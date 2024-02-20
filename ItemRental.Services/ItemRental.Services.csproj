@@ -11,4 +11,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ItemRental.Core\ItemRental.Core.csproj" />
+  </ItemGroup>
+
 </Project>
