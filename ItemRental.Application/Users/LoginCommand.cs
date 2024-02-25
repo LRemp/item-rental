@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ItemRental.Core.Errors;
 
 namespace ItemRental.Application.Users
 {
@@ -16,26 +17,25 @@ namespace ItemRental.Application.Users
     internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
     {
         private readonly IUserRepository _userRepository;
-        public LoginCommandHandler(IUserRepository userRepository)
+        private readonly IJwtProvider _jwtProvider;
+        public LoginCommandHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
         {
             _userRepository = userRepository;
+            _jwtProvider = jwtProvider;
         }
 
         public async Task<Result<string>> Handle(LoginCommand command, CancellationToken cancellationToken)
         {
-            //Get member
-            User? user = await _userRepository.GetByEmailAsync(command.Email);
+            User? user = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-            if(user == null)
+            if(user is null)
             {
-                //Return invalid result
+                return Result.Failure<string>(DomainErrors.User.InvalidCredentials);
             }
 
-            //Generate JWT
+            string token = _jwtProvider.Generate(user);
 
-            //Return JWT
-
-            return "";
+            return token;
         }
     }
 }
