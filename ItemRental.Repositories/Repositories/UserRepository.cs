@@ -19,11 +19,20 @@ namespace ItemRental.Repositories.Repositories
             _mySqlConnection.Open();
         }
 
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM users WHERE email = @email";
 
             var result = await _mySqlConnection.QueryAsync<User>(query, new { email });
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM users WHERE id = @userId";
+
+            var result = await _mySqlConnection.QueryAsync<User>(query, new { userId });
 
             return result.FirstOrDefault();
         }
