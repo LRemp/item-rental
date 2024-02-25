@@ -9,6 +9,7 @@ namespace ItemRental.Core.Contracts
 {
     public interface IUserRepository
     {
-        public Task<User?> GetByEmailAsync(string email);
+        public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
+        public Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
     }
 }
