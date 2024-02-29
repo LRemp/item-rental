@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ItemRental.Core.Contracts;
+using ItemRental.Repositories.Repositories;
 
 namespace ItemRental.Repositories.Extensions
 {
@@ -16,6 +18,8 @@ namespace ItemRental.Repositories.Extensions
             var connectionString = configuration.GetConnectionString("mysql");
 
             services.AddTransient(_ => new MySqlConnection(connectionString));
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IItemRepository, ItemRepository>();
         }
     }
 }

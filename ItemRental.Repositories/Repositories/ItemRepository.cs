@@ -8,6 +8,7 @@ using Dapper;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Helpers;
 using MySqlConnector;
 
 namespace ItemRental.Repositories.Repositories
@@ -19,7 +20,7 @@ namespace ItemRental.Repositories.Repositories
         { 
             _connection = mySqlConnection;
         }
-        public async Task AddAsync(ItemDTO item)
+        public async Task<Result> AddAsync(ItemDTO item)
         {
             var query = @"INSERT INTO items (name, description, tags)
                             VALUES(@name, @description, @tags)";
@@ -30,6 +31,8 @@ namespace ItemRental.Repositories.Repositories
                 description = item.Description,
                 tags = item.Tags
             });
+
+            return Result.Success();
         }
 
         public async Task<Item?> GetAsync(int id)
