@@ -19,6 +19,15 @@ namespace ItemRental.Repositories.Repositories
             _mySqlConnection.Open();
         }
 
+        public async Task<bool> AddAsync(User user)
+        {
+            var query = @"INSERT INTO users (id, username, email, password) VALUES (@id, @username, @email, @password)";
+            
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, username = user.Username, email = user.Email, password = user.Password });
+
+            return result > 0;
+        }
+
         public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM users WHERE email = @email";
@@ -35,6 +44,11 @@ namespace ItemRental.Repositories.Repositories
             var result = await _mySqlConnection.QueryAsync<User>(query, new { userId });
 
             return result.FirstOrDefault();
+        }
+
+        public Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

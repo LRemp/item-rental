@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Services.Authentication
 {
-    internal sealed class JwtProvider : IJwtProvider
+    public sealed class JwtProvider : IJwtProvider
     {
         private JwtOptions _options;
         public JwtProvider(JwtOptions options)

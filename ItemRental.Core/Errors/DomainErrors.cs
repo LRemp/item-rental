@@ -6,9 +6,9 @@ namespace ItemRental.Core.Errors
     {
         public static class User
         {
-            public static readonly Error EmailAlreadyInUse = new Error(
-                "User.EmailAlreadyInUse",
-                "The provided email is already in use.");
+            public static readonly Error EmailOrUsernameAlreadyInUse = new Error(
+                "User.EmailOrUsernameAlreadyInUse",
+                "The provided email or username is already in use.");
 
             public static readonly Func<Guid, Error> NotFound = id => new Error(
                 "User.NotFound",
