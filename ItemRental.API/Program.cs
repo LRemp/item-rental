@@ -2,9 +2,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection.Metadata;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ItemRental.API.OptionsSetup;
 using ItemRental.Repositories.Extensions;
 using ItemRental.Services.Extensions;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +19,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigureOptions<JwtOptionsSetup>();
-builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters.ValidAudience = builder.Configuration["Jwt:Audience"];
+        options.TokenValidationParameters.ValidIssuer = builder.Configuration["Jwt:Issuer"];
+        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]));
+    });
 
 var app = builder.Build();
 

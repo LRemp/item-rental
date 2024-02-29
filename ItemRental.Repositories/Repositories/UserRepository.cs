@@ -28,9 +28,9 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+        public async Task<User?> GetByEmailOrUsernameAsync(string email, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM users WHERE email = @email";
+            var query = @"SELECT * FROM users WHERE email = @email or username = @email";
 
             var result = await _mySqlConnection.QueryAsync<User>(query, new { email });
 
@@ -46,9 +46,13 @@ namespace ItemRental.Repositories.Repositories
             return result.FirstOrDefault();
         }
 
-        public Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email)
+        public async Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email)
         {
-            throw new NotImplementedException();
+            var query = @"SELECT * FROM users WHERE username = @username OR email = @email";
+
+            var result = await _mySqlConnection.QueryAsync<User>(query, new { username, email });
+
+            return result.Count() == 0;
         }
     }
 }

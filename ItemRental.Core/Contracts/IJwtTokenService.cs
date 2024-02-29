@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Core.Contracts
 {
-    public interface IJwtProvider
+    public interface IJwtTokenService
     {
-        string Generate(User user);
+        public string CreateAccessToken(User user, List<string> userRoles);
     }
 }

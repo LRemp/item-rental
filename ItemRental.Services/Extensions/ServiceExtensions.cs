@@ -1,5 +1,4 @@
 ﻿using ItemRental.Core.Contracts;
-using ItemRental.Services.Authentication;
 using ItemRental.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +15,9 @@ namespace ItemRental.Services.Extensions
         public static void AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<JwtProvider>();
-            services.AddTransient<IJwtProvider, JwtProvider>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
+
+            //services.AddTransient<IItemService, IItemService>();
         }
     }
 }

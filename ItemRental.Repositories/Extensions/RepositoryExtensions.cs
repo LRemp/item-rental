@@ -19,6 +19,7 @@ namespace ItemRental.Repositories.Extensions
 
             services.AddTransient(_ => new MySqlConnection(connectionString));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IItemRepository, ItemRepository>();
         }
     }
 }

@@ -12,13 +12,13 @@ using ItemRental.Core.Errors;
 
 namespace ItemRental.Application.Users
 {
-    public record LoginCommand(string Email) : ICommand<string>;
-    public record LoginRequest(string Email);
+    public record LoginCommand(string Email, string Password) : ICommand<string>;
+    public record LoginRequest(string Email, string Password);
     internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IJwtProvider _jwtProvider;
-        public LoginCommandHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
+        private readonly IJwtTokenService _jwtProvider;
+        public LoginCommandHandler(IUserRepository userRepository, IJwtTokenService jwtProvider)
         {
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
@@ -26,14 +26,15 @@ namespace ItemRental.Application.Users
 
         public async Task<Result<string>> Handle(LoginCommand command, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
+            User? user = await _userRepository.GetByEmailOrUsernameAsync(command.Email, cancellationToken);
 
             if(user is null)
             {
                 return Result.Failure<string>(DomainErrors.User.InvalidCredentials);
             }
 
-            string token = _jwtProvider.Generate(user);
+            //TODO: add user roles to the token generation
+            string token = _jwtProvider.CreateAccessToken(user, new List<string>());
 
             return token;
         }

@@ -9,7 +9,7 @@ namespace ItemRental.Core.Contracts
 {
     public interface IUserRepository
     {
-        public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
+        public Task<User?> GetByEmailOrUsernameAsync(string email, CancellationToken cancellationToken);
         public Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
         public Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email);
         public Task<bool> AddAsync(User user);
