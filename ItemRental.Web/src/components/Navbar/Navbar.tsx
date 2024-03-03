@@ -13,6 +13,7 @@ import {
 } from '@tabler/icons-react';
 import LogoSquare from '../../assets/images/logo_square.png';
 import classes from './Navbar.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface NavbarLinkProps {
   icon: typeof IconHome2;
@@ -41,15 +42,19 @@ const mockdata = [
   { icon: IconSettings, label: 'Settings' },
 ];
 
-export function Navbar() {
+export function Navbar({ navlinks = mockdata }: { navlinks: Array<any> }) {
   const [active, setActive] = useState(2);
+  const navigate = useNavigate();
 
-  const links = mockdata.map((link, index) => (
+  const links = navlinks.map((link, index) => (
     <NavbarLink
       {...link}
       key={link.label}
       active={index === active}
-      onClick={() => setActive(index)}
+      onClick={() => {
+        navigate(link.path);
+        setActive(index);
+      }}
     />
   ));
 
@@ -66,7 +71,6 @@ export function Navbar() {
       </div>
 
       <Stack justify="center" gap={0}>
-        <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
         <NavbarLink icon={IconLogout} label="Logout" />
       </Stack>
     </nav>
