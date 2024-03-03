@@ -24,8 +24,8 @@ export function HomePage() {
       <Header />
       {data}
       <button onClick={login}>Login</button>
-      <Welcome />
-      <ColorSchemeToggle />
+      {/*<Welcome />
+      <ColorSchemeToggle />*/}
     </>
   );
 }

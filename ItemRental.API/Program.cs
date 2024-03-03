@@ -6,12 +6,14 @@ using ItemRental.Repositories.Extensions;
 using ItemRental.Services.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ItemRental.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ItemRental.Application.AssemblyReference.Assembly));
 
 builder.Services.AddControllers();

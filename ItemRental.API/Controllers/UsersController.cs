@@ -17,7 +17,7 @@ namespace ItemRental.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            Result<string> result = await _sender.Send(new LoginCommand(request.Email, request.Password));
+            Result<LoginResponse> result = await _sender.Send(new LoginCommand(request.Email, request.Password));
 
             if(result.IsFailure)
             {

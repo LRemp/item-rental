@@ -9,34 +9,50 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ItemRental.Core.Errors;
+using ItemRental.Core.DTOs;
+using AutoMapper;
 
 namespace ItemRental.Application.Users
 {
-    public record LoginCommand(string Email, string Password) : ICommand<string>;
+    public record LoginResponse(string Token, UserDTO User);
+    public record LoginCommand(string Email, string Password) : ICommand<LoginResponse>;
     public record LoginRequest(string Email, string Password);
-    internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
+    internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, LoginResponse>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         private readonly IJwtTokenService _jwtProvider;
-        public LoginCommandHandler(IUserRepository userRepository, IJwtTokenService jwtProvider)
+        private readonly IMapper _mapper;
+        public LoginCommandHandler(IUserRepository userRepository, IUserService userService, IJwtTokenService jwtProvider, IMapper mapper)
         {
             _userRepository = userRepository;
+            _userService = userService;
             _jwtProvider = jwtProvider;
+            _mapper = mapper;
         }
 
-        public async Task<Result<string>> Handle(LoginCommand command, CancellationToken cancellationToken)
+        public async Task<Result<LoginResponse>> Handle(LoginCommand command, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetByEmailOrUsernameAsync(command.Email, cancellationToken);
 
             if(user is null)
             {
-                return Result.Failure<string>(DomainErrors.User.InvalidCredentials);
+                return Result.Failure<LoginResponse>(DomainErrors.User.InvalidCredentials);
+            }
+
+            var isPasswordValid = _userService.VerifyPasswordHash(command.Password, user.Password);
+
+            if(!isPasswordValid)
+            {
+                return Result.Failure<LoginResponse>(DomainErrors.User.InvalidCredentials);
             }
 
             //TODO: add user roles to the token generation
             string token = _jwtProvider.CreateAccessToken(user, new List<string>());
 
-            return token;
+            UserDTO userDTO = _mapper.Map<UserDTO>(user);
+
+            return new LoginResponse(token, userDTO);
         }
     }
 }
