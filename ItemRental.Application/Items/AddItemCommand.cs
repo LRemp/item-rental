@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Items
 {
-    public sealed record AddItemCommand(ItemDTO item) : ICommand;
+    public sealed record AddItemCommand(Guid user, ItemDTO item) : ICommand;
 
     public sealed class AddItemCommandHandler : ICommandHandler<AddItemCommand>
     {
@@ -21,6 +21,7 @@ namespace ItemRental.Application.Items
         }
         public async Task<Result> Handle(AddItemCommand command, CancellationToken cancellationToken)
         {
+
             Result result = await _itemRepository.AddAsync(command.item);
 
             if (result.IsFailure)

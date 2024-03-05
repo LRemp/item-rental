@@ -24,11 +24,15 @@ import {
   IconTrash,
   IconSwitchHorizontal,
   IconChevronDown,
+  IconHome,
+  IconPlus,
+  IconBuildingWarehouse,
 } from '@tabler/icons-react';
 import Logo from '../../assets/images/logo.png';
 import classes from './Header.module.css';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
 
 const user = {
@@ -54,20 +58,20 @@ export function Header() {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const isAuthenticated = useIsAuthenticated();
+  const auth: AuthUser | null = useAuthUser();
 
   const items = tabs.map((tab) => (
     <Tabs.Tab value={tab} key={tab}>
       {tab}
     </Tabs.Tab>
   ));
-
   const signOut = useSignOut();
 
   return (
     <div className={classes.header}>
       <Container className={classes.mainSection} size="md">
         <Group justify="space-between">
-          <img src={Logo} alt="logo" width={120} />
+          <img src={Logo} alt="logo" width={120} onClick={() => navigate('/')} />
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
 
@@ -85,47 +89,36 @@ export function Header() {
                   className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
                 >
                   <Group gap={7}>
-                    <Avatar src={user.image} alt={user.name} radius="xl" size={20} />
+                    <Avatar alt={auth?.username} radius="xl" color="cyan" size={20}>
+                      {auth?.username[0].toUpperCase()}
+                    </Avatar>
                     <Text fw={500} size="sm" lh={1} mr={3}>
-                      {user.name}
+                      {auth?.username}
                     </Text>
                     <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
                   </Group>
                 </UnstyledButton>
               </Menu.Target>
               <Menu.Dropdown>
+                <Menu.Label>Dashboard</Menu.Label>
                 <Menu.Item
                   leftSection={
-                    <IconHeart
-                      style={{ width: rem(16), height: rem(16) }}
-                      color={theme.colors.red[6]}
-                      stroke={1.5}
-                    />
+                    <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                   }
+                  onClick={() => navigate('/dashboard')}
                 >
-                  Liked posts
+                  Home
                 </Menu.Item>
                 <Menu.Item
                   leftSection={
-                    <IconStar
+                    <IconBuildingWarehouse
                       style={{ width: rem(16), height: rem(16) }}
-                      color={theme.colors.yellow[6]}
                       stroke={1.5}
                     />
                   }
+                  onClick={() => navigate('/dashboard/inventory')}
                 >
-                  Saved posts
-                </Menu.Item>
-                <Menu.Item
-                  leftSection={
-                    <IconMessage
-                      style={{ width: rem(16), height: rem(16) }}
-                      color={theme.colors.blue[6]}
-                      stroke={1.5}
-                    />
-                  }
-                >
-                  Your comments
+                  Inventory items
                 </Menu.Item>
 
                 <Menu.Label>Settings</Menu.Label>
@@ -135,16 +128,6 @@ export function Header() {
                   }
                 >
                   Account settings
-                </Menu.Item>
-                <Menu.Item
-                  leftSection={
-                    <IconSwitchHorizontal
-                      style={{ width: rem(16), height: rem(16) }}
-                      stroke={1.5}
-                    />
-                  }
-                >
-                  Change account
                 </Menu.Item>
                 <Menu.Item
                   leftSection={

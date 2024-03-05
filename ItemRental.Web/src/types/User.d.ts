@@ -16,3 +16,8 @@ type UserProfile = {
 };
 
 type RegisterResponse = {};
+
+type AuthUser = {
+  username: string;
+  email: string;
+};

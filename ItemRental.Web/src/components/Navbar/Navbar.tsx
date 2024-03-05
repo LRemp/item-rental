@@ -61,7 +61,7 @@ export function Navbar({ navlinks = mockdata }: { navlinks: Array<any> }) {
   return (
     <nav className={classes.navbar}>
       <Center>
-        <img src={LogoSquare} width={40} />
+        <img src={LogoSquare} width={40} onClick={() => navigate('/')} />
       </Center>
 
       <div className={classes.navbarMain}>
