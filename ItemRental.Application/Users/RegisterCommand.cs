@@ -23,7 +23,7 @@ namespace ItemRental.Application.Users
         }
         public async Task<Result<Guid>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            bool isUnique = await _userRepository.IsEmailAndUsernameUniqueAsync(request.Username, request.Email);
+            bool isUnique = await _userRepository.IsEmailAndUsernameUniqueAsync(request.Username, request.Email, cancellationToken);
             
             if(!isUnique)
             {
@@ -39,7 +39,7 @@ namespace ItemRental.Application.Users
                 Password = passwordHash
             };
 
-            var isSuccess = await _userRepository.AddAsync(user);
+            var isSuccess = await _userRepository.AddAsync(user, cancellationToken);
             if (!isSuccess)
             {
                 //return Result.Failure();

@@ -20,35 +20,68 @@ namespace ItemRental.Repositories.Repositories
         { 
             _connection = mySqlConnection;
         }
-        public async Task<Result> AddAsync(ItemDTO item)
+        public async Task<bool> AddAsync(Item item, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO items (name, description, tags)
-                            VALUES(@name, @description, @tags)";
+            var query = @"INSERT INTO items (id, owner, name, description, tags)
+                            VALUES(@id, @owner, @name, @description, @tags)";
 
-            await _connection.ExecuteAsync(query, new
+            var result = await _connection.ExecuteAsync(query, new
             {
+                id = item.Id,
+                owner = item.Owner,
                 name = item.Name,
                 description = item.Description,
                 tags = item.Tags
             });
 
-            return Result.Success();
+            return result > 0;
         }
 
-        public async Task<Item?> GetAsync(int id)
+        public async Task<Item?> GetAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM items WHERE id = @id";
 
-            var result = await _connection.QueryAsync<Item>(query);
+            var result = await _connection.QueryAsync<Item>(query, new { id });
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Item>> GetAsync()
+        public async Task<List<Item>> GetAsync(CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM items";
 
             var result = await _connection.QueryAsync<Item>(query);
             return result.ToList();
+        }
+
+        public async Task<List<Item>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM items WHERE owner = @owner";
+
+            var result = await _connection.QueryAsync<Item>(query, new { owner = owner.ToString() });
+            return result.ToList();
+        }
+
+        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"DELETE FROM items WHERE id = @id";
+
+            var result = await _connection.ExecuteAsync(query, new { id });
+            return result > 0;
+        }
+
+        public async Task<bool> UpdateAsync(Item item, CancellationToken cancellationToken)
+        {
+            var query = @"UPDATE items SET name = @name, description = @description, tags = @tags WHERE id = @id";
+
+            var result = await _connection.ExecuteAsync(query, new
+            {
+                id = item.Id,
+                name = item.Name,
+                description = item.Description,
+                tags = item.Tags
+            });
+
+            return result > 0;
         }
     }
 }

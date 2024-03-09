@@ -11,6 +11,7 @@ import {
   Table,
   TextInput,
   Textarea,
+  Title,
 } from '@mantine/core';
 import React, { useRef } from 'react';
 import { useDisclosure } from '@mantine/hooks';
@@ -46,41 +47,53 @@ export default function Inventory() {
   };
 
   return (
-    <Grid w={'100%'} m="lg">
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Add new item"
-        centered
-        size={'lg'}
-        closeOnClickOutside={!adding}
-        closeOnEscape={!adding}
-        withCloseButton={!adding}
-      >
-        <form onSubmit={form.onSubmit((values) => addItem(values))}>
-          <Fieldset disabled={adding} variant="unstyled">
-            <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')}></TextInput>
-            <Textarea label="Description" placeholder="Description" autosize></Textarea>
-            <FileDropzone />
-            <Button fullWidth mt="md" type="submit" loading={adding}>
-              Add Item
+    <Box m={'lg'} w={'100%'}>
+      <Grid columns={24} grow>
+        <Modal
+          opened={opened}
+          onClose={close}
+          title="Add new item"
+          centered
+          size={'lg'}
+          closeOnClickOutside={!adding}
+          closeOnEscape={!adding}
+          withCloseButton={!adding}
+        >
+          <form onSubmit={form.onSubmit((values) => addItem(values))}>
+            <Fieldset disabled={adding} variant="unstyled">
+              <TextInput
+                label="Name"
+                placeholder="Name"
+                {...form.getInputProps('name')}
+              ></TextInput>
+              <Textarea label="Description" placeholder="Description" autosize></Textarea>
+              <FileDropzone />
+              <Button fullWidth mt="md" type="submit" loading={adding}>
+                Add Item
+              </Button>
+            </Fieldset>
+          </form>
+        </Modal>
+        <Grid.Col span={24}>
+          <Box>
+            <Button variant="filled" onClick={open}>
+              Add new item
             </Button>
-          </Fieldset>
-        </form>
-      </Modal>
-      <Box ml={'auto'}>
-        <Button variant="filled" onClick={open}>
-          Add new item
-        </Button>
-      </Box>
-      <ItemsList />
-    </Grid>
+          </Box>
+        </Grid.Col>
+        <Grid.Col span={24}>
+          <Paper shadow="md" p={'md'}>
+            <Title order={5}>Inventory items</Title>
+          </Paper>
+        </Grid.Col>
+      </Grid>
+    </Box>
   );
 }
 
 const ItemsList = () => {
   const rows = elements.map((element) => (
-    <Table.Tr key={element.name}>
+    <Table.Tr key={element.name} m={'md'}>
       <Table.Td>{element.position}</Table.Td>
       <Table.Td>{element.name}</Table.Td>
       <Table.Td>{element.symbol}</Table.Td>

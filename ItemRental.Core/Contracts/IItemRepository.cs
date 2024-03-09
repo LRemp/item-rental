@@ -11,8 +11,11 @@ namespace ItemRental.Core.Contracts
 {
     public interface IItemRepository
     {
-        public Task<Result> AddAsync(ItemDTO item);
-        public Task<Item?> GetAsync(int id);
-        public Task<List<Item>> GetAsync();
+        public Task<bool> AddAsync(Item item, CancellationToken cancellationToken);
+        public Task<Item?> GetAsync(Guid id, CancellationToken cancellationToken);
+        public Task<List<Item>> GetAsync(CancellationToken cancellationToken);
+        public Task<List<Item>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken);
+        public Task<bool> UpdateAsync(Item item, CancellationToken cancellationToken);
+        public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

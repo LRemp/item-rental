@@ -1,4 +1,8 @@
-﻿using ItemRental.Core.DTOs;
+﻿using ItemRental.Application.Items;
+using ItemRental.Application.Users;
+using ItemRental.Core.Contracts;
+using ItemRental.Core.DTOs;
+using ItemRental.Core.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,25 +17,75 @@ namespace ItemRental.API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly ISender _sender;
-        public ItemsController(ISender sender)
+        private readonly IJwtTokenService _jwtTokenService;
+        public ItemsController(ISender sender, IJwtTokenService jwtTokenService)
         {
             _sender = sender;
+            _jwtTokenService = jwtTokenService;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-        
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("create")]
-        public void Create([FromBody] ItemDTO item)
+        public async Task<IActionResult> Create([FromBody] ItemDTO item)
         {
-            var usercontext = HttpContext.User;
-            var value = usercontext.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-            var claims = HttpContext.User.Identity as ClaimsIdentity;
-            Console.WriteLine(usercontext.FindFirst(ClaimTypes.Name)?.Value);
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new AddItemCommand(userId, item));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("get")]
+        public async Task<IActionResult> Get()
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<ItemDTO>> result = await _sender.Send(new GetItemsQuery(userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] ItemDTO item)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new UpdateItemCommand(item, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new DeleteItemCommand(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
         }
     }
 }

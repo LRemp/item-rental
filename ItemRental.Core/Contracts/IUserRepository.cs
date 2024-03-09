@@ -11,7 +11,7 @@ namespace ItemRental.Core.Contracts
     {
         public Task<User?> GetByEmailOrUsernameAsync(string email, CancellationToken cancellationToken);
         public Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
-        public Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email);
-        public Task<bool> AddAsync(User user);
+        public Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email, CancellationToken cancellationToken);
+        public Task<bool> AddAsync(User user, CancellationToken cancellationToken);
     }
 }

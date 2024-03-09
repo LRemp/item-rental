@@ -1,5 +1,7 @@
 ﻿using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Entities;
+using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using ItemRental.Services.Extensions.Messaging;
 using System;
@@ -21,12 +23,19 @@ namespace ItemRental.Application.Items
         }
         public async Task<Result> Handle(AddItemCommand command, CancellationToken cancellationToken)
         {
-
-            Result result = await _itemRepository.AddAsync(command.item);
-
-            if (result.IsFailure)
+            Item item = new Item
             {
-                return Result.Failure(result.Error);
+                Id = Guid.NewGuid(),
+                Name = command.item.Name,
+                Description = command.item.Description,
+                Owner = command.user
+            };
+
+            bool success = await _itemRepository.AddAsync(item, cancellationToken);
+
+            if (!success)
+            {
+                return Result.Failure(DomainErrors.Item.FailedToCreate);
             }
 
             return Result.Success();
