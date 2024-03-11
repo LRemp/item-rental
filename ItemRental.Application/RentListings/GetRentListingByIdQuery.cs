@@ -1,5 +1,7 @@
 ﻿using ItemRental.Application.Abstractions.Messaging;
+using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,24 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.RentListings
 {
-    public sealed record GetRentListingByIdResponse(List<RentListingDTO> rentListings);
-    public sealed record GetRentListingByIdQuery(Guid OwnerId) : IQuery<GetRentListingByIdResponse>;
-    public class GetRentListingByIdHandler : IQueryHandler<GetRentListingByIdQuery, GetRentListingByIdResponse>
+    public sealed record GetRentListingByIdQuery(Guid id) : IQuery<RentListingDTO>;
+    public class GetRentListingByIdHandler : IQueryHandler<GetRentListingByIdQuery, RentListingDTO>
     {
-        public Task<Result<GetRentListingByIdResponse>> Handle(GetRentListingByIdQuery request, CancellationToken cancellationToken)
+        private readonly IRentListingRepository _rentListingRepository;
+        public GetRentListingByIdHandler(IRentListingRepository rentListingRepository)
         {
-            throw new NotImplementedException();
+            _rentListingRepository = rentListingRepository;
+        }
+        public async Task<Result<RentListingDTO>> Handle(GetRentListingByIdQuery request, CancellationToken cancellationToken)
+        {
+            var rentListing = await _rentListingRepository.GetAsync(request.id, cancellationToken);
+
+            if(rentListing is null) 
+            { 
+                return Result.Failure<RentListingDTO>(DomainErrors.RentListing.NotFound(request.id));
+            }
+
+            return rentListing;
         }
     }
 }

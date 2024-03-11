@@ -1,4 +1,5 @@
 ﻿using ItemRental.Application.Abstractions.Messaging;
+using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Helpers;
 using System;
@@ -13,9 +14,16 @@ namespace ItemRental.Application.RentListings
     public sealed record GetRentListingsQuery() : IQuery<GetRentListingsResponse>;
     internal class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, GetRentListingsResponse>
     {
-        public Task<Result<GetRentListingsResponse>> Handle(GetRentListingsQuery request, CancellationToken cancellationToken)
+        private readonly IRentListingRepository _rentListingRepository;
+        public GetRentListingsQueryHandler(IRentListingRepository rentListingRepository)
         {
-            throw new NotImplementedException();
+            _rentListingRepository = rentListingRepository;
+        }
+        public async Task<Result<GetRentListingsResponse>> Handle(GetRentListingsQuery request, CancellationToken cancellationToken)
+        {
+            var listings = await _rentListingRepository.GetAsync(cancellationToken);
+
+            return new GetRentListingsResponse(listings);
         }
     }
 }
