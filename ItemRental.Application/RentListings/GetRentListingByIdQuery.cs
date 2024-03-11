@@ -1,0 +1,21 @@
+﻿using ItemRental.Application.Abstractions.Messaging;
+using ItemRental.Core.DTOs;
+using ItemRental.Core.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ItemRental.Application.RentListings
+{
+    public sealed record GetRentListingByIdResponse(List<RentListingDTO> rentListings);
+    public sealed record GetRentListingByIdQuery(Guid OwnerId) : IQuery<GetRentListingByIdResponse>;
+    public class GetRentListingByIdHandler : IQueryHandler<GetRentListingByIdQuery, GetRentListingByIdResponse>
+    {
+        public Task<Result<GetRentListingByIdResponse>> Handle(GetRentListingByIdQuery request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
