@@ -18,5 +18,24 @@ namespace ItemRental.Core.Errors
                 "User.InvalidCredentials", 
                 "The provided credentials are invalid");
         }
+
+        public static class Item
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new Error(
+                "Item.NotFound",
+                "The item was not found");
+
+            public static readonly Error FailedToCreate = new Error(
+                "Item.FailedToCreate",
+                "The item could not be created");
+
+            public static readonly Func<Guid, Error> NotOwner = id => new Error(
+                "Item.NotOwner",
+                "The user is not the owner of the item");
+
+            public static readonly Func<Guid, Error> FailedToDelete = id => new Error(
+                "Item.FailedToDelete",
+                "The item could not be deleted");
+        }
     }
 }

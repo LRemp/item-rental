@@ -6,12 +6,15 @@ using ItemRental.Repositories.Extensions;
 using ItemRental.Services.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ItemRental.Application.Extensions;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ItemRental.Application.AssemblyReference.Assembly));
 
 builder.Services.AddControllers();
@@ -34,6 +37,8 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseCors();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -41,7 +46,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images")),
+    RequestPath = "/Images"
+});
 
 app.UseAuthorization();
 

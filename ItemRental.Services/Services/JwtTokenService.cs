@@ -47,5 +47,19 @@ namespace ItemRental.Services.Services
 
             return new JwtSecurityTokenHandler().WriteToken(accessSecurityToken);
         }
+
+        public Guid GetTokenSubject(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            if(token.Contains("Bearer"))
+            {
+                token = token.Replace("Bearer ", "");
+            }
+
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+            Guid guid = Guid.Parse(securityToken.Subject);
+            return guid;
+        }
     }
 }

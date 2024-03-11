@@ -19,7 +19,7 @@ namespace ItemRental.Repositories.Repositories
             _mySqlConnection.Open();
         }
 
-        public async Task<bool> AddAsync(User user)
+        public async Task<bool> AddAsync(User user, CancellationToken cancellationToken)
         {
             var query = @"INSERT INTO users (id, username, email, password) VALUES (@id, @username, @email, @password)";
             
@@ -46,7 +46,7 @@ namespace ItemRental.Repositories.Repositories
             return result.FirstOrDefault();
         }
 
-        public async Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email)
+        public async Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM users WHERE username = @username OR email = @email";
 
