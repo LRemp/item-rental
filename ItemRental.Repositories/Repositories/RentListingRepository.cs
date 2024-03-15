@@ -58,6 +58,7 @@ namespace ItemRental.Repositories.Repositories
                 {
                     return new RentListingDTO
                     {
+                        Id = rentListing.Id,
                         Item = item,
                         Renter = user,
                         Title = rentListing.Title,
@@ -84,6 +85,7 @@ namespace ItemRental.Repositories.Repositories
                 {
                     return new RentListingDTO
                     {
+                        Id = rentListing.Id,
                         Item = item,
                         Renter = user,
                         Title = rentListing.Title,
@@ -113,6 +115,7 @@ namespace ItemRental.Repositories.Repositories
                 {
                     return new RentListingDTO
                     {
+                        Id = rentListing.Id,
                         Item = item,
                         Renter = user,
                         Title = rentListing.Title,

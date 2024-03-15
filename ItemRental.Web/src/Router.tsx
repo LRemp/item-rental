@@ -6,11 +6,23 @@ import DashboardPage from './pages/Dashboard';
 import InventoryPage from './pages/Dashboard/Inventory.page';
 import DashboardHome from './pages/Dashboard/Home.page';
 import DashboardSettings from './pages/Dashboard/Settings.page';
+import ListingPage from './pages/Listing.page';
+import MainLayout from './layouts/MainLayout';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <MainLayout />,
+    children: [
+      {
+        path: '',
+        element: <HomePage />,
+      },
+      {
+        path: 'listing/:id',
+        element: <ListingPage />,
+      },
+    ],
   },
   {
     path: '/login',

@@ -29,7 +29,7 @@ namespace ItemRental.API.Controllers
         public async Task<IActionResult> Create([FromBody] ItemDTO item)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
-
+            
             Result result = await _sender.Send(new AddItemCommand(userId, item));
 
             if (result.IsFailure)

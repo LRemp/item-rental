@@ -34,7 +34,7 @@ namespace ItemRental.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             Result<RentListingDTO> result = await _sender.Send(new GetRentListingByIdQuery(id));

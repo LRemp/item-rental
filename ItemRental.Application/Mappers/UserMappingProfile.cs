@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Mappers
 {
-    public class UserMappingProfile: Profile
+    public class UserMappingProfile : Profile
     {
         public UserMappingProfile()
         {

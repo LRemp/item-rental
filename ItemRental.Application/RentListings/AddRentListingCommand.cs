@@ -26,6 +26,7 @@ namespace ItemRental.Application.RentListings
             RentListing rentListing = new RentListing
             {
                 Id = Guid.NewGuid(),
+                Item = request.addRentListingDTO.Item,
                 Renter = request.user,
                 Title = request.addRentListingDTO.Title,
                 Description = request.addRentListingDTO.Description,
