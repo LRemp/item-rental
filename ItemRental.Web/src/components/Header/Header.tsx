@@ -33,7 +33,7 @@ import classes from './Header.module.css';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const user = {
   name: 'Jane Spoonfighter',
@@ -71,7 +71,9 @@ export function Header() {
     <div className={classes.header}>
       <Container className={classes.mainSection} size="md">
         <Group justify="space-between">
-          <img src={Logo} alt="logo" width={120} onClick={() => navigate('/')} />
+          <Link to="/">
+            <img src={Logo} alt="logo" width={120} />
+          </Link>
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
 

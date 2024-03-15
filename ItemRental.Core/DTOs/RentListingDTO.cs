@@ -8,7 +8,8 @@ namespace ItemRental.Core.DTOs
 {
     public class RentListingDTO
     {
-        public ItemDTO item { get; set; }
+        public Guid Id { get; set; }
+        public ItemDTO Item { get; set; }
         public UserDTO Renter { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

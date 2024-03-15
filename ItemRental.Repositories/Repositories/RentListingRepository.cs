@@ -37,31 +37,106 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<List<RentListing>> GetAsync(CancellationToken cancellationToken)
+        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM rent_listings";
+            var query = @"DELETE FROM rent_listings WHERE id = @id";
 
-            var result = await mySqlConnection.QueryAsync<RentListing>(query);
+            var result = await mySqlConnection.ExecuteAsync(query, new { id });
+
+            return result > 0;
+        }
+
+        public async Task<List<RentListingDTO>> GetAsync(CancellationToken cancellationToken)
+        {
+            var query = @"SELECT rl.*,  i.*, u.*
+                        FROM rent_listings rl
+                        INNER JOIN items i ON rl.item = i.id
+                        INNER JOIN users u ON rl.renter = u.id";
+
+            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+                (rentListing, item, user) =>
+                {
+                    return new RentListingDTO
+                    {
+                        Id = rentListing.Id,
+                        Item = item,
+                        Renter = user,
+                        Title = rentListing.Title,
+                        Description = rentListing.Description,
+                        Price = rentListing.Price,
+                        Location = rentListing.Location
+                    };
+                }
+            );
 
             return result.ToList();
         }
 
-        public async Task<RentListing> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<RentListingDTO?> GetAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT rl.*,  i.*, u.*
+                        FROM rent_listings rl
+                        INNER JOIN items i ON rl.item = i.id
+                        INNER JOIN users u ON rl.renter = u.id
+                        WHERE rl.id = @id";
+
+            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+                (rentListing, item, user) =>
+                {
+                    return new RentListingDTO
+                    {
+                        Id = rentListing.Id,
+                        Item = item,
+                        Renter = user,
+                        Title = rentListing.Title,
+                        Description = rentListing.Description,
+                        Price = rentListing.Price,
+                        Location = rentListing.Location
+                    };
+                },
+                new { id }
+            );
+
+            var results = result.ToList();
+
+            return results[0];
+        }
+
+        public async Task<List<RentListingDTO>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT rl.*,  i.*, u.*
+                        FROM rent_listings rl
+                        INNER JOIN items i ON rl.item = i.id
+                        INNER JOIN users u ON rl.renter = u.id
+                        WHERE rl.renter = @owner";
+
+            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+                (rentListing, item, user) =>
+                {
+                    return new RentListingDTO
+                    {
+                        Id = rentListing.Id,
+                        Item = item,
+                        Renter = user,
+                        Title = rentListing.Title,
+                        Description = rentListing.Description,
+                        Price = rentListing.Price,
+                        Location = rentListing.Location
+                    };
+                },
+                new { owner }
+            );
+
+            return result.ToList();
+        }
+
+        public async Task<RentListing?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM rent_listings WHERE id = @id";
 
-            var result = await mySqlConnection.QuerySingleAsync<RentListing>(query, new { id });
+            var result = await mySqlConnection.QuerySingleAsync(query, new { id });
 
-            return result;
-        }
-
-        public async Task<RentListing> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
-        {
-            var query = @"SELECT * FROM rent_listings WHERE renter = @owner";
-
-            var result = await mySqlConnection.QuerySingleAsync<RentListingDTO, RentListing, Item>(query, new { owner });
-
-            return result;
+            return result.FirstOrDefault();
         }
 
         public async Task<bool> UpdateAsync(RentListing rentalListing, CancellationToken cancellationToken)
