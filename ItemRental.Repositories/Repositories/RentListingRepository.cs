@@ -37,6 +37,11 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
+        public Task<bool> AddCommentAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"DELETE FROM rent_listings WHERE id = @id";
@@ -48,7 +53,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<RentListingDTO>> GetAsync(CancellationToken cancellationToken)
         {
-            var query = @"SELECT rl.*,  i.*, u.*
+            var query = @"SELECT rl.*, i.*, u.*
                         FROM rent_listings rl
                         INNER JOIN items i ON rl.item = i.id
                         INNER JOIN users u ON rl.renter = u.id";
@@ -104,7 +109,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<RentListingDTO>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
         {
-            var query = @"SELECT rl.*,  i.*, u.*
+            var query = @"SELECT rl.*, i.*, u.*
                         FROM rent_listings rl
                         INNER JOIN items i ON rl.item = i.id
                         INNER JOIN users u ON rl.renter = u.id
@@ -134,7 +139,7 @@ namespace ItemRental.Repositories.Repositories
         {
             var query = @"SELECT * FROM rent_listings WHERE id = @id";
 
-            var result = await mySqlConnection.QuerySingleAsync(query, new { id });
+            var result = await mySqlConnection.QueryAsync<RentListing>(query, new { id });
 
             return result.FirstOrDefault();
         }

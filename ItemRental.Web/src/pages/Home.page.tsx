@@ -19,11 +19,8 @@ export function HomePage() {
 }
 
 const RentListingsContainer = () => {
-  const { result, loading, error, request } = useApiResult(() => api.RentListing.getListings());
+  const { result, loading, error, request } = useApiResult(() => api.RentListing.getListings(), []);
   console.log(error);
-  useEffect(() => {
-    request();
-  }, []);
 
   return (
     <Container>
