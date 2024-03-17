@@ -18,7 +18,12 @@ import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { FileDropzone } from '@/components/FileDropzone/FileDropzone';
+import { FormFileDropzone } from '@/components/FileDropzone/FormFileDropzone';
+import api from '@/api';
+import useApiResult from '@/hooks/useApiResult';
+import useUploadImage from '@/hooks/useUploadImage';
+import { notifications } from '@mantine/notifications';
+import { Error, Success } from '@/utils/Notifications';
 
 const elements = [
   { position: 1, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -32,18 +37,65 @@ export default function Inventory() {
   const [opened, { open, close }] = useDisclosure(false);
   const [adding, add] = useDisclosure(false);
 
-  const openRef = useRef<() => void>(null);
+  const { result, loading, error, request } = useApiResult(api.Item.create);
+  const uploadImage = useUploadImage();
 
   const form = useForm({
-    initialValues: { name: '', description: '' },
+    initialValues: { name: '', description: '', files: [] },
     validate: {
       name: (value) => (value.length <= 0 ? 'You must enter the item name' : null),
     },
   });
 
-  const addItem = (data: any) => {
+  const addItem = async (data: any) => {
     if (adding) return;
     add.open();
+    const notificationId = notifications.show({
+      loading: true,
+      title: 'Loading',
+      message: 'Creating item...',
+      autoClose: false,
+      withCloseButton: false,
+    });
+
+    const imageUpload = await uploadImage(data.files);
+
+    console.log(imageUpload);
+    if (!imageUpload.success) {
+      add.close();
+      return notifications.update(
+        Error({
+          id: notificationId,
+          title: 'Error',
+          message: 'Failed to upload images',
+          autoClose: 2000,
+        })
+      );
+    }
+
+    try {
+      const createRequest = await request({
+        name: data.name,
+        description: data.description,
+        images: imageUpload.data,
+      });
+
+      notifications.update(
+        Success({
+          id: notificationId,
+          title: 'Success',
+          message: 'Item created!',
+        })
+      );
+      close();
+      add.close();
+    } catch (error: any) {
+      console.log(error);
+      notifications.update(
+        Error({ id: notificationId, title: 'Error', message: error.description })
+      );
+      add.close();
+    }
   };
 
   return (
@@ -67,7 +119,7 @@ export default function Inventory() {
                 {...form.getInputProps('name')}
               ></TextInput>
               <Textarea label="Description" placeholder="Description" autosize></Textarea>
-              <FileDropzone />
+              <FormFileDropzone {...form.getInputProps('files')} />
               <Button fullWidth mt="md" type="submit" loading={adding}>
                 Add Item
               </Button>

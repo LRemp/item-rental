@@ -12,6 +12,7 @@ namespace ItemRental.Core.Enums
         Accepted,
         Rejected,
         InProgress,
-        Completed
+        Completed,
+        Cancelled
     }
 }

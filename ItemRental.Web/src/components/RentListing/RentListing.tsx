@@ -18,7 +18,7 @@ function RentListing({ id, title, description, item, renter, price, location }: 
       onClick={() => navigate(`/listing/${id}`)}
     >
       <Card.Section className={classes.imageSection}>
-        <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+        <Image src={`/images/${item.images[0]}`} alt="Tesla Model S" />
       </Card.Section>
 
       <Group justify="space-between" my="md">

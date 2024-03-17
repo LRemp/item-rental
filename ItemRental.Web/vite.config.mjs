@@ -6,6 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:5261',
+      '/images': 'http://localhost:5261',
     },
   },
   plugins: [react(), tsconfigPaths()],

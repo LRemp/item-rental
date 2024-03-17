@@ -68,5 +68,21 @@ namespace ItemRental.API.Controllers
 
             return Ok();
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/UserOrders")]
+        public async Task<IActionResult> GetUserOrders(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<OrderDTO>> result = await _sender.Send(new GetListingUserOrdersQuery(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
     }
 }

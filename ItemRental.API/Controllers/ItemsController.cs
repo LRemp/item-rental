@@ -26,18 +26,18 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] ItemDTO item)
+        public async Task<IActionResult> Create([FromBody] AddItemDTO item)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
             
-            Result result = await _sender.Send(new AddItemCommand(userId, item));
+            Result<Guid> result = await _sender.Send(new AddItemCommand(userId, item));
 
             if (result.IsFailure)
             {
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return Ok(result.Value);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

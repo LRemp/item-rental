@@ -3,6 +3,7 @@ using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using MySqlConnector;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace ItemRental.Repositories.Repositories
                         INNER JOIN users a ON l.renter = a.id
                         WHERE o.id = @id";
 
-            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, ItemDTO, UserDTO, OrderDTO>(query,
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
                 (order, user, listing, item, renter) =>
                 {
                     return new OrderDTO
@@ -72,7 +73,14 @@ namespace ItemRental.Repositories.Repositories
                         {
                             Id = listing.Id,
                             Renter = renter,
-                            Item = item,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
                             Title = listing.Title,
                             Description = listing.Description,
                             Price = listing.Price,
@@ -90,9 +98,58 @@ namespace ItemRental.Repositories.Repositories
             return results[0];
         }
 
+        public Task<Order?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<OrderDTO>> GetUserAsync(Guid user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<OrderDTO>> GetUserListingOrdersAsync(Guid id, Guid user, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE u.id = @user AND l.id = @id";
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status
+                    };
+                }, new { id, user }
+            );
+
+            return result.ToList();
         }
 
         public async Task<bool> UpdateAsync(Order order, CancellationToken cancellationToken)

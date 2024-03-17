@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Dapper;
 using ItemRental.Core.Contracts;
@@ -10,6 +12,7 @@ using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using ItemRental.Core.Helpers;
 using MySqlConnector;
+using Newtonsoft.Json;
 
 namespace ItemRental.Repositories.Repositories
 {
@@ -22,8 +25,8 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Item item, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO items (id, owner, name, description, tags)
-                            VALUES(@id, @owner, @name, @description, @tags)";
+            var query = @"INSERT INTO items (id, owner, name, description, images, tags)
+                            VALUES(@id, @owner, @name, @description, @images, @tags)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -31,6 +34,7 @@ namespace ItemRental.Repositories.Repositories
                 owner = item.Owner,
                 name = item.Name,
                 description = item.Description,
+                images = JsonConvert.SerializeObject(item.Images),
                 tags = item.Tags
             });
 

@@ -2,7 +2,7 @@ import { useCallback, useReducer, useRef } from 'react';
 import useIsMounted from './useIsMounted';
 
 const DEFAULT_STATE = {
-  loading: false,
+  loading: true,
 };
 
 const reducer = (state: any, action: any) => {
@@ -50,7 +50,7 @@ const useAsync = (setResults = true) => {
         if (isMounted() && isCurrentPromise() && e.name !== 'AbortError') {
           dispatch({ type: 'error', payload: setResults ? e : undefined });
         }
-        throw e;
+        //throw e;
       }
     },
     [isMounted, setResults]

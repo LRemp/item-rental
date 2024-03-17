@@ -1,27 +1,17 @@
 import { Carousel } from '@mantine/carousel';
-import { Image } from '@mantine/core';
+import { Box, Flex, Image } from '@mantine/core';
 
-export default function PhotoCarousel() {
+export default function PhotoCarousel({ images }: { images: string[] }) {
   return (
     <Carousel mx="auto" withIndicators loop>
-      <Carousel.Slide>
-        <Image
-          src="https://www.dpreview.com/files/p/articles/2383622612/P1020405-processed.jpeg"
-          alt="Tesla Model S"
-        />
-      </Carousel.Slide>
-      <Carousel.Slide>
-        <Image
-          src="https://www.dpreview.com/files/p/articles/2383622612/P1020405-processed.jpeg"
-          alt="Tesla Model S"
-        />
-      </Carousel.Slide>
-      <Carousel.Slide>
-        <Image
-          src="https://www.dpreview.com/files/p/articles/2383622612/P1020405-processed.jpeg"
-          alt="Tesla Model S"
-        />
-      </Carousel.Slide>
+      {images &&
+        images.map((image) => (
+          <Carousel.Slide>
+            <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
+              <Image src={`/images/${image}`} alt="Tesla Model S" />
+            </Flex>
+          </Carousel.Slide>
+        ))}
     </Carousel>
   );
 }
