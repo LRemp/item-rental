@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import useAsync from './useAsync';
 import useApi from './useApi';
 
-const useApiResult = <T>(fn: Function, dependencies = []) => {
+const useApiResult = <T>(fn: Function, dependencies: Array<any> | null = null) => {
   const api = useApi();
   const { loading, result, error, run } = useAsync(true);
 
@@ -15,19 +15,21 @@ const useApiResult = <T>(fn: Function, dependencies = []) => {
     [api, run, fn]
   );
 
-  useEffect(() => {
-    // if we have specified any dependencies, auto request
-    if (dependencies) {
-      requestAndSetResults().catch(() => {
-        // catch the error to stop the "uncaught exception error"
-      });
-    }
-  }, [...dependencies]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (dependencies) {
+    useEffect(() => {
+      // if we have specified any dependencies, auto request
+      if (dependencies) {
+        requestAndSetResults().catch(() => {
+          // catch the error to stop the "uncaught exception error"
+        });
+      }
+    }, [...dependencies]); // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
-  if (error) {
+  /*if (error) {
     // throw in render to allow the error boundary to catch it
     throw error;
-  }
+  }*/
 
   return {
     loading,

@@ -28,12 +28,13 @@ import {
   IconPlus,
   IconBuildingWarehouse,
 } from '@tabler/icons-react';
-import Logo from '../../assets/images/logo.png';
+import Logo from '@/assets/images/logo.png';
 import classes from './Header.module.css';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Link, useNavigate } from 'react-router-dom';
+import ThemeButton from '../../ThemeButton';
 
 const user = {
   name: 'Jane Spoonfighter',
@@ -162,7 +163,10 @@ export function Header() {
             tab: classes.tab,
           }}
         >
-          <Tabs.List>{items}</Tabs.List>
+          <Tabs.List>
+            {items}
+            <ThemeButton />
+          </Tabs.List>
         </Tabs>
       </Container>
     </div>

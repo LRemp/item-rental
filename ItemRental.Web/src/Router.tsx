@@ -8,6 +8,10 @@ import DashboardHome from './pages/Dashboard/Home.page';
 import DashboardSettings from './pages/Dashboard/Settings.page';
 import ListingPage from './pages/Listing.page';
 import MainLayout from './layouts/MainLayout';
+import ListingsPage from './pages/Dashboard/Listings.page';
+import ItemPage from './pages/Dashboard/Item.page';
+import useApiResult from './hooks/useApiResult';
+import api from './api';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: 'inventory',
         element: <InventoryPage />,
+      },
+      {
+        path: 'listings',
+        element: <ListingsPage />,
+      },
+      {
+        path: 'item/:id',
+        element: <ItemPage />,
       },
       {
         path: 'settings',

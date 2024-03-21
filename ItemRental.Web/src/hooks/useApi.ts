@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 interface RequestParams {
   endpoint: string;
@@ -8,24 +9,33 @@ interface RequestParams {
 }
 
 const useApi = () => {
-  const request = useCallback(({ endpoint, method, body }: RequestParams) => {
+  const authHeader = useAuthHeader() as string;
+
+  const request = useCallback(({ endpoint, method, authenticate, body }: RequestParams) => {
+    const requestHeaders: HeadersInit = new Headers();
+    requestHeaders.set('Content-Type', 'application/json; charset=UTF-8');
+    if (authenticate) {
+      requestHeaders.set('Authorization', authHeader);
+    }
     const requestOptions: RequestInit = {
       method,
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: body ? JSON.stringify(body) : undefined,
+      headers: requestHeaders,
+      body: body instanceof FormData ? body : JSON.stringify(body),
     };
-    console.log(endpoint, requestOptions);
-    return fetch(endpoint, requestOptions)
-      .then(async (resp) => {
-        console.log(resp);
-        return resp.json();
-      })
-      .catch((err) => {
-        console.error(err);
-        throw new Error('Failed to fetch data');
-      });
+    return fetch(endpoint, requestOptions).then(async (result: any) => {
+      if (result.ok) {
+        await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+        return await result.json();
+      }
+      const errorData = await result.json();
+
+      throw {
+        status: result.status,
+        statusText: result.statusText,
+        code: errorData.code,
+        description: errorData.description,
+      };
+    });
   }, []);
 
   return request;

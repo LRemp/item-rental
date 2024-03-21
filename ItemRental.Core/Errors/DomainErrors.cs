@@ -61,5 +61,28 @@ namespace ItemRental.Core.Errors
                 "The rent listing could not be updated"
                 );
         }
+
+        public static class Order
+        {
+            public static readonly Error FailedToCreate = new Error(
+                "Order.FailedToCreate",
+                "The order could not be created");
+
+            public static readonly Func<Guid, Error> NotFound = id => new Error(
+                "Order.NotFound",
+                "The order was not found");
+
+            public static readonly Func<Guid, Error> NotOwner = id => new Error(
+                "Order.NotOwner",
+                "The user is not the owner of the order");
+
+            public static readonly Func<Guid, Error> NotValidAction = id => new Error(
+                "Order.NotValidAction",
+                "The action is not valid for the order");
+
+            public static readonly Func<Guid, Error> FailedToAccept = id => new Error(
+                "Order.FailedToAccept",
+                "Failed to accept the order");
+        }
     }
 }

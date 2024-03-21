@@ -1,7 +1,7 @@
 import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { useEffect, useState } from 'react';
-import { Header } from '@/components/Header/Header';
+import { Header } from '@/components/Nagivation/Header/Header';
 import { Container, Flex, Grid } from '@mantine/core';
 import useApiResult from '@/hooks/useApiResult';
 import { get } from 'http';
@@ -19,11 +19,7 @@ export function HomePage() {
 }
 
 const RentListingsContainer = () => {
-  const { result, loading, error, request } = useApiResult(() => api.RentListing.getListings());
-  console.log(error);
-  useEffect(() => {
-    request();
-  }, []);
+  const { result, loading } = useApiResult(() => api.RentListing.getListings(), []);
 
   return (
     <Container>
@@ -31,6 +27,7 @@ const RentListingsContainer = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
+          result &&
           result?.rentListings &&
           result.rentListings.map((rentListing: RentListing) => (
             <Grid.Col span={6} key={rentListing.id}>

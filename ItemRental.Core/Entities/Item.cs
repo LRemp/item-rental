@@ -10,9 +10,10 @@ namespace ItemRental.Core.Entities
     {
         public Guid Owner { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string[] Tags { get; set; } = new string[0];
-        public string[] Photos { get; set; } = new string[0];
-        public Object? Specification { get; set; }
+        public string? Description { get; set; }
+        public string? Category { get; set; }
+        public string[]? Tags { get; set; }
+        public string? Images { get; set; }
+        public string? Details { get; set; }
     }
 }

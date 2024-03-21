@@ -3,6 +3,7 @@ using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using MySqlConnector;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,11 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
+        public Task<bool> AddCommentAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"DELETE FROM rent_listings WHERE id = @id";
@@ -48,18 +54,25 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<RentListingDTO>> GetAsync(CancellationToken cancellationToken)
         {
-            var query = @"SELECT rl.*,  i.*, u.*
+            var query = @"SELECT rl.*, i.*, u.*
                         FROM rent_listings rl
                         INNER JOIN items i ON rl.item = i.id
                         INNER JOIN users u ON rl.renter = u.id";
 
-            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+            var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>
                 {
                     return new RentListingDTO
                     {
                         Id = rentListing.Id,
-                        Item = item,
+                        Item = new ItemDTO
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Description = item.Description,
+                            Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                            Tags = item.Tags
+                        },
                         Renter = user,
                         Title = rentListing.Title,
                         Description = rentListing.Description,
@@ -80,13 +93,20 @@ namespace ItemRental.Repositories.Repositories
                         INNER JOIN users u ON rl.renter = u.id
                         WHERE rl.id = @id";
 
-            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+            var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>
                 {
                     return new RentListingDTO
                     {
                         Id = rentListing.Id,
-                        Item = item,
+                        Item = new ItemDTO
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Description = item.Description,
+                            Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                            Tags = item.Tags
+                        },
                         Renter = user,
                         Title = rentListing.Title,
                         Description = rentListing.Description,
@@ -104,19 +124,26 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<RentListingDTO>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
         {
-            var query = @"SELECT rl.*,  i.*, u.*
+            var query = @"SELECT rl.*, i.*, u.*
                         FROM rent_listings rl
                         INNER JOIN items i ON rl.item = i.id
                         INNER JOIN users u ON rl.renter = u.id
                         WHERE rl.renter = @owner";
 
-            var result = await mySqlConnection.QueryAsync<RentListing, ItemDTO, UserDTO, RentListingDTO>(query,
+            var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>
                 {
                     return new RentListingDTO
                     {
                         Id = rentListing.Id,
-                        Item = item,
+                        Item = new ItemDTO
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Description = item.Description,
+                            Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                            Tags = item.Tags
+                        },
                         Renter = user,
                         Title = rentListing.Title,
                         Description = rentListing.Description,
@@ -134,7 +161,7 @@ namespace ItemRental.Repositories.Repositories
         {
             var query = @"SELECT * FROM rent_listings WHERE id = @id";
 
-            var result = await mySqlConnection.QuerySingleAsync(query, new { id });
+            var result = await mySqlConnection.QueryAsync<RentListing>(query, new { id });
 
             return result.FirstOrDefault();
         }
