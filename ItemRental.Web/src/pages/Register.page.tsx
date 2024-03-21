@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/components/RegisterForm/RegisterForm';
+import { RegisterForm } from '@/components/Forms/RegisterForm/RegisterForm';
 import { Box, Center } from '@mantine/core';
 import React from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';

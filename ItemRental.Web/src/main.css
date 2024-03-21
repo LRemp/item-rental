@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes anim {
+  0% {
+    transform: rotate(0deg) scale(1) skewY(-20deg);
+  }
+  25% {
+  }
+  50% {
+    transform: rotate(1000deg) scale(0.5) skewY(20deg);
+  }
+  75% {
+  }
+  100% {
+    transform: rotate(0deg) scale(1) skewY(-20deg);
+  }
+}
+
+body {
+  /*animation-name: anim;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  background-image: url('./assets/cat.gif');*/
+}

@@ -25,8 +25,8 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Item item, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO items (id, owner, name, description, images, tags)
-                            VALUES(@id, @owner, @name, @description, @images, @tags)";
+            var query = @"INSERT INTO items (id, owner, name, description, images, tags, details)
+                            VALUES(@id, @owner, @name, @description, @images, @tags, @details)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -35,7 +35,8 @@ namespace ItemRental.Repositories.Repositories
                 name = item.Name,
                 description = item.Description,
                 images = JsonConvert.SerializeObject(item.Images),
-                tags = item.Tags
+                tags = item.Tags,
+                Details = JsonConvert.SerializeObject(item.Details)
             });
 
             return result > 0;
@@ -86,6 +87,27 @@ namespace ItemRental.Repositories.Repositories
             });
 
             return result > 0;
+        }
+
+        public async Task<List<CategoryDTO>> GetCategoriesAsync(CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM categories";
+
+            var result = await _connection.QueryAsync<Category, string, CategoryDTO>(
+                query,
+                (category, schemeJson) =>
+                {
+                    return new CategoryDTO
+                    {
+                        Name = category.Name,
+                        Label = category.Label,
+                        Parent = category.Parent,
+                        Scheme = JsonConvert.DeserializeObject<List<CategoryScheme>>(schemeJson)
+                    };
+                },
+                splitOn: "Scheme");
+
+            return result.ToList();
         }
     }
 }

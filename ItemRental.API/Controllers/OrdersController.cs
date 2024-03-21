@@ -1,6 +1,7 @@
 ﻿using ItemRental.Application.Orders;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Enums;
 using ItemRental.Core.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +77,38 @@ namespace ItemRental.API.Controllers
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
             Result<List<OrderDTO>> result = await _sender.Send(new GetListingUserOrdersQuery(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("Pending")]
+        public async Task<IActionResult> GetPendingOrders(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.Pending));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("InProgress")]
+        public async Task<IActionResult> GetInProgressOrders(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.InProgress));
 
             if (result.IsFailure)
             {

@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/LoginForm/LoginForm';
+import { LoginForm } from '@/components/Forms/LoginForm/LoginForm';
 import { Box, Center } from '@mantine/core';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import React from 'react';

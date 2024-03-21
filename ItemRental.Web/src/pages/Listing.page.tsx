@@ -1,8 +1,8 @@
 import api from '@/api';
-import ListingUserOrders from '@/components/ListingUserOrders';
+import ListingUserOrders from '@/components/Misc/ListingUserOrders';
 import LoginRequired from '@/components/LoginRequired';
-import PhotoCarousel from '@/components/PhotoCarousel';
-import { UserProfileCard } from '@/components/UserProfileCard';
+import PhotoCarousel from '@/components/Misc/PhotoCarousel';
+import { UserProfileCard } from '@/components/Misc/UserProfileCard';
 import useApi from '@/hooks/useApi';
 import useApiResult from '@/hooks/useApiResult';
 import useAsync from '@/hooks/useAsync';
@@ -34,7 +34,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function Listing() {
   const { id } = useParams();
-  const { result, loading, request } = useApiResult<RentListing>(
+  const { result, loading } = useApiResult<RentListing>(
     () => api.RentListing.getListingById(id || ''),
     []
   );
@@ -52,8 +52,10 @@ function Listing() {
         <>
           <Grid columns={12} w={'100%'}>
             <Grid.Col span={8}>
-              <PhotoCarousel images={result?.item.images} />
-              <Group my={12}>
+              {result?.item.images && result?.item.images.length > 0 && (
+                <PhotoCarousel images={result?.item.images} />
+              )}
+              <Group>
                 <Group justify="space-between" w={'100%'}>
                   <Title order={3} fw={600}>
                     {result?.title}

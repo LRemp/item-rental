@@ -2,6 +2,7 @@
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Enums;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System;
@@ -101,6 +102,55 @@ namespace ItemRental.Repositories.Repositories
         public Task<Order?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<OrderDTO>> GetOwnerOrdersAsync(Guid id, OrderStatus? status, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE l.renter = @id";
+
+            if(status != null)
+            {
+                query += " AND o.status = @status";
+            }
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status
+                    };
+                }, new { id, status }
+            );
+
+            return result.ToList();
         }
 
         public async Task<List<OrderDTO>> GetUserAsync(Guid user, CancellationToken cancellationToken)

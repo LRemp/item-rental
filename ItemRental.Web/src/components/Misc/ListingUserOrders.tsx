@@ -6,6 +6,7 @@ import {
   Badge,
   Box,
   Center,
+  Flex,
   Grid,
   Group,
   Loader,
@@ -26,26 +27,30 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
   return (
     <Box>
       <Text size="sm" fw={600} mt={'md'} mb={'xs'}>
-        Your current orders
+        Your recent orders
       </Text>
-      <Paper w={'100%'} radius="sm" withBorder shadow="sm">
-        <ScrollArea h={164} type="always" scrollbarSize={8}>
-          <Table verticalSpacing="xs">
-            <Table.Tbody>
-              {loading ? (
-                <Box w={'100%'} h={'100%'}>
-                  <Loader />
-                </Box>
-              ) : (
-                <>
-                  {result.map((item: Order) => (
-                    <Element {...item} key={item.id} />
-                  ))}
-                </>
-              )}
-            </Table.Tbody>
-          </Table>
-        </ScrollArea>
+      <Paper w={'100%'} radius="sm" withBorder shadow="sm" h={164}>
+        {loading ? (
+          <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
+            <Loader />
+          </Flex>
+        ) : result && result.length > 0 ? (
+          <ScrollArea h={164} type="always" scrollbarSize={8}>
+            <Table verticalSpacing="xs">
+              <Table.Tbody>
+                {result.map((item: Order) => (
+                  <Element {...item} key={item.id} />
+                ))}
+              </Table.Tbody>
+            </Table>
+          </ScrollArea>
+        ) : (
+          <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
+            <Text size="md" fw={500} opacity={'50%'}>
+              No recent orders
+            </Text>
+          </Flex>
+        )}
       </Paper>
     </Box>
   );

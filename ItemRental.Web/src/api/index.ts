@@ -3,6 +3,7 @@ import RentListing from './RentListing';
 import Order from './Order';
 import Item from './Item';
 import Image from './Image';
+import Category from './Category';
 
 export default {
   User,
@@ -10,4 +11,5 @@ export default {
   Order,
   Item,
   Image,
+  Category,
 };

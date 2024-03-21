@@ -11,7 +11,21 @@ const getUserListingOrders = (id: string): ApiRequest => ({
   authenticate: true,
 });
 
+const getPending = (): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Rent/Orders/Pending`,
+  authenticate: true,
+});
+
+const getInProgress = (): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Rent/Orders/InProgress`,
+  authenticate: true,
+});
+
 export default {
   createOrder,
   getUserListingOrders,
+  getPending,
+  getInProgress,
 };

@@ -9,6 +9,7 @@ type LoginResponse = {
 };
 
 type UserProfile = {
+  username: string;
   name: string;
   lastname: string;
   email: string;

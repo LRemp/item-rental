@@ -11,7 +11,7 @@ import {
   IconLogout,
   IconSwitchHorizontal,
 } from '@tabler/icons-react';
-import LogoSquare from '../../assets/images/logo_square.png';
+import LogoSquare from '@/assets/images/logo_square.png';
 import classes from './Navbar.module.css';
 import { useNavigate } from 'react-router-dom';
 

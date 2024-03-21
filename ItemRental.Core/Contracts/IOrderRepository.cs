@@ -1,5 +1,6 @@
 ﻿using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace ItemRental.Core.Contracts
         public Task<List<OrderDTO>> GetUserListingOrdersAsync(Guid id, Guid user, CancellationToken cancellationToken);
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
         public Task<bool> UpdateAsync(Order order, CancellationToken cancellationToken);
+        public Task<List<OrderDTO>> GetOwnerOrdersAsync(Guid id, OrderStatus? status, CancellationToken cancellationToken);
     }
 }

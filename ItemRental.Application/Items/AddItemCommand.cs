@@ -31,7 +31,8 @@ namespace ItemRental.Application.Items
                 Name = command.item.Name,
                 Description = command.item.Description,
                 Images = JsonConvert.SerializeObject(command.item.Images),
-                Owner = command.user
+                Owner = command.user,
+                Details = JsonConvert.SerializeObject(command.item.Details),
             };
 
             bool success = await _itemRepository.AddAsync(item, cancellationToken);

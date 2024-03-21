@@ -24,6 +24,7 @@ const useApi = () => {
     };
     return fetch(endpoint, requestOptions).then(async (result: any) => {
       if (result.ok) {
+        await new Promise((resolve, reject) => setTimeout(resolve, 1000));
         return await result.json();
       }
       const errorData = await result.json();
