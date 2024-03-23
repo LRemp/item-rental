@@ -30,6 +30,7 @@ namespace ItemRental.Application.Items
                 Id = Guid.NewGuid(),
                 Name = command.item.Name,
                 Description = command.item.Description,
+                Category = command.item.Category,
                 Images = JsonConvert.SerializeObject(command.item.Images),
                 Owner = command.user,
                 Details = JsonConvert.SerializeObject(command.item.Details),

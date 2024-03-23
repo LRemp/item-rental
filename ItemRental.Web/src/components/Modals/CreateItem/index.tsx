@@ -11,7 +11,7 @@ import {
   Textarea,
 } from '@mantine/core';
 import React from 'react';
-import { FormFileDropzone } from '../FileDropzone/FormFileDropzone';
+import { FormFileDropzone } from '../../FileDropzone/FormFileDropzone';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { Error, Success } from '@/utils/Notifications';
@@ -92,6 +92,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       const createRequest = await request({
         name: data.name,
         description: data.description,
+        category: data.category,
         images: imageUpload?.data,
         details: details,
       });

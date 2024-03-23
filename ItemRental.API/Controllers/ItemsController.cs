@@ -101,7 +101,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("Categories")]

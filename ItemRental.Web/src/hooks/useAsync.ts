@@ -2,7 +2,7 @@ import { useCallback, useReducer, useRef } from 'react';
 import useIsMounted from './useIsMounted';
 
 const DEFAULT_STATE = {
-  loading: true,
+  loading: false,
 };
 
 const reducer = (state: any, action: any) => {

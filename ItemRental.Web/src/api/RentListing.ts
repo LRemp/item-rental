@@ -13,14 +13,16 @@ const getListingById = (id: string): ApiRequest => ({
   endpoint: `/api/RentListings/get/${id}`,
 });
 
-const createListing = (): ApiRequest => ({
+const create = (data: any): ApiRequest => ({
   method: 'POST',
   endpoint: '/api/RentListings/create',
+  body: data,
+  authenticate: true,
 });
 
 export default {
   getListings,
   getListingsByOwner,
-  createListing,
+  create,
   getListingById,
 };

@@ -69,14 +69,14 @@ namespace ItemRental.API.Controllers
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result result = await _sender.Send(new AddRentListingCommand(addRentListingDTO, userId));
+            Result<Guid> result = await _sender.Send(new AddRentListingCommand(addRentListingDTO, userId));
 
             if (result.IsFailure)
             {
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return Ok(result.Value);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

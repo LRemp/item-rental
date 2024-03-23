@@ -1,6 +1,10 @@
 import api from '@/api';
+import CreateListingAction from '@/components/ButtonActions/CreateListingAction';
+import DeleteItemAction from '@/components/ButtonActions/DeleteItemAction';
+import CreateListingModal from '@/components/Modals/CreateListing';
 import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
 import useApiResult from '@/hooks/useApiResult';
+import { Success } from '@/utils/Notifications';
 import {
   Anchor,
   Box,
@@ -15,8 +19,10 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
-import { IconCross, IconPlus, IconX } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import { IconCross, IconPlaylistAdd, IconPlus, IconX } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -65,33 +71,11 @@ const ItemPage = () => {
 export default ItemPage;
 
 const ItemView: React.FC<Item> = ({ id, name, description, images, category, details }) => {
-  const { loading: deleting, request: deleteItem } = useApiResult(() => api.Item.deleteItem(id));
-  const navigate = useNavigate();
-
-  const openDeleteModal = () =>
-    modals.openConfirmModal({
-      title: 'Delete this item?',
-      centered: true,
-      children: (
-        <Text size="sm">
-          Are you sure you want to delete this item? This action is irreversible and the data about
-          the item will be lost.
-        </Text>
-      ),
-      labels: { confirm: 'Delete item', cancel: 'Cancel' },
-      confirmProps: { color: 'red' },
-      onCancel: () => console.log('Cancel'),
-      onConfirm: async () => {
-        await deleteItem();
-        navigate('/dashboard/inventory');
-      },
-    });
-
   return (
     <Grid>
       <Grid.Col span={{ base: 12, sm: 5 }}>
         <Paper shadow="xs" withBorder p={'md'}>
-          <img src={`/images/${images[0]}`} width={'50%'}></img>
+          {images?.length > 0 ? <img src={`/images/${images[0]}`} width={'50%'} /> : <div></div>}
           <Group>
             <Title fw={600} order={3}>
               {name}
@@ -104,34 +88,50 @@ const ItemView: React.FC<Item> = ({ id, name, description, images, category, det
         </Paper>
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 3 }}>
-        <Group mb={'md'} justify="center">
-          <Button color="blue">
-            Create rent listing <IconPlus size={18} />
-          </Button>
-          <Button color="red" onClick={openDeleteModal}>
-            Delete <IconX size={18} />
-          </Button>
-        </Group>
-        <Paper shadow="xs" withBorder p={'md'}>
-          <Text fw={600} size="md" mb={'md'}>
-            Item details
-          </Text>
-          <Box>
-            {details?.map((detail: Detail) => (
-              <Grid justify="space-between">
-                <Grid.Col span={'content'}>
-                  <Text fw={600} size="sm">
-                    {detail.name}
-                  </Text>
-                </Grid.Col>
-                <Grid.Col span={'content'}>
-                  <Text size="sm">{detail.value}</Text>
-                </Grid.Col>
-              </Grid>
-            ))}
-          </Box>
-        </Paper>
+        <ItemActions id={id} />
+        <ItemDetails details={details} />
       </Grid.Col>
     </Grid>
+  );
+};
+
+interface ItemActionsProps {
+  id: string;
+}
+
+const ItemActions: React.FC<ItemActionsProps> = ({ id }) => {
+  return (
+    <Group mb={'md'} justify="center">
+      <CreateListingAction id={id} />
+      <DeleteItemAction id={id} />
+    </Group>
+  );
+};
+
+interface ItemDetailsProps {
+  details: Detail[];
+}
+
+const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => {
+  return (
+    <Paper shadow="xs" withBorder p={'md'}>
+      <Text fw={600} size="md" mb={'md'}>
+        Item details
+      </Text>
+      <Box>
+        {details?.map((detail: Detail) => (
+          <Grid justify="space-between" key={detail.name}>
+            <Grid.Col span={'content'}>
+              <Text fw={600} size="sm">
+                {detail.name}
+              </Text>
+            </Grid.Col>
+            <Grid.Col span={'content'}>
+              <Text size="sm">{detail.value}</Text>
+            </Grid.Col>
+          </Grid>
+        ))}
+      </Box>
+    </Paper>
   );
 };

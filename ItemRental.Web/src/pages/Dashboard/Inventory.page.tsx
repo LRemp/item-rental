@@ -29,7 +29,7 @@ import useApiResult from '@/hooks/useApiResult';
 import useUploadImage from '@/hooks/useUploadImage';
 import { notifications } from '@mantine/notifications';
 import { Error, Success } from '@/utils/Notifications';
-import CreateItemModal from '@/components/Modals/CreateItemModal';
+import CreateItemModal from '@/components/Modals/CreateItem';
 import ItemTable from '@/components/Tables/ItemTable';
 
 const elements = [
