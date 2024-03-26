@@ -99,9 +99,13 @@ namespace ItemRental.Repositories.Repositories
             return results[0];
         }
 
-        public Task<Order?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Order?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var query = @"SELECT * FROM `orders` WHERE id = @id";
+
+            var result = await _connection.QueryAsync<Order>(query, new { id });
+
+            return result.FirstOrDefault();
         }
 
         public async Task<List<OrderDTO>> GetOwnerOrdersAsync(Guid id, OrderStatus? status, CancellationToken cancellationToken)
@@ -155,7 +159,46 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<OrderDTO>> GetUserAsync(Guid user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE u.id = @user";
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status
+                    };
+                }, new { user }
+            );
+
+            return result.ToList();
         }
 
         public async Task<List<OrderDTO>> GetUserListingOrdersAsync(Guid id, Guid user, CancellationToken cancellationToken)
@@ -210,7 +253,7 @@ namespace ItemRental.Repositories.Repositories
             {
                 id = order.Id,
                 user = order.User,
-                rentListing = order.Listing,
+                listing = order.Listing,
                 startDate = order.StartDate,
                 endDate = order.EndDate,
                 status = order.Status

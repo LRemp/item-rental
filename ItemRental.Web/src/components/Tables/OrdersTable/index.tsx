@@ -1,13 +1,19 @@
+import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
 import getDateLabel from '@/utils/Dates';
 import { Button, Center, Group, Table, Text } from '@mantine/core';
 import React from 'react';
 
 interface OrdersTableProps {
   orders: Order[];
+  type?: string;
+  refresh?: any;
 }
 
-const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [] }) => {
-  const rows = orders.map((order: Order) => <OrdersTableElement {...order} key={order.id} />);
+const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [], type, refresh }) => {
+  console.log(refresh);
+  const rows = orders.map((order: Order) => (
+    <OrdersTableElement {...order} key={order.id} type={type} refresh={refresh} />
+  ));
 
   return (
     <>
@@ -33,7 +39,21 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [] }) => {
   );
 };
 
-const OrdersTableElement: React.FC<Order> = ({ id, rentListing, user, startDate, endDate }) => {
+interface OrderTableElementProps extends Order {
+  type?: string;
+  refresh?: any;
+}
+
+const OrdersTableElement: React.FC<OrderTableElementProps> = ({
+  id,
+  rentListing,
+  user,
+  startDate,
+  endDate,
+  type,
+  refresh,
+}) => {
+  console.log(refresh);
   return (
     <Table.Tr key={id} m={'md'}>
       <Table.Td>{rentListing.title}</Table.Td>
@@ -42,9 +62,7 @@ const OrdersTableElement: React.FC<Order> = ({ id, rentListing, user, startDate,
         {getDateLabel(startDate)} - {getDateLabel(endDate)}
       </Table.Td>
       <Table.Td>
-        <Group>
-          <Button color="blue">View</Button>
-        </Group>
+        <Group>{type == 'pending' && <ConfirmOrderAction id={id} refresh={refresh} />}</Group>
       </Table.Td>
     </Table.Tr>
   );

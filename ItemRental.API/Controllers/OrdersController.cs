@@ -39,6 +39,22 @@ namespace ItemRental.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOrdersQuery(userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -55,7 +71,7 @@ namespace ItemRental.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("{id}/accept")]
+        [HttpPost("{id}/accept")]
         public async Task<IActionResult> Accept(Guid id)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
@@ -67,7 +83,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -108,7 +124,11 @@ namespace ItemRental.API.Controllers
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.InProgress));
+            Result<List<OrderDTO>> inProgressOrders = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.InProgress));
+            Result<List<OrderDTO>> acceptedOrders = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.Accepted));
+            List<OrderDTO> orderDTOs = [.. inProgressOrders.Value, .. acceptedOrders.Value];
+
+            Result<List<OrderDTO>> result = Result.Success(orderDTOs);
 
             if (result.IsFailure)
             {

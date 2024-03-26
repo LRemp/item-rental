@@ -56,11 +56,6 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
   );
 }
 
-const statusColor = {
-  pending: 'orange',
-  accepted: 'green',
-  rejected: 'red',
-};
 const Element = ({ id, startDate, endDate, status }: Order) => {
   return (
     <Table.Tr key={id}>

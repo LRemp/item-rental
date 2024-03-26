@@ -13,6 +13,7 @@ import {
   Flex,
   Grid,
   Group,
+  Image,
   Loader,
   Paper,
   Text,
@@ -25,6 +26,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCross, IconPlaylistAdd, IconPlus, IconX } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import NoImage from '@/assets/images/no_image.png';
 
 const pathItems = [
   { title: 'Dashboard', href: '/dashboard' },
@@ -75,8 +77,14 @@ const ItemView: React.FC<Item> = ({ id, name, description, images, category, det
     <Grid>
       <Grid.Col span={{ base: 12, sm: 5 }}>
         <Paper shadow="xs" withBorder p={'md'}>
-          {images?.length > 0 ? <img src={`/images/${images[0]}`} width={'50%'} /> : <div></div>}
-          <Group>
+          <Image
+            src={`/images/${images?.[0]}`}
+            radius="xs"
+            w="full"
+            fit="contain"
+            fallbackSrc={NoImage}
+          />
+          <Group mt={'sm'}>
             <Title fw={600} order={3}>
               {name}
             </Title>

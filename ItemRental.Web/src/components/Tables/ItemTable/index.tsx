@@ -1,6 +1,8 @@
-import { Button, Group, Table } from '@mantine/core';
+import { Button, Center, Group, Image, Table } from '@mantine/core';
 import classes from './ItemTable.module.css';
 import { useNavigate } from 'react-router-dom';
+import NoImage from '@/assets/images/no_image.png';
+import DeleteItemAction from '@/components/ButtonActions/DeleteItemAction';
 
 interface ItemsListProps {
   items: Item[];
@@ -29,7 +31,18 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, category, ima
   const navigate = useNavigate();
   return (
     <Table.Tr key={id} m={'md'}>
-      <Table.Td>{images && <img width={80} src={`/images/${images[0]}`}></img>}</Table.Td>
+      <Table.Td width={'50px'}>
+        <Center>
+          <Image
+            src={`/images/${images?.[0]}`}
+            radius="xs"
+            h={50}
+            w="auto"
+            fit="contain"
+            fallbackSrc={NoImage}
+          />
+        </Center>
+      </Table.Td>
       <Table.Td>{name}</Table.Td>
       <Table.Td>{description}</Table.Td>
       <Table.Td>{tags}</Table.Td>
@@ -39,7 +52,7 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, category, ima
             View
           </Button>
           <Button color="yellow">Edit</Button>
-          <Button color="red">Delete</Button>
+          <DeleteItemAction id={id} />
         </Group>
       </Table.Td>
     </Table.Tr>

@@ -43,14 +43,14 @@ const user = {
 };
 
 const tabs = [
-  'Home',
-  'Orders',
-  'Education',
-  'Community',
-  'Forums',
-  'Support',
-  'Account',
-  'Helpdesk',
+  {
+    label: 'Home',
+    link: '/',
+  },
+  {
+    label: 'Orders',
+    link: '/orders',
+  },
 ];
 
 export function Header() {
@@ -62,8 +62,8 @@ export function Header() {
   const auth: AuthUser | null = useAuthUser();
 
   const items = tabs.map((tab) => (
-    <Tabs.Tab value={tab} key={tab}>
-      {tab}
+    <Tabs.Tab value={tab.label} key={tab.label} onClick={() => navigate(tab.link || '/')}>
+      {tab.label}
     </Tabs.Tab>
   ));
   const signOut = useSignOut();

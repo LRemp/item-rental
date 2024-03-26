@@ -83,7 +83,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       if (detailsForm.values[scheme[key].name]) {
         details.push({
           name: scheme[key].name,
-          value: detailsForm.values[scheme[key].name],
+          value: detailsForm.values[scheme[key].name] + '',
         });
       }
     }
@@ -138,7 +138,12 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
         <form onSubmit={form.onSubmit((values) => addItem(values))}>
           <Fieldset disabled={adding} variant="unstyled">
             <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')}></TextInput>
-            <Textarea label="Description" placeholder="Description" autosize></Textarea>
+            <Textarea
+              label="Description"
+              placeholder="Description"
+              autosize
+              {...form.getInputProps('description')}
+            ></Textarea>
             <FormFileDropzone {...form.getInputProps('files')} />
 
             <Select
@@ -151,7 +156,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
             {form.values.category &&
               categories
                 .find((item: any) => item.name === form.values.category)
-                .scheme.map((item: any, index: number) => {
+                .scheme?.map((item: any, index: number) => {
                   if (item.type === 'string') {
                     return (
                       <TextInput

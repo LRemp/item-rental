@@ -15,6 +15,7 @@ import {
   Fieldset,
   Grid,
   Group,
+  Image,
   Loader,
   LoadingOverlay,
   Modal,
@@ -31,6 +32,7 @@ import { IconLogin } from '@tabler/icons-react';
 import React from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate, useParams } from 'react-router-dom';
+import NoImage from '@/assets/images/no_image.png';
 
 function Listing() {
   const { id } = useParams();
@@ -52,10 +54,12 @@ function Listing() {
         <>
           <Grid columns={12} w={'100%'}>
             <Grid.Col span={8}>
-              {result?.item.images && result?.item.images.length > 0 && (
+              {result?.item?.images?.length > 0 ? (
                 <PhotoCarousel images={result?.item.images} />
+              ) : (
+                <Image src={NoImage} />
               )}
-              <Group>
+              <Group mt={'md'}>
                 <Group justify="space-between" w={'100%'}>
                   <Title order={3} fw={600}>
                     {result?.title}
@@ -152,6 +156,7 @@ const CreateOrderModal = () => {
                 type="range"
                 label="Pick rent period"
                 placeholder="Pick rent period"
+                minDate={new Date()}
                 {...form.getInputProps('date')}
               />
               <Textarea

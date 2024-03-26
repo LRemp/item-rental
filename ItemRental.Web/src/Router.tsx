@@ -12,6 +12,7 @@ import ListingsPage from './pages/Dashboard/Listings.page';
 import ItemPage from './pages/Dashboard/Item.page';
 import useApiResult from './hooks/useApiResult';
 import api from './api';
+import OrdersPage from './pages/Orders.page';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: 'listing/:id',
         element: <ListingPage />,
+      },
+      {
+        path: 'orders',
+        element: <OrdersPage />,
       },
     ],
   },

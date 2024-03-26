@@ -30,4 +30,41 @@ const labels = {
   },
 };
 
+const indexedLabels: any = {
+  Pending: {
+    id: 0,
+    color: 'blue',
+    label: 'Pending',
+  },
+  Accepted: {
+    id: 1,
+    color: 'green',
+    label: 'Accepted',
+  },
+  Rejected: {
+    id: 2,
+    color: 'red',
+    label: 'Rejected',
+  },
+  'In progress': {
+    id: 3,
+    color: 'orange',
+    label: 'In progress',
+  },
+  Completed: {
+    id: 4,
+    color: 'green',
+    label: 'Completed',
+  },
+  Canceled: {
+    id: 5,
+    color: 'red',
+    label: 'Canceled',
+  },
+};
+
+export function GetBadgeData(label: string): any {
+  return indexedLabels[label] || null;
+}
+
 export default labels;

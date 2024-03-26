@@ -46,7 +46,7 @@ export default function Home() {
 }
 
 const ActiveOrders: React.FC = () => {
-  const { result: orders, error, loading } = useApiResult(() => api.Order.getPending(), []);
+  const { result: orders, error, loading } = useApiResult(() => api.Order.getInProgress(), []);
   return (
     <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
       <Group justify="space-between">
@@ -76,7 +76,7 @@ const PendingOrders: React.FC = () => {
     <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
       <Group justify="space-between">
         <Text size="sm" fw={600}>
-          Rent requests
+          Pending rent requests
         </Text>
         <Button variant="subtle">
           <Center inline>
@@ -89,14 +89,19 @@ const PendingOrders: React.FC = () => {
           <Loader />
         </Flex>
       ) : (
-        <OrdersTable orders={orders} />
+        <OrdersTable orders={orders} type={'pending'} />
       )}
     </Paper>
   );
 };
 
 const CompletedOrders: React.FC = () => {
-  const { result: orders, error, loading } = useApiResult(() => api.Order.getPending(), []);
+  const {
+    result: orders,
+    error,
+    loading,
+    request,
+  } = useApiResult(() => api.Order.getCompleted(), []);
   return (
     <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
       <Group justify="space-between">
@@ -114,7 +119,7 @@ const CompletedOrders: React.FC = () => {
           <Loader />
         </Flex>
       ) : (
-        <OrdersTable orders={orders} />
+        <OrdersTable orders={orders} refresh={() => request()} />
       )}
     </Paper>
   );

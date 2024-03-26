@@ -1,6 +1,6 @@
 const create = (data: ItemCreateRequest): ApiRequest => ({
   method: 'POST',
-  endpoint: '/api/Items/',
+  endpoint: '/api/Items',
   authenticate: true,
   body: data,
 });

@@ -1,7 +1,8 @@
 interface FlexibleButtonActionProps {
-    id?: string;
+  id?: string;
 }
 
 interface ItemButtonActionProps {
-    id: string;
+  id: string;
+  refresh?: any;
 }

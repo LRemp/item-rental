@@ -3,18 +3,22 @@ import classes from './RentListing.module.css';
 import React from 'react';
 import { useHover } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
+import NoImage from '@/assets/images/no_image.png';
 
 function RentListing({ id, title, description, item, renter, price, location }: RentListing) {
   const navigate = useNavigate();
 
+  console.log(item);
+
   return (
     <Card withBorder radius="sm" className={classes.card} shadow="md">
       <Card.Section className={classes.imageSection}>
-        {item.images && item.images.length > 0 ? (
-          <Image src={`/images/${item.images[0]}`} h={140} alt="Tesla Model S" />
-        ) : (
-          <Box></Box>
-        )}
+        <Image
+          src={`/images/${item.images?.[0]}`}
+          h={140}
+          alt="Tesla Model S"
+          fallbackSrc={NoImage}
+        />
       </Card.Section>
 
       <Group justify="space-between" my="md">

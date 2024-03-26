@@ -1,15 +1,10 @@
 import { useCallback, useReducer, useRef } from 'react';
 import useIsMounted from './useIsMounted';
 
-const DEFAULT_STATE = {
-  loading: false,
-};
-
 const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'loading':
       return {
-        ...DEFAULT_STATE,
         loading: true,
       };
     case 'success':
@@ -29,7 +24,10 @@ const reducer = (state: any, action: any) => {
   }
 };
 
-const useAsync = (setResults = true) => {
+const useAsync = (setResults = true, initialStateLoading = false) => {
+  const DEFAULT_STATE = {
+    loading: initialStateLoading,
+  };
   const [{ loading, result, error }, dispatch] = useReducer(reducer, DEFAULT_STATE);
   const isMounted = useIsMounted();
   const promiseRef = useRef();

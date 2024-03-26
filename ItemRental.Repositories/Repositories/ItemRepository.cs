@@ -103,7 +103,7 @@ namespace ItemRental.Repositories.Repositories
                         Name = category.Name,
                         Label = category.Label,
                         Parent = category.Parent,
-                        Scheme = JsonConvert.DeserializeObject<List<CategoryScheme>>(schemeJson)
+                        Scheme = schemeJson is null ? null : JsonConvert.DeserializeObject<List<CategoryScheme>>(schemeJson)
                     };
                 },
                 splitOn: "Scheme");
