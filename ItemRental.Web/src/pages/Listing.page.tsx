@@ -72,7 +72,7 @@ function Listing() {
               </Group>
             </Grid.Col>
             <Grid.Col span={4}>
-              <UserProfileCard />
+              <UserProfileCard {...result?.renter} />
               <CreateOrderModal />
               <ListingUserOrders listingId={id || ''} />
             </Grid.Col>

@@ -2,7 +2,7 @@ import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { useEffect, useState } from 'react';
 import { Header } from '@/components/Nagivation/Header';
-import { Container, Flex, Grid } from '@mantine/core';
+import { Center, Container, Flex, Grid, Group, Loader, Text } from '@mantine/core';
 import useApiResult from '@/hooks/useApiResult';
 import { get } from 'http';
 import api from '@/api';
@@ -24,7 +24,12 @@ const RentListingsContainer = () => {
   return (
     <Grid columns={18}>
       {loading ? (
-        <div>Loading...</div>
+        <Center h={'70vh'} w={'100%'}>
+          <Group>
+            <Loader></Loader>
+            <Text>Loading the rent offers...</Text>
+          </Group>
+        </Center>
       ) : (
         result &&
         result?.rentListings &&

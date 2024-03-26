@@ -165,7 +165,7 @@ interface UserOrdersTableProps {
   items: Order[];
 }
 
-const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items }) => {
+const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
   const data = items.map((item: Order, index: number) => {
     return {
       id: item.id,
@@ -250,9 +250,9 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items }) => {
               rows
             ) : (
               <Table.Tr>
-                <Table.Td colSpan={Object.keys(data[0]).length}>
+                <Table.Td colSpan={3}>
                   <Text fw={500} ta="center">
-                    Nothing found
+                    No orders found
                   </Text>
                 </Table.Td>
               </Table.Tr>
