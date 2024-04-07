@@ -87,6 +87,14 @@ namespace ItemRental.Core.Errors
             public static readonly Func<Guid, Error> DateBusy = id => new Error(
                 "Order.DateBusy",
                 "The selected date is busy");
+
+            public static readonly Error NotInTransit = new Error(
+                "Order.NotInTransit",
+                "The order is not in transit");
+
+            public static readonly Error FailedToConfirmDelivery = new Error(
+                "Order.FailedToConfirmDelivery",
+                "Failed to confirm the delivery");
         }
     }
 }

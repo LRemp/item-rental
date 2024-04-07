@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Core.Enums
 {
-    public enum DeliveryType
+    public enum OrderRole
     {
-        Pickup,
-        Shipping,
+        Customer,
+        Merchant,
     }
 }

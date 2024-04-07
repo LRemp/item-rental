@@ -12,8 +12,9 @@ namespace ItemRental.Core.Contracts
     {
         public Task<bool> AddAsync(Delivery delivery, CancellationToken cancellationToken);
         public Task<DeliveryDTO?> GetAsync(Guid id, CancellationToken cancellationToken);
-        public Task<DeliveryDTO?> GetByOrderAsync(Guid order, CancellationToken cancellationToken);
-        public Task<bool> UpdateAsync(Delivery delivery, CancellationToken cancellationToken);
+        public Task<DeliveryDTO?> GetByOrderAsync(Guid id, CancellationToken cancellationToken);
+        public Task<bool> CompleteDeliveryAsync(Guid id, CancellationToken cancellationToken);
+        public Task<bool> UpdateAsync(UpdateDeliveryDTO updateDeliveryDTO, Guid id, CancellationToken cancellationToken);
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

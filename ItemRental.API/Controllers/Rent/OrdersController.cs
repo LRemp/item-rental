@@ -1,4 +1,5 @@
-﻿using ItemRental.Application.Orders;
+﻿using ItemRental.Application.Delivery;
+using ItemRental.Application.Orders;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Enums;
@@ -136,6 +137,54 @@ namespace ItemRental.API.Controllers.Rent
             }
 
             return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Delivery")]
+        public async Task<IActionResult> GetDeliveryData(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<DeliveryDTO> result = await _sender.Send(new GetDeliveryQuery(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Delivery")]
+        public async Task<IActionResult> SetDeliveryData(Guid id, [FromBody] UpdateDeliveryDTO updateDeliveryDTO)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new UpdateDeliveryCommand(id, userId, updateDeliveryDTO));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Delivery/Confirm")]
+        public async Task<IActionResult> ConfirmDelivery(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new ConfirmDeliveryCommand(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+            
+            return NoContent();
         }
     }
 }

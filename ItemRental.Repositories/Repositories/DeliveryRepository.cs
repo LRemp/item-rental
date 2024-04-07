@@ -56,13 +56,22 @@ namespace ItemRental.Repositories.Repositories
             return result;
         }
 
-        public async Task<Delivery?> GetByOrderAsync(Guid order, DeliveryType type, CancellationToken cancellationToken)
+        public async Task<Delivery?> GetByOrderAndRoleAsync(Guid order, OrderRole role, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM deliveries WHERE order = @order AND type = @type";
+            var query = @"SELECT * FROM deliveries WHERE order = @order AND role = @role";
 
-            var result = await mySqlConnection.QueryFirstOrDefaultAsync<Delivery>(query, new { order, type });
+            var result = await mySqlConnection.QueryFirstOrDefaultAsync<Delivery>(query, new { order, role });
 
             return result;
+        }
+
+        public async Task<List<Delivery>> GetByOrderAsync(Guid order, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM deliveries WHERE order = @order";
+
+            var result = await mySqlConnection.QueryAsync<Delivery>(query, new { order });
+
+            return result.ToList();
         }
 
         public async Task<bool> UpdateAsync(Delivery delivery, CancellationToken cancellationToken)

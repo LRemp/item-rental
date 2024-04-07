@@ -1,4 +1,5 @@
 ﻿using ItemRental.Core.Contracts;
+using ItemRental.Services.Mappers;
 using ItemRental.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@ namespace ItemRental.Services.Extensions
 
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IRentListingService, RentListingService>();
+
+            services.AddAutoMapper(typeof(DeliveryMappingProfile));
 
             //services.AddTransient<IItemService, IItemService>();
         }
