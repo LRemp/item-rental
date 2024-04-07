@@ -7,24 +7,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers
+namespace ItemRental.API.Controllers.Rent
 {
-    [Route("api/[controller]")]
+    [Route("api/Rent/[controller]")]
     [ApiController]
-    public class RentListingsController : ControllerBase
+    public class ListingsController : ControllerBase
     {
         private readonly ISender _sender;
         private readonly IJwtTokenService _jwtTokenService;
-        public RentListingsController(ISender sender, IJwtTokenService jwtTokenService)
+        public ListingsController(ISender sender, IJwtTokenService jwtTokenService)
         {
             _sender = sender;
             _jwtTokenService = jwtTokenService;
         }
 
-        [HttpGet("get")]
-        public async Task<IActionResult> Get()
+        [HttpGet]
+        public async Task<IActionResult> Get(string? searchArgument, string? category, bool? ownerListings, int? page)
         {
-            Result<GetRentListingsResponse> result = await _sender.Send(new GetRentListingsQuery());
+            ///Guid? userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<GetRentListingsResponse> result = await _sender.Send(new GetRentListingsQuery(searchArgument, category, ownerListings, null, page));
 
             if (result.IsFailure)
             {
@@ -34,7 +36,7 @@ namespace ItemRental.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             Result<RentListingDTO> result = await _sender.Send(new GetRentListingByIdQuery(id));
@@ -64,7 +66,7 @@ namespace ItemRental.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddRentListingDTO addRentListingDTO)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
@@ -80,7 +82,7 @@ namespace ItemRental.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("update/{id}")]
+        [HttpPost("{id}/Update")]
         public async Task<IActionResult> Update([FromBody] UpdateRentListingDTO updateRentListingDTO)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
@@ -96,7 +98,7 @@ namespace ItemRental.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
@@ -109,6 +111,19 @@ namespace ItemRental.API.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet("{id}/BusyDates")]
+        public async Task<IActionResult> GetBusyDates(Guid id)
+        {
+            Result<List<OrderDateDTO>> result = await _sender.Send(new GetRentListingBusyDatesQuery(id));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
         }
     }
 }

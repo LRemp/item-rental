@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ConfirmOrderAction: React.FC<ItemButtonActionProps> = ({ id, refresh }) => {
   const { loading, request } = useApiResult(() => api.Order.confirm(id));
-  const navigate = useNavigate();
 
   const openModal = () =>
     modals.openConfirmModal({
@@ -43,7 +42,6 @@ const ConfirmOrderAction: React.FC<ItemButtonActionProps> = ({ id, refresh }) =>
               message: 'The order was successfuly confirmed!',
             })
           );
-          console.log(refresh);
           refresh && refresh();
         } catch (e: any) {
           notifications.update(
@@ -59,7 +57,7 @@ const ConfirmOrderAction: React.FC<ItemButtonActionProps> = ({ id, refresh }) =>
 
   return (
     <>
-      <Button color="green" onClick={openModal}>
+      <Button color="green" size="compact-sm" onClick={openModal}>
         Confirm
         <IconCheck size={18} />
       </Button>

@@ -11,6 +11,6 @@ namespace ItemRental.Core.Contracts
     {
         public Task<RentListingDTO> GetListingDTOAsync(Guid id);
         public Task<List<RentListingDTO>> GetListingsDTOAsync();
-
+        public Task<List<OrderDateDTO>> GetBusyDatesAsync(Guid id, CancellationToken cancellationToken);
     }
 }

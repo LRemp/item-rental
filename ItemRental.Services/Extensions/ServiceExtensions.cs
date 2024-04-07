@@ -17,6 +17,9 @@ namespace ItemRental.Services.Extensions
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
 
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IRentListingService, RentListingService>();
+
             //services.AddTransient<IItemService, IItemService>();
         }
     }

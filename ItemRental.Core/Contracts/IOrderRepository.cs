@@ -19,5 +19,6 @@ namespace ItemRental.Core.Contracts
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
         public Task<bool> UpdateAsync(Order order, CancellationToken cancellationToken);
         public Task<List<OrderDTO>> GetOwnerOrdersAsync(Guid id, OrderStatus? status, CancellationToken cancellationToken);
+        public Task<List<OrderDTO>> GetListingOrdersAsync(Guid id, CancellationToken cancellationToken); 
     }
 }

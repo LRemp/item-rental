@@ -52,12 +52,33 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<List<RentListingDTO>> GetAsync(CancellationToken cancellationToken)
+        public async Task<List<RentListingDTO>> GetAsync(string? searchArgument, string? category, int page, CancellationToken cancellationTokenn)
         {
+            int pageSize = 10;
+            int rowsToSkip = page * pageSize;
+
             var query = @"SELECT rl.*, i.*, u.*
-                        FROM rent_listings rl
-                        INNER JOIN items i ON rl.item = i.id
-                        INNER JOIN users u ON rl.renter = u.id";
+                FROM rent_listings rl
+                INNER JOIN items i ON rl.item = i.id
+                INNER JOIN users u ON rl.renter = u.id";
+
+            if (searchArgument is not null)
+            {
+                query += @" WHERE i.name LIKE CONCAT('%', @search, '%')
+                    OR i.description LIKE CONCAT('%', @search, '%')
+                    OR i.category LIKE CONCAT('%', @search, '%')
+                    OR i.tags LIKE CONCAT('%', @search, '%')
+                    OR i.details LIKE CONCAT('%', @search, '%')
+                    OR rl.title LIKE CONCAT('%', @search, '%')
+                    OR rl.description LIKE CONCAT('%', @search, '%')";
+            }
+
+            if(category is not null)
+            {
+                query += @" WHERE i.category = @category";
+            }
+
+            query += $@" ORDER BY rl.Id OFFSET {rowsToSkip} ROWS FETCH NEXT {pageSize} ROWS ONLY";
 
             var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>
@@ -79,11 +100,12 @@ namespace ItemRental.Repositories.Repositories
                         Price = rentListing.Price,
                         Location = rentListing.Location
                     };
-                }
+                }, new { search = searchArgument, category = category }
             );
 
             return result.ToList();
         }
+
 
         public async Task<RentListingDTO?> GetAsync(Guid id, CancellationToken cancellationToken)
         {

@@ -58,7 +58,7 @@ export default function Inventory() {
   } = useApiResult<Item[]>(() => api.Item.getAll(), []);
 
   return (
-    <Box m={'lg'} w={'100%'}>
+    <Box w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Grid justify="space-between" align="flex-end">

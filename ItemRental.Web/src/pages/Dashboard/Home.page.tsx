@@ -21,7 +21,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <Box m={'lg'} w={'100%'}>
+    <Box w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Title fw={500} order={2}>

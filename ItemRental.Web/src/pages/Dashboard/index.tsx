@@ -1,32 +1,32 @@
-import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
-import { Flex } from '@mantine/core';
-import React from 'react';
+import { AppShell, Burger, Group, Image, Skeleton, Text, UnstyledButton } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
-
-import {
-  IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
-  IconFingerprint,
-  IconCalendarStats,
-  IconUser,
-  IconSettings,
-  IconLogout,
-  IconSwitchHorizontal,
-} from '@tabler/icons-react';
+import { useDisclosure } from '@mantine/hooks';
+import Logo from '@/assets/images/logo.png';
+import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
 
 export default function Dashboard() {
+  const [opened, { toggle }] = useDisclosure();
+
   return (
-    <Flex>
-      <Navbar
-        navlinks={[
-          { icon: IconHome2, label: 'Home', path: '' },
-          { icon: IconGauge, label: 'Inventory', path: 'inventory' },
-          { icon: IconGauge, label: 'Listings', path: 'listings' },
-          { icon: IconSettings, label: 'Settings', path: 'settings' },
-        ]}
-      />
-      <Outlet />
-    </Flex>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <Group h="100%" px="md">
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <UnstyledButton>
+            <Image src={Logo} h={'42'} />
+          </UnstyledButton>
+        </Group>
+      </AppShell.Header>
+      <AppShell.Navbar p="md">
+        <Navbar />
+      </AppShell.Navbar>
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
+    </AppShell>
   );
 }

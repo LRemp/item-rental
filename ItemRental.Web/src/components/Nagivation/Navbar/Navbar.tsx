@@ -1,78 +1,58 @@
 import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
+import { Group, Code, Stack } from '@mantine/core';
 import {
-  IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
+  IconBellRinging,
   IconFingerprint,
-  IconCalendarStats,
-  IconUser,
+  IconKey,
   IconSettings,
-  IconLogout,
+  Icon2fa,
+  IconDatabaseImport,
+  IconReceipt2,
   IconSwitchHorizontal,
+  IconLogout,
+  IconHome,
+  IconClipboardList,
+  IconCheckupList,
+  IconArrowLeft,
 } from '@tabler/icons-react';
-import LogoSquare from '@/assets/images/logo_square.png';
 import classes from './Navbar.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
-interface NavbarLinkProps {
-  icon: typeof IconHome2;
-  label: string;
-  active?: boolean;
-  onClick?(): void;
-}
-
-function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
-  return (
-    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-      <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
-        <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-      </UnstyledButton>
-    </Tooltip>
-  );
-}
-
-const mockdata = [
-  { icon: IconHome2, label: 'Home' },
-  { icon: IconGauge, label: 'Dashboard' },
-  { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-  { icon: IconCalendarStats, label: 'Releases' },
-  { icon: IconUser, label: 'Account' },
-  { icon: IconFingerprint, label: 'Security' },
-  { icon: IconSettings, label: 'Settings' },
+const data = [
+  { link: '/dashboard/home', label: 'Home', icon: IconHome },
+  { link: '/dashboard/inventory', label: 'Inventory', icon: IconClipboardList },
+  { link: '/dashboard/listings', label: 'Listings', icon: IconCheckupList },
 ];
 
-export function Navbar({ navlinks = mockdata }: { navlinks: Array<any> }) {
-  const [active, setActive] = useState(2);
-  const navigate = useNavigate();
+export function Navbar() {
+  const [active, setActive] = useState('Billing');
 
-  const links = navlinks.map((link, index) => (
-    <NavbarLink
-      {...link}
-      key={link.label}
-      active={index === active}
-      onClick={() => {
-        navigate(link.path);
-        setActive(index);
-      }}
-    />
+  const links = data.map((item) => (
+    <NavLink
+      className={({ isActive }) => [isActive ? classes.active : '', classes.link].join(' ')}
+      to={item.link}
+      key={item.label}
+    >
+      <item.icon className={classes.linkIcon} stroke={1.5} />
+      <span>{item.label}</span>
+    </NavLink>
   ));
 
   return (
-    <nav className={classes.navbar}>
-      <Center>
-        <img src={LogoSquare} width={40} onClick={() => navigate('/')} />
-      </Center>
+    <Stack h={'100%'}>
+      <div className={classes.navbarMain}>{links}</div>
 
-      <div className={classes.navbarMain}>
-        <Stack justify="center" gap={0}>
-          {links}
-        </Stack>
+      <div className={classes.footer}>
+        <NavLink to="/" className={classes.link}>
+          <IconArrowLeft className={classes.linkIcon} stroke={1.5} />
+          <span>Exit dashboard</span>
+        </NavLink>
+
+        <NavLink to="/logout" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <IconLogout className={classes.linkIcon} stroke={1.5} />
+          <span>Logout</span>
+        </NavLink>
       </div>
-
-      <Stack justify="center" gap={0}>
-        <NavbarLink icon={IconLogout} label="Logout" />
-      </Stack>
-    </nav>
+    </Stack>
   );
 }

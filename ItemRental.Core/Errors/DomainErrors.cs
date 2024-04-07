@@ -83,6 +83,10 @@ namespace ItemRental.Core.Errors
             public static readonly Func<Guid, Error> FailedToAccept = id => new Error(
                 "Order.FailedToAccept",
                 "Failed to accept the order");
+
+            public static readonly Func<Guid, Error> DateBusy = id => new Error(
+                "Order.DateBusy",
+                "The selected date is busy");
         }
     }
 }

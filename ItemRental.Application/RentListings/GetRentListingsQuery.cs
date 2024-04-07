@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ItemRental.Application.RentListings
 {
     public sealed record GetRentListingsResponse(List<RentListingDTO> rentListings);
-    public sealed record GetRentListingsQuery() : IQuery<GetRentListingsResponse>;
+    public sealed record GetRentListingsQuery(string? searchArgument, string? category, bool? ownerListings, Guid? userId, int? page) : IQuery<GetRentListingsResponse>;
     internal class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, GetRentListingsResponse>
     {
         private readonly IRentListingRepository _rentListingRepository;
@@ -21,7 +21,9 @@ namespace ItemRental.Application.RentListings
         }
         public async Task<Result<GetRentListingsResponse>> Handle(GetRentListingsQuery request, CancellationToken cancellationToken)
         {
-            var listings = await _rentListingRepository.GetAsync(cancellationToken);
+            int page = request.page ?? 0;
+
+            var listings = await _rentListingRepository.GetAsync(request.searchArgument, request.category, page, cancellationToken);
 
             return new GetRentListingsResponse(listings);
         }
