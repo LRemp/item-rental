@@ -16,10 +16,12 @@ namespace ItemRental.Application.Orders
     public sealed record AddOrderCommand(Guid user, AddOrderDTO addOrderDTO) : ICommand<Guid>;
     public class AddOrderCommandHandler : ICommandHandler<AddOrderCommand, Guid>
     {
+        private readonly IOrderService _orderService;
         private readonly IOrderRepository _orderRepository;
         private readonly IRentListingRepository _rentListingRepository;
-        public AddOrderCommandHandler(IOrderRepository orderRepository, IRentListingRepository rentListingRepository)
+        public AddOrderCommandHandler(IOrderService orderService, IOrderRepository orderRepository, IRentListingRepository rentListingRepository)
         {
+            _orderService = orderService;
             _orderRepository = orderRepository;
             _rentListingRepository = rentListingRepository;
         }
@@ -32,6 +34,13 @@ namespace ItemRental.Application.Orders
                 return Result.Failure<Guid>(DomainErrors.RentListing.NotFound(request.addOrderDTO.RentListing));
             }
 
+            var isDateNotTaken = await _orderService.IsDateNotTaken(request.addOrderDTO.RentListing, request.addOrderDTO.StartDate, request.addOrderDTO.EndDate, cancellationToken);
+
+            if(!isDateNotTaken)
+            {
+                return Result.Failure<Guid>(DomainErrors.Order.DateBusy(request.addOrderDTO.RentListing));
+            }
+
             //TODO: check if dates are valid
             var order = new Order
             {
@@ -40,7 +49,8 @@ namespace ItemRental.Application.Orders
                 Listing = request.addOrderDTO.RentListing,
                 StartDate = request.addOrderDTO.StartDate,
                 EndDate = request.addOrderDTO.EndDate,
-                Status = OrderStatus.Pending
+                Status = OrderStatus.Pending,
+                DeliveryType = request.addOrderDTO.DeliveryType
             };
 
             var success = await _orderRepository.AddAsync(order, cancellationToken);

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers
+namespace ItemRental.API.Controllers.Rent
 {
     [Route("api/Rent/[controller]")]
     [ApiController]

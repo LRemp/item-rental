@@ -11,7 +11,7 @@ namespace ItemRental.Core.Contracts
     public interface IRentListingRepository
     {
         public Task<bool> AddAsync(RentListing rentalListing, CancellationToken cancellationToken);
-        public Task<List<RentListingDTO>> GetAsync(CancellationToken cancellationToken);
+        public Task<List<RentListingDTO>> GetAsync(string? searchArgument, string? category, int page, CancellationToken cancellationToken);
         public Task<RentListingDTO?> GetAsync(Guid id, CancellationToken cancellationToken);
         public Task<RentListing?> GetInternalAsync(Guid id, CancellationToken cancellationToken);
         public Task<List<RentListingDTO>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken);

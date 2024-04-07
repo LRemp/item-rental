@@ -12,6 +12,7 @@ import {
   rem,
   useMantineTheme,
   Button,
+  TextInput,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
@@ -27,6 +28,7 @@ import {
   IconHome,
   IconPlus,
   IconBuildingWarehouse,
+  IconSearch,
 } from '@tabler/icons-react';
 import Logo from '@/assets/images/logo.png';
 import classes from './Header.module.css';
@@ -35,6 +37,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeButton from '../../ThemeButton';
+import Search from './Search';
 
 const user = {
   name: 'Jane Spoonfighter',
@@ -77,6 +80,8 @@ export function Header() {
           </Link>
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+
+          <Search />
 
           {isAuthenticated() ? (
             <Menu

@@ -22,8 +22,8 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Order order, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status) 
-                        VALUES (@id, @listing, @user, @startDate, @endDate, @status)";
+            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status, deliveryType) 
+                        VALUES (@id, @listing, @user, @startDate, @endDate, @status, @deliveryType)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -32,7 +32,8 @@ namespace ItemRental.Repositories.Repositories
                 listing = order.Listing,
                 startDate = order.StartDate,
                 endDate = order.EndDate,
-                status = order.Status
+                status = order.Status,
+                deliveryType = order.DeliveryType
             });
 
             return result > 0;
@@ -89,7 +90,8 @@ namespace ItemRental.Repositories.Repositories
                         },
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
-                        Status = order.Status
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType
                     };
                 }, new { id }
             );
@@ -106,6 +108,51 @@ namespace ItemRental.Repositories.Repositories
             var result = await _connection.QueryAsync<Order>(query, new { id });
 
             return result.FirstOrDefault();
+        }
+
+        public async Task<List<OrderDTO>> GetListingOrdersAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE o.listing = @id";
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType
+                    };
+                }, new { id }
+            );
+
+            return result.ToList();
         }
 
         public async Task<List<OrderDTO>> GetOwnerOrdersAsync(Guid id, OrderStatus? status, CancellationToken cancellationToken)
@@ -149,7 +196,8 @@ namespace ItemRental.Repositories.Repositories
                         },
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
-                        Status = order.Status
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType
                     };
                 }, new { id, status }
             );
@@ -193,7 +241,8 @@ namespace ItemRental.Repositories.Repositories
                         },
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
-                        Status = order.Status
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType
                     };
                 }, new { user }
             );
@@ -237,7 +286,8 @@ namespace ItemRental.Repositories.Repositories
                         },
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
-                        Status = order.Status
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType
                     };
                 }, new { id, user }
             );
@@ -247,7 +297,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<bool> UpdateAsync(Order order, CancellationToken cancellationToken)
         {
-            var query = @"UPDATE `orders` SET listing = @listing, user = @user, startDate = @startDate, endDate = @endDate, status = @status WHERE id = @id";
+            var query = @"UPDATE `orders` SET listing = @listing, user = @user, startDate = @startDate, endDate = @endDate, status = @status, deliveryType = @deliveryType WHERE id = @id";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -256,7 +306,8 @@ namespace ItemRental.Repositories.Repositories
                 listing = order.Listing,
                 startDate = order.StartDate,
                 endDate = order.EndDate,
-                status = order.Status
+                status = order.Status,
+                deliveryType = order.DeliveryType
             });
 
             return result > 0;

@@ -2,7 +2,6 @@ import api from '@/api';
 import ListingUserOrders from '@/components/Misc/ListingUserOrders';
 import LoginRequired from '@/components/LoginRequired';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
-import { UserProfileCard } from '@/components/Misc/UserProfileCard';
 import useApi from '@/hooks/useApi';
 import useApiResult from '@/hooks/useApiResult';
 import useAsync from '@/hooks/useAsync';
@@ -24,15 +23,16 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
+import { DatePicker, DatePickerInput, DatePickerProps } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconLogin } from '@tabler/icons-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
+import UserProfileCard from '@/components/Misc/UserProfileCard';
 
 function Listing() {
   const { id } = useParams();
@@ -84,11 +84,16 @@ function Listing() {
 }
 
 const CreateOrderModal = () => {
+  const { id } = useParams();
   const { result, loading, error, request } = useApiResult(api.Order.createOrder);
+  const {
+    result: busyDates,
+    loading: loadingDates,
+    request: loadDates,
+  } = useApiResult(api.RentListing.getBusyDates);
   const [opened, { open, close }] = useDisclosure(false);
   const [creating, create] = useDisclosure(false);
   const isAuthenticated = useIsAuthenticated();
-  const { id } = useParams();
 
   const form = useForm({
     initialValues: { comment: '', date: [] },
@@ -126,12 +131,39 @@ const CreateOrderModal = () => {
       close();
       create.close();
     } catch (error: any) {
+      if (error.code == 'Order.DateBusy') {
+        form.setFieldError('date', 'The selected date is busy!');
+      }
       notifications.update(
         Error({ id: notificationId, title: 'Error', message: error.description })
       );
       create.close();
     }
   };
+
+  const getDayProps: DatePickerProps['getDayProps'] = (date) => {
+    for (var index in busyDates) {
+      if (
+        date > new Date(busyDates[index].startDate) &&
+        date < new Date(busyDates[index].endDate)
+      ) {
+        return {
+          style: {
+            backgroundColor: 'var(--mantine-color-red-filled)',
+            color: 'var(--mantine-color-white)',
+          },
+        };
+      }
+    }
+
+    return {};
+  };
+
+  useEffect(() => {
+    if (opened) {
+      loadDates(id);
+    }
+  }, [opened]);
 
   return (
     <>
@@ -152,13 +184,19 @@ const CreateOrderModal = () => {
               overlayProps={{ radius: 'sm', blur: 1 }}
             />
             <Fieldset variant="unstyled">
-              <DatePickerInput
-                type="range"
-                label="Pick rent period"
-                placeholder="Pick rent period"
-                minDate={new Date()}
-                {...form.getInputProps('date')}
-              />
+              <Center>
+                {loadingDates ? (
+                  <Loader />
+                ) : (
+                  <DatePicker
+                    type="range"
+                    minDate={new Date()}
+                    {...form.getInputProps('date')}
+                    getDayProps={getDayProps}
+                  />
+                )}
+              </Center>
+
               <Textarea
                 label="Comment"
                 placeholder="Add the comment to the order"

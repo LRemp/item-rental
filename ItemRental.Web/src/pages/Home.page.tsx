@@ -1,44 +1,77 @@
-import { Welcome } from '../components/Welcome/Welcome';
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { useEffect, useState } from 'react';
-import { Header } from '@/components/Nagivation/Header';
-import { Center, Container, Flex, Grid, Group, Loader, Text } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Center,
+  Grid,
+  Group,
+  Loader,
+  Pagination,
+  SimpleGrid,
+  Text,
+} from '@mantine/core';
 import useApiResult from '@/hooks/useApiResult';
-import { get } from 'http';
 import api from '@/api';
-import RentListing from '@/components/RentListing/RentListing';
+import ListingCard from '@/components/ListingCard/ListingCard';
+import { IconFilter } from '@tabler/icons-react';
+import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export function HomePage() {
   return (
     <>
       <RentListingsContainer />
-      {/*<Welcome />
-      <ColorSchemeToggle />*/}
     </>
   );
 }
 
 const RentListingsContainer = () => {
-  const { result, loading } = useApiResult(() => api.RentListing.getListings(), []);
+  const { category } = useParams();
+  const { result, loading, request } = useApiResult(api.RentListing.getListings, []);
+
+  useEffect(() => {
+    request({
+      category,
+    });
+  }, [category]);
 
   return (
     <Grid columns={18}>
-      {loading ? (
-        <Center h={'70vh'} w={'100%'}>
-          <Group>
-            <Loader></Loader>
-            <Text>Loading the rent offers...</Text>
-          </Group>
-        </Center>
-      ) : (
-        result &&
-        result?.rentListings &&
-        result.rentListings.map((rentListing: RentListing) => (
-          <Grid.Col span={6} key={rentListing.id}>
-            <RentListing {...rentListing} />
-          </Grid.Col>
-        ))
-      )}
+      <Grid.Col span={18} hiddenFrom="md">
+        <Button>
+          Select category <IconFilter size={18} />
+        </Button>
+      </Grid.Col>
+      <Grid.Col span={{ base: 18, md: 14 }}>
+        {loading ? (
+          <Center h={'70vh'} w={'100%'}>
+            <Group>
+              <Loader></Loader>
+              <Text>Loading the rent offers...</Text>
+            </Group>
+          </Center>
+        ) : (
+          <Grid columns={18}>
+            {result &&
+              result?.rentListings &&
+              result.rentListings.map((rentListing: RentListing) => (
+                <Grid.Col span={6} key={rentListing.id}>
+                  <ListingCard {...rentListing} />
+                </Grid.Col>
+              ))}
+            <Grid.Col span={18}>
+              <Center>
+                <Pagination total={10} />
+              </Center>
+            </Grid.Col>
+          </Grid>
+        )}
+      </Grid.Col>
+      <Grid.Col span={{ base: 0, md: 4 }}>
+        <Box visibleFrom="md">
+          <CategoriesFilterSelection />
+        </Box>
+      </Grid.Col>
     </Grid>
   );
 };

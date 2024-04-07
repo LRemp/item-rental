@@ -11,6 +11,7 @@ import {
   keys,
   Paper,
   Badge,
+  Button,
 } from '@mantine/core';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
 import classes from './main.module.css';
@@ -202,6 +203,9 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
           <Badge color={badge.color} radius={'xs'} fullWidth variant="light">
             {badge.label}
           </Badge>
+        </Table.Td>
+        <Table.Td width={'20px'}>
+          <Button size="compact-sm">View</Button>
         </Table.Td>
       </Table.Tr>
     );

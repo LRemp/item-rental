@@ -1,6 +1,6 @@
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
 import getDateLabel from '@/utils/Dates';
-import { Button, Center, Group, Table, Text } from '@mantine/core';
+import { Button, Center, Group, ScrollArea, Table, Text } from '@mantine/core';
 import React from 'react';
 
 interface OrdersTableProps {
@@ -17,24 +17,26 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [], type, refresh })
 
   return (
     <>
-      <Table>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Title</Table.Th>
-            <Table.Th>Username</Table.Th>
-            <Table.Th>Date</Table.Th>
-            <Table.Th>Actions</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>{rows.length > 0 && rows}</Table.Tbody>
-      </Table>
-      {rows.length === 0 && (
-        <Center h={'70%'}>
-          <Text fw={500} size="sm" opacity={'70%'}>
-            No orders found
-          </Text>
-        </Center>
-      )}
+      <ScrollArea h={230}>
+        <Table>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Title</Table.Th>
+              <Table.Th>Username</Table.Th>
+              <Table.Th>Date</Table.Th>
+              <Table.Th>Actions</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows.length > 0 && rows}</Table.Tbody>
+        </Table>
+        {rows.length === 0 && (
+          <Center h={'70%'}>
+            <Text fw={500} size="sm" opacity={'70%'}>
+              No orders found
+            </Text>
+          </Center>
+        )}
+      </ScrollArea>
     </>
   );
 };

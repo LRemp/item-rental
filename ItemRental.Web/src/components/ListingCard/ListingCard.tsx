@@ -1,11 +1,24 @@
-import { Badge, Box, Button, Card, Group, Image, Text } from '@mantine/core';
-import classes from './RentListing.module.css';
+import { Badge, Box, Button, Card, Group, Highlight, Image, Text } from '@mantine/core';
+import classes from './ListingCard.module.css';
 import React from 'react';
 import { useHover } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 
-function RentListing({ id, title, description, item, renter, price, location }: RentListing) {
+interface ListingCardProps extends RentListing {
+  highlight?: string;
+}
+
+const ListingCard: React.FC<ListingCardProps> = ({
+  id,
+  title,
+  description,
+  item,
+  renter,
+  price,
+  location,
+  highlight,
+}) => {
   const navigate = useNavigate();
 
   console.log(item);
@@ -21,12 +34,14 @@ function RentListing({ id, title, description, item, renter, price, location }: 
         />
       </Card.Section>
 
-      <Group justify="space-between" my="md">
+      <Group justify="space-between" my="md" h={'60'}>
         <div>
-          <Text fw={500}>{title}</Text>
-          <Text fz="xs" c="dimmed" lineClamp={2}>
+          <Highlight fw={500} highlight={highlight || ''}>
+            {title}
+          </Highlight>
+          <Highlight fz="xs" c="dimmed" lineClamp={2} highlight={highlight || ''}>
             {description}
-          </Text>
+          </Highlight>
         </div>
       </Group>
 
@@ -53,6 +68,6 @@ function RentListing({ id, title, description, item, renter, price, location }: 
       </Card.Section>
     </Card>
   );
-}
+};
 
-export default RentListing;
+export default ListingCard;
