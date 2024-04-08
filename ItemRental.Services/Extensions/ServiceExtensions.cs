@@ -20,6 +20,7 @@ namespace ItemRental.Services.Extensions
 
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IRentListingService, RentListingService>();
+            services.AddTransient<IDeliveryService, DeliveryService>();
 
             services.AddAutoMapper(typeof(DeliveryMappingProfile));
 
