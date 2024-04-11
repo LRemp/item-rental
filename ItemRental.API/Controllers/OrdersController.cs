@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers.Rent
+namespace ItemRental.API.Controllers
 {
-    [Route("api/Rent/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -152,10 +152,10 @@ namespace ItemRental.API.Controllers.Rent
                 return NotFound(result.Error);
             }
 
-            if(result.Value is null)
+            if (result.Value is null)
             {
                 return NoContent();
-            }   
+            }
 
             return Ok(result.Value);
         }
@@ -188,7 +188,7 @@ namespace ItemRental.API.Controllers.Rent
             {
                 return NotFound(result.Error);
             }
-            
+
             return NoContent();
         }
     }

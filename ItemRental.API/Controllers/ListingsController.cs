@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers.Rent
+namespace ItemRental.API.Controllers
 {
-    [Route("api/Rent/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ListingsController : ControllerBase
     {
