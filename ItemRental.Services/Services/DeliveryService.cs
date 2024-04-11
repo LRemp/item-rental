@@ -91,10 +91,10 @@ namespace ItemRental.Services.Services
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 
-            if(order.Status == OrderStatus.Accepted)
+            if (order.Status == OrderStatus.Accepted || order.Status == OrderStatus.Delivering)
             {
                 var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, OrderRole.Merchant, cancellationToken);
-                if(delivery is null)
+                if (delivery is null)
                 {
                     await deliveryRepository.AddAsync(new Delivery
                     {
@@ -121,10 +121,10 @@ namespace ItemRental.Services.Services
                 await orderRepository.UpdateAsync(order, cancellationToken);
                 return true;
             }
-            else if(order.Status == OrderStatus.Returning)
+            else if (order.Status == OrderStatus.InProgress || order.Status == OrderStatus.Returning)
             {
                 var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, OrderRole.Customer, cancellationToken);
-                if(delivery is null)
+                if (delivery is null)
                 {
                     await deliveryRepository.AddAsync(new Delivery
                     {
@@ -146,6 +146,8 @@ namespace ItemRental.Services.Services
                     delivery.Comment = updateDeliveryDTO.Comment;
                     await deliveryRepository.UpdateAsync(delivery, cancellationToken);
                 }
+                order.Status = OrderStatus.Returning;
+                await orderRepository.UpdateAsync(order, cancellationToken);
                 return true;
             }
 
