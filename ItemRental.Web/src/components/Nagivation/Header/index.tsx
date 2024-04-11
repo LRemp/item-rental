@@ -13,6 +13,7 @@ import {
   useMantineTheme,
   Button,
   TextInput,
+  ActionIcon,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
@@ -29,6 +30,9 @@ import {
   IconPlus,
   IconBuildingWarehouse,
   IconSearch,
+  IconTruckDelivery,
+  IconBell,
+  IconBellFilled,
 } from '@tabler/icons-react';
 import Logo from '@/assets/images/logo.png';
 import classes from './Header.module.css';
@@ -38,6 +42,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeButton from '../../ThemeButton';
 import Search from './Search';
+import Notifications from '@/components/Misc/Notifications';
 
 const user = {
   name: 'Jane Spoonfighter',
@@ -84,69 +89,93 @@ export function Header() {
           <Search />
 
           {isAuthenticated() ? (
-            <Menu
-              width={260}
-              position="bottom-end"
-              transitionProps={{ transition: 'pop-top-right' }}
-              onClose={() => setUserMenuOpened(false)}
-              onOpen={() => setUserMenuOpened(true)}
-              withinPortal
-            >
-              <Menu.Target>
-                <UnstyledButton
-                  className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
-                >
-                  <Group gap={7}>
-                    <Avatar alt={auth?.username} radius="xl" color="cyan" size={20}>
-                      {auth?.username[0].toUpperCase()}
-                    </Avatar>
-                    <Text fw={500} size="sm" lh={1} mr={3}>
-                      {auth?.username}
-                    </Text>
-                    <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
-                  </Group>
-                </UnstyledButton>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Label>Dashboard</Menu.Label>
-                <Menu.Item
-                  leftSection={
-                    <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                  }
-                  onClick={() => navigate('/dashboard')}
-                >
-                  Home
-                </Menu.Item>
-                <Menu.Item
-                  leftSection={
-                    <IconBuildingWarehouse
-                      style={{ width: rem(16), height: rem(16) }}
-                      stroke={1.5}
-                    />
-                  }
-                  onClick={() => navigate('/dashboard/inventory')}
-                >
-                  Inventory items
-                </Menu.Item>
+            <Group>
+              <Notifications />
+              <Menu
+                width={260}
+                position="bottom-end"
+                transitionProps={{ transition: 'pop-top-right' }}
+                onClose={() => setUserMenuOpened(false)}
+                onOpen={() => setUserMenuOpened(true)}
+                withinPortal
+              >
+                <Menu.Target>
+                  <UnstyledButton
+                    className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
+                  >
+                    <Group gap={7}>
+                      <Avatar alt={auth?.username} radius="xl" color="cyan" size={20}>
+                        {auth?.username[0].toUpperCase()}
+                      </Avatar>
+                      <Text fw={500} size="sm" lh={1} mr={3}>
+                        {auth?.username}
+                      </Text>
+                      <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
+                    </Group>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Label>Dashboard</Menu.Label>
+                  <Menu.Item
+                    leftSection={
+                      <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    }
+                    onClick={() => navigate('/dashboard')}
+                  >
+                    Home
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={
+                      <IconBuildingWarehouse
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                    onClick={() => navigate('/dashboard/inventory')}
+                  >
+                    Inventory items
+                  </Menu.Item>
 
-                <Menu.Label>Settings</Menu.Label>
-                <Menu.Item
-                  leftSection={
-                    <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                  }
-                >
-                  Account settings
-                </Menu.Item>
-                <Menu.Item
-                  leftSection={
-                    <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                  }
-                  onClick={() => signOut()}
-                >
-                  Sign out
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+                  <Menu.Item
+                    leftSection={
+                      <IconBuildingWarehouse
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                    onClick={() => navigate('/dashboard/listings')}
+                  >
+                    Rent listings
+                  </Menu.Item>
+
+                  <Menu.Item
+                    leftSection={
+                      <IconTruckDelivery style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    }
+                    onClick={() => navigate('/dashboard/orders')}
+                  >
+                    Orders
+                  </Menu.Item>
+
+                  <Menu.Label>Settings</Menu.Label>
+                  <Menu.Item
+                    leftSection={
+                      <IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    }
+                  >
+                    Account settings
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={
+                      <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    }
+                    onClick={() => signOut()}
+                  >
+                    Sign out
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
           ) : (
             <Group justify="center" grow>
               <Button variant="default" onClick={() => navigate('/login')}>

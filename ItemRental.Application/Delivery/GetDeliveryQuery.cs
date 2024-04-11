@@ -23,13 +23,8 @@ namespace ItemRental.Application.Delivery
         {
             //TODO: check if allowed
             var delivery = await deliveryService.GetByOrderAsync(request.id, cancellationToken);
-
-            if(delivery is null)
-            {
-                return Result.Failure<DeliveryDTO?>(DomainErrors.Order.NotInTransit);
-            }
             
-            return delivery;
+            return Result.Success(delivery);
         }
     }
 }

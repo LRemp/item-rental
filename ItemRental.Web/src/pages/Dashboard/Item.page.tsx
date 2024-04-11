@@ -52,7 +52,7 @@ const ItemPage = () => {
     <Box m={'lg'} w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
-          <Title fw={500} order={2}>
+          <Title fw={400} order={2}>
             Item
           </Title>
           <Breadcrumbs mt={'xs'}>{pathItems}</Breadcrumbs>

@@ -16,14 +16,14 @@ namespace ItemRental.Application.Orders
     public sealed record GetOrderQuery(Guid id) : IQuery<OrderDTO>;
     public class GetOrderQueryHandler : IQueryHandler<GetOrderQuery, OrderDTO>
     {
-        private readonly IOrderRepository _orderRepository;
-        public GetOrderQueryHandler(IOrderRepository orderRepository)
+        private readonly IOrderService orderService;
+        public GetOrderQueryHandler(IOrderService orderService)
         {
-            _orderRepository = orderRepository;
+            this.orderService = orderService;
         }
         public async Task<Result<OrderDTO>> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
-            var result = await _orderRepository.GetAsync(request.id, cancellationToken);
+            var result = await orderService.GetAsync(request.id, cancellationToken);
 
             if(result is null)
             {

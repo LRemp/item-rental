@@ -5,6 +5,7 @@ using ItemRental.Core.Entities;
 using ItemRental.Core.Enums;
 using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
+using ItemRental.Core.Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace ItemRental.Services.Services
     {
         private readonly IDeliveryRepository deliveryRepository;
         private readonly IOrderRepository orderRepository;
+        private readonly IEventLogRepository eventLogRepository;
         private readonly IMapper mapper;
-        public DeliveryService(IDeliveryRepository deliveryRepository, IOrderRepository orderRepository, IMapper mapper)
+        public DeliveryService(IDeliveryRepository deliveryRepository, IOrderRepository orderRepository, IEventLogRepository eventLogRepository, IMapper mapper)
         {
             this.deliveryRepository = deliveryRepository;
             this.orderRepository = orderRepository;
+            this.eventLogRepository = eventLogRepository;
             this.mapper = mapper;
         }
         public Task<bool> AddAsync(Delivery delivery, CancellationToken cancellationToken)
@@ -104,6 +107,7 @@ namespace ItemRental.Services.Services
                         ShippingId = updateDeliveryDTO.ShippingId,
                         Comment = updateDeliveryDTO.Comment
                     }, cancellationToken);
+                    await eventLogRepository.AddAsync(DomainEventLogs.Order.Dispatched(Guid.NewGuid(), id), cancellationToken);
                 }
                 else
                 {
@@ -111,8 +115,10 @@ namespace ItemRental.Services.Services
                     delivery.ShippingProvider = updateDeliveryDTO.ShippingProvider;
                     delivery.ShippingId = updateDeliveryDTO.ShippingId;
                     delivery.Comment = updateDeliveryDTO.Comment;
-                    await deliveryRepository.AddAsync(delivery, cancellationToken);
+                    await deliveryRepository.UpdateAsync(delivery, cancellationToken);
                 }
+                order.Status = OrderStatus.Delivering;
+                await orderRepository.UpdateAsync(order, cancellationToken);
                 return true;
             }
             else if(order.Status == OrderStatus.Returning)
@@ -138,7 +144,7 @@ namespace ItemRental.Services.Services
                     delivery.ShippingProvider = updateDeliveryDTO.ShippingProvider;
                     delivery.ShippingId = updateDeliveryDTO.ShippingId;
                     delivery.Comment = updateDeliveryDTO.Comment;
-                    await deliveryRepository.AddAsync(delivery, cancellationToken);
+                    await deliveryRepository.UpdateAsync(delivery, cancellationToken);
                 }
                 return true;
             }

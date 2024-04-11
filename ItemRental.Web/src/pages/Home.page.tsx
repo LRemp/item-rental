@@ -8,6 +8,7 @@ import {
   Pagination,
   SimpleGrid,
   Text,
+  Title,
 } from '@mantine/core';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
@@ -16,6 +17,7 @@ import { IconFilter } from '@tabler/icons-react';
 import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { nprogress } from '@mantine/nprogress';
 
 export function HomePage() {
   return (
@@ -35,8 +37,21 @@ const RentListingsContainer = () => {
     });
   }, [category]);
 
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
+
   return (
     <Grid columns={18}>
+      <Grid.Col span={18}>
+        <Title my={'lg'} order={2} fw={400}>
+          Listings
+        </Title>
+      </Grid.Col>
       <Grid.Col span={18} hiddenFrom="md">
         <Button>
           Select category <IconFilter size={18} />

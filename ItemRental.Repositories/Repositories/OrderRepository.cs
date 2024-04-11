@@ -22,8 +22,8 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Order order, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status, deliveryType) 
-                        VALUES (@id, @listing, @user, @startDate, @endDate, @status, @deliveryType)";
+            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status, deliveryType, comment) 
+                        VALUES (@id, @listing, @user, @startDate, @endDate, @status, @deliveryType, @comment)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -33,7 +33,8 @@ namespace ItemRental.Repositories.Repositories
                 startDate = order.StartDate,
                 endDate = order.EndDate,
                 status = order.Status,
-                deliveryType = order.DeliveryType
+                deliveryType = order.DeliveryType,
+                comment = order.Comment
             });
 
             return result > 0;
@@ -91,7 +92,8 @@ namespace ItemRental.Repositories.Repositories
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
                         Status = order.Status,
-                        DeliveryType = order.DeliveryType
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
                     };
                 }, new { id }
             );
@@ -147,7 +149,8 @@ namespace ItemRental.Repositories.Repositories
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
                         Status = order.Status,
-                        DeliveryType = order.DeliveryType
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
                     };
                 }, new { id }
             );
@@ -197,7 +200,8 @@ namespace ItemRental.Repositories.Repositories
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
                         Status = order.Status,
-                        DeliveryType = order.DeliveryType
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
                     };
                 }, new { id, status }
             );
@@ -242,7 +246,8 @@ namespace ItemRental.Repositories.Repositories
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
                         Status = order.Status,
-                        DeliveryType = order.DeliveryType
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
                     };
                 }, new { user }
             );
@@ -287,7 +292,8 @@ namespace ItemRental.Repositories.Repositories
                         StartDate = order.StartDate,
                         EndDate = order.EndDate,
                         Status = order.Status,
-                        DeliveryType = order.DeliveryType
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
                     };
                 }, new { id, user }
             );
@@ -307,7 +313,8 @@ namespace ItemRental.Repositories.Repositories
                 startDate = order.StartDate,
                 endDate = order.EndDate,
                 status = order.Status,
-                deliveryType = order.DeliveryType
+                deliveryType = order.DeliveryType,
+                comment = order.Comment
             });
 
             return result > 0;

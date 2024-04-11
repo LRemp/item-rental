@@ -4,6 +4,7 @@ import { Router } from './Router';
 import { theme } from './theme';
 import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
+import { NavigationProgress } from '@mantine/nprogress';
 import AuthProvider from 'react-auth-kit';
 
 import createStore from 'react-auth-kit/createStore';
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <MantineProvider theme={theme}>
       <ModalsProvider>
+        <NavigationProgress />
         <AuthProvider store={store}>
           <Router />
         </AuthProvider>

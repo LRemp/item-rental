@@ -24,7 +24,7 @@ export default function Home() {
     <Box w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
-          <Title fw={500} order={2}>
+          <Title fw={400} order={2}>
             Dashboard
           </Title>
         </Grid.Col>
@@ -46,9 +46,9 @@ export default function Home() {
 }
 
 const ActiveOrders: React.FC = () => {
-  const { result: orders, error, loading } = useApiResult(() => api.Order.getInProgress(), []);
+  const { result: orders, error, loading } = useApiResult(() => api.Order.getOwnerOrders(3), []);
   return (
-    <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
+    <Paper shadow="sm" withBorder p={'md'} h={300}>
       <Group justify="space-between">
         <Text size="sm" fw={600}>
           Active rents
@@ -71,9 +71,9 @@ const ActiveOrders: React.FC = () => {
 };
 
 const PendingOrders: React.FC = () => {
-  const { result: orders, error, loading } = useApiResult(() => api.Order.getPending(), []);
+  const { result: orders, error, loading } = useApiResult(() => api.Order.getOwnerOrders(0), []);
   return (
-    <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
+    <Paper shadow="sm" withBorder p={'md'} h={300}>
       <Group justify="space-between">
         <Text size="sm" fw={600}>
           Pending rent requests
@@ -101,9 +101,9 @@ const CompletedOrders: React.FC = () => {
     error,
     loading,
     request,
-  } = useApiResult(() => api.Order.getCompleted(), []);
+  } = useApiResult(() => api.Order.getOwnerOrders(5), []);
   return (
-    <Paper shadow="sm" withBorder p={'md'} radius={'md'} h={300}>
+    <Paper shadow="sm" withBorder p={'md'} h={300}>
       <Group justify="space-between">
         <Text size="sm" fw={600}>
           Completed rents

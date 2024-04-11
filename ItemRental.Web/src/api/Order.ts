@@ -17,23 +17,23 @@ const getUserOrders = (): ApiRequest => ({
   authenticate: true,
 });
 
-const getPending = (): ApiRequest => ({
+const getOrder = (id: string): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Rent/Orders/Pending`,
+  endpoint: `/api/Rent/Orders/${id}`,
   authenticate: true,
 });
 
-const getInProgress = (): ApiRequest => ({
-  method: 'GET',
-  endpoint: `/api/Rent/Orders/InProgress`,
-  authenticate: true,
-});
-
-const getCompleted = (): ApiRequest => ({
-  method: 'GET',
-  endpoint: `/api/Rent/Orders/Pending`,
-  authenticate: true,
-});
+const getOwnerOrders = (type?: number): ApiRequest => {
+  let endpoint = `/api/Rent/Orders/Owner`;
+  if (type) {
+    endpoint += `?status=${type}`;
+  }
+  return {
+    method: 'GET',
+    endpoint: endpoint,
+    authenticate: true,
+  };
+};
 
 const confirm = (id: string): ApiRequest => ({
   method: 'POST',
@@ -43,10 +43,9 @@ const confirm = (id: string): ApiRequest => ({
 
 export default {
   createOrder,
+  getOrder,
   getUserListingOrders,
   getUserOrders,
-  getPending,
-  getInProgress,
-  getCompleted,
+  getOwnerOrders,
   confirm,
 };

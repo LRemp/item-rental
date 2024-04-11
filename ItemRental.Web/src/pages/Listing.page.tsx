@@ -33,6 +33,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import UserProfileCard from '@/components/Misc/UserProfileCard';
+import { nprogress } from '@mantine/nprogress';
 
 function Listing() {
   const { id } = useParams();
@@ -40,6 +41,14 @@ function Listing() {
     () => api.RentListing.getListingById(id || ''),
     []
   );
+
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
 
   return (
     <Grid w={'100%'}>
@@ -120,6 +129,7 @@ const CreateOrderModal = () => {
         rentListing: id,
         startDate: values.date[0],
         endDate: values.date[1],
+        comment: values.comment,
       });
       notifications.update(
         Success({

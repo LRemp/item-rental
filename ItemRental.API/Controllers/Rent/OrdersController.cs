@@ -104,12 +104,12 @@ namespace ItemRental.API.Controllers.Rent
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("Pending")]
-        public async Task<IActionResult> GetPendingOrders(Guid id)
+        [HttpGet("Owner")]
+        public async Task<IActionResult> GetPendingOrders([FromQuery(Name = "status")] OrderStatus? status)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.Pending));
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, status));
 
             if (result.IsFailure)
             {
@@ -145,12 +145,17 @@ namespace ItemRental.API.Controllers.Rent
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<DeliveryDTO> result = await _sender.Send(new GetDeliveryQuery(id, userId));
+            Result<DeliveryDTO?> result = await _sender.Send(new GetDeliveryQuery(id, userId));
 
             if (result.IsFailure)
             {
                 return NotFound(result.Error);
             }
+
+            if(result.Value is null)
+            {
+                return NoContent();
+            }   
 
             return Ok(result.Value);
         }
