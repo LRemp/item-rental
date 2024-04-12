@@ -30,13 +30,66 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.categories: ~1 rows (approximately)
+-- Dumping data for table itemrental.categories: ~0 rows (approximately)
 DELETE FROM `categories`;
 INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('1e3ebeba-c402-449f-8a69-0b431b87137c', 'other', 'Other', NULL, NULL),
+	('a01cdedf-8b2d-4f60-9775-2949d4c930af', 'electronics', 'Electronics', NULL, NULL),
 	('123341dd-1307-45f4-a6bf-9bf103e6149b', 'phones', 'Phones', 'electronics', '[{"type":"select","label":"Maker","name":"maker","options":["samsung", "lg"]},{"type":"string","name":"model","label":"Model"}]'),
 	('72f123dd-1307-45f4-a6bf-9bf103e6149b', 'cameras', 'Cameras', 'photo', '[{"name":"mountType","type":"string","label":"Lens mount type"}]'),
 	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'computers', 'Computers', 'electronics', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Cores"}]');
+
+-- Dumping structure for table itemrental.deliveries
+CREATE TABLE IF NOT EXISTS `deliveries` (
+  `id` uuid NOT NULL,
+  `order` uuid NOT NULL,
+  `type` int(11) NOT NULL,
+  `role` int(11) NOT NULL,
+  `location` text DEFAULT NULL,
+  `shippingProvider` varchar(50) DEFAULT NULL,
+  `shippingId` varchar(50) DEFAULT NULL,
+  `comment` longtext DEFAULT NULL,
+  `completed` int(11) DEFAULT 0,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dumping data for table itemrental.deliveries: ~6 rows (approximately)
+DELETE FROM `deliveries`;
+INSERT INTO `deliveries` (`id`, `order`, `type`, `role`, `location`, `shippingProvider`, `shippingId`, `comment`, `completed`) VALUES
+	('d1aa1cc3-17d7-432f-9ed0-0a2d5f81809e', '53df4412-cdbd-4413-8d3d-6723d67488e6', 1, 1, NULL, '2', 'CE473405152EE', 'Pristatymas', 0),
+	('feddfcc3-fbe4-4345-a1d9-18f5a029cdae', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 0, 0, '789797', '2', 'CE473405152EE', NULL, 1),
+	('765f3753-8446-4272-bc6b-2570bd2db8ea', '0b8e55db-ae77-43ab-b072-95a316c2f026', 1, 1, NULL, '2', 'CE473405152EE', NULL, 1),
+	('72711c93-c437-4398-afd4-4bfc0afeb7c1', '1945b4a1-2911-43c6-bbac-dd25bd2a5cdb', 1, 1, NULL, '2', 'CE473405152EE', 'test', 0),
+	('0a9fe6b6-9c51-46dd-88dc-99504b493be6', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 0, 1, 'asd', '2', 'CE473405152EE', NULL, 1),
+	('889a4140-9ca4-4a63-8aed-c5f01ee67662', 'a5735e6b-ec17-405a-8214-1024b6d488cb', 1, 1, NULL, '2', 'CE473405152EE', 'stest123', 0);
+
+-- Dumping structure for table itemrental.eventlog
+CREATE TABLE IF NOT EXISTS `eventlog` (
+  `rowId` int(11) NOT NULL AUTO_INCREMENT,
+  `id` uuid NOT NULL,
+  `resource` uuid NOT NULL,
+  `eventName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `title` longtext NOT NULL,
+  `description` longtext NOT NULL,
+  `timestamp` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`rowId`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dumping data for table itemrental.eventlog: ~11 rows (approximately)
+DELETE FROM `eventlog`;
+INSERT INTO `eventlog` (`rowId`, `id`, `resource`, `eventName`, `title`, `description`, `timestamp`) VALUES
+	(14, 'f64f91df-1f54-44d7-a87f-6a9df4fc3455', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Created', 'Created', 'Order created by the user', '2024-04-11 20:26:47'),
+	(15, 'cc36b133-59e9-4fe4-80c3-45b24b5f454a', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-11 20:27:23'),
+	(16, '9440fbbb-efb3-4f8f-82c5-6ddd2b725db5', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-12 08:35:30'),
+	(17, 'e85e7bf5-a47b-4405-a47b-2c28f6ddd860', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-12 08:46:01'),
+	(18, 'aecce21c-679a-41a5-8181-5860a6bf73ed', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Created', 'Created', 'Order created by the user', '2024-04-12 08:53:37'),
+	(19, '5b1fc963-413c-4c30-ba1c-28b9eb3ccf83', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-12 08:54:07'),
+	(20, '69f5640e-cee3-4e02-b728-a267b8ece53c', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-12 08:55:15'),
+	(21, 'b171ce17-ddd6-4a2e-9540-bf6facb573b4', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-12 08:55:28'),
+	(22, '88423a68-4b5f-473e-8dca-2ef0ab9f1d63', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-04-12 09:13:48'),
+	(23, 'bf8f99b4-0d65-4cf8-9c4d-0c1cb49fc923', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-04-12 09:15:02'),
+	(24, '73735572-387b-4fd7-b68b-84c36881e9a8', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-12 09:15:02');
 
 -- Dumping structure for table itemrental.items
 CREATE TABLE IF NOT EXISTS `items` (
@@ -59,6 +112,21 @@ INSERT INTO `items` (`id`, `owner`, `name`, `description`, `category`, `images`,
 	('8fe61dae-b5fb-48ad-9c6d-d131fa5959e6', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', '', NULL, '', NULL, ''),
 	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'cameras', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', NULL, '[{"Name":"mountType","Value":"asd"}]');
 
+-- Dumping structure for table itemrental.notifications
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` uuid NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `title` text NOT NULL,
+  `description` longtext DEFAULT NULL,
+  `url` longtext DEFAULT NULL,
+  `timestamp` timestamp NULL DEFAULT current_timestamp(),
+  `read` tinyint(4) DEFAULT 0,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Dumping data for table itemrental.notifications: ~0 rows (approximately)
+DELETE FROM `notifications`;
+
 -- Dumping structure for table itemrental.orders
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` uuid NOT NULL,
@@ -67,20 +135,16 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `startDate` datetime DEFAULT NULL,
   `endDate` datetime DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
+  `deliveryType` int(11) DEFAULT NULL,
+  `comment` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.orders: ~7 rows (approximately)
+-- Dumping data for table itemrental.orders: ~2 rows (approximately)
 DELETE FROM `orders`;
-INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`) VALUES
-	('cc680e13-9ee2-418e-af47-0600a10af2ba', 'f09d8b6d-643a-485a-8ac9-46254569b9c1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-03-26 22:00:00', '2024-03-27 22:00:00', 1),
-	('47a43883-a305-460b-a698-2ba8cdd2c1e8', '656ace5f-b27d-4ea3-8dcc-9d9beb734087', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-03-26 22:00:00', '2024-03-27 22:00:00', 1),
-	('f663614e-0d20-4347-8a3c-4572b5437b29', 'c646393c-9067-4793-a004-be8c79443259', 'b7e23fb6-9be5-4abd-9682-681a8cf2847f', '2024-02-29 22:00:00', '2024-03-07 22:00:00', 0),
-	('c4994a84-047b-4429-a40a-4bd51d6ad992', 'c646393c-9067-4793-a004-be8c79443259', '8fe27bb1-091c-44e9-81d2-4c36aee488a2', '2024-02-29 22:00:00', '2024-03-07 22:00:00', 0),
-	('46189591-c556-4017-a93c-7adf6853cbe0', 'c646393c-9067-4793-a004-be8c79443259', 'b7e23fb6-9be5-4abd-9682-681a8cf2847f', '2024-03-06 22:00:00', '2024-03-07 22:00:00', 0),
-	('af813774-1f95-418e-b130-c55dd9e773a2', '656ace5f-b27d-4ea3-8dcc-9d9beb734087', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-03-28 22:00:00', '2024-03-29 22:00:00', 1),
-	('3ab2cd7b-e985-4316-b9cc-e689116e6e3f', 'f09d8b6d-643a-485a-8ac9-46254569b9c1', '13557b17-53e1-4da3-9da2-0496fd7c5474', '2024-03-25 22:00:00', '2024-04-04 21:00:00', 0),
-	('e60dce2b-4474-4ee3-bfbb-fa737da59ea5', 'c646393c-9067-4793-a004-be8c79443259', 'b7e23fb6-9be5-4abd-9682-681a8cf2847f', '2024-03-14 22:00:00', '2024-03-21 22:00:00', 0);
+INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`, `deliveryType`, `comment`) VALUES
+	('d8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'f09d8b6d-643a-485a-8ac9-46254569b9c1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-28 21:00:00', '2024-04-29 21:00:00', 5, 0, ''),
+	('0b8e55db-ae77-43ab-b072-95a316c2f026', 'f09d8b6d-643a-485a-8ac9-46254569b9c1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-22 21:00:00', '2024-04-24 21:00:00', 3, 1, '');
 
 -- Dumping structure for table itemrental.profile_feedback
 CREATE TABLE IF NOT EXISTS `profile_feedback` (
@@ -107,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `rent_listings` (
   `location` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.rent_listings: ~2 rows (approximately)
+-- Dumping data for table itemrental.rent_listings: ~1 rows (approximately)
 DELETE FROM `rent_listings`;
 INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `price`, `location`) VALUES
 	('c646393c-9067-4793-a004-be8c79443259', 'd5805055-afc5-45c5-bda3-e366c0d45797', '44fa8ccc-69cf-45bd-bff2-7b8311e200d8', 'Debug rent listing', 'Well used mirror-less camera available for the rental! Renting along the 35mm Sony G-master lens', 19.990000, 'Kaunas, Lithuania'),

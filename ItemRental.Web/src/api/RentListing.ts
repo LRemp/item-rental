@@ -1,5 +1,5 @@
 const getListings = (data?: any): ApiRequest => {
-  var endpoint = '/api/Rent/Listings?';
+  var endpoint = '/api/Listings?';
   if (data?.searchArgument) {
     endpoint += 'searchArgument=' + data.searchArgument;
   }
@@ -14,22 +14,22 @@ const getListings = (data?: any): ApiRequest => {
 
 const getListingsByOwner = (): ApiRequest => ({
   method: 'GET',
-  endpoint: '/api/Rent/Listings',
+  endpoint: '/api/Listings',
 });
 
 const getListingById = (id: string): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Rent/Listings/${id}`,
+  endpoint: `/api/Listings/${id}`,
 });
 
 const getBusyDates = (id: string): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Rent/Listings/${id}/BusyDates`,
+  endpoint: `/api/Listings/${id}/BusyDates`,
 });
 
 const create = (data: any): ApiRequest => ({
   method: 'POST',
-  endpoint: '/api/Rent/Listings',
+  endpoint: '/api/Listings',
   body: data,
   authenticate: true,
 });

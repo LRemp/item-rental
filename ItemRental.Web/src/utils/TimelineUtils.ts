@@ -15,32 +15,25 @@ const GenerateEvents = (events: EventLog[], status: OrderStatus): TimelineEvent[
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.DeliveryDispatched') == undefined) {
+  if (events.find((event) => event.eventName == 'Order.Dispatched') == undefined) {
     timelineEvents.push({
       title: 'Dispatch package',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.DeliveryComplete') == undefined) {
+  if (events.find((event) => event.eventName == 'Order.Delivered') == undefined) {
     timelineEvents.push({
       title: 'Package received',
     });
   }
 
-  //TODO check and show one day before the return date
-  if (events.find((event) => event.eventName == 'Order.DeliveryComplete') == undefined) {
-    timelineEvents.push({
-      title: 'Use of items',
-    });
-  }
-
-  if (events.find((event) => event.eventName == 'Order.ReturnDelivery') == undefined) {
+  if (events.find((event) => event.eventName == 'Order.ReturnDispatched') == undefined) {
     timelineEvents.push({
       title: 'Return package',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.ReturnDelivery') == undefined) {
+  if (events.find((event) => event.eventName == 'Order.Returned') == undefined) {
     timelineEvents.push({
       title: 'Successful return',
     });

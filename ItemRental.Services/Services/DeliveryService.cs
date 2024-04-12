@@ -41,6 +41,11 @@ namespace ItemRental.Services.Services
                 var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, OrderRole.Merchant, cancellationToken);
                 delivery.Completed = true;
                 await deliveryRepository.UpdateAsync(delivery, cancellationToken);
+
+                order.Status = OrderStatus.InProgress;
+                await orderRepository.UpdateAsync(order, cancellationToken);
+
+                await eventLogRepository.AddAsync(DomainEventLogs.Order.Delivered(Guid.NewGuid(), id), cancellationToken);
                 return true;
             }
             else if(order.Status == OrderStatus.Returning)
@@ -48,6 +53,12 @@ namespace ItemRental.Services.Services
                 var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, OrderRole.Customer, cancellationToken);
                 delivery.Completed = true;
                 await deliveryRepository.UpdateAsync(delivery, cancellationToken);
+
+                order.Status = OrderStatus.Completed;
+                await orderRepository.UpdateAsync(order, cancellationToken);
+
+                await eventLogRepository.AddAsync(DomainEventLogs.Order.Returned(Guid.NewGuid(), id), cancellationToken);
+                await eventLogRepository.AddAsync(DomainEventLogs.Order.Complete(Guid.NewGuid(), id), cancellationToken);
                 return true;
             }
 
@@ -119,6 +130,8 @@ namespace ItemRental.Services.Services
                 }
                 order.Status = OrderStatus.Delivering;
                 await orderRepository.UpdateAsync(order, cancellationToken);
+
+                
                 return true;
             }
             else if (order.Status == OrderStatus.InProgress || order.Status == OrderStatus.Returning)
@@ -137,6 +150,8 @@ namespace ItemRental.Services.Services
                         ShippingId = updateDeliveryDTO.ShippingId,
                         Comment = updateDeliveryDTO.Comment
                     }, cancellationToken);
+
+                    await eventLogRepository.AddAsync(DomainEventLogs.Order.ReturnDispatched(Guid.NewGuid(), id), cancellationToken);
                 }
                 else
                 {

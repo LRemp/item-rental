@@ -1,5 +1,5 @@
 import api from '@/api';
-import OrderReturnDelivery from '@/components/Details/Delivery/OrderReturnDelivery';
+import OrderReturnDelivery from '@/components/Details/Delivery/SubmitReturnDeliveryDetails';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 import TimelineView from '@/components/Misc/TimelineView';
 import DashboardOrdersTable from '@/components/Tables/Dashboard/OrdersTable';
@@ -33,6 +33,7 @@ import DeclineOrderAction from '@/components/ButtonActions/DeclineOrderAction';
 import SubmitDeliveryDetails from '@/components/Details/Delivery/SubmitDeliveryDetails';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 import SubmitDeliveryDetailsAction from '@/components/ButtonActions/SubmitDeliveryDetailsAction';
+import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmReturnDeliveryAction';
 
 const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Orders' }].map(
   (item, index) => (
@@ -143,8 +144,10 @@ const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
           <DeclineOrderAction id={id} size={'sm'} />
         </Group>
       )}
-      {status == 1 && <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />}
-      {status == 2 && <OrderReturnDelivery id={id} />}
+      {(status == 1 || status == 2) && (
+        <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />
+      )}
+      {status == 4 && <ConfirmReturnDeliveryAction id={id} />}
     </Box>
   );
 };

@@ -20,7 +20,7 @@ import { Calendar, DatePickerProps } from '@mantine/dates';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { GenerateEvents } from '@/utils/TimelineUtils';
-import OrderReturnDelivery from '@/components/Details/Delivery/OrderReturnDelivery';
+import OrderReturnDelivery from '@/components/Details/Delivery/SubmitReturnDeliveryDetails';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 import NoImage from '@/assets/images/no_image.png';
 import {
@@ -32,6 +32,8 @@ import {
 } from '@tabler/icons-react';
 import getDateLabel from '@/utils/Dates';
 import { nprogress } from '@mantine/nprogress';
+import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderDeliveryAction';
+import SubmitReturnDeliveryDetailsAction from '@/components/ButtonActions/SubmitReturnDeliveryDetailsAction';
 
 const mock_events = [
   {
@@ -145,8 +147,13 @@ const OrderCalendar: React.FC<OrderCalendarProps> = ({ startDate, endDate }) => 
   );
 };
 
-const DeliveryActions: React.FC<Order> = ({ id, status }) => {
-  return <Box mt={'lg'}>{status == 0 && <OrderReturnDelivery id={id} />}</Box>;
+const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
+  return (
+    <Box mt={'lg'}>
+      {status == 2 && <ConfirmOrderDeliveryAction id={id} fullWidth={true} />}
+      {status == 3 && <SubmitReturnDeliveryDetailsAction id={id} deliveryType={deliveryType} />}
+    </Box>
+  );
 };
 
 const DetailsContainer: React.FC<Order> = ({

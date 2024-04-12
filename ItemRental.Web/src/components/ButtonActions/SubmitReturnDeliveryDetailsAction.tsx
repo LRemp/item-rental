@@ -4,20 +4,21 @@ import React, { useEffect } from 'react';
 import CreateListingModal from '../Modals/CreateListing';
 import { useDisclosure } from '@mantine/hooks';
 import SubmitDeliveryDetailsModal from '../Modals/SubmitDeliveryDetails';
+import SubmitReturnDeliveryDetailsModal from '../Modals/SubmitReturnDeliveryDetails';
 
-interface SubmitDeliveryDetailsActionProps extends ItemButtonActionProps {
+interface SubmitReturnDeliveryDetailsActionProps extends ItemButtonActionProps {
   deliveryType: number;
 }
 
-const SubmitDeliveryDetailsAction: React.FC<SubmitDeliveryDetailsActionProps> = ({
+const SubmitReturnDeliveryDetailsAction: React.FC<SubmitReturnDeliveryDetailsActionProps> = ({
   id,
   deliveryType,
 }) => {
   const [opened, { close, open }] = useDisclosure(false);
-  console.log('TEST');
+
   return (
     <>
-      <SubmitDeliveryDetailsModal
+      <SubmitReturnDeliveryDetailsModal
         id={id}
         opened={opened}
         close={close}
@@ -25,11 +26,11 @@ const SubmitDeliveryDetailsAction: React.FC<SubmitDeliveryDetailsActionProps> = 
       />
       <Button fullWidth onClick={open}>
         <Center inline>
-          Submit delivery details <IconBoxSeam size={26} stroke={1.5} />
+          Submit return delivery details <IconBoxSeam size={26} stroke={1.5} />
         </Center>
       </Button>
     </>
   );
 };
 
-export default SubmitDeliveryDetailsAction;
+export default SubmitReturnDeliveryDetailsAction;

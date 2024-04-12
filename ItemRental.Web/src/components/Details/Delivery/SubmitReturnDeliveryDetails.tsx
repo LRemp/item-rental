@@ -8,7 +8,7 @@ interface OrderReturnDeliveryProps {
   id: string;
 }
 
-const OrderReturnDelivery: React.FC<OrderReturnDeliveryProps> = ({ id }) => {
+const SubmitReturnDeliveryDetails: React.FC<OrderReturnDeliveryProps> = ({ id }) => {
   const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || ''), []);
 
   return (
@@ -22,4 +22,4 @@ const OrderReturnDelivery: React.FC<OrderReturnDeliveryProps> = ({ id }) => {
   );
 };
 
-export default OrderReturnDelivery;
+export default SubmitReturnDeliveryDetails;

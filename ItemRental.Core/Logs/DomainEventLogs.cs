@@ -36,6 +36,42 @@ namespace ItemRental.Core.Logs
                 Title = "Dispatched",
                 Description = "Order dispatched by the merchant"
             };
+
+            public static readonly Func<Guid, Guid, EventLog> Delivered = (id, resource) => new EventLog
+            {
+                Id = id,
+                Resource = resource,
+                EventName = "Order.Delivered",
+                Title = "Delivered",
+                Description = "Order delivered to the customer"
+            };
+
+            public static readonly Func<Guid, Guid, EventLog> ReturnDispatched = (id, resource) => new EventLog
+            {
+                Id = id,
+                Resource = resource,
+                EventName = "Order.ReturnDispatched",
+                Title = "Dispatched",
+                Description = "Order dispatched back by the customer"
+            };
+
+            public static readonly Func<Guid, Guid, EventLog> Returned = (id, resource) => new EventLog
+            {
+                Id = id,
+                Resource = resource,
+                EventName = "Order.Returned",
+                Title = "Returned",
+                Description = "Order returned by the customer"
+            };
+
+            public static readonly Func<Guid, Guid, EventLog> Complete = (id, resource) => new EventLog
+            {
+                Id = id,
+                Resource = resource,
+                EventName = "Order.Complete",
+                Title = "Complete",
+                Description = "The order is complete"
+            };
         }
     }
 }
