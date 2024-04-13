@@ -34,6 +34,7 @@ import getDateLabel from '@/utils/Dates';
 import { nprogress } from '@mantine/nprogress';
 import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderDeliveryAction';
 import SubmitReturnDeliveryDetailsAction from '@/components/ButtonActions/SubmitReturnDeliveryDetailsAction';
+import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 
 const mock_events = [
   {
@@ -95,6 +96,7 @@ function Order() {
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 8 }}>
             <Paper>
+              <ShippingDetailsContainer {...order} />
               <DetailsContainer {...order} />
             </Paper>
           </Grid.Col>

@@ -43,7 +43,7 @@ interface OrderComponent {
 }
 
 const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
-  const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || ''), []);
+  const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || '', 0), []);
   console.log(delivery);
   return (
     <Box>
@@ -104,5 +104,62 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
 };
 
 const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
-  return <Box></Box>;
+  const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || '', 1), []);
+  console.log(delivery);
+  return (
+    <Box>
+      {loading ? (
+        <Center>
+          <Loader />
+        </Center>
+      ) : (
+        <Box my={'md'}>
+          {delivery ? (
+            <>
+              {delivery.type == 0 && (
+                <>
+                  <Box>
+                    <Text fw={500}>Pickup location:</Text>
+                    <Text>{delivery.location}</Text>
+                  </Box>
+                </>
+              )}
+              {delivery.type == 1 && (
+                <>
+                  <Box>
+                    <Text fw={500}>Shipping company</Text>
+                    <Text>
+                      {
+                        shippingProviders.find((item) => item.value == delivery.shippingProvider)
+                          ?.label
+                      }
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text fw={500}>Tracking id</Text>
+                    <Text>{delivery.shippingId}</Text>
+                  </Box>
+                  <Button
+                    onClick={() =>
+                      window.open(
+                        getTrackingLink(delivery.shippingProvider, delivery.shippingId),
+                        '_blank',
+                        'norefferer'
+                      )
+                    }
+                  >
+                    Open package tracking <IconTruckDelivery stroke={1.0} />
+                  </Button>
+                </>
+              )}
+            </>
+          ) : (
+            <Text fs="italic" fw={500} size={'sm'}>
+              No return delivery details found
+            </Text>
+          )}
+        </Box>
+      )}
+    </Box>
+  );
 };

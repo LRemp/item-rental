@@ -78,11 +78,17 @@ namespace ItemRental.Services.Services
             return deliveryDTO;
         }
 
-        public async Task<DeliveryDTO?> GetByOrderAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<DeliveryDTO?> GetByOrderAsync(Guid id, OrderRole? role, CancellationToken cancellationToken)
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 
-            if (order.Status == OrderStatus.Delivering)
+            if(role is not null)
+            {
+                var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, role.Value, cancellationToken);
+                DeliveryDTO deliveryDTO = mapper.Map<DeliveryDTO>(delivery);
+                return deliveryDTO;
+            }
+            else if (order.Status == OrderStatus.Delivering)
             {
                 var delivery = await deliveryRepository.GetByOrderAndRoleAsync(id, OrderRole.Merchant, cancellationToken);
                 DeliveryDTO deliveryDTO = mapper.Map<DeliveryDTO>(delivery);

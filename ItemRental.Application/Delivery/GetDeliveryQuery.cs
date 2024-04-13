@@ -1,6 +1,7 @@
 ﻿using ItemRental.Application.Abstractions.Messaging;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Enums;
 using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Delivery
 {
-    public sealed record GetDeliveryQuery(Guid id, Guid user) : IQuery<DeliveryDTO?>;
+    public sealed record GetDeliveryQuery(Guid id, Guid user, OrderRole? role) : IQuery<DeliveryDTO?>;
     public class GetDeliveryQueryHandler : IQueryHandler<GetDeliveryQuery, DeliveryDTO>
     {
         private readonly IDeliveryService deliveryService;
@@ -22,7 +23,7 @@ namespace ItemRental.Application.Delivery
         public async Task<Result<DeliveryDTO?>> Handle(GetDeliveryQuery request, CancellationToken cancellationToken)
         {
             //TODO: check if allowed
-            var delivery = await deliveryService.GetByOrderAsync(request.id, cancellationToken);
+            var delivery = await deliveryService.GetByOrderAsync(request.id, request.role, cancellationToken);
             
             return Result.Success(delivery);
         }

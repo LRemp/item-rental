@@ -37,6 +37,7 @@ const OrderTableElement: React.FC<Order> = ({
   startDate,
   endDate,
   comment,
+  status,
 }) => {
   const navigate = useNavigate();
   return (
@@ -56,8 +57,12 @@ const OrderTableElement: React.FC<Order> = ({
           >
             View
           </Button>
-          <ConfirmOrderAction id={id} size="compact-sm" />
-          <DeclineOrderAction id={id} size="compact-sm" />
+          {status == 0 && (
+            <>
+              <ConfirmOrderAction id={id} size="compact-sm" />
+              <DeclineOrderAction id={id} size="compact-sm" />
+            </>
+          )}
         </Group>
       </Table.Td>
     </Table.Tr>

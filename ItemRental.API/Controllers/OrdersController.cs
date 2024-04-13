@@ -141,11 +141,11 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}/Delivery")]
-        public async Task<IActionResult> GetDeliveryData(Guid id)
+        public async Task<IActionResult> GetDeliveryData(Guid id, [FromQuery(Name = "role")] OrderRole? role)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<DeliveryDTO?> result = await _sender.Send(new GetDeliveryQuery(id, userId));
+            Result<DeliveryDTO?> result = await _sender.Send(new GetDeliveryQuery(id, userId, role));
 
             if (result.IsFailure)
             {
