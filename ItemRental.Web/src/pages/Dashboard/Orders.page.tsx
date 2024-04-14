@@ -1,18 +1,8 @@
 import api from '@/api';
 import DashboardOrdersTable from '@/components/Tables/Dashboard/OrdersTable';
 import useApiResult from '@/hooks/useApiResult';
-import {
-  Anchor,
-  Box,
-  Breadcrumbs,
-  Button,
-  Center,
-  Grid,
-  Loader,
-  Paper,
-  Title,
-} from '@mantine/core';
-import React, { useEffect } from 'react';
+import { Anchor, Box, Breadcrumbs, Center, Grid, Loader, Paper, Title } from '@mantine/core';
+import { useEffect } from 'react';
 import { nprogress } from '@mantine/nprogress';
 
 const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Orders' }].map(
@@ -33,7 +23,6 @@ function Orders() {
       nprogress.complete();
     }
   }, [loading]);
-  console.log(orders);
 
   return (
     <Box w={'100%'}>

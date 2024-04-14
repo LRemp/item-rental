@@ -215,8 +215,6 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
     );
   });
 
-  console.log(items);
-
   return (
     <Paper radius={'md'} mb={'xl'}>
       <ScrollArea>

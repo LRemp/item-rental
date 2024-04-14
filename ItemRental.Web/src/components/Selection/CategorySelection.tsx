@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function CategorySelection() {
-  const { category, debug } = useParams();
+  const { category } = useParams();
   const navigate = useNavigate();
   const { result } = useApiResult(() => api.Category.getAll(), []);
   const [categories, setCategories] = useState<any>([]);

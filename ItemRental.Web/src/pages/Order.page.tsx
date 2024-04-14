@@ -10,26 +10,17 @@ import {
   Image,
   Loader,
   Paper,
-  SimpleGrid,
   Tabs,
   Text,
-  Timeline,
   Title,
 } from '@mantine/core';
 import { Calendar, DatePickerProps } from '@mantine/dates';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { GenerateEvents } from '@/utils/TimelineUtils';
-import OrderReturnDelivery from '@/components/Details/Delivery/SubmitReturnDeliveryDetails';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 import NoImage from '@/assets/images/no_image.png';
-import {
-  IconBoxSeam,
-  IconMessageCancel,
-  IconPhoto,
-  IconSettings,
-  IconTruckDelivery,
-} from '@tabler/icons-react';
+import { IconBoxSeam, IconTruckDelivery } from '@tabler/icons-react';
 import getDateLabel from '@/utils/Dates';
 import { nprogress } from '@mantine/nprogress';
 import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderDeliveryAction';
@@ -129,7 +120,6 @@ interface OrderCalendarProps {
 
 const OrderCalendar: React.FC<OrderCalendarProps> = ({ startDate, endDate }) => {
   const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-    console.log(startDate, endDate, date, date > new Date(startDate) && date < new Date(endDate));
     if (date > new Date(startDate) && date < new Date(endDate)) {
       return {
         style: {

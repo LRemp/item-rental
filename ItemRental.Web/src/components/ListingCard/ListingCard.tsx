@@ -21,8 +21,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  console.log(item);
-
   return (
     <Card withBorder radius="sm" className={classes.card} shadow="md">
       <Card.Section className={classes.imageSection}>

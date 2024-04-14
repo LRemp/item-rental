@@ -14,7 +14,7 @@ const SubmitDeliveryDetailsAction: React.FC<SubmitDeliveryDetailsActionProps> = 
   deliveryType,
 }) => {
   const [opened, { close, open }] = useDisclosure(false);
-  console.log('TEST');
+
   return (
     <>
       <SubmitDeliveryDetailsModal

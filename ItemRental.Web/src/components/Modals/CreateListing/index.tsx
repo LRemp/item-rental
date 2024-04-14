@@ -51,11 +51,8 @@ const CreateListingModal: React.FC<CreatListingModalProps> = ({ id, opened, clos
         })
       );
 
-      console.log(response);
-
       navigate(`/listing/${response}`);
     } catch (error: any) {
-      console.log(error);
       notifications.update(
         Error({ id: notificationId, title: 'Error', message: error.description })
       );

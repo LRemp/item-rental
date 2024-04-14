@@ -17,7 +17,7 @@ const useApi = () => {
     if (authenticate) {
       requestHeaders.set('Authorization', authHeader);
     }
-    console.log(body);
+
     const requestOptions: RequestInit = {
       method,
       headers: requestHeaders,

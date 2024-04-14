@@ -44,7 +44,7 @@ interface OrderComponent {
 
 const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
   const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || '', 0), []);
-  console.log(delivery);
+
   return (
     <Box>
       {loading ? (
@@ -105,7 +105,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
 
 const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
   const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || '', 1), []);
-  console.log(delivery);
+
   return (
     <Box>
       {loading ? (

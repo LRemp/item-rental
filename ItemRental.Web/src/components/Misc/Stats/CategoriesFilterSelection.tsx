@@ -23,16 +23,12 @@ function CategoriesFilterSelection() {
 
   useEffect(() => {
     if (result) {
-      console.log(result);
       const data = GenerateCategoriesTree(result);
-      console.log(data);
       setCategories(data);
     }
   }, [result]);
 
   const select = (name: string) => {};
-
-  console.log(category);
 
   return (
     <Box w={'100%'}>

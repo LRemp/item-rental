@@ -2,13 +2,10 @@ import api from '@/api';
 import ListingUserOrders from '@/components/Misc/ListingUserOrders';
 import LoginRequired from '@/components/LoginRequired';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
-import useApi from '@/hooks/useApi';
 import useApiResult from '@/hooks/useApiResult';
-import useAsync from '@/hooks/useAsync';
 import { Error, Success } from '@/utils/Notifications';
 import {
   Badge,
-  Box,
   Button,
   Center,
   Fieldset,
@@ -18,19 +15,17 @@ import {
   Loader,
   LoadingOverlay,
   Modal,
-  Paper,
   Text,
   Textarea,
   Title,
 } from '@mantine/core';
-import { DatePicker, DatePickerInput, DatePickerProps } from '@mantine/dates';
+import { DatePicker, DatePickerProps } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { IconLogin } from '@tabler/icons-react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import UserProfileCard from '@/components/Misc/UserProfileCard';
 import { nprogress } from '@mantine/nprogress';
@@ -94,7 +89,7 @@ function Listing() {
 
 const CreateOrderModal = () => {
   const { id } = useParams();
-  const { result, loading, error, request } = useApiResult(api.Order.createOrder);
+  const { request } = useApiResult(api.Order.createOrder);
   const {
     result: busyDates,
     loading: loadingDates,
@@ -108,7 +103,6 @@ const CreateOrderModal = () => {
     initialValues: { comment: '', date: [] },
     validate: {
       date: (value) => {
-        console.log(value);
         return (value.length != 2 || value[0] == null) && 'You must pick the rent period';
       },
     },
