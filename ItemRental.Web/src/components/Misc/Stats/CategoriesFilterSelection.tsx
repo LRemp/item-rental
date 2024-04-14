@@ -52,7 +52,7 @@ function CategoriesFilterSelection() {
             <UnstyledButton
               key={item.id}
               c={item.name == category ? 'blue' : ''}
-              onClick={() => navigate(`/${item.name}`)}
+              onClick={() => navigate(`/${item.value}`)}
             >
               <Text size="sm" fw={500}>
                 {item.label}

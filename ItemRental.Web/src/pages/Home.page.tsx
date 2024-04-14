@@ -18,6 +18,8 @@ import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterS
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { nprogress } from '@mantine/nprogress';
+import SelectCategoryAction from '@/components/ButtonActions/SelectCategoryAction';
+import CategorySelection from '@/components/Selection/CategorySelection';
 
 export function HomePage() {
   return (
@@ -53,9 +55,7 @@ const RentListingsContainer = () => {
         </Title>
       </Grid.Col>
       <Grid.Col span={18} hiddenFrom="md">
-        <Button>
-          Select category <IconFilter size={18} />
-        </Button>
+        <CategorySelection />
       </Grid.Col>
       <Grid.Col span={{ base: 18, md: 14 }}>
         {loading ? (
