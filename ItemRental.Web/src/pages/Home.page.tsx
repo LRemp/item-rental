@@ -29,25 +29,6 @@ export function HomePage() {
 }
 
 const RentListingsContainer = () => {
-  const [page, setPage] = useState(1);
-  const { category } = useParams();
-  const { result, loading, request } = useApiResult(api.RentListing.getListings, []);
-
-  useEffect(() => {
-    request({
-      category,
-      page,
-    });
-  }, [category, page]);
-
-  useEffect(() => {
-    if (loading) {
-      nprogress.start();
-    } else {
-      nprogress.complete();
-    }
-  }, [loading]);
-
   return (
     <Grid columns={18}>
       <Grid.Col span={18}>
@@ -59,29 +40,7 @@ const RentListingsContainer = () => {
         <CategorySelection />
       </Grid.Col>
       <Grid.Col span={{ base: 18, md: 15 }}>
-        {loading ? (
-          <Center h={'70vh'} w={'100%'}>
-            <Group>
-              <Loader></Loader>
-              <Text>Loading the rent offers...</Text>
-            </Group>
-          </Center>
-        ) : (
-          <Grid columns={18}>
-            {result &&
-              result?.result &&
-              result.result.map((rentListing: RentListing) => (
-                <Grid.Col span={{ base: 18, sm: 6 }} key={rentListing.id}>
-                  <ListingCard {...rentListing} />
-                </Grid.Col>
-              ))}
-            <Grid.Col span={18}>
-              <Center>
-                <Pagination total={result.totalPages} value={page} onChange={setPage} />
-              </Center>
-            </Grid.Col>
-          </Grid>
-        )}
+        <ItemsContainer />
       </Grid.Col>
       <Grid.Col span={{ base: 0, md: 3 }}>
         <Box visibleFrom="md">
@@ -89,5 +48,54 @@ const RentListingsContainer = () => {
         </Box>
       </Grid.Col>
     </Grid>
+  );
+};
+
+const ItemsContainer: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const { category } = useParams();
+  const { result, loading, request } = useApiResult(api.RentListing.getListings, []);
+
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    request({
+      category,
+      page,
+    });
+  }, [category, page]);
+
+  return (
+    <>
+      {loading ? (
+        <Center h={'70vh'} w={'100%'}>
+          <Group>
+            <Loader></Loader>
+            <Text>Loading the rent offers...</Text>
+          </Group>
+        </Center>
+      ) : (
+        <Grid columns={18}>
+          {result &&
+            result?.result &&
+            result.result.map((rentListing: RentListing) => (
+              <Grid.Col span={{ base: 18, sm: 6 }} key={rentListing.id}>
+                <ListingCard {...rentListing} />
+              </Grid.Col>
+            ))}
+          <Grid.Col span={18}>
+            <Center>
+              <Pagination total={result.totalPages} value={page} onChange={setPage} />
+            </Center>
+          </Grid.Col>
+        </Grid>
+      )}
+    </>
   );
 };

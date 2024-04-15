@@ -7,6 +7,7 @@ import NoImage from '@/assets/images/no_image.png';
 
 interface ListingCardProps extends RentListing {
   highlight?: string;
+  w?: string;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -18,11 +19,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
   price,
   location,
   highlight,
+  w,
 }) => {
   const navigate = useNavigate();
 
   return (
-    <Card withBorder radius="sm" className={classes.card} shadow="md">
+    <Card withBorder radius="sm" className={classes.card} shadow="md" w={w}>
       <Card.Section className={classes.imageSection}>
         <Image
           src={`/images/${item.images?.[0]}`}

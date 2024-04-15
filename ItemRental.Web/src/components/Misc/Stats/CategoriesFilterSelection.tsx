@@ -19,7 +19,7 @@ function CategoriesFilterSelection() {
   const { category } = useParams();
   const navigate = useNavigate();
   const { result, loading } = useApiResult(() => api.Category.getAll(), []);
-  const [categories, setCategories] = useState<any>(null);
+  const [categories, setCategories] = useState<any>([]);
 
   useEffect(() => {
     if (result) {
@@ -44,17 +44,32 @@ function CategoriesFilterSelection() {
       </Text>
       {categories &&
         categories.map((item: any) => (
-          <Group>
+          <Box>
             <UnstyledButton
               key={item.id}
-              c={item.name == category ? 'blue' : ''}
+              c={item.value == category && category != undefined ? 'blue' : ''}
               onClick={() => navigate(`/${item.value}`)}
+              w={'100%'}
             >
               <Text size="sm" fw={500}>
                 {item.label}
               </Text>
             </UnstyledButton>
-          </Group>
+            <Box ml={'xs'}>
+              {item.children.map((child: any) => (
+                <UnstyledButton
+                  key={child.id}
+                  c={child.value == category && category != undefined ? 'blue' : ''}
+                  onClick={() => navigate(`/${child.value}`)}
+                  w={'100%'}
+                >
+                  <Text size="sm" fw={500}>
+                    {child.label}
+                  </Text>
+                </UnstyledButton>
+              ))}
+            </Box>
+          </Box>
         ))}
     </Box>
   );
