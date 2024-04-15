@@ -1,8 +1,5 @@
 ﻿using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
-using ItemRental.Core.Entities;
-using ItemRental.Core.Enums;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using ItemRental.Services.Extensions.Messaging;
 using System;

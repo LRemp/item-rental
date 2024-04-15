@@ -2,7 +2,6 @@
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Enums;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using System;
 using System.Collections.Generic;

@@ -19,7 +19,7 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import { DatePicker, DatePickerProps } from '@mantine/dates';
+import { DatePicker, DatePickerProps, DatesProvider } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -146,11 +146,13 @@ const CreateOrderModal = () => {
   };
 
   const getDayProps: DatePickerProps['getDayProps'] = (date) => {
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     for (var index in busyDates) {
-      if (
-        date > new Date(busyDates[index].startDate) &&
-        date < new Date(busyDates[index].endDate)
-      ) {
+      var startDate = new Date(busyDates[index].startDate);
+      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      var endDate = new Date(busyDates[index].endDate);
+      endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+      if (date >= startDate && date <= endDate) {
         return {
           style: {
             backgroundColor: 'var(--mantine-color-red-filled)',
@@ -192,12 +194,15 @@ const CreateOrderModal = () => {
                 {loadingDates ? (
                   <Loader />
                 ) : (
-                  <DatePicker
-                    type="range"
-                    minDate={new Date()}
-                    {...form.getInputProps('date')}
-                    getDayProps={getDayProps}
-                  />
+                  <DatesProvider settings={{ timezone: 'UTC' }}>
+                    <DatePicker
+                      type="range"
+                      minDate={new Date()}
+                      {...form.getInputProps('date')}
+                      getDayProps={getDayProps}
+                      onDateChange={(date) => console.log(date)}
+                    />
+                  </DatesProvider>
                 )}
               </Center>
 

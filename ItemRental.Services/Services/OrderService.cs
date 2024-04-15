@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using ItemRental.Core.Enums;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
-using ItemRental.Core.Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +18,14 @@ namespace ItemRental.Services.Services
         private readonly IOrderRepository orderRepository;
         private readonly IRentListingRepository rentListingRepository;
         private readonly IEventLogRepository eventLogRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
-        public OrderService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository, IEventLogRepository eventLogRepository, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository, IEventLogRepository eventLogRepository, IUserRepository userRepository, IMapper mapper)
         {
             this.orderRepository = orderRepository;
             this.rentListingRepository = rentListingRepository;
             this.eventLogRepository = eventLogRepository;
+            this.userRepository = userRepository;
             this.mapper = mapper;
         }
 
@@ -70,6 +71,7 @@ namespace ItemRental.Services.Services
             }
 
             await eventLogRepository.AddAsync(DomainEventLogs.Order.Accepted(Guid.NewGuid(), order.Id), cancellationToken);
+            userRepository.AddNotificationAsync(DomainNotifications.Order.Accepted(order.User, order.Id), cancellationToken);
 
             return Result.Success();
         }
@@ -110,7 +112,8 @@ namespace ItemRental.Services.Services
             }
 
             await eventLogRepository.AddAsync(DomainEventLogs.Order.Created(Guid.NewGuid(), order.Id), cancellationToken);
-            
+            await userRepository.AddNotificationAsync(DomainNotifications.Order.Created(order.User, order.Id), cancellationToken);
+
             return Result.Success(order.Id);
         }
 

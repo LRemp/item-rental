@@ -46,7 +46,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       </Group>
 
       <Card.Section className={classes.section}>
-        <Group gap={30}>
+        <Group justify="space-between">
           <div>
             <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
               {price} Eur
@@ -56,13 +56,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Text>
           </div>
 
-          <Button
-            radius="sm"
-            variant="light"
-            style={{ flex: 1 }}
-            onClick={() => navigate(`/listing/${id}`)}
-          >
-            Rent now
+          <Button radius="sm" variant="light" onClick={() => navigate(`/listing/${id}`)}>
+            Rent it
           </Button>
         </Group>
       </Card.Section>

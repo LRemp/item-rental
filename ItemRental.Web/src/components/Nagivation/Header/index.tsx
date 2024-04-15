@@ -68,13 +68,17 @@ export function Header() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const isAuthenticated = useIsAuthenticated();
   const auth: AuthUser | null = useAuthUser();
+  const signOut = useSignOut();
 
   const items = tabs.map((tab) => (
     <Tabs.Tab value={tab.label} key={tab.label} onClick={() => navigate(tab.link || '/')}>
       {tab.label}
     </Tabs.Tab>
   ));
-  const signOut = useSignOut();
+  const signOutAction = () => {
+    signOut();
+    navigate('/');
+  };
 
   return (
     <div className={classes.header}>
@@ -169,7 +173,7 @@ export function Header() {
                     leftSection={
                       <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     }
-                    onClick={() => signOut()}
+                    onClick={signOutAction}
                   >
                     Sign out
                   </Menu.Item>

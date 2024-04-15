@@ -23,6 +23,7 @@ namespace ItemRental.Services.Extensions
             services.AddTransient<IDeliveryService, DeliveryService>();
 
             services.AddAutoMapper(typeof(DeliveryMappingProfile));
+            services.AddAutoMapper(typeof(NotificationMappingProfile));
 
             //services.AddTransient<IItemService, IItemService>();
         }

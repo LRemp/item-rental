@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ItemRental.Core.Logs
+namespace ItemRental.Core.Domain
 {
     public static class DomainEventLogs
     {
         public static class Order
         {
-            public static readonly Func<Guid, Guid, EventLog> Created = (id, resource) => new EventLog {
+            public static readonly Func<Guid, Guid, EventLog> Created = (id, resource) => new EventLog
+            {
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Created",

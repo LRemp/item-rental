@@ -1,5 +1,4 @@
 export const GenerateCategoriesTree = (categories = [], parentCategory = null) => {
-  console.log(categories);
   var categoryTree: any = [];
   categories
     .filter((category: any) => category.parent === parentCategory)

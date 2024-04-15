@@ -16,6 +16,7 @@ import {
   Image,
   Loader,
   Paper,
+  Tabs,
   Text,
   Title,
   UnstyledButton,
@@ -49,7 +50,7 @@ const ItemPage = () => {
   }, []);
 
   return (
-    <Box m={'lg'} w={'100%'}>
+    <Box w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Title fw={400} order={2}>
@@ -122,24 +123,31 @@ interface ItemDetailsProps {
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => {
   return (
-    <Paper shadow="xs" withBorder p={'md'}>
-      <Text fw={600} size="md" mb={'md'}>
-        Item details
-      </Text>
-      <Box>
-        {details?.map((detail: Detail) => (
-          <Grid justify="space-between" key={detail.name}>
-            <Grid.Col span={'content'}>
-              <Text fw={600} size="sm">
-                {detail.name}
-              </Text>
-            </Grid.Col>
-            <Grid.Col span={'content'}>
-              <Text size="sm">{detail.value}</Text>
-            </Grid.Col>
-          </Grid>
-        ))}
-      </Box>
-    </Paper>
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">Item details</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">
+        {details?.length == 0 ? (
+          <Text mt={'md'}></Text>
+        ) : (
+          <>
+            {details?.map((detail: Detail) => (
+              <Grid justify="space-between" key={detail.name}>
+                <Grid.Col span={'content'}>
+                  <Text fw={600} size="sm">
+                    {detail.name}
+                  </Text>
+                </Grid.Col>
+                <Grid.Col span={'content'}>
+                  <Text size="sm">{detail.value}</Text>
+                </Grid.Col>
+              </Grid>
+            ))}
+          </>
+        )}
+      </Tabs.Panel>
+    </Tabs>
   );
 };

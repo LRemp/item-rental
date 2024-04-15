@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using ItemRental.Core.Enums;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
-using ItemRental.Core.Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +18,15 @@ namespace ItemRental.Services.Services
         private readonly IDeliveryRepository deliveryRepository;
         private readonly IOrderRepository orderRepository;
         private readonly IEventLogRepository eventLogRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
-        public DeliveryService(IDeliveryRepository deliveryRepository, IOrderRepository orderRepository, IEventLogRepository eventLogRepository, IMapper mapper)
+        public DeliveryService(IDeliveryRepository deliveryRepository, IOrderRepository orderRepository, IEventLogRepository eventLogRepository,  IMapper mapper, IUserRepository userRepository)
         {
             this.deliveryRepository = deliveryRepository;
             this.orderRepository = orderRepository;
             this.eventLogRepository = eventLogRepository;
             this.mapper = mapper;
+            this.userRepository = userRepository;
         }
         public Task<bool> AddAsync(Delivery delivery, CancellationToken cancellationToken)
         {
@@ -46,6 +47,7 @@ namespace ItemRental.Services.Services
                 await orderRepository.UpdateAsync(order, cancellationToken);
 
                 await eventLogRepository.AddAsync(DomainEventLogs.Order.Delivered(Guid.NewGuid(), id), cancellationToken);
+                userRepository.AddNotificationAsync(DomainNotifications.Order.Delivered(order.User, order.Id), cancellationToken);
                 return true;
             }
             else if(order.Status == OrderStatus.Returning)
@@ -59,6 +61,8 @@ namespace ItemRental.Services.Services
 
                 await eventLogRepository.AddAsync(DomainEventLogs.Order.Returned(Guid.NewGuid(), id), cancellationToken);
                 await eventLogRepository.AddAsync(DomainEventLogs.Order.Complete(Guid.NewGuid(), id), cancellationToken);
+                userRepository.AddNotificationAsync(DomainNotifications.Order.Returned(order.User, order.Id), cancellationToken);
+                userRepository.AddNotificationAsync(DomainNotifications.Order.Completed(order.User, order.Id), cancellationToken);
                 return true;
             }
 
@@ -125,6 +129,7 @@ namespace ItemRental.Services.Services
                         Comment = updateDeliveryDTO.Comment
                     }, cancellationToken);
                     await eventLogRepository.AddAsync(DomainEventLogs.Order.Dispatched(Guid.NewGuid(), id), cancellationToken);
+                    userRepository.AddNotificationAsync(DomainNotifications.Order.Dispatched(order.User, order.Id), cancellationToken);
                 }
                 else
                 {
