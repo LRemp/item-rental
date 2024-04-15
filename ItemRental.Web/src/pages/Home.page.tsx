@@ -15,10 +15,9 @@ import api from '@/api';
 import ListingCard from '@/components/ListingCard/ListingCard';
 import { IconFilter } from '@tabler/icons-react';
 import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nprogress } from '@mantine/nprogress';
-import SelectCategoryAction from '@/components/ButtonActions/SelectCategoryAction';
 import CategorySelection from '@/components/Selection/CategorySelection';
 
 export function HomePage() {
@@ -30,14 +29,16 @@ export function HomePage() {
 }
 
 const RentListingsContainer = () => {
+  const [page, setPage] = useState(1);
   const { category } = useParams();
   const { result, loading, request } = useApiResult(api.RentListing.getListings, []);
 
   useEffect(() => {
     request({
       category,
+      page,
     });
-  }, [category]);
+  }, [category, page]);
 
   useEffect(() => {
     if (loading) {
@@ -57,7 +58,7 @@ const RentListingsContainer = () => {
       <Grid.Col span={18} hiddenFrom="md">
         <CategorySelection />
       </Grid.Col>
-      <Grid.Col span={{ base: 18, md: 14 }}>
+      <Grid.Col span={{ base: 18, md: 15 }}>
         {loading ? (
           <Center h={'70vh'} w={'100%'}>
             <Group>
@@ -68,21 +69,21 @@ const RentListingsContainer = () => {
         ) : (
           <Grid columns={18}>
             {result &&
-              result?.rentListings &&
-              result.rentListings.map((rentListing: RentListing) => (
-                <Grid.Col span={6} key={rentListing.id}>
+              result?.result &&
+              result.result.map((rentListing: RentListing) => (
+                <Grid.Col span={{ base: 18, sm: 6 }} key={rentListing.id}>
                   <ListingCard {...rentListing} />
                 </Grid.Col>
               ))}
             <Grid.Col span={18}>
               <Center>
-                <Pagination total={10} />
+                <Pagination total={result.totalPages} value={page} onChange={setPage} />
               </Center>
             </Grid.Col>
           </Grid>
         )}
       </Grid.Col>
-      <Grid.Col span={{ base: 0, md: 4 }}>
+      <Grid.Col span={{ base: 0, md: 3 }}>
         <Box visibleFrom="md">
           <CategoriesFilterSelection />
         </Box>

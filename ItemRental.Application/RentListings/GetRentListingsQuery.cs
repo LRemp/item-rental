@@ -10,22 +10,21 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.RentListings
 {
-    public sealed record GetRentListingsResponse(List<RentListingDTO> rentListings);
-    public sealed record GetRentListingsQuery(string? searchArgument, string? category, bool? ownerListings, Guid? userId, int? page) : IQuery<GetRentListingsResponse>;
-    internal class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, GetRentListingsResponse>
+    public sealed record GetRentListingsQuery(string? searchArgument, string? category, bool? ownerListings, Guid? userId, int? page) : IQuery<PaginatedResult<List<RentListingDTO>>>;
+    internal class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, PaginatedResult<List<RentListingDTO>>>
     {
         private readonly IRentListingRepository _rentListingRepository;
         public GetRentListingsQueryHandler(IRentListingRepository rentListingRepository)
         {
             _rentListingRepository = rentListingRepository;
         }
-        public async Task<Result<GetRentListingsResponse>> Handle(GetRentListingsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PaginatedResult<List<RentListingDTO>>>> Handle(GetRentListingsQuery request, CancellationToken cancellationToken)
         {
-            int page = request.page ?? 0;
+            int page = request.page - 1 ?? 0;
 
-            var listings = await _rentListingRepository.GetAsync(request.searchArgument, request.category, page, cancellationToken);
+            var paginatedResult = await _rentListingRepository.GetAsync(request.searchArgument, request.category, page, cancellationToken);
 
-            return new GetRentListingsResponse(listings);
+            return paginatedResult;
         }
     }
 }

@@ -65,7 +65,12 @@ const CreateListingModal: React.FC<CreatListingModalProps> = ({ id, opened, clos
         <form onSubmit={form.onSubmit((values) => createListing(values))}>
           <Fieldset disabled={loading} variant="unstyled">
             <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} />
-            <Textarea label="Description" placeholder="Description" autosize />
+            <Textarea
+              label="Description"
+              placeholder="Description"
+              autosize
+              {...form.getInputProps('description')}
+            />
             <TextInput
               label="Item"
               placeholder="Item"

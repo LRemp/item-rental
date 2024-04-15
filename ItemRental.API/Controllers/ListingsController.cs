@@ -26,7 +26,7 @@ namespace ItemRental.API.Controllers
         {
             ///Guid? userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<GetRentListingsResponse> result = await _sender.Send(new GetRentListingsQuery(searchArgument, category, ownerListings, null, page));
+            Result<PaginatedResult<List<RentListingDTO>>> result = await _sender.Send(new GetRentListingsQuery(searchArgument, category, ownerListings, null, page));
 
             if (result.IsFailure)
             {

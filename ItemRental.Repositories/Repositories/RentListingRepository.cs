@@ -2,12 +2,15 @@
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Helpers;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ItemRental.Repositories.Repositories
@@ -52,9 +55,9 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<List<RentListingDTO>> GetAsync(string? searchArgument, string? category, int page, CancellationToken cancellationTokenn)
+        public async Task<PaginatedResult<List<RentListingDTO>>> GetAsync(string? searchArgument, string? category, int page, CancellationToken cancellationTokenn)
         {
-            int pageSize = 10;
+            int pageSize = 3;
             int rowsToSkip = page * pageSize;
 
             var query = @"SELECT rl.*, i.*, u.*
@@ -73,12 +76,10 @@ namespace ItemRental.Repositories.Repositories
                     OR rl.description LIKE CONCAT('%', @search, '%')";
             }
 
-            if(category is not null)
+            if (category is not null)
             {
                 query += @" WHERE i.category = @category";
             }
-
-            query += $@" ORDER BY rl.Id OFFSET {rowsToSkip} ROWS FETCH NEXT {pageSize} ROWS ONLY";
 
             var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>
@@ -103,7 +104,17 @@ namespace ItemRental.Repositories.Repositories
                 }, new { search = searchArgument, category = category }
             );
 
-            return result.ToList();
+            var resultItems = result.ToList();
+            var totalPages = (int)Math.Ceiling((double)resultItems.Count / pageSize);
+
+
+            return new PaginatedResult<List<RentListingDTO>>
+            {
+                Result = resultItems.Skip(page * pageSize).Take(pageSize).ToList(),
+                Page = page,
+                PageSize = pageSize,
+                TotalPages = totalPages
+            };
         }
 
 

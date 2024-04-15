@@ -46,7 +46,7 @@ function Listing() {
   }, [loading]);
 
   return (
-    <Grid w={'100%'}>
+    <Grid w={'100%'} mt={'md'}>
       {loading ? (
         <Center h={'70vh'} w={'100%'}>
           <Group>
@@ -57,7 +57,7 @@ function Listing() {
       ) : (
         <>
           <Grid columns={12} w={'100%'}>
-            <Grid.Col span={8}>
+            <Grid.Col span={{ base: 12, md: 8 }}>
               {result?.item?.images?.length > 0 ? (
                 <PhotoCarousel images={result?.item.images} />
               ) : (
@@ -75,7 +75,7 @@ function Listing() {
                 <div>{result?.description}</div>
               </Group>
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col span={{ base: 12, md: 4 }}>
               <UserProfileCard {...result?.renter} />
               <CreateOrderModal />
               <ListingUserOrders listingId={id || ''} />

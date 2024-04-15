@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `deliveries` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.deliveries: ~6 rows (approximately)
+-- Dumping data for table itemrental.deliveries: ~5 rows (approximately)
 DELETE FROM `deliveries`;
 INSERT INTO `deliveries` (`id`, `order`, `type`, `role`, `location`, `shippingProvider`, `shippingId`, `comment`, `completed`) VALUES
 	('d1aa1cc3-17d7-432f-9ed0-0a2d5f81809e', '53df4412-cdbd-4413-8d3d-6723d67488e6', 1, 1, NULL, '2', 'CE473405152EE', 'Pristatymas', 0),
@@ -104,12 +104,13 @@ CREATE TABLE IF NOT EXISTS `items` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.items: ~4 rows (approximately)
+-- Dumping data for table itemrental.items: ~5 rows (approximately)
 DELETE FROM `items`;
 INSERT INTO `items` (`id`, `owner`, `name`, `description`, `category`, `images`, `tags`, `details`) VALUES
+	('ec0b4bc7-65d1-448b-8255-2de6d9b88727', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Phone', 'A well used phone', 'phones', 'null', NULL, '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"Galaxy S10"}]'),
 	('892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Badge', 'Debug badge', 'other', '["e855b3c2-ae26-49e4-873a-2e33c245c6dd.jpg"]', NULL, '[]'),
 	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'phones', 'null', NULL, '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]'),
-	('8fe61dae-b5fb-48ad-9c6d-d131fa5959e6', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', '', NULL, '', NULL, ''),
+	('8fe61dae-b5fb-48ad-9c6d-d131fa5959e6', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', '', 'cameras', '', NULL, ''),
 	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'cameras', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', NULL, '[{"Name":"mountType","Value":"asd"}]');
 
 -- Dumping structure for table itemrental.notifications
@@ -171,11 +172,11 @@ CREATE TABLE IF NOT EXISTS `rent_listings` (
   `location` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.rent_listings: ~1 rows (approximately)
+-- Dumping data for table itemrental.rent_listings: ~2 rows (approximately)
 DELETE FROM `rent_listings`;
 INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `price`, `location`) VALUES
-	('c646393c-9067-4793-a004-be8c79443259', 'd5805055-afc5-45c5-bda3-e366c0d45797', '44fa8ccc-69cf-45bd-bff2-7b8311e200d8', 'Debug rent listing', 'Well used mirror-less camera available for the rental! Renting along the 35mm Sony G-master lens', 19.990000, 'Kaunas, Lithuania'),
-	('f09d8b6d-643a-485a-8ac9-46254569b9c1', '892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'What is lorem ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20.990000, 'Vilnius, Lithuania');
+	('f09d8b6d-643a-485a-8ac9-46254569b9c1', '892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'What is lorem ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20.990000, 'Vilnius, Lithuania'),
+	('b9853a20-47c8-47be-8925-68e8e893a0dd', 'ec0b4bc7-65d1-448b-8255-2de6d9b88727', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Phone rent', '', 5.000000, 'Kaunas, Vilnius');
 
 -- Dumping structure for table itemrental.users
 CREATE TABLE IF NOT EXISTS `users` (

@@ -6,6 +6,9 @@ const getListings = (data?: any): ApiRequest => {
   if (data?.category) {
     endpoint += 'category=' + data.category;
   }
+  if (data?.page) {
+    endpoint += 'page=' + data.page;
+  }
   return {
     method: 'GET',
     endpoint: endpoint,
