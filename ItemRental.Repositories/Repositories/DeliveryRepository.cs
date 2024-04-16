@@ -20,14 +20,15 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Delivery delivery, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO deliveries (id, order, type, location, shippingProvider, shippingId, comment, completed)
-                        VALUES(@id, @order, @type, @location, @shippingProvider, @shippingId, @comment, @completed)";
+            var query = @"INSERT INTO deliveries (`id`, `order`, `type`, role, location, shippingProvider, shippingId, comment, completed)
+                        VALUES(@id, @order, @type, @role, @location, @shippingProvider, @shippingId, @comment, @completed)";
 
             var result = await mySqlConnection.ExecuteAsync(query, new
             {
                 id = delivery.Id,
                 order = delivery.Order,
                 type = delivery.Type,
+                role = delivery.Role,
                 location = delivery.Location,
                 shippingProvider = delivery.ShippingProvider,
                 shippingId = delivery.ShippingId,
@@ -56,13 +57,22 @@ namespace ItemRental.Repositories.Repositories
             return result;
         }
 
-        public async Task<Delivery?> GetByOrderAsync(Guid order, DeliveryType type, CancellationToken cancellationToken)
+        public async Task<Delivery?> GetByOrderAndRoleAsync(Guid order, OrderRole role, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM deliveries WHERE order = @order AND type = @type";
+            var query = @"SELECT * FROM deliveries WHERE `order` = @order AND `role` = @role";
 
-            var result = await mySqlConnection.QueryFirstOrDefaultAsync<Delivery>(query, new { order, type });
+            var result = await mySqlConnection.QueryFirstOrDefaultAsync<Delivery>(query, new { order, role });
 
             return result;
+        }
+
+        public async Task<List<Delivery>> GetByOrderAsync(Guid order, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM deliveries WHERE order = @order";
+
+            var result = await mySqlConnection.QueryAsync<Delivery>(query, new { order });
+
+            return result.ToList();
         }
 
         public async Task<bool> UpdateAsync(Delivery delivery, CancellationToken cancellationToken)

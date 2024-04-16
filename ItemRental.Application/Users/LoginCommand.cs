@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ItemRental.Core.Errors;
 using ItemRental.Core.DTOs;
 using AutoMapper;
+using ItemRental.Core.Domain;
 
 namespace ItemRental.Application.Users
 {

@@ -5,7 +5,7 @@ export const GenerateCategoriesTree = (categories = [], parentCategory = null) =
     .forEach((category: any) => {
       const categoryObj = {
         label: category.label,
-        name: category.name,
+        value: category.name,
         children: GenerateCategoriesTree(categories, category.name),
       };
       categoryTree.push(categoryObj);

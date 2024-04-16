@@ -22,3 +22,12 @@ type AuthUser = {
   username: string;
   email: string;
 };
+
+type UserNotification = {
+  code: string;
+  title: string;
+  description: string;
+  url: string;
+  timestamp: string;
+  read: boolean;
+};

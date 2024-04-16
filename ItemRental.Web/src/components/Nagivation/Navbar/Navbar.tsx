@@ -14,6 +14,7 @@ import {
   IconClipboardList,
   IconCheckupList,
   IconArrowLeft,
+  IconTruckDelivery,
 } from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 import { Link, NavLink } from 'react-router-dom';
@@ -22,6 +23,7 @@ const data = [
   { link: '/dashboard/home', label: 'Home', icon: IconHome },
   { link: '/dashboard/inventory', label: 'Inventory', icon: IconClipboardList },
   { link: '/dashboard/listings', label: 'Listings', icon: IconCheckupList },
+  { link: '/dashboard/orders', label: 'Orders', icon: IconTruckDelivery },
 ];
 
 export function Navbar() {

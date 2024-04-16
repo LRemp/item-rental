@@ -10,7 +10,5 @@ namespace ItemRental.Core.Enums
     {
         Pickup,
         Shipping,
-        ReturnPickup,
-        ReturnShipping
     }
 }

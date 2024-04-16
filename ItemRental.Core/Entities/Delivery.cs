@@ -10,11 +10,12 @@ namespace ItemRental.Core.Entities
     public class Delivery : Entity
     {
         public DeliveryType Type { get; set; }
+        public OrderRole Role { get; set; }
         public Guid Order { get; set; }
         public string? Location { get; set; }
         public string? ShippingProvider { get; set; }
         public string? ShippingId { get; set; }
         public string? Comment { get; set; }
-        public int Completed = 0;
+        public bool Completed = false;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using ItemRental.Services.Extensions.Messaging;
 using Newtonsoft.Json;

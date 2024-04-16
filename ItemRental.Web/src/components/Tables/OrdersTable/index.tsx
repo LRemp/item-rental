@@ -10,7 +10,6 @@ interface OrdersTableProps {
 }
 
 const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [], type, refresh }) => {
-  console.log(refresh);
   const rows = orders.map((order: Order) => (
     <OrdersTableElement {...order} key={order.id} type={type} refresh={refresh} />
   ));
@@ -55,7 +54,6 @@ const OrdersTableElement: React.FC<OrderTableElementProps> = ({
   type,
   refresh,
 }) => {
-  console.log(refresh);
   return (
     <Table.Tr key={id} m={'md'}>
       <Table.Td>{rentListing.title}</Table.Td>
@@ -64,7 +62,9 @@ const OrdersTableElement: React.FC<OrderTableElementProps> = ({
         {getDateLabel(startDate)} - {getDateLabel(endDate)}
       </Table.Td>
       <Table.Td>
-        <Group>{type == 'pending' && <ConfirmOrderAction id={id} refresh={refresh} />}</Group>
+        <Group>
+          {type == 'pending' && <ConfirmOrderAction size="compact-sm" id={id} refresh={refresh} />}
+        </Group>
       </Table.Td>
     </Table.Tr>
   );

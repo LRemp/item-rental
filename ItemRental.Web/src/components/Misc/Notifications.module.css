@@ -1,0 +1,10 @@
+.notification {
+  border-radius: 4px;
+  padding: 5px;
+  transition: 0.2s;
+}
+
+.notification:hover {
+  background: rgb(240, 240, 240);
+  transition: 0.2s;
+}

@@ -1,4 +1,5 @@
-﻿using ItemRental.Application.Orders;
+﻿using ItemRental.Application.Delivery;
+using ItemRental.Application.Orders;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Enums;
@@ -8,9 +9,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers.Rent
+namespace ItemRental.API.Controllers
 {
-    [Route("api/Rent/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -103,12 +104,12 @@ namespace ItemRental.API.Controllers.Rent
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("Pending")]
-        public async Task<IActionResult> GetPendingOrders(Guid id)
+        [HttpGet("Owner")]
+        public async Task<IActionResult> GetPendingOrders([FromQuery(Name = "status")] OrderStatus? status)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, OrderStatus.Pending));
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOwnerOrdersQuery(userId, status));
 
             if (result.IsFailure)
             {
@@ -136,6 +137,59 @@ namespace ItemRental.API.Controllers.Rent
             }
 
             return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Delivery")]
+        public async Task<IActionResult> GetDeliveryData(Guid id, [FromQuery(Name = "role")] OrderRole? role)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<DeliveryDTO?> result = await _sender.Send(new GetDeliveryQuery(id, userId, role));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            if (result.Value is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Delivery")]
+        public async Task<IActionResult> SetDeliveryData(Guid id, [FromBody] UpdateDeliveryDTO updateDeliveryDTO)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new UpdateDeliveryCommand(id, userId, updateDeliveryDTO));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Delivery/Confirm")]
+        public async Task<IActionResult> ConfirmDelivery(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new ConfirmDeliveryCommand(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
         }
     }
 }
