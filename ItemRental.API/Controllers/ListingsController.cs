@@ -55,7 +55,7 @@ namespace ItemRental.API.Controllers
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<GetRentListingByOwnerResponse> result = await _sender.Send(new GetRentListingByOwnerQuery(userId));
+            Result<List<RentListingDTO>> result = await _sender.Send(new GetRentListingByOwnerQuery(userId));
 
             if (result.IsFailure)
             {

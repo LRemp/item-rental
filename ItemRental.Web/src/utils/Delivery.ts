@@ -17,6 +17,17 @@ export const shippingProviders = [
   },
 ];
 
+export const deliveryTypes = [
+  {
+    value: '0',
+    label: 'Pickup',
+  },
+  {
+    value: '1',
+    label: 'Shipping',
+  },
+];
+
 export const getTrackingLink = (provider: string, id: string) => {
   switch (provider) {
     case '0':

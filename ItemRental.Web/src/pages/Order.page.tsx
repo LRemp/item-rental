@@ -26,6 +26,7 @@ import { nprogress } from '@mantine/nprogress';
 import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderDeliveryAction';
 import SubmitReturnDeliveryDetailsAction from '@/components/ButtonActions/SubmitReturnDeliveryDetailsAction';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
+import labels, { GetBadgeData } from '@/utils/OrderStatusLabels';
 
 const mock_events = [
   {
@@ -74,12 +75,21 @@ function Order() {
       ) : (
         <Grid columns={12} p={'lg'}>
           <Grid.Col span={12}>
-            <Title my={'lg'} order={2} fw={400}>
-              Order{' '}
-              <Text fw={400} size="xs" c="dimmed">
-                ({order.id})
-              </Text>
-            </Title>
+            <Group justify="space-between">
+              <Title my={'lg'} order={2} fw={400}>
+                Order{' '}
+                <Text fw={400} size="xs" c="dimmed">
+                  ({order.id})
+                </Text>
+              </Title>
+              <Badge
+                color={labels[order.status as keyof typeof labels].color}
+                radius={'xs'}
+                size="xl"
+              >
+                {labels[order.status as keyof typeof labels].label}
+              </Badge>
+            </Group>
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 4 }}>
             <TimelineContainer events={order.events} status={order.status} />

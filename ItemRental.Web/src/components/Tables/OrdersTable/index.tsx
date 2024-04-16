@@ -62,7 +62,9 @@ const OrdersTableElement: React.FC<OrderTableElementProps> = ({
         {getDateLabel(startDate)} - {getDateLabel(endDate)}
       </Table.Td>
       <Table.Td>
-        <Group>{type == 'pending' && <ConfirmOrderAction id={id} refresh={refresh} />}</Group>
+        <Group>
+          {type == 'pending' && <ConfirmOrderAction size="compact-sm" id={id} refresh={refresh} />}
+        </Group>
       </Table.Td>
     </Table.Tr>
   );

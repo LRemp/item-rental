@@ -1,13 +1,13 @@
 const getListings = (data?: any): ApiRequest => {
   var endpoint = '/api/Listings?';
   if (data?.searchArgument) {
-    endpoint += 'searchArgument=' + data.searchArgument;
+    endpoint += '&searchArgument=' + data.searchArgument;
   }
   if (data?.category) {
-    endpoint += 'category=' + data.category;
+    endpoint += '&category=' + data.category;
   }
   if (data?.page) {
-    endpoint += 'page=' + data.page;
+    endpoint += '&page=' + data.page;
   }
   return {
     method: 'GET',
@@ -17,7 +17,8 @@ const getListings = (data?: any): ApiRequest => {
 
 const getListingsByOwner = (): ApiRequest => ({
   method: 'GET',
-  endpoint: '/api/Listings',
+  endpoint: '/api/Listings/getByOwner',
+  authenticate: true,
 });
 
 const getListingById = (id: string): ApiRequest => ({

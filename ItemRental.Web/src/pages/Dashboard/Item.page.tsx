@@ -24,10 +24,18 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCross, IconPlaylistAdd, IconPlus, IconX } from '@tabler/icons-react';
+import {
+  IconCross,
+  IconDatabase,
+  IconList,
+  IconPlaylistAdd,
+  IconPlus,
+  IconX,
+} from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
+import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 
 const pathItems = [
   { title: 'Dashboard', href: '/dashboard' },
@@ -74,17 +82,17 @@ const ItemPage = () => {
 export default ItemPage;
 
 const ItemView: React.FC<Item> = ({ id, name, description, images, category, details }) => {
+  console.log(images);
   return (
     <Grid>
       <Grid.Col span={{ base: 12, sm: 5 }}>
-        <Paper shadow="xs" withBorder p={'md'}>
-          <Image
-            src={`/images/${images?.[0]}`}
-            radius="xs"
-            w="full"
-            fit="contain"
-            fallbackSrc={NoImage}
-          />
+        <Paper>
+          {images == null ? (
+            <Image src={NoImage} radius="xs" w="full" fit="contain" />
+          ) : (
+            <PhotoCarousel images={images} />
+          )}
+
           <Group mt={'sm'}>
             <Title fw={600} order={3}>
               {name}
@@ -125,7 +133,9 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => {
   return (
     <Tabs defaultValue="first">
       <Tabs.List>
-        <Tabs.Tab value="first">Item details</Tabs.Tab>
+        <Tabs.Tab value="first" leftSection={<IconList size={18} />}>
+          Item details
+        </Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="first">
@@ -134,16 +144,10 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => {
         ) : (
           <>
             {details?.map((detail: Detail) => (
-              <Grid justify="space-between" key={detail.name}>
-                <Grid.Col span={'content'}>
-                  <Text fw={600} size="sm">
-                    {detail.name}
-                  </Text>
-                </Grid.Col>
-                <Grid.Col span={'content'}>
-                  <Text size="sm">{detail.value}</Text>
-                </Grid.Col>
-              </Grid>
+              <Box>
+                <Text fw={500}>{detail.name}</Text>
+                <Text>{detail.value}</Text>
+              </Box>
             ))}
           </>
         )}

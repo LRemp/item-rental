@@ -34,6 +34,7 @@ import SubmitDeliveryDetails from '@/components/Details/Delivery/SubmitDeliveryD
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 import SubmitDeliveryDetailsAction from '@/components/ButtonActions/SubmitDeliveryDetailsAction';
 import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmReturnDeliveryAction';
+import labels from '@/utils/OrderStatusLabels';
 
 const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Orders' }].map(
   (item, index) => (
@@ -53,9 +54,23 @@ function Order() {
         <Grid.Col span={24}>
           <Grid justify="space-between" align="flex-end">
             <Grid.Col>
-              <Title fw={400} order={2}>
-                Order
-              </Title>
+              <Group justify="space-between">
+                <Title fw={400} order={2}>
+                  <Center inline>
+                    Order
+                    {order && (
+                      <Badge
+                        color={labels[order?.status as keyof typeof labels].color}
+                        radius={'xs'}
+                        size="md"
+                        ml={'sm'}
+                      >
+                        {labels[order?.status as keyof typeof labels].label}
+                      </Badge>
+                    )}
+                  </Center>
+                </Title>
+              </Group>
               <Text c="dimmed" size="xs" fw={500}>
                 {id}
               </Text>

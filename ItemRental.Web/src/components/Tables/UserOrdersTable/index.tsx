@@ -197,6 +197,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
 
   const rows = sortedData.map((row) => {
     const badge = GetBadgeData(row.status);
+
     return (
       <Table.Tr key={row.id}>
         <Table.Td>{row.title}</Table.Td>

@@ -15,9 +15,11 @@ import {
   Loader,
   LoadingOverlay,
   Modal,
+  Select,
   Text,
   Textarea,
   Title,
+  isNumberLike,
 } from '@mantine/core';
 import { DatePicker, DatePickerProps, DatesProvider } from '@mantine/dates';
 import { useForm } from '@mantine/form';
@@ -29,6 +31,7 @@ import { useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import UserProfileCard from '@/components/Misc/UserProfileCard';
 import { nprogress } from '@mantine/nprogress';
+import { deliveryTypes } from '@/utils/Delivery';
 
 function Listing() {
   const { id } = useParams();
@@ -100,10 +103,13 @@ const CreateOrderModal = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const form = useForm({
-    initialValues: { comment: '', date: [] },
+    initialValues: { comment: '', date: [], deliveryType: undefined },
     validate: {
       date: (value) => {
         return (value.length != 2 || value[0] == null) && 'You must pick the rent period';
+      },
+      deliveryType: (value) => {
+        return !value && 'You must pick the delivery type';
       },
     },
   });
@@ -124,6 +130,7 @@ const CreateOrderModal = () => {
         startDate: values.date[0],
         endDate: values.date[1],
         comment: values.comment,
+        deliveryType: parseInt(values.deliveryType),
       });
       notifications.update(
         Success({
@@ -212,6 +219,12 @@ const CreateOrderModal = () => {
                 autosize
                 {...form.getInputProps('comment')}
               ></Textarea>
+              <Select
+                label="Delivery type"
+                placeholder="Select delivery type"
+                data={deliveryTypes}
+                {...form.getInputProps('deliveryType')}
+              ></Select>
               <Button fullWidth mt="md" type="submit">
                 Add Item
               </Button>

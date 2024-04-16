@@ -32,6 +32,7 @@ import { Error, Success } from '@/utils/Notifications';
 import CreateItemModal from '@/components/Modals/CreateItem';
 import ItemTable from '@/components/Tables/ItemTable';
 import { nprogress } from '@mantine/nprogress';
+import ListingsTable from '@/components/Tables/ListingsTable';
 
 const elements = [
   { position: 1, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -56,7 +57,7 @@ export default function Inventory() {
     error,
     loading,
     request,
-  } = useApiResult<Item[]>(() => api.Item.getAll(), []);
+  } = useApiResult<Item[]>(() => api.RentListing.getListingsByOwner(), []);
 
   useEffect(() => {
     if (loading) {
@@ -96,7 +97,7 @@ export default function Inventory() {
                 <Loader />
               </Center>
             ) : (
-              <ItemTable items={items} />
+              <ListingsTable items={items} />
             )}
           </Paper>
         </Grid.Col>
