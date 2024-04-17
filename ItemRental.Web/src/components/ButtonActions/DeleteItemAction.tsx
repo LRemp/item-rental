@@ -40,7 +40,7 @@ const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
 
   return (
     <>
-      <Button color="red" onClick={openModal}>
+      <Button color="red" onClick={openModal} size="compact-sm">
         Delete
         <IconX size={18} />
       </Button>

@@ -1,4 +1,6 @@
 ﻿using ItemRental.Application.Users;
+using ItemRental.Core.Contracts;
+using ItemRental.Core.DTOs;
 using ItemRental.Core.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +12,11 @@ namespace ItemRental.API.Controllers
     public class UsersController: ControllerBase
     {
         private readonly ISender _sender;
-        public UsersController(ISender sender)
+        private readonly IJwtTokenService _jwtTokenService;
+        public UsersController(ISender sender, IJwtTokenService jwtTokenService)
         {
             _sender = sender;
+            _jwtTokenService = jwtTokenService;
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
@@ -46,6 +50,21 @@ namespace ItemRental.API.Controllers
             if(result.IsFailure)
             {
                 return BadRequest(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [HttpGet("Notifications")]
+        public async Task<IActionResult> GetNotifications()
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<NotificationDTO>> result = await _sender.Send(new GetUserNotificationsQuery(userId));
+
+            if(result.IsFailure)
+            {
+                return NotFound(result.Error);
             }
 
             return Ok(result.Value);

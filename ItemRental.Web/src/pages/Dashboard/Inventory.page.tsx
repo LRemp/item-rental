@@ -18,7 +18,7 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { IconUpload, IconPhoto, IconX, IconPlus } from '@tabler/icons-react';
@@ -31,6 +31,7 @@ import { notifications } from '@mantine/notifications';
 import { Error, Success } from '@/utils/Notifications';
 import CreateItemModal from '@/components/Modals/CreateItem';
 import ItemTable from '@/components/Tables/ItemTable';
+import { nprogress } from '@mantine/nprogress';
 
 const elements = [
   { position: 1, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -57,32 +58,37 @@ export default function Inventory() {
     request,
   } = useApiResult<Item[]>(() => api.Item.getAll(), []);
 
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
+
   return (
     <Box w={'100%'}>
       <Grid columns={24} grow>
         <Grid.Col span={24}>
-          <Grid justify="space-between" align="flex-end">
-            <Grid.Col span={1}>
-              <Title fw={500} order={2}>
+          <Group justify="space-between">
+            <Box>
+              <Title fw={400} order={2}>
                 Inventory
               </Title>
               <Breadcrumbs mt={'xs'}>{pathItems}</Breadcrumbs>
-            </Grid.Col>
-            <Grid.Col span={1}>
-              <Button variant="filled" onClick={open}>
-                <IconPlus size={18} />
-                Add new item
-              </Button>
-            </Grid.Col>
-          </Grid>
+            </Box>
+            <Button variant="filled" onClick={open}>
+              <IconPlus size={18} />
+              Add new item
+            </Button>
+          </Group>
           <Box></Box>
         </Grid.Col>
         <Grid.Col span={24}>
           <CreateItemModal opened={opened} close={close} />
         </Grid.Col>
         <Grid.Col span={24}>
-          <Paper p={'md'}>
-            <Title order={5}>Inventory items</Title>
+          <Box>
             {loading ? (
               <Center>
                 <Loader />
@@ -90,7 +96,7 @@ export default function Inventory() {
             ) : (
               <ItemTable items={items} />
             )}
-          </Paper>
+          </Box>
         </Grid.Col>
       </Grid>
     </Box>

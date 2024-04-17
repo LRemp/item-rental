@@ -9,3 +9,18 @@ type ApiRequest = {
   authenticate?: boolean;
   body?: Record<string, any>;
 };
+
+type EventLog = {
+  resource: string;
+  eventName: string;
+  title: string;
+  description: string;
+  timestamp: string;
+};
+
+type PaginatedResult<T> = {
+  result: T[];
+  pageSize: number;
+  totalPages: number;
+  currentPage: number;
+};

@@ -1,8 +1,8 @@
 ﻿using ItemRental.Application.Abstractions.Messaging;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using Newtonsoft.Json;
 using System;

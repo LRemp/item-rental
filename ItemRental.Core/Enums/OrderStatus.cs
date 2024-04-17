@@ -10,9 +10,11 @@ namespace ItemRental.Core.Enums
     {
         Pending,
         Accepted,
-        Rejected,
+        Delivering,
         InProgress,
+        Returning,
         Completed,
+        Rejected,
         Cancelled
     }
 }

@@ -9,9 +9,17 @@ type Order = {
   rentListing: RentListing;
   startDate: string;
   endDate: string;
-  status: number;
+  status: OrderStatus;
+  deliveryType: DeliveryType;
   user: UserProfile;
+  events: EventLog[];
+  comment: string;
 };
+
+enum DeliveryType {
+  Pickup = 0,
+  Shipping = 1,
+}
 
 enum OrderStatus {
   Pending = 0,

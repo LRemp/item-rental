@@ -51,7 +51,6 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
     if (adding) return;
     add.open();
 
-    //return console.log(data);
     const notificationId = notifications.show({
       loading: true,
       title: 'Loading',
@@ -64,7 +63,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
 
     if (data.files.length > 0) {
       imageUpload = await uploadImage(data.files);
-      console.log(imageUpload);
+
       if (!imageUpload.success) {
         add.close();
         return notifications.update(
@@ -108,7 +107,6 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       close();
       add.close();
     } catch (error: any) {
-      console.log(error);
       notifications.update(
         Error({ id: notificationId, title: 'Error', message: error.description })
       );
@@ -116,9 +114,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
     }
   };
 
-  const changeCategory = (value: string | null) => {
-    console.log(value);
-  };
+  const changeCategory = (value: string | null) => {};
 
   return (
     <Modal

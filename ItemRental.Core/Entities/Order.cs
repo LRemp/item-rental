@@ -15,5 +15,6 @@ namespace ItemRental.Core.Entities
         public DateTime EndDate { get; set; }
         public OrderStatus Status { get; set; }
         public DeliveryType DeliveryType { get; set; }
+        public string? Comment { get; set; }
     }
 }

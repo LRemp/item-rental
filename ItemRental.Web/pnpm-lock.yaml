@@ -29,6 +29,9 @@ dependencies:
   '@mantine/notifications':
     specifier: ^7.6.1
     version: 7.6.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0)
+  '@mantine/nprogress':
+    specifier: ^7.7.1
+    version: 7.7.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0)
   '@tabler/icons-react':
     specifier: ^2.47.0
     version: 2.47.0(react@18.2.0)
@@ -2287,8 +2290,31 @@ packages:
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
+  /@mantine/nprogress@7.7.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-4IkjL30/mgHN3QQvxJWM5/NkJH38fwwa6A1PkH6KgWxCflTa1mVI2DALsr7nx7eEVFnt9ScVZPpiwDxOteOPtg==}
+    peerDependencies:
+      '@mantine/core': 7.7.1
+      '@mantine/hooks': 7.7.1
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@mantine/core': 7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.56)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.5.1(react@18.2.0)
+      '@mantine/store': 7.7.1(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@mantine/store@7.6.1(react@18.2.0):
     resolution: {integrity: sha512-UqSsJLlAL53OSSUNK/aTXpkss9DX0TppTbtBKXPyflYfq0B9vKwQKumxEsg3UGVC4cjiQq2VD4mjGT94r+deug==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /@mantine/store@7.7.1(react@18.2.0):
+    resolution: {integrity: sha512-dmuCOLCFlVHYhZARFsi5YckFQR2Vr4giOgs0X1hczqCVUnRDRIgRusAO5GjUhQrtNxfN0EWwFywjLdcrLkA6Lg==}
     peerDependencies:
       react: ^18.2.0
     dependencies:

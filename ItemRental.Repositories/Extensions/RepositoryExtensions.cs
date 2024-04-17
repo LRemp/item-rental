@@ -22,6 +22,8 @@ namespace ItemRental.Repositories.Extensions
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IRentListingRepository, RentListingRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IDeliveryRepository, DeliveryRepository>();
+            services.AddTransient<IEventLogRepository, EventLogRepository>();
         }
     }
 }

@@ -47,11 +47,17 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, category, ima
       <Table.Td>{description}</Table.Td>
       <Table.Td>{tags}</Table.Td>
       <Table.Td>
-        <Group>
-          <Button color="blue" onClick={() => navigate(`/dashboard/item/${id}`)}>
+        <Group gap={'xs'}>
+          <Button
+            color="blue"
+            onClick={() => navigate(`/dashboard/inventory/${id}`)}
+            size="compact-sm"
+          >
             View
           </Button>
-          <Button color="yellow">Edit</Button>
+          <Button color="yellow" size="compact-sm">
+            Edit
+          </Button>
           <DeleteItemAction id={id} />
         </Group>
       </Table.Td>

@@ -4,6 +4,7 @@ import Order from './Order';
 import Item from './Item';
 import Image from './Image';
 import Category from './Category';
+import Delivery from './Delivery';
 
 export default {
   User,
@@ -12,4 +13,5 @@ export default {
   Item,
   Image,
   Category,
+  Delivery,
 };

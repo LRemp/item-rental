@@ -13,5 +13,6 @@ namespace ItemRental.Core.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DeliveryType DeliveryType { get; set; }
+        public string Comment { get; set; } = string.Empty;
     }
 }

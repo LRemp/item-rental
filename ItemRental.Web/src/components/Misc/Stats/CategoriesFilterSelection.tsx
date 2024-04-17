@@ -19,26 +19,22 @@ function CategoriesFilterSelection() {
   const { category } = useParams();
   const navigate = useNavigate();
   const { result, loading } = useApiResult(() => api.Category.getAll(), []);
-  const [categories, setCategories] = useState<any>(null);
+  const [categories, setCategories] = useState<any>([]);
 
   useEffect(() => {
     if (result) {
-      console.log(result);
       const data = GenerateCategoriesTree(result);
-      console.log(data);
       setCategories(data);
     }
   }, [result]);
 
   const select = (name: string) => {};
 
-  console.log(category);
-
   return (
     <Box w={'100%'}>
       <Text fw={600} size="md" mb="md">
         <Center inline>
-          Categories {loading && <Loader size={'xs'} />}{' '}
+          Categories {loading && <Loader size={'xs'} ml={'xs'} />}{' '}
           {category && (
             <ActionIcon onClick={() => navigate('/')} size="xs" ml={'xs'}>
               <IconX size="xs"></IconX>
@@ -48,17 +44,32 @@ function CategoriesFilterSelection() {
       </Text>
       {categories &&
         categories.map((item: any) => (
-          <Group>
+          <Box>
             <UnstyledButton
               key={item.id}
-              c={item.name == category ? 'blue' : ''}
-              onClick={() => navigate(`/${item.name}`)}
+              c={item.value == category && category != undefined ? 'blue' : ''}
+              onClick={() => navigate(`/${item.value}`)}
+              w={'100%'}
             >
               <Text size="sm" fw={500}>
                 {item.label}
               </Text>
             </UnstyledButton>
-          </Group>
+            <Box ml={'xs'}>
+              {item.children.map((child: any) => (
+                <UnstyledButton
+                  key={child.id}
+                  c={child.value == category && category != undefined ? 'blue' : ''}
+                  onClick={() => navigate(`/${child.value}`)}
+                  w={'100%'}
+                >
+                  <Text size="sm" fw={500}>
+                    {child.label}
+                  </Text>
+                </UnstyledButton>
+              ))}
+            </Box>
+          </Box>
         ))}
     </Box>
   );
