@@ -1,6 +1,6 @@
 ﻿using ItemRental.Core.Helpers;
 
-namespace ItemRental.Core.Errors
+namespace ItemRental.Core.Domain
 {
     public static class DomainErrors
     {
@@ -13,9 +13,9 @@ namespace ItemRental.Core.Errors
             public static readonly Func<Guid, Error> NotFound = id => new Error(
                 "User.NotFound",
                 $"The member with identifier {id} was not found.");
-            
+
             public static readonly Error InvalidCredentials = new Error(
-                "User.InvalidCredentials", 
+                "User.InvalidCredentials",
                 "The provided credentials are invalid");
         }
 
@@ -38,7 +38,7 @@ namespace ItemRental.Core.Errors
                 "The item could not be deleted");
         }
 
-        public static class  RentListing
+        public static class RentListing
         {
             public static readonly Error FailedToCreate = new Error(
                 "RentListing.FailedToCreate",
@@ -87,6 +87,14 @@ namespace ItemRental.Core.Errors
             public static readonly Func<Guid, Error> DateBusy = id => new Error(
                 "Order.DateBusy",
                 "The selected date is busy");
+
+            public static readonly Error NotInTransit = new Error(
+                "Order.NotInTransit",
+                "The order is not in transit");
+
+            public static readonly Error FailedToConfirmDelivery = new Error(
+                "Order.FailedToConfirmDelivery",
+                "Failed to confirm the delivery");
         }
     }
 }

@@ -17,6 +17,7 @@ import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@table
 import classes from './main.module.css';
 import getDateLabel from '@/utils/Dates';
 import OrderStatusLabels, { GetBadgeData } from '@/utils/OrderStatusLabels';
+import { useNavigate } from 'react-router-dom';
 
 interface RowData {
   id: string;
@@ -179,6 +180,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
+  const navigate = useNavigate();
 
   const setSorting = (field: keyof RowData) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -195,6 +197,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
 
   const rows = sortedData.map((row) => {
     const badge = GetBadgeData(row.status);
+
     return (
       <Table.Tr key={row.id}>
         <Table.Td>{row.title}</Table.Td>
@@ -205,16 +208,16 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
           </Badge>
         </Table.Td>
         <Table.Td width={'20px'}>
-          <Button size="compact-sm">View</Button>
+          <Button size="compact-sm" onClick={() => navigate(`/orders/${row.id}`)}>
+            View
+          </Button>
         </Table.Td>
       </Table.Tr>
     );
   });
 
-  console.log(items);
-
   return (
-    <Paper p={'md'} withBorder radius={'md'} shadow="xs" mb={'xl'}>
+    <Paper radius={'md'} mb={'xl'}>
       <ScrollArea>
         <TextInput
           placeholder="Search by any field"

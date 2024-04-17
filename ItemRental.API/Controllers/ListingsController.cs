@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ItemRental.API.Controllers.Rent
+namespace ItemRental.API.Controllers
 {
-    [Route("api/Rent/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ListingsController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace ItemRental.API.Controllers.Rent
         {
             ///Guid? userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<GetRentListingsResponse> result = await _sender.Send(new GetRentListingsQuery(searchArgument, category, ownerListings, null, page));
+            Result<PaginatedResult<List<RentListingDTO>>> result = await _sender.Send(new GetRentListingsQuery(searchArgument, category, ownerListings, null, page));
 
             if (result.IsFailure)
             {
@@ -55,7 +55,7 @@ namespace ItemRental.API.Controllers.Rent
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<GetRentListingByOwnerResponse> result = await _sender.Send(new GetRentListingByOwnerQuery(userId));
+            Result<List<RentListingDTO>> result = await _sender.Send(new GetRentListingByOwnerQuery(userId));
 
             if (result.IsFailure)
             {

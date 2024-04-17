@@ -1,7 +1,7 @@
 ﻿using ItemRental.Application.Abstractions.Messaging;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
-using ItemRental.Core.Errors;
 using ItemRental.Core.Helpers;
 using System;
 using System.Collections.Generic;

@@ -13,6 +13,9 @@ import ItemPage from './pages/Dashboard/Item.page';
 import useApiResult from './hooks/useApiResult';
 import api from './api';
 import OrdersPage from './pages/Orders.page';
+import OrderPage from './pages/Order.page';
+import DashboardOrders from './pages/Dashboard/Orders.page';
+import DashboardOrder from './pages/Dashboard/Order.page';
 
 const router = createBrowserRouter([
   {
@@ -20,16 +23,20 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: ':category?',
+        path: '/:category?',
         element: <HomePage />,
       },
       {
-        path: 'listing/:id',
+        path: '/listing/:id',
         element: <ListingPage />,
       },
       {
-        path: 'orders',
+        path: '/orders',
         element: <OrdersPage />,
+      },
+      {
+        path: '/orders/:id',
+        element: <OrderPage />,
       },
     ],
   },
@@ -58,8 +65,16 @@ const router = createBrowserRouter([
         element: <ListingsPage />,
       },
       {
-        path: 'item/:id',
+        path: 'inventory/:id',
         element: <ItemPage />,
+      },
+      {
+        path: 'orders',
+        element: <DashboardOrders />,
+      },
+      {
+        path: 'orders/:id',
+        element: <DashboardOrder />,
       },
       {
         path: 'settings',

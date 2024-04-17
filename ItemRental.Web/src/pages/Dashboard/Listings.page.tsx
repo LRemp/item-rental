@@ -18,7 +18,7 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { IconUpload, IconPhoto, IconX, IconPlus } from '@tabler/icons-react';
@@ -31,6 +31,8 @@ import { notifications } from '@mantine/notifications';
 import { Error, Success } from '@/utils/Notifications';
 import CreateItemModal from '@/components/Modals/CreateItem';
 import ItemTable from '@/components/Tables/ItemTable';
+import { nprogress } from '@mantine/nprogress';
+import ListingsTable from '@/components/Tables/ListingsTable';
 
 const elements = [
   { position: 1, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -55,7 +57,15 @@ export default function Inventory() {
     error,
     loading,
     request,
-  } = useApiResult<Item[]>(() => api.Item.getAll(), []);
+  } = useApiResult<Item[]>(() => api.RentListing.getListingsByOwner(), []);
+
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
 
   return (
     <Box w={'100%'}>
@@ -63,7 +73,7 @@ export default function Inventory() {
         <Grid.Col span={24}>
           <Grid justify="space-between" align="flex-end">
             <Grid.Col span={2}>
-              <Title fw={500} order={2}>
+              <Title fw={400} order={2}>
                 Rent listings
               </Title>
               <Breadcrumbs mt={'xs'}>{pathItems}</Breadcrumbs>
@@ -81,14 +91,13 @@ export default function Inventory() {
           <CreateItemModal opened={opened} close={close} />
         </Grid.Col>
         <Grid.Col span={24}>
-          <Paper p={'md'}>
-            <Title order={5}>Your rent listings</Title>
+          <Paper>
             {loading ? (
               <Center>
                 <Loader />
               </Center>
             ) : (
-              <ItemTable items={items} />
+              <ListingsTable items={items} />
             )}
           </Paper>
         </Grid.Col>

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\ItemRental.Services\ItemRental.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Delivery\" />
-  </ItemGroup>
-
 </Project>

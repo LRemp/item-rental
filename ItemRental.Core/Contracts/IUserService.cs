@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemRental.Core.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace ItemRental.Core.Contracts
     {
         public string GeneratePasswordHash(string password);
         public bool VerifyPasswordHash(string password, string passwordHash);
+        public Task<List<NotificationDTO>> GetNotificationsAsync(Guid user, CancellationToken cancellationToken);
     }
 }

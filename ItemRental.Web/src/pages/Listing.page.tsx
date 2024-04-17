@@ -2,13 +2,10 @@ import api from '@/api';
 import ListingUserOrders from '@/components/Misc/ListingUserOrders';
 import LoginRequired from '@/components/LoginRequired';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
-import useApi from '@/hooks/useApi';
 import useApiResult from '@/hooks/useApiResult';
-import useAsync from '@/hooks/useAsync';
 import { Error, Success } from '@/utils/Notifications';
 import {
   Badge,
-  Box,
   Button,
   Center,
   Fieldset,
@@ -18,21 +15,23 @@ import {
   Loader,
   LoadingOverlay,
   Modal,
-  Paper,
+  Select,
   Text,
   Textarea,
   Title,
+  isNumberLike,
 } from '@mantine/core';
-import { DatePicker, DatePickerInput, DatePickerProps } from '@mantine/dates';
+import { DatePicker, DatePickerProps, DatesProvider } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { IconLogin } from '@tabler/icons-react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import UserProfileCard from '@/components/Misc/UserProfileCard';
+import { nprogress } from '@mantine/nprogress';
+import { deliveryTypes } from '@/utils/Delivery';
 
 function Listing() {
   const { id } = useParams();
@@ -41,8 +40,16 @@ function Listing() {
     []
   );
 
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
+
   return (
-    <Grid w={'100%'}>
+    <Grid w={'100%'} mt={'md'}>
       {loading ? (
         <Center h={'70vh'} w={'100%'}>
           <Group>
@@ -53,7 +60,7 @@ function Listing() {
       ) : (
         <>
           <Grid columns={12} w={'100%'}>
-            <Grid.Col span={8}>
+            <Grid.Col span={{ base: 12, md: 8 }}>
               {result?.item?.images?.length > 0 ? (
                 <PhotoCarousel images={result?.item.images} />
               ) : (
@@ -71,7 +78,7 @@ function Listing() {
                 <div>{result?.description}</div>
               </Group>
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col span={{ base: 12, md: 4 }}>
               <UserProfileCard {...result?.renter} />
               <CreateOrderModal />
               <ListingUserOrders listingId={id || ''} />
@@ -85,7 +92,7 @@ function Listing() {
 
 const CreateOrderModal = () => {
   const { id } = useParams();
-  const { result, loading, error, request } = useApiResult(api.Order.createOrder);
+  const { request } = useApiResult(api.Order.createOrder);
   const {
     result: busyDates,
     loading: loadingDates,
@@ -96,11 +103,13 @@ const CreateOrderModal = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const form = useForm({
-    initialValues: { comment: '', date: [] },
+    initialValues: { comment: '', date: [], deliveryType: undefined },
     validate: {
       date: (value) => {
-        console.log(value);
         return (value.length != 2 || value[0] == null) && 'You must pick the rent period';
+      },
+      deliveryType: (value) => {
+        return !value && 'You must pick the delivery type';
       },
     },
   });
@@ -120,6 +129,8 @@ const CreateOrderModal = () => {
         rentListing: id,
         startDate: values.date[0],
         endDate: values.date[1],
+        comment: values.comment,
+        deliveryType: parseInt(values.deliveryType),
       });
       notifications.update(
         Success({
@@ -142,11 +153,13 @@ const CreateOrderModal = () => {
   };
 
   const getDayProps: DatePickerProps['getDayProps'] = (date) => {
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     for (var index in busyDates) {
-      if (
-        date > new Date(busyDates[index].startDate) &&
-        date < new Date(busyDates[index].endDate)
-      ) {
+      var startDate = new Date(busyDates[index].startDate);
+      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      var endDate = new Date(busyDates[index].endDate);
+      endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+      if (date >= startDate && date <= endDate) {
         return {
           style: {
             backgroundColor: 'var(--mantine-color-red-filled)',
@@ -188,12 +201,15 @@ const CreateOrderModal = () => {
                 {loadingDates ? (
                   <Loader />
                 ) : (
-                  <DatePicker
-                    type="range"
-                    minDate={new Date()}
-                    {...form.getInputProps('date')}
-                    getDayProps={getDayProps}
-                  />
+                  <DatesProvider settings={{ timezone: 'UTC' }}>
+                    <DatePicker
+                      type="range"
+                      minDate={new Date()}
+                      {...form.getInputProps('date')}
+                      getDayProps={getDayProps}
+                      onDateChange={(date) => console.log(date)}
+                    />
+                  </DatesProvider>
                 )}
               </Center>
 
@@ -203,6 +219,12 @@ const CreateOrderModal = () => {
                 autosize
                 {...form.getInputProps('comment')}
               ></Textarea>
+              <Select
+                label="Delivery type"
+                placeholder="Select delivery type"
+                data={deliveryTypes}
+                {...form.getInputProps('deliveryType')}
+              ></Select>
               <Button fullWidth mt="md" type="submit">
                 Add Item
               </Button>

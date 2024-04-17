@@ -13,20 +13,28 @@ const labels = {
     color: 'green',
   },
   2: {
-    label: 'Rejected',
-    color: 'red',
+    label: 'Delivering',
+    color: 'yellow',
   },
   3: {
-    label: 'In progress',
+    label: 'In Progress',
     color: 'orange',
   },
   4: {
+    label: 'Returning',
+    color: 'yellow',
+  },
+  5: {
     label: 'Completed',
     color: 'green',
   },
-  5: {
-    label: 'Canceled',
+  6: {
+    label: 'Rejected',
     color: 'red',
+  },
+  7: {
+    label: 'Cancelled',
+    color: 'white',
   },
 };
 
@@ -41,25 +49,35 @@ const indexedLabels: any = {
     color: 'green',
     label: 'Accepted',
   },
-  Rejected: {
+  Delivering: {
     id: 2,
-    color: 'red',
-    label: 'Rejected',
+    color: 'yellow',
+    label: 'Delivering',
   },
-  'In progress': {
+  'In Progress': {
     id: 3,
     color: 'orange',
-    label: 'In progress',
+    label: 'In Progress',
+  },
+  Returning: {
+    id: 4,
+    color: 'yellow',
+    label: 'Returning',
   },
   Completed: {
-    id: 4,
+    id: 5,
     color: 'green',
     label: 'Completed',
   },
-  Canceled: {
-    id: 5,
+  Rejected: {
+    id: 6,
     color: 'red',
-    label: 'Canceled',
+    label: 'Rejected',
+  },
+  Cancelled: {
+    id: 7,
+    color: 'gray',
+    label: 'Cancelled',
   },
 };
 
