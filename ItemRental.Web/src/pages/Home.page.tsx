@@ -12,7 +12,6 @@ import {
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 import ListingCard from '@/components/ListingCard/ListingCard';
-import { IconFilter } from '@tabler/icons-react';
 import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -27,7 +26,11 @@ export function HomePage() {
 
 const RentListingsContainer = () => {
   const { category } = useParams();
-  const { result, loading, request } = useApiResult(api.RentListing.getListings, []);
+  const {
+    result: pageData,
+    loading,
+    request,
+  } = useApiResult<PaginatedResult<RentListing>>(api.RentListing.getListings, []);
 
   useEffect(() => {
     request({
@@ -52,9 +55,7 @@ const RentListingsContainer = () => {
           </Center>
         ) : (
           <Grid columns={18}>
-            {result &&
-              result?.rentListings &&
-              result.rentListings.map((rentListing: RentListing) => (
+              {pageData.result.map((rentListing: RentListing) => (
                 <Grid.Col span={6} key={rentListing.id}>
                   <ListingCard {...rentListing} />
                 </Grid.Col>
