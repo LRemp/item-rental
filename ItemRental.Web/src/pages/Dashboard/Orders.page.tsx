@@ -5,7 +5,7 @@ import { Anchor, Box, Breadcrumbs, Center, Grid, Loader, Paper, Title } from '@m
 import { useEffect } from 'react';
 import { nprogress } from '@mantine/nprogress';
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Orders' }].map(
+const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Orders' }].map(
   (item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}

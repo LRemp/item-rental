@@ -36,7 +36,7 @@ import SubmitDeliveryDetailsAction from '@/components/ButtonActions/SubmitDelive
 import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmReturnDeliveryAction';
 import labels from '@/utils/OrderStatusLabels';
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Orders' }].map(
+const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Orders' }].map(
   (item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}
@@ -233,14 +233,33 @@ const ListingDetails: React.FC<ListingDetailsProps> = ({ listing }) => {
   const { result: data, loading } = useApiResult(() => api.RentListing.getListingById(listing), []);
   return (
     <Grid columns={12} mt={'sm'}>
-      <Grid.Col span={{ base: 12, sm: 6 }}></Grid.Col>
-      <Grid.Col span={{ base: 12, sm: 6 }}>
-        {data?.item?.images?.length > 0 ? (
-          <PhotoCarousel images={data?.item.images} />
-        ) : (
-          <Image src={NoImage} />
-        )}
-      </Grid.Col>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Box>
+              <Text fw={500}>Title</Text>
+              <Text>{data.title}</Text>
+            </Box>
+            <Box>
+              <Text fw={500}>Description</Text>
+              <Text>{data.description}</Text>
+            </Box>
+            <Box>
+              <Text fw={500}>Price</Text>
+              <Text>{data.price} Eur per day</Text>
+            </Box>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            {data?.item?.images?.length > 0 ? (
+              <PhotoCarousel images={data?.item.images} />
+            ) : (
+              <Image src={NoImage} />
+            )}
+          </Grid.Col>
+        </>
+      )}
     </Grid>
   );
 };

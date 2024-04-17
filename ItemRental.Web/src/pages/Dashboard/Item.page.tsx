@@ -38,7 +38,7 @@ import NoImage from '@/assets/images/no_image.png';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 
 const pathItems = [
-  { title: 'Dashboard', href: '/dashboard' },
+  { title: 'Dashboard', href: '/dashboard/home' },
   { title: 'Inventory', href: '/dashboard/inventory' },
   { title: 'Item' },
 ].map((item, index) => (

@@ -41,7 +41,7 @@ const elements = [
   { position: 5, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
 ];
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Inventory' }].map(
+const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Inventory' }].map(
   (item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}
