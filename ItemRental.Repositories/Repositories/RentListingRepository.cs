@@ -65,21 +65,32 @@ namespace ItemRental.Repositories.Repositories
                 INNER JOIN items i ON rl.item = i.id
                 INNER JOIN users u ON rl.renter = u.id";
 
-            if (searchArgument is not null)
+            if (searchArgument is not null || category is not null)
             {
-                query += @" WHERE i.name LIKE CONCAT('%', @search, '%')
-                    OR i.description LIKE CONCAT('%', @search, '%')
-                    OR i.category LIKE CONCAT('%', @search, '%')
-                    OR i.tags LIKE CONCAT('%', @search, '%')
-                    OR i.details LIKE CONCAT('%', @search, '%')
-                    OR rl.title LIKE CONCAT('%', @search, '%')
-                    OR rl.description LIKE CONCAT('%', @search, '%')";
+                query += @" WHERE ";
+                if (category is not null)
+                {
+                    query += @"i.category = @category";
+                }
+
+                if (searchArgument is not null)
+                {
+                    if(category is not null)
+                    {
+                        query += @" AND ";
+                    }
+
+                    query += @"(i.name LIKE CONCAT('%', @search, '%')
+                        OR i.description LIKE CONCAT('%', @search, '%')
+                        OR i.category LIKE CONCAT('%', @search, '%')
+                        OR i.tags LIKE CONCAT('%', @search, '%')
+                        OR i.details LIKE CONCAT('%', @search, '%')
+                        OR rl.title LIKE CONCAT('%', @search, '%')
+                        OR rl.description LIKE CONCAT('%', @search, '%'))";
+                }
             }
 
-            if (category is not null)
-            {
-                query += @" WHERE i.category = @category";
-            }
+            
 
             var result = await mySqlConnection.QueryAsync<RentListing, Item, UserDTO, RentListingDTO>(query,
                 (rentListing, item, user) =>

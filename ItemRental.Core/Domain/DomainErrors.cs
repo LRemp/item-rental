@@ -29,9 +29,9 @@ namespace ItemRental.Core.Domain
                 "Item.FailedToCreate",
                 "The item could not be created");
 
-            public static readonly Func<Guid, Error> NotOwner = id => new Error(
-                "Item.NotOwner",
-                "The user is not the owner of the item");
+            public static readonly Func<Guid, Error> Unauthorized = id => new Error(
+                "Item.Unauthorized",
+                "Not authorized for this action");
 
             public static readonly Func<Guid, Error> FailedToDelete = id => new Error(
                 "Item.FailedToDelete",

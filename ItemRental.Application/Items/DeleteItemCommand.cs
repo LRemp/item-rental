@@ -27,9 +27,10 @@ namespace ItemRental.Application.Items
                 return Result.Failure(DomainErrors.Item.NotFound(request.itemId));
             }
 
-            if(item.Owner != request.userId)
+            var isAuthorized = await IsAuthorized(request.itemId, request.userId, cancellationToken);
+            if(!isAuthorized)
             {
-                return Result.Failure(DomainErrors.Item.NotOwner(request.itemId));
+                return Result.Failure(DomainErrors.Item.Unauthorized(request.itemId));
             }
 
             var success = await _itemRepository.DeleteAsync(request.itemId, cancellationToken);
@@ -40,6 +41,11 @@ namespace ItemRental.Application.Items
             }
             
             return Result.Success();
+        }
+        public async Task<bool> IsAuthorized(Guid id, Guid user, CancellationToken cancellationToken)
+        {
+            var item = await _itemRepository.GetAsync(id, cancellationToken);
+            return item.Owner == user;
         }
     }
 }

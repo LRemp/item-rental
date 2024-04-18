@@ -1,8 +1,5 @@
 import api from '@/api';
-import OrderReturnDelivery from '@/components/Details/Delivery/SubmitReturnDeliveryDetails';
-import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 import TimelineView from '@/components/Misc/TimelineView';
-import DashboardOrdersTable from '@/components/Tables/Dashboard/OrdersTable';
 import useApiResult from '@/hooks/useApiResult';
 import getDateLabel from '@/utils/Dates';
 import { GenerateEvents } from '@/utils/TimelineUtils';
@@ -11,30 +8,27 @@ import {
   Badge,
   Box,
   Breadcrumbs,
-  Button,
   Center,
-  Container,
   Grid,
   Group,
-  Image,
   Loader,
   Paper,
   Tabs,
   Text,
   Title,
 } from '@mantine/core';
-import { Calendar, DatePickerProps } from '@mantine/dates';
 import { IconBoxSeam, IconTruckDelivery } from '@tabler/icons-react';
 import React from 'react';
-import NoImage from '@/assets/images/no_image.png';
+
 import { useParams } from 'react-router-dom';
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
 import DeclineOrderAction from '@/components/ButtonActions/DeclineOrderAction';
-import SubmitDeliveryDetails from '@/components/Details/Delivery/SubmitDeliveryDetails';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 import SubmitDeliveryDetailsAction from '@/components/ButtonActions/SubmitDeliveryDetailsAction';
 import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmReturnDeliveryAction';
 import labels from '@/utils/OrderStatusLabels';
+import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
+import OrderCalendar from '@/components/Misc/OrderCalendar';
 
 const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Orders' }].map(
   (item, index) => (
@@ -124,32 +118,6 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({ events, status })
   );
 };
 
-interface OrderCalendarProps {
-  startDate: string;
-  endDate: string;
-}
-
-const OrderCalendar: React.FC<OrderCalendarProps> = ({ startDate, endDate }) => {
-  const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-    if (date > new Date(startDate) && date < new Date(endDate)) {
-      return {
-        style: {
-          backgroundColor: 'var(--mantine-color-blue-filled)',
-          color: 'var(--mantine-color-white)',
-        },
-      };
-    }
-
-    return {};
-  };
-
-  return (
-    <Box>
-      <Calendar defaultDate={new Date(startDate)} getDayProps={getDayProps} hasNextLevel={false} />
-    </Box>
-  );
-};
-
 const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
   return (
     <Box mt={'lg'}>
@@ -219,47 +187,8 @@ const DetailsContainer: React.FC<Order> = ({
       </Tabs.Panel>
 
       <Tabs.Panel value="listing">
-        <ListingDetails listing={rentListing.id} />
+        <ListingDetailsTab id={rentListing.id} />
       </Tabs.Panel>
     </Tabs>
-  );
-};
-
-interface ListingDetailsProps {
-  listing: string;
-}
-
-const ListingDetails: React.FC<ListingDetailsProps> = ({ listing }) => {
-  const { result: data, loading } = useApiResult(() => api.RentListing.getListingById(listing), []);
-  return (
-    <Grid columns={12} mt={'sm'}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Box>
-              <Text fw={500}>Title</Text>
-              <Text>{data.title}</Text>
-            </Box>
-            <Box>
-              <Text fw={500}>Description</Text>
-              <Text>{data.description}</Text>
-            </Box>
-            <Box>
-              <Text fw={500}>Price</Text>
-              <Text>{data.price} Eur per day</Text>
-            </Box>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            {data?.item?.images?.length > 0 ? (
-              <PhotoCarousel images={data?.item.images} />
-            ) : (
-              <Image src={NoImage} />
-            )}
-          </Grid.Col>
-        </>
-      )}
-    </Grid>
   );
 };
