@@ -7,3 +7,8 @@ type TimelineEvent = {
   date?: string;
   description?: string;
 };
+
+type PageLink = {
+  title: string;
+  href?: string;
+};

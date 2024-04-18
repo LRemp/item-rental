@@ -140,7 +140,9 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => {
 
       <Tabs.Panel value="first">
         {details?.length == 0 ? (
-          <Text mt={'md'}></Text>
+          <Text mt={'md'} fs="italic">
+            No details found
+          </Text>
         ) : (
           <>
             {details?.map((detail: Detail) => (

@@ -7,6 +7,7 @@ import getDateLabel from '@/utils/Dates';
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
 import DeclineOrderAction from '@/components/ButtonActions/DeclineOrderAction';
 import labels from '@/utils/OrderStatusLabels';
+import OrderMenu from '@/components/Menu/OrderMenu';
 
 interface DashboardOrdersTableProps {
   items: Order[];
@@ -53,21 +54,7 @@ const OrderTableElement: React.FC<Order> = ({
         {getDateLabel(startDate)} - {getDateLabel(endDate)}
       </Table.Td>
       <Table.Td>
-        <Group gap={'xs'}>
-          <Button
-            color="blue"
-            onClick={() => navigate(`/dashboard/orders/${id}`)}
-            size="compact-sm"
-          >
-            View
-          </Button>
-          {status == 0 && (
-            <>
-              <ConfirmOrderAction id={id} size="compact-sm" />
-              <DeclineOrderAction id={id} size="compact-sm" />
-            </>
-          )}
-        </Group>
+        <OrderMenu id={id} status={status} />
       </Table.Td>
       <Table.Td>
         <Center>

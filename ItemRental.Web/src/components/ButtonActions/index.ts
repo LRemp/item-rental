@@ -17,3 +17,9 @@ interface ItemButtonActionProps {
     | 'compact-lg'
     | 'compact-xl';
 }
+
+interface ActionButtonProps {
+  id: string;
+  refresh?: Function;
+  button: React.ReactNode;
+}

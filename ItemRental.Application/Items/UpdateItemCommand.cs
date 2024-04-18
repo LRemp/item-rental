@@ -24,7 +24,20 @@ namespace ItemRental.Application.Items
         }
         public async Task<Result> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
         {
-            Item item = new Item
+            var item = await _itemRepository.GetAsync(request.itemDTO.Id, cancellationToken);
+
+            if(item is null)
+            {
+                return Result.Failure(DomainErrors.Item.NotFound(request.itemDTO.Id));
+            }
+
+            var isAuthorized = await IsAuthorized(request.itemDTO.Id, request.userId, cancellationToken);
+            if (!isAuthorized)
+            {
+                return Result.Failure(DomainErrors.Item.Unauthorized(request.itemDTO.Id));
+            }
+
+            Item itemUpdate = new Item
             {
                 Id = request.itemDTO.Id,
                 Name = request.itemDTO.Name,
@@ -34,7 +47,7 @@ namespace ItemRental.Application.Items
                 Details = JsonConvert.SerializeObject(request.itemDTO.Details)
             };
 
-            bool success = await _itemRepository.UpdateAsync(item, cancellationToken);
+            bool success = await _itemRepository.UpdateAsync(itemUpdate, cancellationToken);
 
             if(!success)
             {
@@ -42,6 +55,11 @@ namespace ItemRental.Application.Items
             }
             
             return Result.Success();
+        }
+        public async Task<bool> IsAuthorized(Guid id, Guid user, CancellationToken cancellationToken)
+        {
+            var item = await _itemRepository.GetAsync(id, cancellationToken);
+            return item.Owner == user;
         }
     }
 }

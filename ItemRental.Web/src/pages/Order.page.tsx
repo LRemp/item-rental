@@ -19,7 +19,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { GenerateEvents } from '@/utils/TimelineUtils';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
-import NoImage from '@/assets/images/no_image.png';
+
 import { IconBoxSeam, IconTruckDelivery } from '@tabler/icons-react';
 import getDateLabel from '@/utils/Dates';
 import { nprogress } from '@mantine/nprogress';
@@ -27,6 +27,8 @@ import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderD
 import SubmitReturnDeliveryDetailsAction from '@/components/ButtonActions/SubmitReturnDeliveryDetailsAction';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 import labels, { GetBadgeData } from '@/utils/OrderStatusLabels';
+import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
+import OrderCalendar from '@/components/Misc/OrderCalendar';
 
 const mock_events = [
   {
@@ -123,32 +125,6 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({ events, status })
   );
 };
 
-interface OrderCalendarProps {
-  startDate: string;
-  endDate: string;
-}
-
-const OrderCalendar: React.FC<OrderCalendarProps> = ({ startDate, endDate }) => {
-  const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-    if (date > new Date(startDate) && date < new Date(endDate)) {
-      return {
-        style: {
-          backgroundColor: 'var(--mantine-color-blue-filled)',
-          color: 'var(--mantine-color-white)',
-        },
-      };
-    }
-
-    return {};
-  };
-
-  return (
-    <Box>
-      <Calendar defaultDate={new Date(startDate)} getDayProps={getDayProps} hasNextLevel={false} />
-    </Box>
-  );
-};
-
 const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
   return (
     <Box mt={'lg'}>
@@ -205,28 +181,8 @@ const DetailsContainer: React.FC<Order> = ({
       </Tabs.Panel>
 
       <Tabs.Panel value="listing">
-        <ListingDetails listing={rentListing.id} />
+        <ListingDetailsTab id={rentListing.id} />
       </Tabs.Panel>
     </Tabs>
-  );
-};
-
-interface ListingDetailsProps {
-  listing: string;
-}
-
-const ListingDetails: React.FC<ListingDetailsProps> = ({ listing }) => {
-  const { result: data, loading } = useApiResult(() => api.RentListing.getListingById(listing), []);
-  return (
-    <Grid columns={12} mt={'sm'}>
-      <Grid.Col span={{ base: 12, sm: 6 }}></Grid.Col>
-      <Grid.Col span={{ base: 12, sm: 6 }}>
-        {data?.item?.images?.length > 0 ? (
-          <PhotoCarousel images={data?.item.images} />
-        ) : (
-          <Image src={NoImage} />
-        )}
-      </Grid.Col>
-    </Grid>
   );
 };
