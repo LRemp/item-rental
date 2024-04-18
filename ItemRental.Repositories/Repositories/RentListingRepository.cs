@@ -122,6 +122,7 @@ namespace ItemRental.Repositories.Repositories
                         Item = new ItemDTO
                         {
                             Id = item.Id,
+                            SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),
@@ -167,6 +168,7 @@ namespace ItemRental.Repositories.Repositories
                         Item = new ItemDTO
                         {
                             Id = item.Id,
+                            SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),
@@ -204,6 +206,7 @@ namespace ItemRental.Repositories.Repositories
                         Item = new ItemDTO
                         {
                             Id = item.Id,
+                            SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),

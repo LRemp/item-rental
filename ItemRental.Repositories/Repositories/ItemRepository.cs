@@ -25,13 +25,14 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Item item, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO items (id, owner, name, description, category, images, tags, details)
-                            VALUES(@id, @owner, @name, @description, @category, @images, @tags, @details)";
+            var query = @"INSERT INTO items (id, serialNumber, owner, name, description, category, images, tags, details)
+                            VALUES(@id, @serialNumber, @owner, @name, @description, @category, @images, @tags, @details)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
                 id = item.Id,
                 owner = item.Owner,
+                serialNumber = item.SerialNumber,
                 name = item.Name,
                 description = item.Description,
                 category = item.Category,
