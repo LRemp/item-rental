@@ -19,6 +19,25 @@ namespace ItemRental.Core.Domain
                 "The provided credentials are invalid");
         }
 
+        public static class Comment
+        {
+            public static readonly Error FailedToCreate = new Error(
+                "Comment.FailedToCreate",
+                "The comment could not be created");
+
+            public static readonly Error Unauthorized = new Error(
+                "Comment.Unauthorized",
+                "Not authorized for this action");
+
+            public static readonly Error NotFound = new Error(
+                "Comment.NotFound",
+                "The comment was not found");
+
+            public static readonly Error Failed = new Error(
+                "Comment.Failed",
+                "The comment could not be updated");
+        }
+
         public static class Item
         {
             public static readonly Func<Guid, Error> NotFound = id => new Error(

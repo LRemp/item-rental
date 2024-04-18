@@ -41,14 +41,35 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public Task<bool> AddCommentAsync()
+        public async Task<bool> AddCommentAsync(Comment comment, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var query = @"INSERT INTO comments (id, resource, user, text, createdAt)
+                        VALUES(@id, @resource, @user, @text, @createdAt)";
+
+            var result = await mySqlConnection.ExecuteAsync(query, new
+            {
+                id = comment.Id,
+                resource = comment.Resource,
+                user = comment.User,
+                text = comment.Text,
+                createdAt = comment.CreatedAt
+            });
+
+            return result > 0;
         }
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"DELETE FROM rent_listings WHERE id = @id";
+
+            var result = await mySqlConnection.ExecuteAsync(query, new { id });
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteCommentAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"DELETE FROM comments WHERE id = @id";
 
             var result = await mySqlConnection.ExecuteAsync(query, new { id });
 
@@ -201,6 +222,24 @@ namespace ItemRental.Repositories.Repositories
             return result.ToList();
         }
 
+        public async Task<Comment?> GetCommentAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM comments WHERE id = @id";
+
+            var result = await mySqlConnection.QueryAsync<Comment>(query, new { id });
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<List<Comment>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM comments WHERE resource = @resource";
+            
+            var result = await mySqlConnection.QueryAsync<Comment>(query, new { resource });
+
+            return result.ToList();
+        }
+
         public async Task<RentListing?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM rent_listings WHERE id = @id";
@@ -222,6 +261,15 @@ namespace ItemRental.Repositories.Repositories
                 price = rentalListing.Price,
                 location = rentalListing.Location
             });
+
+            return result > 0;
+        }
+
+        public async Task<bool> UpdateCommentAsync(Comment comment, CancellationToken cancellationToken)
+        {
+            var query = @"UPDATE comments SET text = @text WHERE id = @id";
+
+            var result = await mySqlConnection.ExecuteAsync(query, new { id = comment.Id, text = comment.Text });
 
             return result > 0;
         }

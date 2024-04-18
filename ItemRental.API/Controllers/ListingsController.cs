@@ -1,6 +1,7 @@
 ﻿using ItemRental.Application.RentListings;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Entities;
 using ItemRental.Core.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -124,6 +125,51 @@ namespace ItemRental.API.Controllers
             }
 
             return Ok(result.Value);
+        }
+
+        [HttpGet("{id}/Comments")]
+        public async Task<IActionResult> GetComments(Guid id)
+        {
+            Result<List<Comment>> result = await _sender.Send(new GetCommentsQuery(id));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Comments")]
+        public async Task<IActionResult> CreateComment(Guid id, [FromBody] string text)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<Guid> result = await _sender.Send(new CreateCommentCommand(id, userId, text));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("{id}/Comments")]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new DeleteCommentCommand(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
         }
     }
 }

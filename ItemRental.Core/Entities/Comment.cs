@@ -8,7 +8,9 @@ namespace ItemRental.Core.Entities
 {
     public class Comment : Entity
     {
-        public Guid Author { get; set; }
+        public Guid Resource { get; set; }
+        public Guid User { get; set; }
         public string Text { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

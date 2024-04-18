@@ -18,6 +18,10 @@ namespace ItemRental.Core.Contracts
         public Task<List<RentListingDTO>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken);
         public Task<bool> UpdateAsync(RentListing rentalListing, CancellationToken cancellationToken);
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
-        public Task<bool> AddCommentAsync();
+        public Task<bool> AddCommentAsync(Comment comment, CancellationToken cancellationToken);
+        public Task<List<Comment>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken);
+        public Task<Comment?> GetCommentAsync(Guid id, CancellationToken cancellationToken);
+        public Task<bool> UpdateCommentAsync(Comment comment, CancellationToken cancellationToken);
+        public Task<bool> DeleteCommentAsync(Guid id, CancellationToken cancellationToken);
     }
 }
