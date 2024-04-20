@@ -13,7 +13,7 @@ interface MerchantListingsTableProps {
 const MerchantListingsTable: React.FC<MerchantListingsTableProps> = ({ elements }) => {
   const navigate = useNavigate();
 
-  const rows = elements.map(({ id, item, title, description }) => (
+  const rows = elements.map(({ id, item, title, description, price }) => (
     <Table.Tr key={id}>
       <Table.Td>
         <Center>
@@ -29,9 +29,14 @@ const MerchantListingsTable: React.FC<MerchantListingsTableProps> = ({ elements 
       </Table.Td>
       <Table.Td>
         <Box>
-          <Text fw={500} size="sm">
-            {title}
-          </Text>
+          <Center inline>
+            <Text fw={500} size="sm">
+              {title}
+            </Text>
+            <Badge radius={'xs'} size="sm" ml="xs">
+              {price}€
+            </Badge>
+          </Center>
           <Text size="sm" lineClamp={2}>
             {description}
           </Text>
