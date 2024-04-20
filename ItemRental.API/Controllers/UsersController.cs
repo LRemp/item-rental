@@ -1,8 +1,12 @@
-﻿using ItemRental.Application.Users;
+﻿using ItemRental.Application.Orders;
+using ItemRental.Application.RentListings;
+using ItemRental.Application.Users;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Helpers;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ItemRental.API.Controllers
@@ -61,6 +65,38 @@ namespace ItemRental.API.Controllers
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
             Result<List<NotificationDTO>> result = await _sender.Send(new GetUserNotificationsQuery(userId));
+
+            if(result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Orders")]
+        public async Task<IActionResult> GetOrders(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<OrderDTO>> result = await _sender.Send(new GetOrdersFromMerchantQuery(userId, id));
+
+            if(result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Listings")]
+        public async Task<IActionResult> GetListings(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<RentListingDTO>> result = await _sender.Send(new GetRentListingByOwnerQuery(id));
 
             if(result.IsFailure)
             {

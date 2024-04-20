@@ -301,6 +301,52 @@ namespace ItemRental.Repositories.Repositories
             return result.ToList();
         }
 
+        public async Task<List<OrderDTO>> GetOrdersFromMerchantAsync(Guid user, Guid merchant, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE o.user = @user AND l.renter = @merchant";
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = item.Tags
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment
+                    };
+                }, new { user, merchant }
+            );
+
+            return result.ToList();
+        }
+
         public async Task<bool> UpdateAsync(Order order, CancellationToken cancellationToken)
         {
             var query = @"UPDATE `orders` SET listing = @listing, user = @user, startDate = @startDate, endDate = @endDate, status = @status, deliveryType = @deliveryType WHERE id = @id";

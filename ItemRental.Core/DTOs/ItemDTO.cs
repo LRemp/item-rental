@@ -10,6 +10,7 @@ namespace ItemRental.Core.DTOs
     public class ItemDTO
     {
         public Guid Id { get; set; }
+        public string SerialNumber { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
         public string? Category { get; set; }

@@ -14,6 +14,7 @@ type Order = {
   user: UserProfile;
   events: EventLog[];
   comment: string;
+  createdAd: string;
 };
 
 enum DeliveryType {

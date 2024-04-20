@@ -28,6 +28,13 @@ export const deliveryTypes = [
   },
 ];
 
+export const deliveryStatusTips = [
+  {
+    id: 0,
+    text: 'Your order is successfuly registered, now we are waiting for the merchant to accept it',
+  },
+];
+
 export const getTrackingLink = (provider: string, id: string) => {
   switch (provider) {
     case '0':

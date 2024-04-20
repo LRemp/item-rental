@@ -1,9 +1,12 @@
 ﻿using Dapper;
 using ItemRental.Core.Contracts;
+using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using MySqlConnector;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
