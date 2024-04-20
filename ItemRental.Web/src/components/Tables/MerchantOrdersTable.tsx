@@ -6,11 +6,11 @@ import getDateLabel from '@/utils/Dates';
 import labels from '@/utils/OrderStatusLabels';
 import { useNavigate } from 'react-router-dom';
 
-interface OrdersTableProps {
+interface MerchantOrdersTableProps {
   elements: Order[];
 }
 
-const OrdersTableUpdated: React.FC<OrdersTableProps> = ({ elements }) => {
+const MerchantOrdersTable: React.FC<MerchantOrdersTableProps> = ({ elements }) => {
   const navigate = useNavigate();
 
   const rows = elements.map(({ id, startDate, endDate, rentListing, status }) => (
@@ -68,4 +68,4 @@ const OrdersTableUpdated: React.FC<OrdersTableProps> = ({ elements }) => {
   );
 };
 
-export default OrdersTableUpdated;
+export default MerchantOrdersTable;
