@@ -311,7 +311,7 @@ namespace ItemRental.Repositories.Repositories
                         INNER JOIN users a ON l.renter = a.id
                         WHERE o.user = @user AND l.renter = @merchant";
 
-            var result = await _mySqlConnection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
                 (order, user, listing, item, renter) =>
                 {
                     return new OrderDTO

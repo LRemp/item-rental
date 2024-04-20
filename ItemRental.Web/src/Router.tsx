@@ -10,12 +10,11 @@ import ListingPage from './pages/Listing.page';
 import MainLayout from './layouts/MainLayout';
 import ListingsPage from './pages/Dashboard/Listings.page';
 import ItemPage from './pages/Dashboard/Item.page';
-import useApiResult from './hooks/useApiResult';
-import api from './api';
 import OrdersPage from './pages/Orders.page';
 import OrderPage from './pages/Order.page';
 import DashboardOrders from './pages/Dashboard/Orders.page';
 import DashboardOrder from './pages/Dashboard/Order.page';
+import UserPage from './pages/User.page';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/orders/:id',
         element: <OrderPage />,
+      },
+      {
+        path: '/user/:id',
+        element: <UserPage />,
       },
     ],
   },

@@ -12,8 +12,21 @@ const GetNotifications = (): ApiRequest => ({
   authenticate: true,
 });
 
+const get = (id: string): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Users/${id}`,
+});
+
+const getMerchantOrders = (id: string): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Users/${id}/Orders`,
+  authenticate: true,
+});
+
 export default {
   Login,
   Register,
   GetNotifications,
+  get,
+  getMerchantOrders,
 };
