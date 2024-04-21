@@ -55,6 +55,14 @@ namespace ItemRental.Core.Domain
             public static readonly Func<Guid, Error> FailedToDelete = id => new Error(
                 "Item.FailedToDelete",
                 "The item could not be deleted");
+
+            public static readonly Func<Guid, Error> UsedInListing = id => new Error(
+                "Item.UsedInListing",
+                "This item is included in the listing and can not be deleted");
+
+            public static readonly Func<Guid, Error> UsedInOrder = id => new Error(
+                "Item.UsedInOrder",
+                "This item is used in order and can not be deleted");
         }
 
         public static class RentListing

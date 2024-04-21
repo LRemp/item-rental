@@ -14,5 +14,6 @@ namespace ItemRental.Core.Contracts
         public Task<Result<Guid>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken);
         public Task<Result> AcceptAsync(Guid id, Guid user, CancellationToken cancellationToken);
         public Task<bool> IsDateNotTaken(Guid id, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
+        public Task<bool> IsItemInUse(Guid id, CancellationToken cancellationToken);
     }
 }
