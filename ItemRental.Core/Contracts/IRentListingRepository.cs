@@ -23,5 +23,6 @@ namespace ItemRental.Core.Contracts
         public Task<Comment?> GetCommentAsync(Guid id, CancellationToken cancellationToken);
         public Task<bool> UpdateCommentAsync(Comment comment, CancellationToken cancellationToken);
         public Task<bool> DeleteCommentAsync(Guid id, CancellationToken cancellationToken);
+        public Task<RentListing?> GetWithItemAsync(Guid id, CancellationToken cancellationToken);
     }
 }

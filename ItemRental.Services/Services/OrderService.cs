@@ -147,5 +147,12 @@ namespace ItemRental.Services.Services
 
             return true; // No overlapping dates found, date is available
         }
+
+        public async Task<bool> IsItemInUse(Guid id, CancellationToken cancellationToken)
+        {
+            var orders = await orderRepository.GetWithItemAsync(id, cancellationToken);
+
+            return orders.Where(x => x.Status < OrderStatus.Completed).Any();
+        }
     }
 }

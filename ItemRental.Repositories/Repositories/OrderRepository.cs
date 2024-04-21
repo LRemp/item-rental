@@ -365,5 +365,17 @@ namespace ItemRental.Repositories.Repositories
 
             return result > 0;
         }
+
+        public async Task<List<Order>> GetWithItemAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, l.*
+                        FROM orders o
+                        INNER JOIN rent_listings l ON o.listing = l.id   
+                        WHERE rl.item = @id";
+
+            var result = await _connection.QueryAsync<Order>(query, new { id });
+
+            return result.ToList();
+        }
     }
 }

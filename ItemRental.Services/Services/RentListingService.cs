@@ -11,9 +11,11 @@ namespace ItemRental.Services.Services
     public class RentListingService : IRentListingService
     {
         private readonly IOrderRepository orderRepository;
-        public RentListingService(IOrderRepository orderRepository)
+        private readonly IRentListingRepository rentListingRepository;
+        public RentListingService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository)
         {
             this.orderRepository = orderRepository;
+            this.rentListingRepository = rentListingRepository;
         }
 
         public async Task<List<OrderDateDTO>> GetBusyDatesAsync(Guid id, CancellationToken cancellationToken)
@@ -40,6 +42,13 @@ namespace ItemRental.Services.Services
         public Task<List<RentListingDTO>> GetListingsDTOAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsItemUsed(Guid id, CancellationToken cancellationToken)
+        {
+            var listing = await rentListingRepository.GetWithItemAsync(id, cancellationToken);
+
+            return listing is not null;
         }
     }
 }

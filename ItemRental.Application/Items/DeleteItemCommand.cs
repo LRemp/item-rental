@@ -13,14 +13,18 @@ namespace ItemRental.Application.Items
     public sealed record DeleteItemCommand(Guid itemId, Guid userId) : ICommand;
     public class DeleteItemCommandHandler : ICommandHandler<DeleteItemCommand>
     {
-        private readonly IItemRepository _itemRepository;
-        public DeleteItemCommandHandler(IItemRepository itemRepository)
+        private readonly IItemRepository itemRepository;
+        private readonly IOrderService orderService;
+        private readonly IRentListingService rentListingService;
+        public DeleteItemCommandHandler(IItemRepository itemRepository, IOrderService orderService, IRentListingService rentListingService)
         {
-            _itemRepository = itemRepository;
+            this.itemRepository = itemRepository;
+            this.orderService = orderService;
+            this.rentListingService = rentListingService;
         }
         public async Task<Result> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
-            var item = await _itemRepository.GetAsync(request.itemId, cancellationToken);
+            var item = await itemRepository.GetAsync(request.itemId, cancellationToken);
 
             if(item is null)
             {
@@ -33,7 +37,21 @@ namespace ItemRental.Application.Items
                 return Result.Failure(DomainErrors.Item.Unauthorized(request.itemId));
             }
 
-            var success = await _itemRepository.DeleteAsync(request.itemId, cancellationToken);
+            var includedInListing = await rentListingService.IsItemUsed(request.itemId, cancellationToken);
+
+            if(includedInListing)
+            {
+                return Result.Failure(DomainErrors.Item.UsedInListing(request.itemId));
+            }
+
+            var usedInOrder = await orderService.IsItemInUse(request.itemId, cancellationToken);
+
+            if(usedInOrder)
+            {
+                return Result.Failure(DomainErrors.Item.UsedInOrder(request.itemId));
+            }
+
+            var success = await itemRepository.DeleteAsync(request.itemId, cancellationToken);
 
             if (!success)
             {
@@ -44,7 +62,7 @@ namespace ItemRental.Application.Items
         }
         public async Task<bool> IsAuthorized(Guid id, Guid user, CancellationToken cancellationToken)
         {
-            var item = await _itemRepository.GetAsync(id, cancellationToken);
+            var item = await itemRepository.GetAsync(id, cancellationToken);
             return item.Owner == user;
         }
     }

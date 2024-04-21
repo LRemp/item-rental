@@ -247,9 +247,18 @@ namespace ItemRental.Repositories.Repositories
         {
             var query = @"SELECT * FROM rent_listings WHERE id = @id";
 
-            var result = await mySqlConnection.QueryAsync<RentListing>(query, new { id });
+            var result = await mySqlConnection.QuerySingleAsync<RentListing>(query, new { id });
 
-            return result.FirstOrDefault();
+            return result;
+        }
+
+        public async Task<RentListing?> GetWithItemAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM rent_listings WHERE item = @id";
+
+            var result = await mySqlConnection.QuerySingleAsync<RentListing>(query, new { id });
+
+            return result;
         }
 
         public async Task<bool> UpdateAsync(RentListing rentalListing, CancellationToken cancellationToken)
