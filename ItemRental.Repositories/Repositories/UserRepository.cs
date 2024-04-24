@@ -93,5 +93,14 @@ namespace ItemRental.Repositories.Repositories
 
             return result.Count() == 0;
         }
+
+        public async Task<bool> IsUserAdministrator(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT * FROM administrators WHERE user = @id";
+
+            var result = await _mySqlConnection.QueryAsync(query, new { id });
+
+            return result.Count() > 0;
+        }
     }
 }

@@ -17,5 +17,6 @@ namespace ItemRental.Core.Contracts
         public Task<bool> AddNotificationAsync(Notification notification, CancellationToken cancellationToken);
         public Task<List<Notification>> GetNotificationsAsync(Guid user, CancellationToken cancellationToken);
         public Task<Notification?> GetNotificationAsync(Guid user, CancellationToken cancellationToken);
+        public Task<bool> IsUserAdministrator(Guid id, CancellationToken cancellationToken);
     }
 }

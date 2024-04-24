@@ -47,8 +47,10 @@ namespace ItemRental.Application.Users
                 return Result.Failure<LoginResponse>(DomainErrors.User.InvalidCredentials);
             }
 
+            var roles = await _userService.GetUserRoles(user.Id, cancellationToken);
+
             //TODO: add user roles to the token generation
-            string token = _jwtProvider.CreateAccessToken(user, new List<string>());
+            string token = _jwtProvider.CreateAccessToken(user, roles);
 
             UserDTO userDTO = _mapper.Map<UserDTO>(user);
 

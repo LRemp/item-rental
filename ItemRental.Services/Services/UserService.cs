@@ -4,6 +4,7 @@ using ItemRental.Core.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,18 @@ namespace ItemRental.Services.Services
         {
             var notifications = await userRepository.GetNotificationsAsync(user, cancellationToken);
             return mapper.Map<List<NotificationDTO>>(notifications);
+        }
+
+        public async Task<List<string>> GetUserRoles(Guid id, CancellationToken cancellationToken)
+        {
+            List<string> roles = new List<string>();
+
+            if(await userRepository.IsUserAdministrator(id, cancellationToken))
+            {
+                roles.Add("Administrator");
+            }
+
+            return roles;
         }
 
         public bool VerifyPasswordHash(string password, string passwordHash)
