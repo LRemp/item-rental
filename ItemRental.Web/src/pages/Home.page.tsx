@@ -101,7 +101,7 @@ const ItemsContainer: React.FC = () => {
       ) : pageData?.result.length != 0 ? (
         <>
           {pageData?.result?.map((rentListing: RentListing) => (
-            <Grid.Col span={{ base: 18, sm: 6 }} key={rentListing.id}>
+            <Grid.Col span={{ base: 18, sm: 8, lg: 6, xl: 4 }} key={rentListing.id}>
               <ListingCard {...rentListing} />
             </Grid.Col>
           ))}

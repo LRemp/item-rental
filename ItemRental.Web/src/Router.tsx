@@ -19,7 +19,7 @@ import UserPage from './pages/User.page';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: <DashboardPage />,
     children: [
       {
         path: '/:category?',

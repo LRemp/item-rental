@@ -2,7 +2,7 @@ import api from '@/api';
 import CreateListingAction from '@/components/ButtonActions/CreateListingAction';
 import DeleteItemAction from '@/components/ButtonActions/DeleteItemAction';
 import CreateListingModal from '@/components/Modals/CreateListing';
-import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
+import { Navbar } from '@/components/Nagivation/Navbar';
 import useApiResult from '@/hooks/useApiResult';
 import { Success } from '@/utils/Notifications';
 import {

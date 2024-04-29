@@ -2,7 +2,7 @@ import { AppShell, Burger, Group, Image, Skeleton, Text, UnstyledButton } from '
 import { Outlet } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from '@/assets/images/logo.png';
-import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
+import { Navbar } from '@/components/Nagivation/Navbar';
 
 export default function Dashboard() {
   const [opened, { toggle }] = useDisclosure();

@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
+import { Navbar } from '@/components/Nagivation/Navbar';
 import { Flex } from '@mantine/core';
 import React from 'react';
 

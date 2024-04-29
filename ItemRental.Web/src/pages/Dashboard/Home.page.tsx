@@ -1,6 +1,6 @@
 import api from '@/api';
 import { StatsGrid } from '@/components/Misc/Stats';
-import { Navbar } from '@/components/Nagivation/Navbar/Navbar';
+import { Navbar } from '@/components/Nagivation/Navbar';
 import OrdersTable from '@/components/Tables/OrdersTable';
 import useApiResult from '@/hooks/useApiResult';
 import {
