@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Group, Code, Stack, Grid, SegmentedControl, Button, TextInput, Text } from '@mantine/core';
 import {
-  IconBellRinging,
   IconFingerprint,
   IconKey,
   IconSettings,
@@ -26,10 +25,8 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { modals } from '@mantine/modals';
 
 const navLinks = {
-  client: [
-    { link: '/', label: 'Home', icon: IconHome },
-    { link: '/orders', label: 'Your orders', icon: IconClipboardList },
-  ],
+  client: [{ link: '/', label: 'Home', icon: IconHome },
+    { link: '/orders', label: 'Your orders', icon: IconClipboardList },],
   merchant: [
     { link: '/dashboard/home', label: 'Home', icon: IconHome },
     { link: '/dashboard/inventory', label: 'Inventory', icon: IconClipboardList },
@@ -56,8 +53,7 @@ export function Navbar() {
     </NavLink>
   ));
 
-  const signOutAction = (e: Event) => {
-    e.preventDefault();
+  const signOutAction = () => {
     setRole('client');
     signOut();
     navigate('/');
