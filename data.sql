@@ -19,6 +19,17 @@
 CREATE DATABASE IF NOT EXISTS `itemrental` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci */;
 USE `itemrental`;
 
+-- Dumping structure for table itemrental.administrators
+CREATE TABLE IF NOT EXISTS `administrators` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` uuid NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user` (`user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- Dumping data for table itemrental.administrators: ~0 rows (approximately)
+DELETE FROM `administrators`;
+
 -- Dumping structure for table itemrental.categories
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` uuid NOT NULL,
@@ -30,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.categories: ~11 rows (approximately)
+-- Dumping data for table itemrental.categories: ~10 rows (approximately)
 DELETE FROM `categories`;
 INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('1e3ebeba-c402-449f-8a69-0b431b87137c', 'other', 'Other', NULL, NULL),
@@ -44,6 +55,18 @@ INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('72f123dd-1307-45f4-a6bf-9bf103e6149b', 'cameras', 'Cameras', 'video', '[{"name":"mountType","type":"string","label":"Lens mount type"}]'),
 	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'computers', 'Computers', 'electronics', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Cores"}]'),
 	('fb55d6cc-d5c2-47d2-b8fa-9e7415068d31', 'lens', 'Lens', 'video', '[{"type":"string","label":"Mount type","name":"mounttype"},{"type":"string","name":"focallength","label":"Focal length"},{"type":"string","label":"Apperture","name":"apperture"}]');
+
+-- Dumping structure for table itemrental.comments
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` uuid NOT NULL,
+  `resource` uuid NOT NULL,
+  `user` uuid NOT NULL,
+  `text` longtext NOT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- Dumping data for table itemrental.comments: ~0 rows (approximately)
+DELETE FROM `comments`;
 
 -- Dumping structure for table itemrental.deliveries
 CREATE TABLE IF NOT EXISTS `deliveries` (
@@ -59,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `deliveries` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.deliveries: ~10 rows (approximately)
+-- Dumping data for table itemrental.deliveries: ~11 rows (approximately)
 DELETE FROM `deliveries`;
 INSERT INTO `deliveries` (`id`, `order`, `type`, `role`, `location`, `shippingProvider`, `shippingId`, `comment`, `completed`) VALUES
 	('593567e8-5e10-4430-973f-08b00d64f763', 'e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 1, 1, NULL, '2', 'CE473405152EE', NULL, 0),
@@ -86,9 +109,9 @@ CREATE TABLE IF NOT EXISTS `eventlog` (
   `timestamp` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`rowId`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.eventlog: ~26 rows (approximately)
+-- Dumping data for table itemrental.eventlog: ~52 rows (approximately)
 DELETE FROM `eventlog`;
 INSERT INTO `eventlog` (`rowId`, `id`, `resource`, `eventName`, `title`, `description`, `timestamp`) VALUES
 	(14, 'f64f91df-1f54-44d7-a87f-6a9df4fc3455', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Created', 'Created', 'Order created by the user', '2024-04-11 20:26:47'),
@@ -146,11 +169,14 @@ INSERT INTO `eventlog` (`rowId`, `id`, `resource`, `eventName`, `title`, `descri
 	(66, 'cc39932c-06ff-4b00-8992-b8d319ef6e6f', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-16 09:04:44'),
 	(67, '7d70e8e6-13f8-4541-91f8-b17d157b669d', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-04-16 09:04:58'),
 	(68, '4c6345fc-e01c-4001-bed4-dded83e39d10', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-04-16 09:05:04'),
-	(69, 'e7f5a9b8-f8c6-45c7-a733-cd8a78342c47', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-16 09:05:04');
+	(69, 'e7f5a9b8-f8c6-45c7-a733-cd8a78342c47', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-16 09:05:04'),
+	(70, '4e81bd34-8fcf-4345-aa4d-5d2c5e095f28', '752858d3-269c-4839-9a50-d619751e83a1', 'Order.Created', 'Created', 'Order created by the user', '2024-04-17 08:28:33'),
+	(71, 'd0539364-ad27-4cad-aa4b-e3d769dc8873', 'b9aa4f51-9788-4790-bfde-535b38610e61', 'Order.Created', 'Created', 'Order created by the user', '2024-04-23 21:32:09');
 
 -- Dumping structure for table itemrental.items
 CREATE TABLE IF NOT EXISTS `items` (
   `id` uuid NOT NULL,
+  `sn` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `owner` uuid NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
@@ -163,22 +189,22 @@ CREATE TABLE IF NOT EXISTS `items` (
 
 -- Dumping data for table itemrental.items: ~15 rows (approximately)
 DELETE FROM `items`;
-INSERT INTO `items` (`id`, `owner`, `name`, `description`, `category`, `images`, `tags`, `details`) VALUES
-	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'lensfilter', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', NULL, '[{"Name":"type","Value":"Polarizing"}]'),
-	('fcf53cdc-6f12-4356-879b-2def3d2d186d', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'vehicles', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
-	('62c42c49-b548-454e-9c46-4d4076b5dd78', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Tesla Model S', 'Tesla elektromobilis', 'vehicles', '["c309d7e9-c9fe-4dba-a61e-afa515c6af1f.jpg","431cbbe0-ad24-45a8-92fd-93f9c1a8199d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"EV"}]'),
-	('7cbdf583-4b98-4bce-87fc-59585a7ae494', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'RODE PodMic', 'Studijos lygio mikrofonas', 'microphones', '["6150f019-123b-4564-bda1-71421431f271.jpg"]', NULL, '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"PodMic"},{"Name":"connection","Value":"USB"}]'),
-	('c6841033-4ab2-41c7-a155-61da6c42a7db', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30', 'BMW trečios klasės benzininis automobilis', 'vehicles', '["331de3f9-77d6-425b-8418-47f7253f3918.jpeg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
-	('38442e05-7369-4747-ba10-73ee8d6f2ab6', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', 'Pilno kardo fotoaparatas', 'cameras', '["fe98092f-cc84-4613-bb1e-6d1549df6fa5.jpg","3cc526ab-b236-4910-a85b-75c354401d91.png"]', NULL, '[{"Name":"mountType","Value":"Sony E-Mount"}]'),
-	('46c5db9a-0e83-4052-83b3-76e656724a44', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Genesis Radium 600', 'Studijinis mikrofonas', 'microphones', '["c35d4863-e029-4d94-960f-a02d5d139827.jpg"]', NULL, '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"Radium 600"},{"Name":"connection","Value":"USB"}]'),
-	('700f1862-8a21-486e-bfa2-7d2f99564da9', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Žoliapjovė/traktoriukas', 'Naujas traktoriukas skirtas prižiūrėti vejai', 'other', '["9b40ffe1-37aa-43ec-bf43-9d52ccfb7446.jpg","7f8b2758-469e-458c-b170-de96a0243d3a.jpg","1e209e69-7616-4079-9a0f-1bd2926052c5.jpg"]', NULL, '[]'),
-	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'phones', 'null', NULL, '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]'),
-	('90c0992e-d736-4638-b292-a18c42d949c1', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Nikon D5100', 'Veidrodinis Nikon fotoaparatas', 'cameras', '["58895aea-9b1a-4603-bb31-a209efe84b23.jpg"]', NULL, '[{"Name":"mountType","Value":"Nikon mount"}]'),
-	('e58af2d6-ad2c-4250-aa0e-af9a8d5a0885', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Elektrinė žolepjovė', 'Mažai naudota žolepjovė, veikianti įjungus į elektros tinklą', 'other', '["1fd76ae9-7c04-48f4-99f7-6a3035985692.jpg"]', NULL, '[]'),
-	('af000421-55ac-433f-8524-d063e7c39d73', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'GARDEN priekaba', 'Prikabinama automobilinė priekaba', 'vehicles', '["05fc6c7f-97f6-4a43-b52c-1bfe9b903d2f.png"]', NULL, '[{"Name":"type","Value":"Trailer"}]'),
-	('2cacbcdd-e5a9-4280-932e-d8485323dc16', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'vehicles', '["3a6450a9-214f-48c4-85cd-c0a0ba4a136d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
-	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'cameras', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', NULL, '[{"Name":"mountType","Value":"asd"}]'),
-	('b9885038-af3d-4d2c-b818-f8fcad813341', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Audi S3', 'Aukštos klasės audi automobilis', 'vehicles', '["ca0ddecb-859a-4935-b433-59af4c0c83ce.jpg","adcf34dc-1353-4e4e-88dd-b0bb572e1d26.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Diesel"}]');
+INSERT INTO `items` (`id`, `sn`, `owner`, `name`, `description`, `category`, `images`, `tags`, `details`) VALUES
+	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'lensfilter', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', NULL, '[{"Name":"type","Value":"Polarizing"}]'),
+	('fcf53cdc-6f12-4356-879b-2def3d2d186d', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'vehicles', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
+	('62c42c49-b548-454e-9c46-4d4076b5dd78', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Tesla Model S', 'Tesla elektromobilis', 'vehicles', '["c309d7e9-c9fe-4dba-a61e-afa515c6af1f.jpg","431cbbe0-ad24-45a8-92fd-93f9c1a8199d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"EV"}]'),
+	('7cbdf583-4b98-4bce-87fc-59585a7ae494', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'RODE PodMic', 'Studijos lygio mikrofonas', 'microphones', '["6150f019-123b-4564-bda1-71421431f271.jpg"]', NULL, '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"PodMic"},{"Name":"connection","Value":"USB"}]'),
+	('c6841033-4ab2-41c7-a155-61da6c42a7db', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30', 'BMW trečios klasės benzininis automobilis', 'vehicles', '["331de3f9-77d6-425b-8418-47f7253f3918.jpeg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
+	('38442e05-7369-4747-ba10-73ee8d6f2ab6', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', 'Pilno kardo fotoaparatas', 'cameras', '["fe98092f-cc84-4613-bb1e-6d1549df6fa5.jpg","3cc526ab-b236-4910-a85b-75c354401d91.png"]', NULL, '[{"Name":"mountType","Value":"Sony E-Mount"}]'),
+	('46c5db9a-0e83-4052-83b3-76e656724a44', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Genesis Radium 600', 'Studijinis mikrofonas', 'microphones', '["c35d4863-e029-4d94-960f-a02d5d139827.jpg"]', NULL, '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"Radium 600"},{"Name":"connection","Value":"USB"}]'),
+	('700f1862-8a21-486e-bfa2-7d2f99564da9', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Žoliapjovė/traktoriukas', 'Naujas traktoriukas skirtas prižiūrėti vejai', 'other', '["9b40ffe1-37aa-43ec-bf43-9d52ccfb7446.jpg","7f8b2758-469e-458c-b170-de96a0243d3a.jpg","1e209e69-7616-4079-9a0f-1bd2926052c5.jpg"]', NULL, '[]'),
+	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'phones', 'null', NULL, '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]'),
+	('90c0992e-d736-4638-b292-a18c42d949c1', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Nikon D5100', 'Veidrodinis Nikon fotoaparatas', 'cameras', '["58895aea-9b1a-4603-bb31-a209efe84b23.jpg"]', NULL, '[{"Name":"mountType","Value":"Nikon mount"}]'),
+	('e58af2d6-ad2c-4250-aa0e-af9a8d5a0885', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Elektrinė žolepjovė', 'Mažai naudota žolepjovė, veikianti įjungus į elektros tinklą', 'other', '["1fd76ae9-7c04-48f4-99f7-6a3035985692.jpg"]', NULL, '[]'),
+	('af000421-55ac-433f-8524-d063e7c39d73', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'GARDEN priekaba', 'Prikabinama automobilinė priekaba', 'vehicles', '["05fc6c7f-97f6-4a43-b52c-1bfe9b903d2f.png"]', NULL, '[{"Name":"type","Value":"Trailer"}]'),
+	('2cacbcdd-e5a9-4280-932e-d8485323dc16', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'vehicles', '["3a6450a9-214f-48c4-85cd-c0a0ba4a136d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]'),
+	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'cameras', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', NULL, '[{"Name":"mountType","Value":"asd"}]'),
+	('b9885038-af3d-4d2c-b818-f8fcad813341', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Audi S3', 'Aukštos klasės audi automobilis', 'vehicles', '["ca0ddecb-859a-4935-b433-59af4c0c83ce.jpg","adcf34dc-1353-4e4e-88dd-b0bb572e1d26.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Diesel"}]');
 
 -- Dumping structure for table itemrental.notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
@@ -193,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.notifications: ~0 rows (approximately)
+-- Dumping data for table itemrental.notifications: ~6 rows (approximately)
 DELETE FROM `notifications`;
 INSERT INTO `notifications` (`id`, `user`, `code`, `title`, `description`, `url`, `timestamp`, `read`) VALUES
 	('3629e96c-5b3c-42eb-9e4f-0e3f4d8d3e77', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', '2024-04-16 09:00:49', 0),
@@ -201,7 +227,9 @@ INSERT INTO `notifications` (`id`, `user`, `code`, `title`, `description`, `url`
 	('72209bce-033c-474e-b3b2-36cbd0887b07', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:35', 0),
 	('ec10b14e-abd2-4aad-9eda-9d4534ce126c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Delivered', 'Your order was dispatched', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:44', 0),
 	('22055df3-9000-4d88-a103-bda09e7f5b7d', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:25', 0),
-	('fd321b9b-6180-40d8-899b-c08e105c9e92', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:08', 0);
+	('fd321b9b-6180-40d8-899b-c08e105c9e92', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:08', 0),
+	('b4c1fe27-b258-4c79-a1e6-cdb171b14551', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/752858d3-269c-4839-9a50-d619751e83a1', '2024-04-17 08:28:33', 0),
+	('3b4c7df5-c3b1-4572-b1c9-ef115fe26d48', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/b9aa4f51-9788-4790-bfde-535b38610e61', '2024-04-23 21:32:09', 0);
 
 -- Dumping structure for table itemrental.orders
 CREATE TABLE IF NOT EXISTS `orders` (
@@ -217,13 +245,15 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.orders: ~3 rows (approximately)
+-- Dumping data for table itemrental.orders: ~4 rows (approximately)
 DELETE FROM `orders`;
 INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`, `deliveryType`, `comment`, `createdAt`) VALUES
 	('6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '9802d975-8fe5-4523-aa15-2fcac5d1c85c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-16', '2024-04-17', 5, 0, '', '2024-04-16 09:04:08'),
+	('b9aa4f51-9788-4790-bfde-535b38610e61', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-25', '2024-04-27', 0, 1, 'test', '2024-04-23 21:32:09'),
 	('e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 'b8d19c9e-8d1b-4cec-b3cc-2c42cb76b4d2', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-27', '2024-04-28', 2, 1, 'Bus naudojamas gimtadienio fotosesijai', '2024-04-16 08:49:12'),
 	('05d6659e-9392-40d9-9f13-99a507ece273', 'c7aa5214-552b-4fa1-8010-1cd753cf1c75', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-23', '2024-04-26', 3, 0, '', '2024-04-16 08:47:03'),
-	('bc0acfd6-8ac7-45fe-9378-c743a22f1393', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-20', '2024-04-21', 0, 0, 'Skirtingomis dienomis bus kiti žmonės', '2024-04-16 08:46:35');
+	('bc0acfd6-8ac7-45fe-9378-c743a22f1393', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-20', '2024-04-21', 0, 0, 'Skirtingomis dienomis bus kiti žmonės', '2024-04-16 08:46:35'),
+	('752858d3-269c-4839-9a50-d619751e83a1', '205a4ff4-fcb3-4f69-8486-da3aade46168', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-17', '2024-04-19', 0, 1, 'Test', '2024-04-17 08:28:33');
 
 -- Dumping structure for table itemrental.profile_feedback
 CREATE TABLE IF NOT EXISTS `profile_feedback` (
@@ -250,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `rent_listings` (
   `location` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.rent_listings: ~4 rows (approximately)
+-- Dumping data for table itemrental.rent_listings: ~14 rows (approximately)
 DELETE FROM `rent_listings`;
 INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `price`, `location`) VALUES
 	('f09d8b6d-643a-485a-8ac9-46254569b9c1', '892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'What is lorem ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20.990000, 'Vilnius, Lithuania'),
