@@ -33,6 +33,26 @@ export const deliveryStatusTips = [
     id: 0,
     text: 'Your order is successfuly registered, now we are waiting for the merchant to accept it',
   },
+  {
+    id: 1,
+    text: 'Your order is accepted, now we are waiting for the merchant to submit delivery details',
+  },
+  {
+    id: 2,
+    text: 'Your order is dispatched, please confirm delivery when you receive or pickup the package',
+  },
+  {
+    id: 3,
+    text: 'You are using the rent of those items. Be aware that you will need to return the package the last day',
+  },
+  {
+    id: 4,
+    text: 'Your rent order package is being returned, now we are waiting for merchant to confirm the successful return delivery',
+  },
+  {
+    id: 5,
+    text: 'Your rent order package is successfuly returned!',
+  },
 ];
 
 export const getTrackingLink = (provider: string, id: string) => {
