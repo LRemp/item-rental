@@ -40,22 +40,12 @@ const OrderMenu: React.FC<OrderMenuProps> = ({ status, id }) => {
           <>
             <Menu.Divider />
             <Menu.Label>Confirmation</Menu.Label>
-            <ConfirmOrderAction
-              id={id}
-              button={
-                <Menu.Item leftSection={<IconCheck style={{ width: rem(14), height: rem(14) }} />}>
-                  Confirm
-                </Menu.Item>
-              }
-            />
-            <DeclineOrderAction
-              id={id}
-              button={
-                <Menu.Item leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}>
-                  Confirm
-                </Menu.Item>
-              }
-            />
+            <Menu.Item leftSection={<IconCheck style={{ width: rem(14), height: rem(14) }} />}>
+              <ConfirmOrderAction id={id} />
+            </Menu.Item>
+            <Menu.Item leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}>
+              <DeclineOrderAction id={id} />
+            </Menu.Item>
           </>
         )}
       </Menu.Dropdown>

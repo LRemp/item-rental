@@ -27,7 +27,7 @@ namespace ItemRental.Application.Items
 
             if(item is null)
             {
-                return Result.Failure<ItemDTO>(DomainErrors.Item.NotFound(request.id));
+                return Result.Failure<ItemDTO>(DomainErrors.Item.NotFound);
             }
 
             var itemDTO = new ItemDTO

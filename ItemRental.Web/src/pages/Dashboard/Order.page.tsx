@@ -123,8 +123,8 @@ const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
     <Box mt={'lg'}>
       {status == 0 && (
         <Group>
-          <ConfirmOrderAction id={id} size={'sm'} />
-          <DeclineOrderAction id={id} size={'sm'} />
+          <ConfirmOrderAction id={id} />
+          <DeclineOrderAction id={id} />
         </Group>
       )}
       {(status == 1 || status == 2) && (

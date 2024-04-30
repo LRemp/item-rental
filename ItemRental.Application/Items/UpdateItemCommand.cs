@@ -28,13 +28,13 @@ namespace ItemRental.Application.Items
 
             if(item is null)
             {
-                return Result.Failure(DomainErrors.Item.NotFound(request.itemDTO.Id));
+                return Result.Failure(DomainErrors.Item.NotFound);
             }
 
             var isAuthorized = await IsAuthorized(request.itemDTO.Id, request.userId, cancellationToken);
             if (!isAuthorized)
             {
-                return Result.Failure(DomainErrors.Item.Unauthorized(request.itemDTO.Id));
+                return Result.Failure(DomainErrors.Item.Unauthorized);
             }
 
             Item itemUpdate = new Item
@@ -51,7 +51,7 @@ namespace ItemRental.Application.Items
 
             if(!success)
             {
-                return Result.Failure(DomainErrors.Item.NotFound(item.Id));
+                return Result.Failure(DomainErrors.Item.NotFound);
             }
             
             return Result.Success();

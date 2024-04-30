@@ -28,34 +28,34 @@ namespace ItemRental.Application.Items
 
             if(item is null)
             {
-                return Result.Failure(DomainErrors.Item.NotFound(request.itemId));
+                return Result.Failure(DomainErrors.Item.NotFound);
             }
 
             var isAuthorized = await IsAuthorized(request.itemId, request.userId, cancellationToken);
             if(!isAuthorized)
             {
-                return Result.Failure(DomainErrors.Item.Unauthorized(request.itemId));
+                return Result.Failure(DomainErrors.Item.Unauthorized);
             }
 
             var includedInListing = await rentListingService.IsItemUsed(request.itemId, cancellationToken);
 
             if(includedInListing)
             {
-                return Result.Failure(DomainErrors.Item.UsedInListing(request.itemId));
+                return Result.Failure(DomainErrors.Item.UsedInListing);
             }
 
             var usedInOrder = await orderService.IsItemInUse(request.itemId, cancellationToken);
 
             if(usedInOrder)
             {
-                return Result.Failure(DomainErrors.Item.UsedInOrder(request.itemId));
+                return Result.Failure(DomainErrors.Item.UsedInOrder);
             }
 
             var success = await itemRepository.DeleteAsync(request.itemId, cancellationToken);
 
             if (!success)
             {
-                return Result.Failure(DomainErrors.Item.FailedToDelete(request.itemId));
+                return Result.Failure(DomainErrors.Item.FailedToDelete);
             }
             
             return Result.Success();

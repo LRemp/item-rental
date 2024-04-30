@@ -40,7 +40,7 @@ namespace ItemRental.Core.Domain
 
         public static class Item
         {
-            public static readonly Func<Guid, Error> NotFound = id => new Error(
+            public static readonly Error NotFound = new Error(
                 "Item.NotFound",
                 "The item was not found");
 
@@ -48,19 +48,19 @@ namespace ItemRental.Core.Domain
                 "Item.FailedToCreate",
                 "The item could not be created");
 
-            public static readonly Func<Guid, Error> Unauthorized = id => new Error(
+            public static readonly Error Unauthorized = new Error(
                 "Item.Unauthorized",
                 "Not authorized for this action");
 
-            public static readonly Func<Guid, Error> FailedToDelete = id => new Error(
+            public static readonly Error FailedToDelete = new Error(
                 "Item.FailedToDelete",
                 "The item could not be deleted");
 
-            public static readonly Func<Guid, Error> UsedInListing = id => new Error(
+            public static readonly Error UsedInListing = new Error(
                 "Item.UsedInListing",
                 "This item is included in the listing and can not be deleted");
 
-            public static readonly Func<Guid, Error> UsedInOrder = id => new Error(
+            public static readonly Error UsedInOrder = new Error(
                 "Item.UsedInOrder",
                 "This item is used in order and can not be deleted");
         }

@@ -18,4 +18,10 @@
     <ProjectReference Include="..\ItemRental.Services\ItemRental.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		  <_Parameter1>ItemRental.Tests</_Parameter1>
+	  </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

@@ -55,7 +55,7 @@ const ConfirmOrderAction: React.FC<ActionButtonProps> = ({ id, refresh, button }
       },
     });
 
-  return <UnstyledButton onClick={openModal}>{button}</UnstyledButton>;
+  return <Button onClick={openModal}>Confirm</Button>;
 };
 
 export default ConfirmOrderAction;

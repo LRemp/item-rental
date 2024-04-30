@@ -21,5 +21,5 @@ interface ItemButtonActionProps {
 interface ActionButtonProps {
   id: string;
   refresh?: Function;
-  button: React.ReactNode;
+  button?: string;
 }
