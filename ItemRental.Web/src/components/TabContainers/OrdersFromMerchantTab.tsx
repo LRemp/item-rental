@@ -10,6 +10,7 @@ interface OrdersFromMerchantTabProps {
 
 const OrdersFromMerchantTab: React.FC<OrdersFromMerchantTabProps> = ({ id }) => {
   const { result, loading } = useApiResult(() => api.User.getMerchantOrders(id), []);
+  console.log(result);
   return <>{loading ? <Loader /> : <MerchantOrdersTable elements={result} />}</>;
 };
 

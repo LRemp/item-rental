@@ -10,6 +10,7 @@ namespace ItemRental.Core.Entities
     {
         public string Address = string.Empty;
         public string Subject = string.Empty;
-        public string Message = string.Empty;
+        public string PlainTextContent = string.Empty;
+        public string HTMLcontent = string.Empty;
     }
 }

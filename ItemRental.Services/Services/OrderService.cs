@@ -19,13 +19,15 @@ namespace ItemRental.Services.Services
         private readonly IRentListingRepository rentListingRepository;
         private readonly IEventLogRepository eventLogRepository;
         private readonly IUserRepository userRepository;
+        private readonly IEmailService emailService;
         private readonly IMapper mapper;
-        public OrderService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository, IEventLogRepository eventLogRepository, IUserRepository userRepository, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository, IEventLogRepository eventLogRepository, IUserRepository userRepository, IEmailService emailService, IMapper mapper)
         {
             this.orderRepository = orderRepository;
             this.rentListingRepository = rentListingRepository;
             this.eventLogRepository = eventLogRepository;
             this.userRepository = userRepository;
+            this.emailService = emailService;
             this.mapper = mapper;
         }
 
@@ -110,6 +112,10 @@ namespace ItemRental.Services.Services
             {
                 return Result.Failure<Guid>(DomainErrors.Order.FailedToCreate);
             }
+
+            var merchant = await userRepository.GetByIdAsync(listing.Renter, cancellationToken);
+
+            emailService.SendEmail(DomainEmails.Order.NewOrderCreated(merchant, listing));
 
             await eventLogRepository.AddAsync(DomainEventLogs.Order.Created(Guid.NewGuid(), order.Id), cancellationToken);
             await userRepository.AddNotificationAsync(DomainNotifications.Order.Created(order.User, order.Id), cancellationToken);

@@ -1,8 +1,18 @@
-import { AppShell, Burger, Group, Image, Skeleton, Text, UnstyledButton } from '@mantine/core';
+import {
+  AppShell,
+  Burger,
+  Grid,
+  Group,
+  Image,
+  Skeleton,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from '@/assets/images/logo.png';
 import { Navbar } from '@/components/Nagivation/Navbar';
+import Notifications from '@/components/Misc/Notifications';
 
 export default function Dashboard() {
   const [opened, { toggle }] = useDisclosure();
@@ -16,9 +26,12 @@ export default function Dashboard() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <UnstyledButton>
-            <Image src={Logo} h={'42'} />
-          </UnstyledButton>
+          <Group justify="space-between" w={'100%'}>
+            <UnstyledButton>
+              <Image src={Logo} h={'42'} />
+            </UnstyledButton>
+            <Notifications />
+          </Group>
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">

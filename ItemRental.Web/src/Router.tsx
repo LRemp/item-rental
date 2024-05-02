@@ -1,20 +1,21 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/Home.page';
-import LoginPage from './pages/Login.page';
-import RegisterPage from './pages/Register.page';
+import HomePage from './pages/Home';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
 import DashboardPage from './pages/Dashboard';
-import InventoryPage from './pages/Dashboard/Inventory.page';
+import InventoryPage from './pages/Dashboard/Inventory';
 import DashboardHome from './pages/Dashboard/Home.page';
 import DashboardSettings from './pages/Dashboard/Settings.page';
 import ListingPage from './pages/Listing.page';
 import MainLayout from './layouts/MainLayout';
-import ListingsPage from './pages/Dashboard/Listings.page';
-import ItemPage from './pages/Dashboard/Item.page';
-import OrdersPage from './pages/Orders.page';
+import ListingsPage from './pages/Dashboard/Listings';
+import ItemPage from './pages/Dashboard/Item';
+import OrdersPage from './pages/Orders';
 import OrderPage from './pages/Order.page';
-import DashboardOrders from './pages/Dashboard/Orders.page';
-import DashboardOrder from './pages/Dashboard/Order.page';
+import DashboardOrders from './pages/Dashboard/Orders';
+import DashboardOrder from './pages/Dashboard/Order';
 import UserPage from './pages/User.page';
+import ProfilePage from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/user/:id',
         element: <UserPage />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
     ],
   },

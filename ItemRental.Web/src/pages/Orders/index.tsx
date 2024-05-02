@@ -1,0 +1,50 @@
+import api from '@/api';
+import OrderCard from '@/components/Cards/OrderCard';
+import UserOrdersTable from '@/components/Tables/UserOrdersTable';
+import useApiResult from '@/hooks/useApiResult';
+import { Box, Center, Grid, Group, Loader, Text, Title } from '@mantine/core';
+import React, { useEffect } from 'react';
+import { nprogress } from '@mantine/nprogress';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import LoginRequired from '@/components/LoginRequired';
+
+const Orders: React.FC = () => {
+  const { result: orders, loading } = useApiResult(() => api.Order.getUserOrders(), []);
+  const isAuthenticated = useIsAuthenticated();
+
+  useEffect(() => {
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.complete();
+    }
+  }, [loading]);
+
+  return (
+    <>
+      <Box>
+        <Title fw={700}>Nuomos rezervacijos</Title>
+        {isAuthenticated() ? (
+          <>
+            {loading ? (
+              <Center h={'70vh'} w={'100%'}>
+                <Group>
+                  <Loader></Loader>
+                  <Text>Loading up your orders...</Text>
+                </Group>
+              </Center>
+            ) : (
+              <UserOrdersTable items={orders} />
+            )}
+          </>
+        ) : (
+          <Center mih={'70vh'}>
+            <LoginRequired />
+          </Center>
+        )}
+      </Box>
+    </>
+  );
+};
+
+export default Orders;

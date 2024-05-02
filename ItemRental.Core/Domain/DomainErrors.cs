@@ -10,9 +10,9 @@ namespace ItemRental.Core.Domain
                 "User.EmailOrUsernameAlreadyInUse",
                 "The provided email or username is already in use.");
 
-            public static readonly Func<Guid, Error> NotFound = id => new Error(
+            public static readonly Error NotFound = new Error(
                 "User.NotFound",
-                $"The member with identifier {id} was not found.");
+                $"The member with given username was not found.");
 
             public static readonly Error InvalidCredentials = new Error(
                 "User.InvalidCredentials",

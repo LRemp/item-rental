@@ -36,7 +36,7 @@ const RentListingsContainer = () => {
   return (
     <Grid columns={18}>
       <Grid.Col span={18}>
-        <Title my={'lg'} order={2} fw={400}>
+        <Title fw={400} order={2}>
           Listings
         </Title>
       </Grid.Col>

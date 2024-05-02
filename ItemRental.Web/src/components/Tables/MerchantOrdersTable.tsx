@@ -13,7 +13,7 @@ interface MerchantOrdersTableProps {
 const MerchantOrdersTable: React.FC<MerchantOrdersTableProps> = ({ elements }) => {
   const navigate = useNavigate();
 
-  const rows = elements.map(({ id, startDate, endDate, rentListing, status }) => (
+  const rows = elements?.map(({ id, startDate, endDate, rentListing, status }) => (
     <Table.Tr key={id}>
       <Table.Td>
         <Center>

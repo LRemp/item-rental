@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,12 @@ namespace ItemRental.Services.Services
             }
 
             return roles;
+        }
+
+        public async Task<UserDTO?> GetUserProfile(string username, CancellationToken cancellationToken)
+        {
+            User? user = await userRepository.GetByEmailOrUsernameAsync(username, cancellationToken);
+            return mapper.Map<UserDTO>(user);
         }
 
         public bool VerifyPasswordHash(string password, string passwordHash)

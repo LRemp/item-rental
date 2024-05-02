@@ -173,7 +173,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
       id: item.id,
       title: item.rentListing.title,
       date: getDateLabel(item.startDate) + ' - ' + getDateLabel(item.endDate),
-      status: OrderStatusLabels[item.status as keyof typeof OrderStatusLabels].label,
+      status: OrderStatusLabels[item.status as keyof typeof OrderStatusLabels].name,
     };
   });
   const [search, setSearch] = useState('');
@@ -217,7 +217,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
   });
 
   return (
-    <Paper radius={'md'} mb={'xl'}>
+    <Paper radius={'sm'} mb={'xl'} mt={'lg'} p={'md'} shadow="md">
       <ScrollArea>
         <TextInput
           placeholder="Search by any field"

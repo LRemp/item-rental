@@ -12,9 +12,9 @@ const GetNotifications = (): ApiRequest => ({
   authenticate: true,
 });
 
-const get = (id: string): ApiRequest => ({
+const get = (username: string): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Users/${id}`,
+  endpoint: `/api/Users/${username}`,
 });
 
 const getMerchantOrders = (id: string): ApiRequest => ({

@@ -225,6 +225,8 @@ namespace ItemRental.Repositories.Repositories
             return result.ToList();
         }
 
+        
+
         public async Task<Comment?> GetCommentAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM comments WHERE id = @id";
@@ -245,20 +247,20 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<RentListing?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM rent_listings WHERE id = @id";
+            var query = @"SELECT * FROM rent_listings WHERE id = @id LIMIT 1";
 
-            var result = await mySqlConnection.QuerySingleAsync<RentListing>(query, new { id });
+            var result = await mySqlConnection.QueryAsync<RentListing>(query, new { id });
 
-            return result;
+            return result.FirstOrDefault();
         }
 
         public async Task<RentListing?> GetWithItemAsync(Guid id, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM rent_listings WHERE item = @id";
+            var query = @"SELECT * FROM rent_listings WHERE item = @id LIMIT 1";
 
-            var result = await mySqlConnection.QuerySingleAsync<RentListing>(query, new { id });
+            var result = await mySqlConnection.QueryAsync<RentListing>(query, new { id });
 
-            return result;
+            return result.FirstOrDefault();
         }
 
         public async Task<bool> UpdateAsync(RentListing rentalListing, CancellationToken cancellationToken)

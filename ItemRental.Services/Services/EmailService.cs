@@ -1,4 +1,6 @@
-﻿using ItemRental.Core.Contracts;
+﻿using Azure;
+using Azure.Communication.Email;
+using ItemRental.Core.Contracts;
 using ItemRental.Core.Entities;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,16 +13,27 @@ namespace ItemRental.Services.Services
 {
     public class EmailService : IEmailService
     {
-        private bool Initialized = false;
-        public EmailService() { }
-        public EmailService(IConfiguration configuration) { 
+        private bool initialized = false;
+        private EmailClient emailClient;
+        public EmailService(IConfiguration configuration) {
+            this.emailClient = new EmailClient(configuration["EmailServiceConnectionString"]);
+            this.initialized = true;
         }
         public void SendEmail(Email email)
         {
-            if (!Initialized)
+            if (!initialized || emailClient is null)
             {
+                
                 throw new InvalidOperationException("Email service not initialized");
             }
+            EmailSendOperation emailSendOperation = emailClient.Send(
+                WaitUntil.Started,
+                senderAddress: "DoNotReply@bead29e0-a40e-4714-a3a5-d590f17ea26a.azurecomm.net",
+                recipientAddress: email.Address,
+                subject: email.Subject,
+                htmlContent: email.HTMLcontent,
+                plainTextContent: email.PlainTextContent);
         }
+
     }
 }
