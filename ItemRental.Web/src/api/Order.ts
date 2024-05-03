@@ -41,6 +41,12 @@ const confirm = (id: string): ApiRequest => ({
   authenticate: true,
 });
 
+const decline = (id: string): ApiRequest => ({
+  method: 'POST',
+  endpoint: `/api/Orders/${id}/decline`,
+  authenticate: true,
+});
+
 export default {
   createOrder,
   getOrder,
@@ -48,4 +54,5 @@ export default {
   getUserOrders,
   getOwnerOrders,
   confirm,
+  decline,
 };

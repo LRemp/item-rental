@@ -9,6 +9,7 @@ import {
   Loader,
   Skeleton,
   Text,
+  Title,
   UnstyledButton,
 } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
@@ -34,7 +35,10 @@ function CategoriesFilterSelection() {
     <Box w={'100%'}>
       <Text fw={600} size="md" mb="md">
         <Center inline>
-          Categories {loading && <Loader size={'xs'} ml={'xs'} />}{' '}
+          <Title order={3} fw={600}>
+            Categories {loading && <Loader size={'xs'} ml={'xs'} />}{' '}
+          </Title>
+
           {category && (
             <ActionIcon onClick={() => navigate('/')} size="xs" ml={'xs'}>
               <IconX size="xs"></IconX>

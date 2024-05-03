@@ -5,6 +5,7 @@ using ItemRental.Core.Domain;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using ItemRental.Core.Helpers;
+using ItemRental.Repositories.Repositories;
 using Moq;
 
 namespace ItemRental.Tests.Application
@@ -75,7 +76,7 @@ namespace ItemRental.Tests.Application
             var command = new DeleteItemCommand(Guid.NewGuid(), Guid.NewGuid());
 
             var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, null, null);
-        
+
             _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync((Item)null);
 
             //Act

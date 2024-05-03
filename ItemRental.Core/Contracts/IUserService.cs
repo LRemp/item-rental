@@ -12,6 +12,7 @@ namespace ItemRental.Core.Contracts
     {
         public string GeneratePasswordHash(string password);
         public bool VerifyPasswordHash(string password, string passwordHash);
+        public Task<UserDTO?> GetUserProfile(string username, CancellationToken cancellationToken);
         public Task<List<NotificationDTO>> GetNotificationsAsync(Guid user, CancellationToken cancellationToken);
         public Task<List<string>> GetUserRoles(Guid id, CancellationToken cancellationToken);
     }

@@ -25,13 +25,15 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { modals } from '@mantine/modals';
 
 const navLinks = {
-  client: [{ link: '/', label: 'Home', icon: IconHome },
-    { link: '/orders', label: 'Your orders', icon: IconClipboardList },],
+  client: [
+    { link: '/', label: 'Pagrindinis', icon: IconHome },
+    { link: '/orders', label: 'Rezervacijos', icon: IconClipboardList },
+  ],
   merchant: [
-    { link: '/dashboard/home', label: 'Home', icon: IconHome },
-    { link: '/dashboard/inventory', label: 'Inventory', icon: IconClipboardList },
-    { link: '/dashboard/listings', label: 'Listings', icon: IconCheckupList },
-    { link: '/dashboard/orders', label: 'Orders', icon: IconTruckDelivery },
+    { link: '/dashboard/home', label: 'Pagrindinis', icon: IconHome },
+    { link: '/dashboard/inventory', label: 'Inventorius', icon: IconClipboardList },
+    { link: '/dashboard/listings', label: 'Skelbimai', icon: IconCheckupList },
+    { link: '/dashboard/orders', label: 'Užsakymai', icon: IconTruckDelivery },
   ],
 };
 
@@ -89,8 +91,8 @@ export function Navbar() {
           <>
             <SegmentedControl
               data={[
-                { label: 'Client', value: 'client' },
-                { label: 'Merchant', value: 'merchant' },
+                { label: 'Klientas', value: 'client' },
+                { label: 'Nuomininkas', value: 'merchant' },
               ]}
               fullWidth
               onChange={changeRole}
@@ -98,19 +100,19 @@ export function Navbar() {
             <ProfileButton />
             <NavLink to="/logout" className={classes.link} onClick={signOutAction}>
               <IconLogout className={classes.linkIcon} stroke={1.5} />
-              <span>Logout</span>
+              <span>Atsijungti</span>
             </NavLink>
           </>
         ) : (
           <>
             <NavLink to="/login" className={classes.link}>
               <IconLogin className={classes.linkIcon} stroke={1.5} />
-              <span>Log In</span>
+              <span>Prisijungti</span>
             </NavLink>
 
             <NavLink to="/register" className={classes.link}>
               <IconFingerprint className={classes.linkIcon} stroke={1.5} />
-              <span>Register</span>
+              <span>Registruotis</span>
             </NavLink>
           </>
         )}

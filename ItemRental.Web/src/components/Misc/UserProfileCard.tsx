@@ -1,7 +1,9 @@
 import { Avatar, Text, Button, Paper, Grid } from '@mantine/core';
 import { IconDiscountCheckFilled } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
-const UserProfileCard: React.FC<UserProfile> = ({ username, name, lastname }) => {
+const UserProfileCard: React.FC<UserProfile> = ({ id, username, name, lastname }) => {
+  const navigate = useNavigate();
   return (
     <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)" shadow="sm">
       <Grid columns={12}>
@@ -14,7 +16,12 @@ const UserProfileCard: React.FC<UserProfile> = ({ username, name, lastname }) =>
           <Text ta="center" fw={500}>
             {username} <IconDiscountCheckFilled size={'18'} />
           </Text>
-          <Button variant="default" size="compact-xs" fullWidth>
+          <Button
+            variant="default"
+            size="compact-xs"
+            fullWidth
+            onClick={() => navigate(`/user/${id}`)}
+          >
             View profile
           </Button>
         </Grid.Col>

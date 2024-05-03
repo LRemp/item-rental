@@ -9,6 +9,7 @@ import {
   Container,
   Group,
   Button,
+  rem,
 } from '@mantine/core';
 import Logo from '@/assets/images/logo.png';
 import classes from './RegisterForm.module.css';
@@ -17,6 +18,7 @@ import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import api from '@/api';
 import { Error, Success } from '@/utils/Notifications';
+import { IconAt, IconLock } from '@tabler/icons-react';
 
 export function RegisterForm() {
   const navigate = useNavigate();
@@ -114,17 +116,21 @@ export function RegisterForm() {
         <form onSubmit={form.onSubmit((values) => register(values))}>
           <TextInput
             label="Username"
-            placeholder="username"
+            placeholder="Your username"
             required
             {...form.getInputProps('username')}
           />
           <TextInput
+            leftSectionPointerEvents="none"
+            leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="Your email address"
             required
             {...form.getInputProps('email')}
           />
           <PasswordInput
+            leftSectionPointerEvents="none"
+            leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
             label="Password"
             placeholder="Your password"
             required
@@ -132,6 +138,8 @@ export function RegisterForm() {
             {...form.getInputProps('password')}
           />
           <PasswordInput
+            leftSectionPointerEvents="none"
+            leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
             label="Repeat password"
             placeholder="Repeat your password"
             required

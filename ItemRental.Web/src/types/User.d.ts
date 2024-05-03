@@ -9,9 +9,10 @@ type LoginResponse = {
 };
 
 type UserProfile = {
+  id: string;
   username: string;
   name: string;
-  lastname: string;
+  surname: string;
   email: string;
   gender: string;
 };

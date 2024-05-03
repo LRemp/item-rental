@@ -47,6 +47,7 @@ function Listing() {
       nprogress.complete();
     }
   }, [loading]);
+  console.log(result);
 
   return (
     <Grid w={'100%'} mt={'md'}>

@@ -24,10 +24,10 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<bool> AddAsync(User user, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO users (id, username, email, password) 
-                            VALUES (@id, @username, @email, @password)";
+            var query = @"INSERT INTO users (id, username, email, password, name, surname) 
+                            VALUES (@id, @username, @email, @password, @name, @surname)";
             
-            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, username = user.Username, email = user.Email, password = user.Password });
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, username = user.Username, email = user.Email, password = user.Password, name = user.Name, surname = user.Surname });
 
             return result > 0;
         }

@@ -27,7 +27,7 @@ namespace ItemRental.Application.Orders
 
             if(user is null)
             {
-                return Result.Failure<List<OrderDTO>>(DomainErrors.User.NotFound(request.merchant));
+                return Result.Failure<List<OrderDTO>>(DomainErrors.User.NotFound);
             }
 
             var orders = await _orderRepository.GetOrdersFromMerchantAsync(request.user, request.merchant, cancellationToken);

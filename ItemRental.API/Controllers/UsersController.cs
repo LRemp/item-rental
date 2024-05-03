@@ -34,10 +34,10 @@ namespace ItemRental.API.Controllers
 
             return Ok(result.Value);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetById(string username)
         {
-            Result<UserResponse> result = await _sender.Send(new GetUserByIdQuery(id));
+            Result<UserDTO> result = await _sender.Send(new GetUserByUsernameQuery(username));
 
             if(result.IsFailure)
             {

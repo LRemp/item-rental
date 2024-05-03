@@ -5,79 +5,87 @@ type StatusLabel = {
 
 const labels = {
   0: {
-    label: 'Pending',
+    label: 'Laukiama patvirtinimo',
+    name: 'pending',
     color: 'blue',
   },
   1: {
-    label: 'Accepted',
+    label: 'Patvirtintas',
+    name: 'accepted',
     color: 'green',
   },
   2: {
-    label: 'Delivering',
+    label: 'Pristatomas',
+    name: 'delivering',
     color: 'yellow',
   },
   3: {
-    label: 'In Progress',
+    label: 'Nuomojamas',
+    name: 'inprogress',
     color: 'orange',
   },
   4: {
-    label: 'Returning',
+    label: 'Grąžinamas',
+    name: 'returning',
     color: 'yellow',
   },
   5: {
-    label: 'Completed',
+    label: 'Užbaigtas',
+    name: 'completed',
     color: 'green',
   },
   6: {
-    label: 'Rejected',
+    label: 'Atmestas',
+    name: 'rejected',
     color: 'red',
   },
   7: {
-    label: 'Cancelled',
+    label: 'Atšauktas',
+    name: 'cancelled',
     color: 'white',
   },
 };
 
 const indexedLabels: any = {
-  Pending: {
+  pending: {
     id: 0,
     color: 'blue',
-    label: 'Pending',
+    label: 'Laukiama patvirtinimo',
   },
-  Accepted: {
+  accepted: {
     id: 1,
     color: 'green',
-    label: 'Accepted',
+    label: 'Patvirtintas',
   },
-  Delivering: {
+  delivering: {
     id: 2,
     color: 'yellow',
-    label: 'Delivering',
+    label: 'Pristatomas',
   },
-  'In Progress': {
+  inprogress: {
     id: 3,
     color: 'orange',
-    label: 'In Progress',
+    label: 'Nuomojamas',
   },
-  Returning: {
+  returning: {
     id: 4,
     color: 'yellow',
-    label: 'Returning',
+    label: 'Grąžinamas',
   },
-  Completed: {
+  completed: {
     id: 5,
     color: 'green',
-    label: 'Completed',
+    label: 'Užbaigtas',
   },
-  Rejected: {
+  rejected: {
     id: 6,
     color: 'red',
-    label: 'Rejected',
+    label: 'Atmestas',
   },
-  Cancelled: {
+  cancelled: {
     id: 7,
     color: 'gray',
-    label: 'Cancelled',
+    label: 'Atšauktas',
   },
 };
 

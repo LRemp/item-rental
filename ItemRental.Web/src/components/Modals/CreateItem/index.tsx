@@ -7,6 +7,7 @@ import {
   Modal,
   NumberInput,
   Select,
+  TagsInput,
   TextInput,
   Textarea,
 } from '@mantine/core';
@@ -95,6 +96,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
         category: data.category,
         images: imageUpload?.data,
         details: details,
+        serialNumber: data.serialNumber,
       });
 
       notifications.update(
@@ -141,6 +143,13 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
               autosize
               {...form.getInputProps('description')}
             ></Textarea>
+
+            <TextInput
+              label="Serial number"
+              placeholder="Enter item serial number"
+              {...form.getInputProps('serialNumber')}
+            />
+
             <FormFileDropzone {...form.getInputProps('files')} />
 
             <Select
@@ -186,6 +195,13 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                     );
                   }
                 })}
+
+            <TagsInput
+              label="Žymės"
+              placeholder="Įveskite žymę"
+              clearable
+              {...form.getInputProps('tags')}
+            />
 
             <Button fullWidth mt="md" type="submit" loading={adding}>
               Add Item

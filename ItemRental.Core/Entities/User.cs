@@ -12,5 +12,7 @@ namespace ItemRental.Core.Entities
         public string Password { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string AvatarURL { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
     }
 }
