@@ -1,6 +1,3 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
-import { Success } from '@/utils/Notifications';
 import { Button, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
@@ -8,6 +5,9 @@ import { notifications } from '@mantine/notifications';
 import { IconX } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Success } from '@/utils/Notifications';
+import useApiResult from '@/hooks/useApiResult';
+import api from '@/api';
 
 const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
   const { loading, request } = useApiResult(() => api.Item.deleteItem(id));

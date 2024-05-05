@@ -5,7 +5,7 @@ type Item = {
   category: string;
   images: string[];
   details: Detail[];
-  tags: string[];
+  tags?: string[];
 };
 
 type Detail = {

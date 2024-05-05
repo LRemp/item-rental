@@ -1,5 +1,5 @@
 export const GenerateCategoriesTree = (categories = [], parentCategory = null) => {
-  var categoryTree: any = [];
+  const categoryTree: any = [];
   categories
     .filter((category: any) => category.parent === parentCategory)
     .forEach((category: any) => {

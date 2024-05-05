@@ -12,15 +12,15 @@ import {
   Textarea,
 } from '@mantine/core';
 import React from 'react';
-import { FormFileDropzone } from '../../FileDropzone/FormFileDropzone';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { Error, Success } from '@/utils/Notifications';
 import { notifications } from '@mantine/notifications';
+import { DatePickerProps } from '@mantine/dates';
+import { FormFileDropzone } from '../../FileDropzone/FormFileDropzone';
+import { Error, Success } from '@/utils/Notifications';
 import useUploadImage from '@/hooks/useUploadImage';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
-import { DatePickerProps } from '@mantine/dates';
 
 interface CreateItemModalProps {
   opened: boolean;
@@ -60,7 +60,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       withCloseButton: false,
     });
 
-    var imageUpload;
+    let imageUpload;
 
     if (data.files.length > 0) {
       imageUpload = await uploadImage(data.files);
@@ -78,13 +78,13 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       }
     }
 
-    var details: any = [];
-    var scheme = categories.find((item: any) => item.name === form.values.category).scheme;
-    for (var key in scheme) {
+    const details: any = [];
+    const { scheme } = categories.find((item: any) => item.name === form.values.category);
+    for (const key in scheme) {
       if (detailsForm.values[scheme[key].name]) {
         details.push({
           name: scheme[key].name,
-          value: detailsForm.values[scheme[key].name] + '',
+          value: `${detailsForm.values[scheme[key].name]}`,
         });
       }
     }
@@ -95,7 +95,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
         description: data.description,
         category: data.category,
         images: imageUpload?.data,
-        details: details,
+        details,
         serialNumber: data.serialNumber,
       });
 
@@ -124,7 +124,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       onClose={close}
       title="Add new item"
       centered
-      size={'lg'}
+      size="lg"
       closeOnClickOutside={!adding}
       closeOnEscape={!adding}
       withCloseButton={!adding}
@@ -136,13 +136,13 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       ) : (
         <form onSubmit={form.onSubmit((values) => addItem(values))}>
           <Fieldset disabled={adding} variant="unstyled">
-            <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')}></TextInput>
+            <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
             <Textarea
               label="Description"
               placeholder="Description"
               autosize
               {...form.getInputProps('description')}
-            ></Textarea>
+            />
 
             <TextInput
               label="Serial number"
@@ -170,9 +170,9 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                         label={item.label}
                         placeholder={item.label}
                         {...detailsForm.getInputProps(item.name)}
-                      ></TextInput>
+                      />
                     );
-                  } else if (item.type == 'select') {
+                  } if (item.type == 'select') {
                     return (
                       <Select
                         key={index}
@@ -182,7 +182,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                         {...detailsForm.getInputProps(item.name)}
                       />
                     );
-                  } else if (item.type == 'number') {
+                  } if (item.type == 'number') {
                     return (
                       <NumberInput
                         key={index}
@@ -191,7 +191,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                         min={item.min}
                         max={item.max}
                         {...detailsForm.getInputProps(item.name)}
-                      ></NumberInput>
+                      />
                     );
                   }
                 })}

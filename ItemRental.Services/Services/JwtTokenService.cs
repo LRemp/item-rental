@@ -25,7 +25,7 @@ namespace ItemRental.Services.Services
             _audience = configuration["Jwt:Audience"];
         }
 
-        public string CreateAccessToken(User user, List<string> userRoles)
+        public async Task<string> CreateAccessToken(User user, List<string> userRoles)
         {
             var authClaims = new List<Claim>
             {

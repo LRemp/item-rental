@@ -66,4 +66,5 @@ export const getTrackingLink = (provider: string, id: string) => {
     case '3':
       return `https://www.post.lt/paieska/?search=${id}`;
   }
+  return '';
 };

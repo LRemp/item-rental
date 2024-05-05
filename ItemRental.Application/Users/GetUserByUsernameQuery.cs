@@ -13,14 +13,12 @@ using System.Threading.Tasks;
 namespace ItemRental.Application.Users
 {
     public sealed record GetUserByUsernameQuery(string username) : IQuery<UserDTO>;
-    internal class GetUserByUsernameQueryHandler : IQueryHandler<GetUserByUsernameQuery, UserDTO>
+    public class GetUserByUsernameQueryHandler : IQueryHandler<GetUserByUsernameQuery, UserDTO>
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        public GetUserByUsernameQueryHandler(IUserService userService, IMapper mapper)
+        public GetUserByUsernameQueryHandler(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
         }
 
         public async Task<Result<UserDTO>> Handle(GetUserByUsernameQuery request, CancellationToken cancellationToken)
@@ -32,9 +30,7 @@ namespace ItemRental.Application.Users
                 return Result.Failure<UserDTO>(DomainErrors.User.NotFound);
             }
 
-            var response = _mapper.Map<UserDTO>(user);
-
-            return response;
+            return user;
         }
     }
 }

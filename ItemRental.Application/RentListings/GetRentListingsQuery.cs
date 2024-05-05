@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ItemRental.Application.RentListings
 {
     public sealed record GetRentListingsQuery(string? searchArgument, string? category, bool? ownerListings, Guid? userId, int? page) : IQuery<PaginatedResult<List<RentListingDTO>>>;
-    internal class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, PaginatedResult<List<RentListingDTO>>>
+    public class GetRentListingsQueryHandler : IQueryHandler<GetRentListingsQuery, PaginatedResult<List<RentListingDTO>>>
     {
         private readonly IRentListingRepository _rentListingRepository;
         public GetRentListingsQueryHandler(IRentListingRepository rentListingRepository)

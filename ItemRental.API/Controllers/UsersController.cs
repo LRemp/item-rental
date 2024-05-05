@@ -23,7 +23,7 @@ namespace ItemRental.API.Controllers
             _jwtTokenService = jwtTokenService;
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginDTO request)
         {
             Result<LoginResponse> result = await _sender.Send(new LoginCommand(request.Email, request.Password));
 
@@ -104,6 +104,83 @@ namespace ItemRental.API.Controllers
             }
 
             return Ok(result.Value);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("VerificationRequests")]
+        public async Task<IActionResult> GetVerificationRequests()
+        {
+            Result<List<VerificationRequestDTO>> result = await _sender.Send(new GetVerificationRequestsQuery());
+
+            if(result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("Profile/Verification")]
+        public async Task<IActionResult> GetVerificationRequest()
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<VerificationRequestDTO> result = await _sender.Send(new GetVerificationRequestQuery(userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("Profile/Verification")]
+        public async Task<IActionResult> CreateVerificationRequest()
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new CreateVerificationRequestCommand(userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("VerificationRequests/{id}/Approve")]
+        public async Task<IActionResult> ApproveVerificationRequest(Guid id)
+        {
+            Result result = await _sender.Send(new ApproveVerificationRequestCommand(id));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("VerificationRequests/{id}/Reject")]
+        public async Task<IActionResult> RejectVerificationRequest(Guid id)
+        {
+            Result result = await _sender.Send(new RejectVerificationRequestCommand(id));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
         }
     }
 }

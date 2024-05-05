@@ -1,11 +1,11 @@
-import api from '@/api';
-import OrderCard from '@/components/Cards/OrderCard';
-import UserOrdersTable from '@/components/Tables/UserOrdersTable';
-import useApiResult from '@/hooks/useApiResult';
 import { Box, Center, Grid, Group, Loader, Text, Title } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { nprogress } from '@mantine/nprogress';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import api from '@/api';
+import OrderCard from '@/components/Cards/OrderCard';
+import UserOrdersTable from '@/components/Tables/UserOrdersTable';
+import useApiResult from '@/hooks/useApiResult';
 import LoginRequired from '@/components/LoginRequired';
 
 const Orders: React.FC = () => {
@@ -27,9 +27,9 @@ const Orders: React.FC = () => {
         {isAuthenticated() ? (
           <>
             {loading ? (
-              <Center h={'70vh'} w={'100%'}>
+              <Center h="70vh" w="100%">
                 <Group>
-                  <Loader></Loader>
+                  <Loader />
                   <Text>Loading up your orders...</Text>
                 </Group>
               </Center>
@@ -38,7 +38,7 @@ const Orders: React.FC = () => {
             )}
           </>
         ) : (
-          <Center mih={'70vh'}>
+          <Center mih="70vh">
             <LoginRequired />
           </Center>
         )}

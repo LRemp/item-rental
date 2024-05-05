@@ -44,12 +44,12 @@ namespace ItemRental.Services.Services
 
             if (rentListing is null)
             {
-                return Result.Failure(DomainErrors.RentListing.NotFound(order.Listing));
+                return Result.Failure(DomainErrors.RentListing.NotFound);
             }
 
             if (rentListing.Renter != user)
             {
-                return Result.Failure(DomainErrors.RentListing.NotRenter(rentListing.Id));
+                return Result.Failure(DomainErrors.RentListing.NotRenter);
             }
 
             if (order.Status != OrderStatus.Pending)
@@ -84,7 +84,7 @@ namespace ItemRental.Services.Services
 
             if (listing is null)
             {
-                return Result.Failure<Guid>(DomainErrors.RentListing.NotFound(addOrderDTO.RentListing));
+                return Result.Failure<Guid>(DomainErrors.RentListing.NotFound);
             }
 
             var isDateNotTaken = await this.IsDateNotTaken(addOrderDTO.RentListing, addOrderDTO.StartDate, addOrderDTO.EndDate, cancellationToken);

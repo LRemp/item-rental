@@ -1,5 +1,3 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
 import {
   ActionIcon,
   Box,
@@ -14,8 +12,10 @@ import {
 } from '@mantine/core';
 import { IconBell, IconBellFilled, IconInfoCircle } from '@tabler/icons-react';
 import React from 'react';
-import classes from './Notifications.module.css';
 import { useNavigate } from 'react-router-dom';
+import classes from './Notifications.module.css';
+import useApiResult from '@/hooks/useApiResult';
+import api from '@/api';
 import getDateLabel from '@/utils/Dates';
 
 const mock_notifications = [
@@ -48,16 +48,16 @@ function Notifications() {
         {loading || notifications == undefined ? (
           <>
             <Box>
-              <Skeleton height={12} radius={'xs'} w={'20%'} mb={'xs'} />
-              <Skeleton height={12} radius={'xs'} />
+              <Skeleton height={12} radius="xs" w="20%" mb="xs" />
+              <Skeleton height={12} radius="xs" />
             </Box>
-            <Box mt={'xs'}>
-              <Skeleton height={12} radius={'xs'} w={'20%'} mb={'xs'} />
-              <Skeleton height={12} radius={'xs'} />
+            <Box mt="xs">
+              <Skeleton height={12} radius="xs" w="20%" mb="xs" />
+              <Skeleton height={12} radius="xs" />
             </Box>
-            <Box mt={'xs'}>
-              <Skeleton height={12} radius={'xs'} w={'20%'} mb={'xs'} />
-              <Skeleton height={12} radius={'xs'} />
+            <Box mt="xs">
+              <Skeleton height={12} radius="xs" w="20%" mb="xs" />
+              <Skeleton height={12} radius="xs" />
             </Box>
           </>
         ) : (
@@ -77,12 +77,12 @@ export default Notifications;
 const Notification: React.FC<UserNotification> = ({ title, description, timestamp, url, read }) => {
   const navigate = useNavigate();
   return (
-    <UnstyledButton w={'100%'} className={classes.notification} onClick={() => navigate(url)}>
+    <UnstyledButton w="100%" className={classes.notification} onClick={() => navigate(url)}>
       <Box>
         <Flex>
           <Indicator inline disabled={read} color="red" size={6}>
             <ActionIcon variant="light" aria-label="Notification">
-              <IconInfoCircle></IconInfoCircle>
+              <IconInfoCircle />
             </ActionIcon>
           </Indicator>
           <Text fw={500} ml="xs">

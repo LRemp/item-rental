@@ -1,10 +1,10 @@
 import { Badge, Box, Button, Center, Image, Table, Text } from '@mantine/core';
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import getDateLabel from '@/utils/Dates';
 import labels from '@/utils/OrderStatusLabels';
-import { useNavigate } from 'react-router-dom';
 
 interface MerchantListingsTableProps {
   elements: RentListing[];
@@ -33,7 +33,7 @@ const MerchantListingsTable: React.FC<MerchantListingsTableProps> = ({ elements 
             <Text fw={500} size="sm">
               {title}
             </Text>
-            <Badge radius={'xs'} size="sm" ml="xs">
+            <Badge radius="xs" size="sm" ml="xs">
               {price}€
             </Badge>
           </Center>

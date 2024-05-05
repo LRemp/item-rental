@@ -10,14 +10,14 @@ import {
   Group,
   Button,
 } from '@mantine/core';
-import Logo from '@/assets/images/logo.png';
-import classes from './LoginForm.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '@/api';
 import { notifications } from '@mantine/notifications';
-import { Error, Success } from '@/utils/Notifications';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useForm } from '@mantine/form';
+import Logo from '@/assets/images/logo.png';
+import classes from './LoginForm.module.css';
+import api from '@/api';
+import { Error, Success } from '@/utils/Notifications';
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ export function LoginForm() {
       },
     });
 
-    const status = request.status;
+    const { status } = request;
 
     if (status == 400) {
       const error: ErrorResponse = await request.json();

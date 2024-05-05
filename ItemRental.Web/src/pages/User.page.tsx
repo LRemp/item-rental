@@ -1,10 +1,10 @@
+import { Avatar, Center, Grid, Loader, Paper, Stack, Text, Title } from '@mantine/core';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import api from '@/api';
 import UserDetailsCard from '@/components/Cards/UserDetailsCard';
 import UserProfileDetails from '@/components/Misc/UserProfileDetails';
 import useApiResult from '@/hooks/useApiResult';
-import { Avatar, Center, Grid, Loader, Paper, Stack, Text, Title } from '@mantine/core';
-import React from 'react';
-import { useParams } from 'react-router-dom';
 
 function User() {
   const { id } = useParams();
@@ -34,19 +34,17 @@ interface ProfileProps {
   id: string | undefined;
 }
 
-const Profile: React.FC<ProfileProps> = ({ user, id }) => {
-  return (
+const Profile: React.FC<ProfileProps> = ({ user, id }) => (
     <>
       <Grid.Col span={{ base: 18, md: 4 }}>
-        <Paper shadow="md" radius={'sm'} p={'md'}>
+        <Paper shadow="md" radius="sm" p="md">
           <UserDetailsCard {...user} />
         </Paper>
       </Grid.Col>
       <Grid.Col span={{ base: 18, md: 14 }}>
-        <Paper shadow="md" radius={'sm'} p={'md'}>
+        <Paper shadow="md" radius="sm" p="md">
           <UserProfileDetails id={user.id} />
         </Paper>
       </Grid.Col>
     </>
   );
-};

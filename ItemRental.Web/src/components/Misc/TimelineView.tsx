@@ -20,8 +20,7 @@ const TimelineView: React.FC<TimelineViewProps> = ({
   bulletSize = 25,
   lineWidth = 3,
   color = 'blue',
-}) => {
-  return (
+}) => (
     <Timeline active={active} bulletSize={bulletSize} lineWidth={lineWidth} color={color}>
       {events.map((event, index) => (
         <Timeline.Item
@@ -39,6 +38,5 @@ const TimelineView: React.FC<TimelineViewProps> = ({
       ))}
     </Timeline>
   );
-};
 
 export default TimelineView;

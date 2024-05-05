@@ -14,10 +14,10 @@ import {
   Button,
 } from '@mantine/core';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import classes from './main.module.css';
 import getDateLabel from '@/utils/Dates';
 import OrderStatusLabels, { GetBadgeData } from '@/utils/OrderStatusLabels';
-import { useNavigate } from 'react-router-dom';
 
 interface RowData {
   id: string;
@@ -168,14 +168,12 @@ interface UserOrdersTableProps {
 }
 
 const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
-  const data = items.map((item: Order, index: number) => {
-    return {
+  const data = items.map((item: Order, index: number) => ({
       id: item.id,
       title: item.rentListing.title,
-      date: getDateLabel(item.startDate) + ' - ' + getDateLabel(item.endDate),
+      date: `${getDateLabel(item.startDate)} - ${getDateLabel(item.endDate)}`,
       status: OrderStatusLabels[item.status as keyof typeof OrderStatusLabels].name,
-    };
-  });
+    }));
   const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
@@ -203,11 +201,11 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
         <Table.Td>{row.title}</Table.Td>
         <Table.Td>{row.date}</Table.Td>
         <Table.Td>
-          <Badge color={badge.color} radius={'xs'} fullWidth variant="light">
+          <Badge color={badge.color} radius="xs" fullWidth variant="light">
             {badge.label}
           </Badge>
         </Table.Td>
-        <Table.Td width={'20px'}>
+        <Table.Td width="20px">
           <Button size="compact-sm" onClick={() => navigate(`/orders/${row.id}`)}>
             View
           </Button>
@@ -217,7 +215,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
   });
 
   return (
-    <Paper radius={'sm'} mb={'xl'} mt={'lg'} p={'md'} shadow="md">
+    <Paper radius="sm" mb="xl" mt="lg" p="md" shadow="md">
       <ScrollArea>
         <TextInput
           placeholder="Search by any field"

@@ -130,7 +130,7 @@ namespace ItemRental.API.Controllers
         [HttpGet("{id}/Comments")]
         public async Task<IActionResult> GetComments(Guid id)
         {
-            Result<List<Comment>> result = await _sender.Send(new GetCommentsQuery(id));
+            Result<List<CommentDTO>> result = await _sender.Send(new GetCommentsQuery(id));
 
             if (result.IsFailure)
             {

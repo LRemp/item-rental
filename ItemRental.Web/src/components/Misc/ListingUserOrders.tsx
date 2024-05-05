@@ -1,7 +1,3 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
-import getDateLabel from '@/utils/Dates';
-import OrderStatusLabels from '@/utils/OrderStatusLabels';
 import {
   Badge,
   Box,
@@ -17,6 +13,10 @@ import {
   Title,
 } from '@mantine/core';
 import React from 'react';
+import api from '@/api';
+import useApiResult from '@/hooks/useApiResult';
+import getDateLabel from '@/utils/Dates';
+import OrderStatusLabels from '@/utils/OrderStatusLabels';
 
 function ListingUserOrders({ listingId }: { listingId: string }) {
   const { result, error, loading } = useApiResult<any>(
@@ -26,12 +26,12 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
 
   return (
     <Box>
-      <Text size="sm" fw={600} mt={'md'} mb={'xs'}>
-        Your recent orders
+      <Text size="sm" fw={600} mt="md" mb="xs">
+        Jūsų rezervacijos
       </Text>
-      <Paper w={'100%'} radius="sm" withBorder shadow="sm" h={164}>
+      <Paper w="100%" radius="sm" shadow="md" h={164}>
         {loading ? (
-          <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
+          <Flex justify="center" align="center" h="100%" w="100%">
             <Loader />
           </Flex>
         ) : result && result.length > 0 ? (
@@ -45,9 +45,9 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
             </Table>
           </ScrollArea>
         ) : (
-          <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
-            <Text size="md" fw={500} opacity={'50%'}>
-              No recent orders
+          <Flex justify="center" align="center" h="100%" w="100%">
+            <Text size="md" fw={500} opacity="50%">
+              Rezervacijų nerasta
             </Text>
           </Flex>
         )}
@@ -56,18 +56,17 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
   );
 }
 
-const Element = ({ id, startDate, endDate, status }: Order) => {
-  return (
+const Element = ({ id, startDate, endDate, status }: Order) => (
     <Table.Tr key={id}>
       <Table.Td>
-        <Text size={'xs'} fw={600}>
+        <Text size="xs" fw={600}>
           {getDateLabel(startDate)} - {getDateLabel(endDate)}
         </Text>
       </Table.Td>
       <Table.Td>
         <Badge
           color={OrderStatusLabels[status as keyof typeof OrderStatusLabels].color}
-          radius={'xs'}
+          radius="xs"
           fullWidth
           variant="light"
         >
@@ -76,6 +75,5 @@ const Element = ({ id, startDate, endDate, status }: Order) => {
       </Table.Td>
     </Table.Tr>
   );
-};
 
 export default ListingUserOrders;

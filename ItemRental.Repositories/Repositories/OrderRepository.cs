@@ -82,7 +82,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,
@@ -139,7 +139,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,
@@ -190,7 +190,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,
@@ -236,7 +236,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,
@@ -282,7 +282,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,
@@ -328,7 +328,7 @@ namespace ItemRental.Repositories.Repositories
                                 Name = item.Name,
                                 Description = item.Description,
                                 Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                                Tags = item.Tags
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
                             },
                             Title = listing.Title,
                             Description = listing.Description,

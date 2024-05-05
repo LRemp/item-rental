@@ -9,7 +9,7 @@ namespace ItemRental.Core.Contracts
 {
     public interface IJwtTokenService
     {
-        public string CreateAccessToken(User user, List<string> userRoles);
+        public Task<string> CreateAccessToken(User user, List<string> userRoles);
         public Guid GetTokenSubject(string token);
     }
 }

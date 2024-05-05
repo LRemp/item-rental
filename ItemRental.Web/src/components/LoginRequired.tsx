@@ -21,7 +21,7 @@ function LoginRequired() {
         </Grid.Col>
         <Grid.Col>
           <Center>
-            <Button onClick={() => navigate(`/login`)}>Log in</Button>
+            <Button onClick={() => navigate('/login')}>Log in</Button>
           </Center>
         </Grid.Col>
       </Grid>

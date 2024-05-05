@@ -1,9 +1,3 @@
-import api from '@/api';
-import ListingUserOrders from '@/components/Misc/ListingUserOrders';
-import LoginRequired from '@/components/LoginRequired';
-import PhotoCarousel from '@/components/Misc/PhotoCarousel';
-import useApiResult from '@/hooks/useApiResult';
-import { Error, Success } from '@/utils/Notifications';
 import {
   Badge,
   Button,
@@ -15,6 +9,7 @@ import {
   Loader,
   LoadingOverlay,
   Modal,
+  Paper,
   Select,
   Text,
   Textarea,
@@ -27,11 +22,20 @@ import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { nprogress } from '@mantine/nprogress';
 import NoImage from '@/assets/images/no_image.png';
 import UserProfileCard from '@/components/Misc/UserProfileCard';
-import { nprogress } from '@mantine/nprogress';
+import { Error, Success } from '@/utils/Notifications';
+import useApiResult from '@/hooks/useApiResult';
+import PhotoCarousel from '@/components/Misc/PhotoCarousel';
+import LoginRequired from '@/components/LoginRequired';
+import ListingUserOrders from '@/components/Misc/ListingUserOrders';
+import api from '@/api';
 import { deliveryTypes } from '@/utils/Delivery';
+import Comments from './Components/Comments';
+import UserDetailsCard from '@/components/Cards/UserDetailsCard';
+import ItemDetails from './Components/ItemDetails';
 
 function Listing() {
   const { id } = useParams();
@@ -50,39 +54,58 @@ function Listing() {
   console.log(result);
 
   return (
-    <Grid w={'100%'} mt={'md'}>
+    <Grid w="100%" mt="md">
       {loading ? (
-        <Center h={'70vh'} w={'100%'}>
+        <Center h="70vh" w="100%">
           <Group>
-            <Loader></Loader>
+            <Loader />
             <Text>Loading up the listing...</Text>
           </Group>
         </Center>
       ) : (
         <>
-          <Grid columns={12} w={'100%'}>
+          <Grid columns={12} w="100%">
             <Grid.Col span={{ base: 12, md: 8 }}>
-              {result?.item?.images?.length > 0 ? (
-                <PhotoCarousel images={result?.item.images} />
-              ) : (
-                <Image src={NoImage} />
-              )}
-              <Group mt={'md'}>
-                <Group justify="space-between" w={'100%'}>
-                  <Title order={3} fw={600}>
-                    {result?.title}
-                  </Title>
-                  <Badge size="20" px="10" py="15" variant="light" radius={'sm'} fw={600}>
-                    {result?.price} Eur / day
-                  </Badge>
+              <Paper shadow="md" p="md" radius="sm" mb="md">
+                {result?.item?.images?.length > 0 ? (
+                  <PhotoCarousel images={result?.item.images} />
+                ) : (
+                  <Image src={NoImage} />
+                )}
+                <Group mt="md">
+                  <Group justify="space-between" w="100%">
+                    <Title order={3} fw={600}>
+                      {result?.title}
+                      {result?.item?.tags && (
+                        <Text>
+                          {result?.item.tags.map((x: string, index: number) => (
+                            <Badge variant="default" radius="xl" mr="xs" key={index}>
+                              <Text fw={400} size="xs">
+                                {x.toUpperCase()}
+                              </Text>
+                            </Badge>
+                          ))}
+                        </Text>
+                      )}
+                    </Title>
+
+                    <Badge size="20" px="10" py="15" variant="light" radius="sm" fw={600}>
+                      {result?.price} Eur / day
+                    </Badge>
+                  </Group>
+
+                  <div>{result?.description}</div>
                 </Group>
-                <div>{result?.description}</div>
-              </Group>
+              </Paper>
+              <Comments id={id || ''} />
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4 }}>
-              <UserProfileCard {...result?.renter} />
+              <Paper shadow="md" radius="sm" p="md">
+                <UserDetailsCard {...result?.renter} />
+              </Paper>
               <CreateOrderModal />
               <ListingUserOrders listingId={id || ''} />
+              <ItemDetails {...result?.item} />
             </Grid.Col>
           </Grid>
         </>
@@ -93,6 +116,7 @@ function Listing() {
 
 const CreateOrderModal = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { request } = useApiResult(api.Order.createOrder);
   const {
     result: busyDates,
@@ -106,12 +130,8 @@ const CreateOrderModal = () => {
   const form = useForm({
     initialValues: { comment: '', date: [], deliveryType: undefined },
     validate: {
-      date: (value) => {
-        return (value.length != 2 || value[0] == null) && 'You must pick the rent period';
-      },
-      deliveryType: (value) => {
-        return !value && 'You must pick the delivery type';
-      },
+      date: (value) => (value.length != 2 || value[0] == null) && 'You must pick the rent period',
+      deliveryType: (value) => !value && 'You must pick the delivery type',
     },
   });
 
@@ -142,6 +162,8 @@ const CreateOrderModal = () => {
       );
       close();
       create.close();
+
+      navigate(`/orders/${createRequest}`);
     } catch (error: any) {
       if (error.code == 'Order.DateBusy') {
         form.setFieldError('date', 'The selected date is busy!');
@@ -155,10 +177,10 @@ const CreateOrderModal = () => {
 
   const getDayProps: DatePickerProps['getDayProps'] = (date) => {
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    for (var index in busyDates) {
-      var startDate = new Date(busyDates[index].startDate);
+    for (const index in busyDates) {
+      let startDate = new Date(busyDates[index].startDate);
       startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-      var endDate = new Date(busyDates[index].endDate);
+      let endDate = new Date(busyDates[index].endDate);
       endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
       if (date >= startDate && date <= endDate) {
         return {
@@ -219,13 +241,13 @@ const CreateOrderModal = () => {
                 placeholder="Add the comment to the order"
                 autosize
                 {...form.getInputProps('comment')}
-              ></Textarea>
+              />
               <Select
                 label="Delivery type"
                 placeholder="Select delivery type"
                 data={deliveryTypes}
                 {...form.getInputProps('deliveryType')}
-              ></Select>
+              />
               <Button fullWidth mt="md" type="submit">
                 Add Item
               </Button>

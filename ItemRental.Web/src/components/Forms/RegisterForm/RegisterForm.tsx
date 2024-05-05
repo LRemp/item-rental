@@ -11,14 +11,14 @@ import {
   Button,
   rem,
 } from '@mantine/core';
-import Logo from '@/assets/images/logo.png';
-import classes from './RegisterForm.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { IconAt, IconLock } from '@tabler/icons-react';
+import Logo from '@/assets/images/logo.png';
+import classes from './RegisterForm.module.css';
 import api from '@/api';
 import { Error, Success } from '@/utils/Notifications';
-import { IconAt, IconLock } from '@tabler/icons-react';
 
 export function RegisterForm() {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export function RegisterForm() {
       },
     });
 
-    const status = request.status;
+    const { status } = request;
 
     if (status == 400) {
       const error: ErrorResponse = await request.json();

@@ -1,8 +1,8 @@
 import { UnstyledButton, Group, Avatar, Text, rem } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
-import classes from './ProfileButton.module.css';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
+import classes from './ProfileButton.module.css';
 
 export function ProfileButton() {
   const auth: AuthUser | null = useAuthUser();

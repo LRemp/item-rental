@@ -17,12 +17,12 @@ import {
   IconLogin,
   IconLogin2,
 } from '@tabler/icons-react';
-import classes from './Navbar.module.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { ProfileButton } from './ProfileButton';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { modals } from '@mantine/modals';
+import { ProfileButton } from './ProfileButton';
+import classes from './Navbar.module.css';
 
 const navLinks = {
   client: [
@@ -83,7 +83,7 @@ export function Navbar() {
   };
 
   return (
-    <Stack h={'100%'}>
+    <Stack h="100%">
       <div className={classes.navbarMain}>{links}</div>
 
       <div className={classes.footer}>

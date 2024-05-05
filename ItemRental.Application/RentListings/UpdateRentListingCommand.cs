@@ -9,30 +9,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace ItemRental.Application.RentListings
 {
-    public sealed record UpdateRentListingCommand(UpdateRentListingDTO UpdateRentListingDTO, Guid user) : ICommand<Result>;
-    internal class UpdateRentListingCommandHandler : ICommandHandler<UpdateRentListingCommand, Result>
+    public sealed record UpdateRentListingCommand(UpdateRentListingDTO UpdateRentListingDTO, Guid user) : ICommand;
+    internal class UpdateRentListingCommandHandler : ICommandHandler<UpdateRentListingCommand>
     {
         private readonly IRentListingRepository _rentListingRepository;
         public UpdateRentListingCommandHandler(IRentListingRepository rentListingRepository)
         {
             _rentListingRepository = rentListingRepository;
         }
-        public async Task<Result<Result>> Handle(UpdateRentListingCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateRentListingCommand request, CancellationToken cancellationToken)
         {
             var rentListing = await _rentListingRepository.GetInternalAsync(request.UpdateRentListingDTO.Id, cancellationToken);
 
             if (rentListing is null)
             {
-                   return Result.Failure(DomainErrors.RentListing.NotFound(request.UpdateRentListingDTO.Id));
+                return Result.Failure(DomainErrors.RentListing.NotFound);
             }
             
             if (rentListing.Renter != request.user)
             {
-                return Result.Failure(DomainErrors.RentListing.NotRenter(request.UpdateRentListingDTO.Id));
+                return Result.Failure(DomainErrors.RentListing.NotRenter);
             }
 
             var updateRentListing = new RentListing
@@ -49,7 +48,7 @@ namespace ItemRental.Application.RentListings
 
             if(!success)
             {
-                return Result.Failure(DomainErrors.RentListing.FailedToUpdate(request.UpdateRentListingDTO.Id));
+                return Result.Failure(DomainErrors.RentListing.FailedToUpdate);
             } 
 
             return Result.Success();

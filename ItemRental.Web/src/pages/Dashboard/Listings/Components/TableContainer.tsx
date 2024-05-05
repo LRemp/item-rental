@@ -1,5 +1,4 @@
-import { Center, Image, Table } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Center, Image, Paper, Table, Text } from '@mantine/core';
 import NoImage from '@/assets/images/no_image.png';
 import ItemActions from './ItemActions';
 
@@ -11,25 +10,28 @@ const TableContainer: React.FC<ListingsTableProps> = ({ items }) => {
   const rows = items.map((item: RentListing) => <ListingTableElement {...item} key={item.id} />);
 
   return (
-    <Table>
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th></Table.Th>
-          <Table.Th>Name</Table.Th>
-          <Table.Th>Description</Table.Th>
-          <Table.Th>Actions</Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{items && rows}</Table.Tbody>
-    </Table>
+    <Paper p="md" shadow="md" radius="sm">
+      <Table>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th />
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Description</Table.Th>
+            <Table.Th>Actions</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{items && rows}</Table.Tbody>
+      </Table>
+    </Paper>
   );
 };
 
 const ListingTableElement: React.FC<RentListing> = ({ id, title, description, item }) => {
-  const navigate = useNavigate();
+  console.log();
+
   return (
-    <Table.Tr key={id} m={'md'}>
-      <Table.Td width={'50px'}>
+    <Table.Tr key={id} m="md">
+      <Table.Td width="50px">
         <Center>
           <Image
             src={`/images/${item?.images?.[0]}`}
@@ -42,7 +44,11 @@ const ListingTableElement: React.FC<RentListing> = ({ id, title, description, it
         </Center>
       </Table.Td>
       <Table.Td>{title}</Table.Td>
-      <Table.Td>{description}</Table.Td>
+      <Table.Td>
+        <Text lineClamp={4} size="xs">
+          {description}
+        </Text>
+      </Table.Td>
       <Table.Td>
         <ItemActions id={id} />
       </Table.Td>

@@ -6,7 +6,7 @@ import DashboardPage from './pages/Dashboard';
 import InventoryPage from './pages/Dashboard/Inventory';
 import DashboardHome from './pages/Dashboard/Home.page';
 import DashboardSettings from './pages/Dashboard/Settings.page';
-import ListingPage from './pages/Listing.page';
+import ListingPage from './pages/Listing';
 import MainLayout from './layouts/MainLayout';
 import ListingsPage from './pages/Dashboard/Listings';
 import ItemPage from './pages/Dashboard/Item';

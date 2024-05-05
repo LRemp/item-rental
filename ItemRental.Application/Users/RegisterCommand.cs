@@ -42,7 +42,7 @@ namespace ItemRental.Application.Users
             var isSuccess = await _userRepository.AddAsync(user, cancellationToken);
             if (!isSuccess)
             {
-                //return Result.Failure();
+                return Result.Failure<Guid>(DomainErrors.User.FailedToCreate);
             }
 
             return user.Id;

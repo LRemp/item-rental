@@ -1,11 +1,11 @@
 const get = (id: string, role?: number): ApiRequest => {
-  var endpoint = `/api/Orders/${id}/Delivery?`;
+  let endpoint = `/api/Orders/${id}/Delivery?`;
   if (role != undefined) {
     endpoint += `role=${role}`;
   }
   return {
     method: 'GET',
-    endpoint: endpoint,
+    endpoint,
     authenticate: true,
   };
 };

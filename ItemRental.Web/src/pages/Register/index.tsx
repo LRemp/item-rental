@@ -14,14 +14,14 @@ import {
   Box,
   Center,
 } from '@mantine/core';
-import Logo from '@/assets/images/logo.png';
-import classes from './Components/Form.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { IconAt, IconLock, IconUser } from '@tabler/icons-react';
+import Logo from '@/assets/images/logo.png';
+import classes from './Components/Form.module.css';
 import api from '@/api';
 import { Error, Success } from '@/utils/Notifications';
-import { IconAt, IconLock, IconUser } from '@tabler/icons-react';
 import PasswordStrength from './Components/PasswordStrength';
 
 export function Register() {
@@ -38,9 +38,7 @@ export function Register() {
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      passwordRepeat: (value, values) => {
-        return value === values.password ? null : 'Passwords do not match';
-      },
+      passwordRepeat: (value, values) => value === values.password ? null : 'Passwords do not match',
     },
   });
 
@@ -65,7 +63,7 @@ export function Register() {
       },
     });
 
-    const status = request.status;
+    const { status } = request;
 
     if (status == 400) {
       const error: ErrorResponse = await request.json();
@@ -105,7 +103,7 @@ export function Register() {
   };
 
   return (
-    <Center w={'100vw'} h={'100vh'}>
+    <Center w="100vw" h="100vh">
       <Container size={420} my={40}>
         <img src={Logo} alt="logo" width={80} className="" />
         <Title ta="center" className={classes.title}>

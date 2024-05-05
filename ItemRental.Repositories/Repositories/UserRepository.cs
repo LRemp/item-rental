@@ -2,6 +2,7 @@
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Enums;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System;
@@ -49,6 +50,15 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
+        public async Task<bool> CreateVerificationRequestAsync(Guid user, CancellationToken cancellationToken)
+        {
+            var query = @"INSERT INTO verification_requests (id, user, status) VALUES (@id, @user, @status)";
+
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = Guid.NewGuid(), user, status = VerificationStatus.Pending });
+
+            return result > 0;
+        }
+
         public async Task<User?> GetByEmailOrUsernameAsync(string email, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM users WHERE email = @email or username = @email";
@@ -85,6 +95,69 @@ namespace ItemRental.Repositories.Repositories
             return result.ToList();
         }
 
+        public async Task<VerificationRequestDTO?> GetProfileVerificationRequestAsync(Guid user, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT v.*, u.* 
+                        FROM verification_requests v
+                        INNER JOIN users u ON v.user = u.id   
+                        WHERE v.user = @user AND v.status = '0'";
+
+            var result = await _mySqlConnection.QueryAsync<VerificationRequest, UserDTO, VerificationRequestDTO>(query, 
+                (verification, user) => {
+                    return new VerificationRequestDTO
+                    {
+                        Id = verification.Id,
+                        User = user,
+                        Status = verification.Status,
+                        CreatedAt = verification.CreatedAt
+                    };
+                }, new { user });
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<VerificationRequestDTO?> GetProfileVerificationRequestByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT v.*, u.* 
+                        FROM verification_requests v
+                        INNER JOIN users u ON v.user = u.id   
+                        WHERE v.id = @id AND v.status = '0'";
+
+            var result = await _mySqlConnection.QueryAsync<VerificationRequest, UserDTO, VerificationRequestDTO>(query,
+                (verification, user) => {
+                    return new VerificationRequestDTO
+                    {
+                        Id = verification.Id,
+                        User = user,
+                        Status = verification.Status,
+                        CreatedAt = verification.CreatedAt
+                    };
+                }, new { id });
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<List<VerificationRequestDTO>> GetProfileVerificationRequestsAsync(CancellationToken cancellationToken)
+        {
+            var query = @"SELECT v.*, u.*
+                        FROM verification_requests v
+                        INNER JOIN users u ON v.user = u.id
+                        WHERE v.status = '0'";
+
+            var result = await _mySqlConnection.QueryAsync<VerificationRequest, UserDTO, VerificationRequestDTO>(query,
+                (verification, user) => {
+                    return new VerificationRequestDTO
+                    {
+                        Id = verification.Id,
+                        User = user,
+                        Status = verification.Status,
+                        CreatedAt = verification.CreatedAt
+                    };
+                });
+
+            return result.ToList();
+        }
+
         public async Task<bool> IsEmailAndUsernameUniqueAsync(string username, string email, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM users WHERE username = @username OR email = @email";
@@ -101,6 +174,24 @@ namespace ItemRental.Repositories.Repositories
             var result = await _mySqlConnection.QueryAsync(query, new { id });
 
             return result.Count() > 0;
+        }
+
+        public async Task<bool> UpdateAsync(User user, CancellationToken cancellationToken)
+        {
+            var query = @"UPDATE users SET password = @password, name = @name, surname = @surname, verified = @verified WHERE id = @id";
+
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, password = user.Password, name = user.Name, surname = user.Surname, verified = user.Verified });
+
+            return result > 0;
+        }
+
+        public async Task<bool> UpdateProfileVerificationRequestAsync(Guid id, VerificationStatus status, CancellationToken cancelationToken)
+        {
+            var query = @"UPDATE verification_requests SET status = @status WHERE id = @id";
+
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id, status });
+
+            return result > 0;
         }
     }
 }

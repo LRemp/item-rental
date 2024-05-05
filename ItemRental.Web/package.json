@@ -39,7 +39,8 @@
     "react-auth-kit": "^3.1.2",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
-    "react-router-dom": "^6.21.0"
+    "react-router-dom": "^6.21.0",
+    "react-timeago": "^7.2.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.6",
@@ -53,6 +54,7 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
+    "@types/react-timeago": "^4.1.7",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.36",
     "@types/react-dom": "^18.2.14",

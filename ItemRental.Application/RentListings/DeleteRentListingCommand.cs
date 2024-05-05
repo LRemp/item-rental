@@ -25,19 +25,19 @@ namespace ItemRental.Application.RentListings
 
             if(rentListing is null)
             {
-                return Result.Failure(DomainErrors.RentListing.NotFound(request.id));
+                return Result.Failure(DomainErrors.RentListing.NotFound);
             }
 
             if(rentListing.Renter != request.user)
             {
-                return Result.Failure(DomainErrors.RentListing.NotRenter(request.id));
+                return Result.Failure(DomainErrors.RentListing.NotRenter);
             }
 
             var success = await _rentListingRepository.DeleteAsync(request.id, cancellationToken);
 
             if(!success)
             {
-                return Result.Failure(DomainErrors.RentListing.FailedToDelete(request.id));
+                return Result.Failure(DomainErrors.RentListing.FailedToDelete);
             }
 
             return Result.Success();

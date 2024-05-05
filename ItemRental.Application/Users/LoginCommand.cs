@@ -16,19 +16,16 @@ namespace ItemRental.Application.Users
 {
     public record LoginResponse(string Token, UserDTO User);
     public record LoginCommand(string Email, string Password) : ICommand<LoginResponse>;
-    public record LoginRequest(string Email, string Password);
     internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, LoginResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserService _userService;
         private readonly IJwtTokenService _jwtProvider;
-        private readonly IMapper _mapper;
-        public LoginCommandHandler(IUserRepository userRepository, IUserService userService, IJwtTokenService jwtProvider, IMapper mapper)
+        public LoginCommandHandler(IUserRepository userRepository, IUserService userService, IJwtTokenService jwtProvider)
         {
             _userRepository = userRepository;
             _userService = userService;
             _jwtProvider = jwtProvider;
-            _mapper = mapper;
         }
 
         public async Task<Result<LoginResponse>> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -37,10 +34,10 @@ namespace ItemRental.Application.Users
 
             if(user is null)
             {
-                return Result.Failure<LoginResponse>(DomainErrors.User.InvalidCredentials);
+                return Result.Failure<LoginResponse>(DomainErrors.User.NotFound);
             }
 
-            var isPasswordValid = _userService.VerifyPasswordHash(command.Password, user.Password);
+            var isPasswordValid = await _userService.VerifyPasswordHash(command.Password, user.Password);
 
             if(!isPasswordValid)
             {
@@ -50,9 +47,16 @@ namespace ItemRental.Application.Users
             var roles = await _userService.GetUserRoles(user.Id, cancellationToken);
 
             //TODO: add user roles to the token generation
-            string token = _jwtProvider.CreateAccessToken(user, roles);
+            string token = await _jwtProvider.CreateAccessToken(user, roles);
 
-            UserDTO userDTO = _mapper.Map<UserDTO>(user);
+            UserDTO userDTO = new UserDTO
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname
+            };
 
             return new LoginResponse(token, userDTO);
         }

@@ -33,6 +33,7 @@ namespace ItemRental.Application.Items
                 Category = command.item.Category,
                 Images = JsonConvert.SerializeObject(command.item.Images),
                 Owner = command.user,
+                Tags = JsonConvert.SerializeObject(command.item.Tags),
                 Details = JsonConvert.SerializeObject(command.item.Details),
             };
 

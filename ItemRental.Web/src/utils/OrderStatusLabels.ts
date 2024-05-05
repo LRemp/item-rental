@@ -1,8 +1,3 @@
-type StatusLabel = {
-  label: string;
-  color: string;
-};
-
 const labels = {
   0: {
     label: 'Laukiama patvirtinimo',

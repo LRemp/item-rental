@@ -2,10 +2,10 @@ import { Box, Button, Center, Grid, Group, Loader, Title } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
+import { nprogress } from '@mantine/nprogress';
 import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
 import CreateItemModal from '@/components/Modals/CreateItem';
-import { nprogress } from '@mantine/nprogress';
 import PagePath from '@/components/Nagivation/PagePath';
 import TableContainer from './Components/TableContainer';
 
@@ -27,7 +27,7 @@ export default function Inventory() {
   }, [loading]);
 
   return (
-    <Box w={'100%'}>
+    <Box w="100%">
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Group justify="space-between">

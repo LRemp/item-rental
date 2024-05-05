@@ -1,6 +1,6 @@
 import { Button, Center, Group, Image, Table } from '@mantine/core';
-import classes from './ItemTable.module.css';
 import { useNavigate } from 'react-router-dom';
+import classes from './ItemTable.module.css';
 import NoImage from '@/assets/images/no_image.png';
 import DeleteItemAction from '@/components/ButtonActions/DeleteItemAction';
 
@@ -15,7 +15,7 @@ const ListingsTable: React.FC<ListingsTableProps> = ({ items }) => {
     <Table>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th></Table.Th>
+          <Table.Th />
           <Table.Th>Name</Table.Th>
           <Table.Th>Description</Table.Th>
           <Table.Th>Actions</Table.Th>
@@ -29,8 +29,8 @@ const ListingsTable: React.FC<ListingsTableProps> = ({ items }) => {
 const ListingTableElement: React.FC<RentListing> = ({ id, title, description, item }) => {
   const navigate = useNavigate();
   return (
-    <Table.Tr key={id} m={'md'}>
-      <Table.Td width={'50px'}>
+    <Table.Tr key={id} m="md">
+      <Table.Td width="50px">
         <Center>
           <Image
             src={`/images/${item?.images?.[0]}`}
@@ -45,7 +45,7 @@ const ListingTableElement: React.FC<RentListing> = ({ id, title, description, it
       <Table.Td>{title}</Table.Td>
       <Table.Td>{description}</Table.Td>
       <Table.Td>
-        <Group gap={'xs'}>
+        <Group gap="xs">
           <Button
             color="blue"
             onClick={() => navigate(`/dashboard/inventory/${id}`)}

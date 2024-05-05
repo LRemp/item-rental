@@ -1,10 +1,10 @@
 import { Badge, Box, Button, Center, Image, Table, Text } from '@mantine/core';
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
 import getDateLabel from '@/utils/Dates';
 import labels from '@/utils/OrderStatusLabels';
-import { useNavigate } from 'react-router-dom';
 
 interface MerchantOrdersTableProps {
   elements: Order[];
@@ -35,7 +35,7 @@ const MerchantOrdersTable: React.FC<MerchantOrdersTableProps> = ({ elements }) =
             </Text>
             <Badge
               color={labels[status as keyof typeof labels].color}
-              radius={'xs'}
+              radius="xs"
               size="xs"
               ml="xs"
               variant="light"

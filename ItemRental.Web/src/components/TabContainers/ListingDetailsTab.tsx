@@ -1,5 +1,5 @@
-import api from '@/api';
 import { Grid, Loader, Box, Text, Image } from '@mantine/core';
+import api from '@/api';
 import PhotoCarousel from '../Misc/PhotoCarousel';
 import useApiResult from '@/hooks/useApiResult';
 import NoImage from '@/assets/images/no_image.png';
@@ -11,7 +11,7 @@ interface ListingDetailsTabProps {
 const ListingDetailsTab: React.FC<ListingDetailsTabProps> = ({ id }) => {
   const { result: data, loading } = useApiResult(() => api.RentListing.getListingById(id), []);
   return (
-    <Grid columns={12} mt={'sm'}>
+    <Grid columns={12} mt="sm">
       {loading ? (
         <Loader />
       ) : (

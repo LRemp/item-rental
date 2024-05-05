@@ -1,6 +1,3 @@
-import api from '@/api';
-import ListingCard from '@/components/ListingCard/ListingCard';
-import useApiResult from '@/hooks/useApiResult';
 import {
   ActionIcon,
   Box,
@@ -18,6 +15,9 @@ import {
 import { useDebouncedState } from '@mantine/hooks';
 import { IconBellFilled, IconSearch } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import useApiResult from '@/hooks/useApiResult';
+import ListingCard from '@/components/ListingCard/ListingCard';
+import api from '@/api';
 
 const Search: React.FC = () => {
   const [popoverOpened, setPopoverOpened] = useState(false);
@@ -48,7 +48,7 @@ const Search: React.FC = () => {
               ) : (
                 <Box>
                   <Center>
-                    <Text fw={500} size="lg" mb={'md'}>
+                    <Text fw={500} size="lg" mb="md">
                       Search results:
                     </Text>
                   </Center>

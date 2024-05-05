@@ -1,6 +1,3 @@
-import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
-import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
-import useDeleteAction from '@/components/Actions/DeleteItemAction';
 import { Menu, Button, rem, Text, ActionIcon } from '@mantine/core';
 import {
   IconSettings,
@@ -18,6 +15,9 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import useDeleteAction from '@/components/Actions/DeleteItemAction';
+import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
+import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
 
 interface ItemActionsProps {
   id: string;
@@ -58,7 +58,7 @@ const ItemActions: React.FC<ItemActionsProps> = ({ id }) => {
           </Menu.Item>
           <Menu.Item
             leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}
-            onClick={() => deleteItemAction(id, () => navigate(`/dashboard/inventory`))}
+            onClick={() => deleteItemAction(id, () => navigate('/dashboard/inventory'))}
           >
             Delete
           </Menu.Item>

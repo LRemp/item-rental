@@ -12,7 +12,7 @@ const PagePath: React.FC<PagePathProps> = ({ links }) => {
     </Anchor>
   ));
 
-  return <Breadcrumbs my={'xs'}>{pathItems}</Breadcrumbs>;
+  return <Breadcrumbs my="xs">{pathItems}</Breadcrumbs>;
 };
 
 export default PagePath;

@@ -4,7 +4,7 @@ import useApi from './useApi';
 
 const useApiResult = <T>(fn: Function, dependencies: Array<any> | null = null) => {
   const api = useApi();
-  const { loading, result, error, run } = useAsync(true, dependencies === null ? false : true);
+  const { loading, result, error, run } = useAsync(true, dependencies !== null);
 
   const requestAndSetResults = useCallback(
     async (...args: any[]) => {

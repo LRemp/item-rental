@@ -36,8 +36,8 @@ namespace ItemRental.Application.Items
                 Name = item.Name,
                 Description = item.Description,
                 Category = item.Category,
-                Images = item.Images is null ? null : JsonConvert.DeserializeObject < string[]>(item.Images),
-                Tags = item.Tags,
+                Images = item.Images is null ? null : JsonConvert.DeserializeObject<string[]>(item.Images),
+                Tags = item.Tags is null ? null : JsonConvert.DeserializeObject<string[]>(item.Tags),
                 Details = item.Details is null ? null : JsonConvert.DeserializeObject<Specification[]>(item.Details)
             };
 
