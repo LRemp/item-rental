@@ -24,7 +24,7 @@ const SubmitDeliveryDetailsAction: React.FC<SubmitDeliveryDetailsActionProps> = 
       />
       <Button fullWidth onClick={open}>
         <Center inline>
-          Submit delivery details <IconBoxSeam size={26} stroke={1.5} />
+          Pateikti pristatymo informaciją <IconBoxSeam size={26} stroke={1.5} />
         </Center>
       </Button>
     </>

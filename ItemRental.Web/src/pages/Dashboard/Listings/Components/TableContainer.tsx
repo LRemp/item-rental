@@ -41,9 +41,8 @@ const TableContainer: React.FC<ListingsTableProps> = ({ items }) => {
         <Table.Thead>
           <Table.Tr>
             <Table.Th />
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Description</Table.Th>
-            <Table.Th>Actions</Table.Th>
+            <Table.Th>Pavadinimas</Table.Th>
+            <Table.Th>Aprašymas</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{items && rows}</Table.Tbody>

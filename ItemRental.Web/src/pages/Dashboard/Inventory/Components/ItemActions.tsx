@@ -31,21 +31,21 @@ const ItemActions: React.FC<ItemActionsProps> = ({ id }) => {
         </Menu.Target>
 
         <Menu.Dropdown>
-          <Menu.Label>Order actions</Menu.Label>
+          <Menu.Label>Užsakymo veiksmai</Menu.Label>
           <Menu.Item
             leftSection={<IconEye style={{ width: rem(14), height: rem(14) }} />}
             onClick={() => navigate(`/dashboard/orders/${id}`)}
           >
-            View
+            Peržiūrėti
           </Menu.Item>
           <Menu.Item leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}>
-            Edit
+            Redaguoti
           </Menu.Item>
           <Menu.Item
             leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}
             onClick={() => deleteItemAction(id, () => navigate('/dashboard/inventory'))}
           >
-            Delete
+            Ištrinti
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

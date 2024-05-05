@@ -1,5 +1,6 @@
 import {
   Anchor,
+  Badge,
   Box,
   Breadcrumbs,
   Grid,
@@ -22,9 +23,9 @@ import NoImage from '@/assets/images/no_image.png';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 
 const pathItems = [
-  { title: 'Dashboard', href: '/dashboard/home' },
-  { title: 'Inventory', href: '/dashboard/inventory' },
-  { title: 'Item' },
+  { title: 'Pagrindinis', href: '/dashboard/home' },
+  { title: 'Inventorius', href: '/dashboard/inventory' },
+  { title: 'Daiktas' },
 ].map((item, index) => (
   <Anchor href={item.href} key={index}>
     {item.title}
@@ -50,14 +51,14 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => (
   <Tabs defaultValue="first">
     <Tabs.List>
       <Tabs.Tab value="first" leftSection={<IconList size={18} />}>
-        Item details
+        Daikto ypatybės
       </Tabs.Tab>
     </Tabs.List>
 
     <Tabs.Panel value="first">
       {details?.length === 0 ? (
         <Text mt="md" fs="italic">
-          No details found
+          Informacijos nerasta
         </Text>
       ) : (
         <>
@@ -73,7 +74,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => (
   </Tabs>
 );
 
-const ItemView: React.FC<Item> = ({ id, name, description, images, category, details }) => (
+const ItemView: React.FC<Item> = ({ id, name, description, images, category, details, tags }) => (
   <Paper shadow="md" radius="sm" p="md">
     <Grid>
       <Grid.Col span={{ base: 12, sm: 5 }}>
@@ -91,6 +92,17 @@ const ItemView: React.FC<Item> = ({ id, name, description, images, category, det
             ({category})
           </Text>
         </Group>
+        {tags && (
+          <Text>
+            {tags.map((x: string, index: number) => (
+              <Badge variant="default" radius="xl" size="xs" mr="2px" key={index}>
+                <Text fw={400} size="xs">
+                  {x.toUpperCase()}
+                </Text>
+              </Badge>
+            ))}
+          </Text>
+        )}
         <Text>{description}</Text>
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 3 }}>

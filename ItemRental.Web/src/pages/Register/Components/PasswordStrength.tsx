@@ -14,10 +14,10 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
 }
 
 const requirements = [
-  { re: /[0-9]/, label: 'Includes number' },
-  { re: /[a-z]/, label: 'Includes lowercase letter' },
-  { re: /[A-Z]/, label: 'Includes uppercase letter' },
-  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'Includes special symbol' },
+  { re: /[0-9]/, label: 'Turi bent vieną numerį' },
+  { re: /[a-z]/, label: 'Turi bent vieną mažąją raidę' },
+  { re: /[A-Z]/, label: 'Turi bent vieną didžiąją raidę' },
+  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'Turi bent vieną specialųjį simbolį' },
 ];
 
 function getStrength(password: string) {
@@ -69,8 +69,8 @@ const PasswordStrength: React.FC<PasswordStrengthProps> = ({ formHandle }) => {
         leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
         value={formHandle.value}
         onChange={inputPassword}
-        placeholder="Your password"
-        label="Password"
+        placeholder="Įveskite slaptažodį"
+        label="Slaptažodis"
         required
         error={formHandle.error}
         onFocus={formHandle.onFocus}
@@ -81,7 +81,7 @@ const PasswordStrength: React.FC<PasswordStrengthProps> = ({ formHandle }) => {
         {bars}
       </Group>
 
-      <PasswordRequirement label="Has at least 6 characters" meets={value.length > 5} />
+      <PasswordRequirement label="Turi bent 6 simbolius" meets={value.length > 5} />
       {checks}
     </div>
   );

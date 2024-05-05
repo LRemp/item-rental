@@ -28,7 +28,14 @@ interface CreateItemModalProps {
 const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
   const uploadImage = useUploadImage();
   const form = useForm({
-    initialValues: { name: '', description: '', category: '', files: [] },
+    initialValues: {
+      name: 'Demonstracinis daiktas',
+      description: 'Demonstracinis aprašymas',
+      category: 'other',
+      serialNumber: 'BU98S-FRHK2-KSO1Y-ETA52-AMWB3',
+      files: [],
+      tags: ['Demonstracija', 'Naujas'],
+    },
     validate: {
       name: (value) => (value.length <= 0 ? 'You must enter the item name' : null),
       category: (value) => (value.length <= 0 ? 'You must select a category' : null),
@@ -96,6 +103,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
         images: imageUpload?.data,
         details,
         serialNumber: data.serialNumber,
+        tags: data.tags,
       });
 
       notifications.update(
@@ -117,7 +125,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
     <Modal
       opened={opened}
       onClose={close}
-      title="Add new item"
+      title="Pridėti naują daiktą"
       centered
       size="lg"
       closeOnClickOutside={!adding}
@@ -131,25 +139,29 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       ) : (
         <form onSubmit={form.onSubmit((values) => addItem(values))}>
           <Fieldset disabled={adding} variant="unstyled">
-            <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+            <TextInput
+              label="Pavadinimas"
+              placeholder="Pavadinimas"
+              {...form.getInputProps('name')}
+            />
             <Textarea
-              label="Description"
-              placeholder="Description"
+              label="Aprašymas"
+              placeholder="Aprašymas"
               autosize
               {...form.getInputProps('description')}
             />
 
             <TextInput
-              label="Serial number"
-              placeholder="Enter item serial number"
+              label="Serijinis numeris"
+              placeholder="Įveskite serijinį numerį"
               {...form.getInputProps('serialNumber')}
             />
 
             <FormFileDropzone {...form.getInputProps('files')} />
 
             <Select
-              label="Category"
-              placeholder="Select category"
+              label="Kategorija"
+              placeholder="Pasirinkite kategoriją"
               data={categories.map((item: any) => ({ value: item.name, label: item.label }))}
               {...form.getInputProps('category')}
             />

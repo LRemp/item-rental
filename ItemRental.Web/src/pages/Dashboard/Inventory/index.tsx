@@ -10,8 +10,8 @@ import PagePath from '@/components/Nagivation/PagePath';
 import TableContainer from './Components/TableContainer';
 
 const pagePath: PageLink[] = [
-  { title: 'Dashboard', href: '/dashboard/home' },
-  { title: 'Inventory' },
+  { title: 'Pagrindinis', href: '/dashboard/home' },
+  { title: 'Inventorius' },
 ];
 
 export default function Inventory() {

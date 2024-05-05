@@ -13,7 +13,7 @@ const CreateListingAction: React.FC<FlexibleButtonActionProps> = ({ id }) => {
     <>
       <CreateListingModal id={id} opened={opened} close={close} />
       <Button onClick={openModal}>
-        Create Listing <IconPlaylistAdd size={18} />
+        Sukurti skelbimą <IconPlaylistAdd size={18} />
       </Button>
     </>
   );

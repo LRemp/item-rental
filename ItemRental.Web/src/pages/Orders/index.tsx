@@ -29,7 +29,7 @@ const Orders: React.FC = () => {
               <Center h="70vh" w="100%">
                 <Group>
                   <Loader />
-                  <Text>Loading up your orders...</Text>
+                  <Text>Kraunami jūsų užsakymai...</Text>
                 </Group>
               </Center>
             ) : (

@@ -11,9 +11,15 @@ import {
   keys,
   Paper,
   Badge,
-  Button,
+  ActionIcon,
 } from '@mantine/core';
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons-react';
+import {
+  IconSelector,
+  IconChevronDown,
+  IconChevronUp,
+  IconSearch,
+  IconEye,
+} from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import classes from './main.module.css';
 import getDateLabel from '@/utils/Dates';
@@ -115,17 +121,26 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
 
     return (
       <Table.Tr key={row.id}>
-        <Table.Td>{row.title}</Table.Td>
-        <Table.Td>{row.date}</Table.Td>
+        <Table.Td>
+          <Text size="sm">{row.title}</Text>
+        </Table.Td>
+        <Table.Td maw="80px">
+          <Text size="xs">{row.date}</Text>
+        </Table.Td>
         <Table.Td>
           <Badge color={badge.color} radius="xs" fullWidth variant="light">
             {badge.label}
           </Badge>
         </Table.Td>
-        <Table.Td width="20px">
-          <Button size="compact-sm" onClick={() => navigate(`/orders/${row.id}`)}>
-            View
-          </Button>
+        <Table.Td width="48px">
+          <ActionIcon
+            variant="subtle"
+            aria-label="Settings"
+            onClick={() => navigate(`/orders/${row.id}`)}
+            color="gray"
+          >
+            <IconEye style={{ width: '70%', height: '70%' }} stroke={1.5} />
+          </ActionIcon>
         </Table.Td>
       </Table.Tr>
     );
@@ -141,7 +156,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
           value={search}
           onChange={handleSearchChange}
         />
-        <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} layout="fixed">
+        <Table horizontalSpacing="md" verticalSpacing="xs" layout="fixed">
           <Table.Tbody>
             <Table.Tr>
               <Th
@@ -149,22 +164,23 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
                 reversed={reverseSortDirection}
                 onSort={() => setSorting('title')}
               >
-                Rent listing
+                Skelbimas
               </Th>
               <Th
                 sorted={sortBy === 'date'}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting('date')}
               >
-                Date
+                Data
               </Th>
               <Th
                 sorted={sortBy === 'status'}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting('status')}
               >
-                Status
+                Būsena
               </Th>
+              <Table.Th w="48px"> </Table.Th>
             </Table.Tr>
           </Table.Tbody>
           <Table.Tbody>
@@ -174,7 +190,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
               <Table.Tr>
                 <Table.Td colSpan={3}>
                   <Text fw={500} ta="center">
-                    No orders found
+                    Užsakymų nerasta
                   </Text>
                 </Table.Td>
               </Table.Tr>

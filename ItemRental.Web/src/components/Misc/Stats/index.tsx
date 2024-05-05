@@ -17,10 +17,9 @@ const icons = {
 };
 
 const data = [
-  { title: 'Revenue', icon: 'receipt', value: '13,456', diff: 34 },
-  { title: 'Profit', icon: 'coin', value: '4,145', diff: -13 },
-  { title: 'Coupons usage', icon: 'discount', value: '745', diff: 18 },
-  { title: 'New customers', icon: 'user', value: '188', diff: -30 },
+  { title: 'Rezervacijų kiekis', icon: 'receipt', value: '53', diff: 25 },
+  { title: 'Lankytojų kiekis', icon: 'user', value: '594', diff: -13 },
+  { title: 'Įvykdytų užsakymų kiekis', icon: 'coin', value: '40', diff: 10 },
 ] as const;
 
 export function StatsGrid() {
@@ -46,7 +45,7 @@ export function StatsGrid() {
         </Group>
 
         <Text fz="xs" c="dimmed" mt={7}>
-          Compared to previous month
+          Palyginus su praeitu mėnesiu
         </Text>
       </Paper>
     );

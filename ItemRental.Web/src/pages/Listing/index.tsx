@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 import {
   Badge,
+  Box,
   Button,
   Center,
   Fieldset,
@@ -214,11 +215,13 @@ function Listing() {
           <Grid columns={12} w="100%">
             <Grid.Col span={{ base: 12, md: 8 }}>
               <Paper shadow="md" p="md" radius="sm" mb="md">
-                {result?.item?.images?.length > 0 ? (
-                  <PhotoCarousel images={result?.item.images} />
-                ) : (
-                  <Image src={NoImage} />
-                )}
+                <Box>
+                  {result?.item?.images?.length > 0 ? (
+                    <PhotoCarousel images={result?.item.images} />
+                  ) : (
+                    <Image src={NoImage} />
+                  )}
+                </Box>
                 <Group mt="md">
                   <Group justify="space-between" w="100%">
                     <Title order={3} fw={600}>

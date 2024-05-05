@@ -1,7 +1,8 @@
-import { Badge, Center, Paper, Table, Text } from '@mantine/core';
+import { Badge, Center, Paper, SegmentedControl, Table, Text } from '@mantine/core';
 import getDateLabel from '@/utils/Dates';
 import labels from '@/utils/OrderStatusLabels';
 import ItemActions from './ItemActions';
+import { useState } from 'react';
 
 const OrderTableElement: React.FC<Order> = ({
   id,
@@ -15,7 +16,9 @@ const OrderTableElement: React.FC<Order> = ({
   <Table.Tr key={id} m="md">
     <Table.Td>{rentListing.title}</Table.Td>
     <Table.Td>
-      <Text size="sm">{user.username}</Text>
+      <Text size="sm">
+        {user.name} {user.surname}
+      </Text>
       <Text c="dimmed" size="xs">
         {user.email}
       </Text>
@@ -48,10 +51,34 @@ interface DashboardOrdersTableProps {
 }
 
 const TableContainer: React.FC<DashboardOrdersTableProps> = ({ items }) => {
-  const rows = items.map((item: Order) => <OrderTableElement {...item} key={item.id} />);
+  const [type, setType] = useState<string>('0');
+  const rows = items
+    // eslint-disable-next-line radix, yoda
+    .filter((x) => type === 'all' || x.status === parseInt(type))
+    .map((item: Order) => <OrderTableElement {...item} key={item.id} />);
+
+  const changeType = (value: string) => {
+    setType(value);
+  };
 
   return (
     <Paper radius="sm" shadow="md" p="md">
+      <SegmentedControl
+        value={type}
+        onChange={changeType}
+        color="blue"
+        data={[
+          { label: 'Visi', value: 'all' },
+          { label: 'Laukiama patvirtinimo', value: '0' },
+          { label: 'Patvirtintas', value: '1' },
+          { label: 'Pristatomas', value: '2' },
+          { label: 'Nuomojamas', value: '3' },
+          { label: 'Grąžinamas', value: '4' },
+          { label: 'Užbaigtas', value: '5' },
+          { label: 'Atmestas', value: '6' },
+          { label: 'Atšauktas', value: '7' },
+        ]}
+      />
       <Table>
         <Table.Thead>
           <Table.Tr>

@@ -24,7 +24,7 @@ function CategoriesFilterSelection() {
       <Text fw={600} size="md" mb="md">
         <Center inline>
           <Title order={3} fw={600}>
-            Categories {loading && <Loader size="xs" ml="xs" />}{' '}
+            Kategorijos {loading && <Loader size="xs" ml="xs" />}{' '}
           </Title>
 
           {category && (

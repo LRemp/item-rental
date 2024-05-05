@@ -7,13 +7,14 @@ import useApiResult from '@/hooks/useApiResult';
 import CreateItemModal from '@/components/Modals/CreateItem';
 import TableContainer from './Components/TableContainer';
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Rent Listings' }].map(
-  (item, index) => (
-    <Anchor href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  )
-);
+const pathItems = [
+  { title: 'Pagrindinis', href: '/dashboard/home' },
+  { title: 'Nuomos skelbimai' },
+].map((item, index) => (
+  <Anchor href={item.href} key={index}>
+    {item.title}
+  </Anchor>
+));
 
 export default function Inventory() {
   const [opened, { close }] = useDisclosure(false);

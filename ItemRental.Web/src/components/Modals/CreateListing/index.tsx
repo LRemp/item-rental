@@ -16,7 +16,13 @@ interface CreatListingModalProps {
 const CreateListingModal: React.FC<CreatListingModalProps> = ({ id, opened, close }) => {
   const { loading, request } = useApiResult(api.RentListing.create);
   const form = useForm({
-    initialValues: { item: id, title: '', price: null, description: '' },
+    initialValues: {
+      item: id,
+      title: 'Demonstracins skelbimas',
+      price: 50,
+      description: 'Demonstracinis skelbimo aprašymas',
+      location: 'Kaunas, Lithuania',
+    },
     validate: {
       title: (value) => (value.length > 0 ? null : 'You must enter the title'),
       price: (value) => (value != null ? null : 'You must enter the price'),
@@ -60,37 +66,37 @@ const CreateListingModal: React.FC<CreatListingModalProps> = ({ id, opened, clos
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Create item rent listing" centered>
+      <Modal opened={opened} onClose={close} title="Sukurti daikto nuomos skelbimą" centered>
         <form onSubmit={form.onSubmit((values) => createListing(values))}>
           <Fieldset disabled={loading} variant="unstyled">
-            <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} />
+            <TextInput
+              label="Pavadinimas"
+              placeholder="Pavadinimas"
+              {...form.getInputProps('title')}
+            />
             <Textarea
-              label="Description"
+              label="Aprašymas"
               placeholder="Description"
               autosize
               {...form.getInputProps('description')}
             />
             <TextInput
-              label="Item"
-              placeholder="Item"
+              label="Daikto ID"
+              placeholder="Daikto ID"
               {...form.getInputProps('item')}
               value={id}
               disabled={id != null}
             />
-            <TextInput
-              label="Location"
-              placeholder="Location"
-              {...form.getInputProps('location')}
-            />
+            <TextInput label="Vieta" placeholder="Vieta" {...form.getInputProps('location')} />
 
             <NumberInput
-              label="Price for a day"
-              placeholder="Price"
+              label="Kaina dienai"
+              placeholder="Kaina"
               {...form.getInputProps('price')}
             />
 
             <Button fullWidth mt="md" type="submit" loading={loading}>
-              Create rent listing
+              Sukurti skelbimą
             </Button>
           </Fieldset>
         </form>

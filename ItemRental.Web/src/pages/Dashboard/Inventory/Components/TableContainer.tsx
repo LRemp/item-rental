@@ -1,4 +1,4 @@
-import { Center, Image, Paper, Table } from '@mantine/core';
+import { Badge, Center, Image, Paper, Table, Text } from '@mantine/core';
 import NoImage from '@/assets/images/no_image.png';
 import ItemActions from './ItemActions';
 
@@ -18,7 +18,19 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, images, tags 
     </Table.Td>
     <Table.Td>{name}</Table.Td>
     <Table.Td>{description}</Table.Td>
-    <Table.Td>{tags}</Table.Td>
+    <Table.Td>
+      {tags && (
+        <Text>
+          {tags.map((x: string, index: number) => (
+            <Badge variant="default" radius="xl" mr="xs" key={index}>
+              <Text fw={400} size="xs">
+                {x.toUpperCase()}
+              </Text>
+            </Badge>
+          ))}
+        </Text>
+      )}
+    </Table.Td>
     <Table.Td>
       <ItemActions id={id} />
     </Table.Td>

@@ -14,15 +14,15 @@ const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
 
   const openModal = () =>
     modals.openConfirmModal({
-      title: 'Delete this item?',
+      title: 'Ar tikrai norite ištrinti šį daiktą?',
       centered: true,
       children: (
         <Text size="sm">
-          Are you sure you want to delete this item? This action is irreversible and the data about
-          the item will be lost.
+          Ar tikrai norite ištrinti šį daiktą? Šis veiksmas yra negrįžtamas ir visi susiję duomenys
+          bus panaikinti iš sistemos.
         </Text>
       ),
-      labels: { confirm: 'Delete item', cancel: 'Cancel' },
+      labels: { confirm: 'Ištrinti', cancel: 'Atšaukti' },
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         await request();
@@ -38,8 +38,8 @@ const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
 
   return (
     <>
-      <Button color="red" onClick={openModal} size="compact-sm">
-        Delete
+      <Button color="red" onClick={openModal}>
+        Ištrinti
         <IconX size={18} />
       </Button>
     </>

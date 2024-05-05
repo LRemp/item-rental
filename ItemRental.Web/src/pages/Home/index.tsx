@@ -48,7 +48,7 @@ const ItemsContainer: React.FC = () => {
     <Grid columns={18}>
       <Grid.Col span={18}>
         <TextInput
-          placeholder="Search listings..."
+          placeholder="Įveskite paieškos kriterijų..."
           leftSection={<IconSearch />}
           onChange={(event) => setSearch(event.currentTarget.value)}
         />
@@ -58,7 +58,7 @@ const ItemsContainer: React.FC = () => {
         <Center h="70vh" w="100%">
           <Group>
             <Loader />
-            <Text>Loading the rent offers...</Text>
+            <Text>Kraunami skelbimai...</Text>
           </Group>
         </Center>
       ) : pageData?.result.length !== 0 ? (
@@ -79,7 +79,7 @@ const ItemsContainer: React.FC = () => {
           <Center h="50vh" w="100%">
             <Group>
               <Text c="dimmed" fw={500} size="lg">
-                No listings found
+                Skelbimų nerasta
               </Text>
             </Group>
           </Center>

@@ -1,12 +1,12 @@
-import { Image, Card, Text, Group, Button, rem } from '@mantine/core';
+import { Image, Card, Text, Group, Button } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
-import { IconStar } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import classes from './ListingCard.module.css';
+import NoImage from '@/assets/images/no_image.png';
 
 const ListingCard: React.FC<RentListing> = ({ id, title, description, price, item }) => {
   const navigate = useNavigate();
-  const slides = item.images.map((image) => (
+  const slides = item.images?.map((image) => (
     <Carousel.Slide key={image}>
       <Image src={`/images/${image}`} height={220} />
     </Carousel.Slide>
@@ -24,7 +24,13 @@ const ListingCard: React.FC<RentListing> = ({ id, title, description, price, ite
             indicator: classes.carouselIndicator,
           }}
         >
-          {slides}
+          {slides?.length > 0 ? (
+            slides
+          ) : (
+            <Carousel.Slide>
+              <Image src={NoImage} height={220} />
+            </Carousel.Slide>
+          )}
         </Carousel>
       </Card.Section>
 
@@ -33,12 +39,12 @@ const ListingCard: React.FC<RentListing> = ({ id, title, description, price, ite
           {title}
         </Text>
 
-        <Group gap={5}>
+        {/*<Group gap={5}>
           <IconStar style={{ width: rem(16), height: rem(16) }} />
           <Text fz="xs" fw={500}>
             4.78
           </Text>
-        </Group>
+        </Group>*/}
       </Group>
 
       <Text fz="xs" c="dimmed" mt="sm" lineClamp={4}>
@@ -52,12 +58,12 @@ const ListingCard: React.FC<RentListing> = ({ id, title, description, price, ite
           </Text>
           <Text span fz="sm" c="dimmed">
             {' '}
-            / day
+            / dienai
           </Text>
         </div>
 
         <Button radius="sm" variant="light" onClick={() => navigate(`/listing/${id}`)}>
-          Rent now
+          Išsinuomoti
         </Button>
       </Group>
     </Card>

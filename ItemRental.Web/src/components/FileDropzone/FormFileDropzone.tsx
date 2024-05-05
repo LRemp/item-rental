@@ -36,9 +36,9 @@ export function FormFileDropzone({
         }}
       >
         <Center h={120}>
-          <Dropzone.Idle>Drop files here</Dropzone.Idle>
-          <Dropzone.Accept>Drop files here</Dropzone.Accept>
-          <Dropzone.Reject>Files are invalid</Dropzone.Reject>
+          <Dropzone.Idle>Užveskite nuotraukas čia</Dropzone.Idle>
+          <Dropzone.Accept>Užveskite nuotraukas čia</Dropzone.Accept>
+          <Dropzone.Reject>Nuotraukos formatas nepalaikomas</Dropzone.Reject>
         </Center>
       </Dropzone>
 
@@ -51,7 +51,7 @@ export function FormFileDropzone({
       {selectedFiles && selectedFiles.length > 0 && (
         <>
           <Text mb={5} mt="md">
-            Selected files:
+            Įkeltos nuotraukos:
           </Text>
           {selectedFiles}
         </>

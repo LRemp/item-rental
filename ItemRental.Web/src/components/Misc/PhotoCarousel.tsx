@@ -3,7 +3,7 @@ import { Flex, Image } from '@mantine/core';
 
 export default function PhotoCarousel({ images }: { images: string[] }) {
   return (
-    <Carousel mx="auto" withIndicators loop>
+    <Carousel mx="auto" withIndicators loop maw="600px">
       {images &&
         images.map((image) => (
           <Carousel.Slide>

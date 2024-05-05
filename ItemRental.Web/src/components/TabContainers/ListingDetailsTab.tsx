@@ -18,16 +18,16 @@ const ListingDetailsTab: React.FC<ListingDetailsTabProps> = ({ id }) => {
         <>
           <Grid.Col span={{ base: 12, sm: 6 }}>
             <Box>
-              <Text fw={500}>Title</Text>
+              <Text fw={500}>Pavadinimas</Text>
               <Text>{data.title}</Text>
             </Box>
             <Box>
-              <Text fw={500}>Description</Text>
+              <Text fw={500}>Aprašymas</Text>
               <Text>{data.description}</Text>
             </Box>
             <Box>
-              <Text fw={500}>Price</Text>
-              <Text>{data.price} Eur per day</Text>
+              <Text fw={500}>Kaina</Text>
+              <Text>{data.price} Eur / dienai</Text>
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 6 }}>

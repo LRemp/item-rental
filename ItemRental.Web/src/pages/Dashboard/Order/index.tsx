@@ -75,10 +75,10 @@ const DetailsContainer: React.FC<Order> = ({
   <Tabs defaultValue="order">
     <Tabs.List>
       <Tabs.Tab value="order" leftSection={<IconTruckDelivery size={26} stroke={1.5} />}>
-        Order details
+        Užsakymo informacija
       </Tabs.Tab>
       <Tabs.Tab value="listing" leftSection={<IconBoxSeam size={26} stroke={1.5} />}>
-        Listing details
+        Skelbimo informacija
       </Tabs.Tab>
     </Tabs.List>
 
@@ -87,23 +87,28 @@ const DetailsContainer: React.FC<Order> = ({
         <Grid.Col span={{ base: 12, sm: 6 }}>
           <Box>
             <Box>
-              <Text fw={500}>Client</Text>
-              <Text>{user.username}</Text>
+              <Text fw={500}>Klientas</Text>
+              <Text>
+                {user.name} {user.surname}
+              </Text>
+              <Text c="dimmed" size="xs">
+                {user.email}
+              </Text>
             </Box>
             <Box>
-              <Text fw={500}>Rent date</Text>
+              <Text fw={500}>Nuomos data</Text>
               <Text>
                 {getDateLabel(startDate)} - {getDateLabel(endDate)}
               </Text>
             </Box>
             <Box>
-              <Text fw={500}>Comment</Text>
+              <Text fw={500}>Komentaras</Text>
               <Text>{comment}</Text>
             </Box>
             <Box>
-              <Text fw={500}>Delivery type</Text>
+              <Text fw={500}>Pristatymo tipas</Text>
               <Badge radius="xs" size="md">
-                {deliveryType === 0 ? 'Pickup' : 'Shippment'}
+                {deliveryType === 0 ? 'Atsiimti' : 'Siuntimas'}
               </Badge>
             </Box>
           </Box>

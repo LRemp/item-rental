@@ -20,8 +20,8 @@ function CategorySelection() {
 
   return (
     <Select
-      label="Category"
-      placeholder="Select category"
+      label="Kategorija"
+      placeholder="Pasirinkite kategoriją"
       onChange={(value) => navigate(`/${value}`)}
       value={category}
       data={categories}

@@ -20,38 +20,38 @@ export const shippingProviders = [
 export const deliveryTypes = [
   {
     value: '0',
-    label: 'Pickup',
+    label: 'Atsiėmimas vietoje',
   },
   {
     value: '1',
-    label: 'Shipping',
+    label: 'Siuntimas',
   },
 ];
 
 export const deliveryStatusTips = [
   {
     id: 0,
-    text: 'Your order is successfuly registered, now we are waiting for the merchant to accept it',
+    text: 'Jūsų rezervacija sėkmingai užregistruota, laukiame rezervacijos patvirtinimo',
   },
   {
     id: 1,
-    text: 'Your order is accepted, now we are waiting for the merchant to submit delivery details',
+    text: 'Jūsų rezervacija patvirtinta, laukiame prekės išsiuntimo informacijos',
   },
   {
     id: 2,
-    text: 'Your order is dispatched, please confirm delivery when you receive or pickup the package',
+    text: 'Jūsų užsakymas išsiųstas, laukiame pristatymo patvirtinimo',
   },
   {
     id: 3,
-    text: 'You are using the rent of those items. Be aware that you will need to return the package the last day',
+    text: 'Šiuo metu vyksta nuomos procesas, prašome nepamiršti grąžinti prekės laiku',
   },
   {
     id: 4,
-    text: 'Your rent order package is being returned, now we are waiting for merchant to confirm the successful return delivery',
+    text: 'Nuomos daiktai grąžinami, laukiame prekės grąžinimo patvirtinimo',
   },
   {
     id: 5,
-    text: 'Your rent order package is successfuly returned!',
+    text: 'Nuoimos daiktai sėkmingai grąžinti!',
   },
 ];
 

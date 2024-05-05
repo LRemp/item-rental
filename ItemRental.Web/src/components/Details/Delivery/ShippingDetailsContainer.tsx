@@ -25,7 +25,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
               {delivery.type === 0 && (
                 <>
                   <Box>
-                    <Text fw={500}>Pickup location:</Text>
+                    <Text fw={500}>Atsiėmimo adresas:</Text>
                     <Text>{delivery.location}</Text>
                   </Box>
                 </>
@@ -33,7 +33,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
               {delivery.type === 1 && (
                 <>
                   <Box>
-                    <Text fw={500}>Shipping company</Text>
+                    <Text fw={500}>Pristatymo kompanija</Text>
                     <Text>
                       {
                         shippingProviders.find((item) => item.value === delivery.shippingProvider)
@@ -42,7 +42,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
                     </Text>
                   </Box>
                   <Box>
-                    <Text fw={500}>Tracking id</Text>
+                    <Text fw={500}>Sekimo ID</Text>
                     <Text>{delivery.shippingId}</Text>
                   </Box>
                   <Button
@@ -54,14 +54,14 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
                       )
                     }
                   >
-                    Open package tracking <IconTruckDelivery stroke={1.0} />
+                    Atverti pristatymo stebėjimą <IconTruckDelivery stroke={1.0} />
                   </Button>
                 </>
               )}
             </>
           ) : (
             <Text fs="italic" fw={500} size="sm">
-              No delivery details found
+              Pristatymo informacija nerasta
             </Text>
           )}
         </Box>
@@ -86,7 +86,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
               {delivery.type === 0 && (
                 <>
                   <Box>
-                    <Text fw={500}>Pickup location:</Text>
+                    <Text fw={500}>Atsiėmimo adresas:</Text>
                     <Text>{delivery.location}</Text>
                   </Box>
                 </>
@@ -94,7 +94,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
               {delivery.type === 1 && (
                 <>
                   <Box>
-                    <Text fw={500}>Shipping company</Text>
+                    <Text fw={500}>Pristatymo kompanija</Text>
                     <Text>
                       {
                         shippingProviders.find((item) => item.value === delivery.shippingProvider)
@@ -103,7 +103,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
                     </Text>
                   </Box>
                   <Box>
-                    <Text fw={500}>Tracking id</Text>
+                    <Text fw={500}>Sekimo ID</Text>
                     <Text>{delivery.shippingId}</Text>
                   </Box>
                   <Button
@@ -115,14 +115,14 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
                       )
                     }
                   >
-                    Open package tracking <IconTruckDelivery stroke={1.0} />
+                    Atverti pristatymo stebėjimą <IconTruckDelivery stroke={1.0} />
                   </Button>
                 </>
               )}
             </>
           ) : (
             <Text fs="italic" fw={500} size="sm">
-              No return delivery details found
+              Grąžinimo informacija nerasta
             </Text>
           )}
         </Box>
@@ -137,11 +137,11 @@ const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => (
       <Tabs defaultValue="delivery">
         <Tabs.List>
           <Tabs.Tab value="delivery" leftSection={<IconPackageExport size={18} />}>
-            Delivery details
+            Pristatymo informacija
           </Tabs.Tab>
           {status > 3 && (
             <Tabs.Tab value="return" leftSection={<IconPackageImport size={18} />}>
-              Return details
+              Grąžinimo informacija
             </Tabs.Tab>
           )}
         </Tabs.List>

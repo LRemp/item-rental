@@ -11,37 +11,37 @@ const GenerateEvents = (events: EventLog[]): TimelineEvent[] => {
 
   if (events.find((event) => event.eventName === 'Order.Accepted') === undefined) {
     timelineEvents.push({
-      title: 'Accepted',
+      title: 'Užsakymas priimtas',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.Dispatched') === undefined) {
     timelineEvents.push({
-      title: 'Dispatch package',
+      title: 'Išiųsta',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.Delivered') === undefined) {
     timelineEvents.push({
-      title: 'Package received',
+      title: 'Užsakymas pristatytas',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.ReturnDispatched') === undefined) {
     timelineEvents.push({
-      title: 'Return package',
+      title: 'Grąžinamas užsakymas',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.Returned') === undefined) {
     timelineEvents.push({
-      title: 'Successful return',
+      title: 'Užsakymas grąžintas',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.Complete') === undefined) {
     timelineEvents.push({
-      title: 'Complete',
+      title: 'Nuoma sėkmingai atlikta',
     });
   }
 

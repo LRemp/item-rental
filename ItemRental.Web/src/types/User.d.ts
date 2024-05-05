@@ -15,6 +15,7 @@ type UserProfile = {
   surname: string;
   email: string;
   gender: string;
+  verified: boolean;
 };
 
 type RegisterResponse = {};

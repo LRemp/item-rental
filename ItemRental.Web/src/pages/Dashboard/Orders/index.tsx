@@ -5,13 +5,14 @@ import api from '@/api';
 import TableContainer from './Components/TableContainer';
 import useApiResult from '@/hooks/useApiResult';
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Orders' }].map(
-  (item, index) => (
-    <Anchor href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  )
-);
+const pathItems = [
+  { title: 'Pagrindinis', href: '/dashboard/home' },
+  { title: 'Nuomos užklausos' },
+].map((item, index) => (
+  <Anchor href={item.href} key={index}>
+    {item.title}
+  </Anchor>
+));
 
 function Orders() {
   const { result: orders, loading } = useApiResult(() => api.Order.getOwnerOrders(), []);

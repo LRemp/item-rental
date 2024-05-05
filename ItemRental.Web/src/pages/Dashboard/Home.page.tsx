@@ -13,12 +13,12 @@ const ActiveOrders: React.FC = () => {
     <Paper shadow="md" radius="sm" p="md" h={300}>
       <Group justify="space-between">
         <Title fw={500} order={4}>
-          Active rents
+          Aktyvios nuomos
         </Title>
         <Link to="/dashboard/orders">
           <Button color="orange">
             <Center inline>
-              Open rents <IconArrowRight size={18} />
+              Peržiūrėti užsakymus <IconArrowRight size={18} />
             </Center>
           </Button>
         </Link>
@@ -40,12 +40,12 @@ const PendingOrders: React.FC = () => {
     <Paper shadow="md" radius="sm" p="md" h={300}>
       <Group justify="space-between">
         <Title fw={500} order={4}>
-          Pending rent requests
+          Nuomos rezervacijos
         </Title>
         <Link to="/dashboard/orders">
           <Button color="yellow">
             <Center inline>
-              Open rents <IconArrowRight size={18} />
+              Peržiūrėti rezervacijas <IconArrowRight size={18} />
             </Center>
           </Button>
         </Link>
@@ -67,12 +67,12 @@ const CompletedOrders: React.FC = () => {
     <Paper shadow="md" radius="sm" p="md" h={300}>
       <Group justify="space-between">
         <Title fw={500} order={4}>
-          Completed rents
+          Įvykdyti užsakymai
         </Title>
         <Link to="/dashboard/orders">
           <Button color="green">
             <Center inline>
-              Open rents <IconArrowRight size={18} />
+              Peržiūrėti užsakymus <IconArrowRight size={18} />
             </Center>
           </Button>
         </Link>

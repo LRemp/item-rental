@@ -44,9 +44,9 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [] }) => {
         <Table>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>Title</Table.Th>
-              <Table.Th>Username</Table.Th>
-              <Table.Th>Date</Table.Th>
+              <Table.Th>Skelbimas</Table.Th>
+              <Table.Th>Klientas</Table.Th>
+              <Table.Th>Data</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows.length > 0 && rows}</Table.Tbody>
@@ -54,7 +54,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders = [] }) => {
         {rows.length === 0 && (
           <Center h="70%">
             <Text fw={500} size="sm" opacity="70%">
-              No orders found
+              Užsakymų nerasta
             </Text>
           </Center>
         )}
