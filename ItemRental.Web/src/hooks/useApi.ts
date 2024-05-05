@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/return-await */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable @typescript-eslint/no-throw-literal */
 import { useCallback } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
@@ -25,8 +28,8 @@ const useApi = () => {
     };
     return fetch(endpoint, requestOptions).then(async (result: any) => {
       if (result.ok) {
-        await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-        return result.status == 200 ? await result.json() : {};
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        return result.status === 200 ? await result.json() : {};
       }
       const errorData = await result.json();
 

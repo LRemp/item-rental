@@ -1,5 +1,4 @@
 import { Button, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconX } from '@tabler/icons-react';
@@ -10,7 +9,7 @@ import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 
 const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
-  const { loading, request } = useApiResult(() => api.Item.deleteItem(id));
+  const { request } = useApiResult(() => api.Item.deleteItem(id));
   const navigate = useNavigate();
 
   const openModal = () =>
@@ -25,7 +24,6 @@ const DeleteItemAction: React.FC<ItemButtonActionProps> = ({ id }) => {
       ),
       labels: { confirm: 'Delete item', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
-      onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         await request();
         notifications.show(

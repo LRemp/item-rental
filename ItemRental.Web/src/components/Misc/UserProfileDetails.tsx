@@ -1,5 +1,5 @@
 import { Tabs, rem } from '@mantine/core';
-import { IconBoxSeam, IconList, IconListDetails } from '@tabler/icons-react';
+import { IconBoxSeam, IconListDetails } from '@tabler/icons-react';
 import React from 'react';
 import OrdersFromMerchantTab from '../TabContainers/OrdersFromMerchantTab';
 import MerchantListingsTab from '../TabContainers/MerchantListingsTab';
@@ -11,7 +11,7 @@ interface UserProfileDetailsProps {
 const UserProfileDetails: React.FC<UserProfileDetailsProps> = ({ id }) => {
   const iconStyle = { width: rem(18), height: rem(18) };
 
-  if (id == undefined) {
+  if (id === undefined) {
     return <></>;
   }
 

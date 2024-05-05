@@ -31,66 +31,6 @@ const pathItems = [
   </Anchor>
 ));
 
-const Item = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const { result: item, loading, request } = useApiResult(api.Item.get);
-
-  useEffect(() => {
-    request(id).catch(() => navigate('/dashboard/inventory'));
-  }, []);
-
-  return (
-    <Box w="100%">
-      <Grid columns={24} grow>
-        <Grid.Col span={24}>
-          <Title fw={700}>Item</Title>
-          <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
-        </Grid.Col>
-        <Grid.Col span={24}>
-          {loading ? (
-            <Grid w="100%" h="100%" justify="center" align="center">
-              <Loader />
-            </Grid>
-          ) : (
-            <ItemView {...item} />
-          )}
-        </Grid.Col>
-      </Grid>
-    </Box>
-  );
-};
-export default Item;
-
-const ItemView: React.FC<Item> = ({ id, name, description, images, category, details }) => (
-  <Paper shadow="md" radius="sm" p="md">
-    <Grid>
-      <Grid.Col span={{ base: 12, sm: 5 }}>
-        {images == null ? (
-          <Image src={NoImage} radius="xs" w="full" fit="contain" />
-        ) : (
-          <PhotoCarousel images={images} />
-        )}
-
-        <Group mt="sm">
-          <Title fw={600} order={3}>
-            {name}
-          </Title>
-          <Text size="xs" opacity="50%">
-            ({category})
-          </Text>
-        </Group>
-        <Text>{description}</Text>
-      </Grid.Col>
-      <Grid.Col span={{ base: 12, sm: 3 }}>
-        <ItemActions id={id} />
-        <ItemDetails details={details} />
-      </Grid.Col>
-    </Grid>
-  </Paper>
-);
-
 interface ItemActionsProps {
   id: string;
 }
@@ -132,3 +72,63 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => (
     </Tabs.Panel>
   </Tabs>
 );
+
+const ItemView: React.FC<Item> = ({ id, name, description, images, category, details }) => (
+  <Paper shadow="md" radius="sm" p="md">
+    <Grid>
+      <Grid.Col span={{ base: 12, sm: 5 }}>
+        {images == null ? (
+          <Image src={NoImage} radius="xs" w="full" fit="contain" />
+        ) : (
+          <PhotoCarousel images={images} />
+        )}
+
+        <Group mt="sm">
+          <Title fw={600} order={3}>
+            {name}
+          </Title>
+          <Text size="xs" opacity="50%">
+            ({category})
+          </Text>
+        </Group>
+        <Text>{description}</Text>
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, sm: 3 }}>
+        <ItemActions id={id} />
+        <ItemDetails details={details} />
+      </Grid.Col>
+    </Grid>
+  </Paper>
+);
+
+const Item = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { result: item, loading, request } = useApiResult(api.Item.get);
+
+  useEffect(() => {
+    request(id).catch(() => navigate('/dashboard/inventory'));
+  }, []);
+
+  return (
+    <Box w="100%">
+      <Grid columns={24} grow>
+        <Grid.Col span={24}>
+          <Title fw={700}>Item</Title>
+          <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
+        </Grid.Col>
+        <Grid.Col span={24}>
+          {loading ? (
+            <Grid w="100%" h="100%" justify="center" align="center">
+              <Loader />
+            </Grid>
+          ) : (
+            <ItemView {...item} />
+          )}
+        </Grid.Col>
+      </Grid>
+    </Box>
+  );
+};
+export default Item;

@@ -2,7 +2,7 @@ import { Avatar, Text, Button, Paper, Grid } from '@mantine/core';
 import { IconDiscountCheckFilled } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 
-const UserProfileCard: React.FC<UserProfile> = ({ id, username, name, surname }) => {
+const UserProfileCard: React.FC<UserProfile> = ({ id, username }) => {
   const navigate = useNavigate();
   return (
     <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)" shadow="sm">

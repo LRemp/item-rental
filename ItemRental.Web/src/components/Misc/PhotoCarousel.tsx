@@ -1,5 +1,5 @@
 import { Carousel } from '@mantine/carousel';
-import { Box, Flex, Image } from '@mantine/core';
+import { Flex, Image } from '@mantine/core';
 
 export default function PhotoCarousel({ images }: { images: string[] }) {
   return (

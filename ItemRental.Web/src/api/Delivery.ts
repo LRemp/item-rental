@@ -1,6 +1,6 @@
 const get = (id: string, role?: number): ApiRequest => {
   let endpoint = `/api/Orders/${id}/Delivery?`;
-  if (role != undefined) {
+  if (role !== undefined) {
     endpoint += `role=${role}`;
   }
   return {

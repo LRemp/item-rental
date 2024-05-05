@@ -2,7 +2,6 @@ import {
   ActionIcon,
   Box,
   Flex,
-  Group,
   Indicator,
   Popover,
   ScrollArea,
@@ -10,7 +9,7 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core';
-import { IconBell, IconBellFilled, IconInfoCircle } from '@tabler/icons-react';
+import { IconBellFilled, IconInfoCircle } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import classes from './Notifications.module.css';
@@ -18,22 +17,34 @@ import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 import getDateLabel from '@/utils/Dates';
 
-const mock_notifications = [
-  {
-    id: '1',
-    code: 'Order.Delivering',
-    title: 'Order dispatched',
-    describe: 'The merchant has dispatched your order',
-    url: '/orders/1',
-    timestamp: new Date(),
-    read: false,
-  },
-];
+const Notification: React.FC<UserNotification> = ({ title, description, timestamp, url, read }) => {
+  const navigate = useNavigate();
+  return (
+    <UnstyledButton w="100%" className={classes.notification} onClick={() => navigate(url)}>
+      <Box>
+        <Flex>
+          <Indicator inline disabled={read} color="red" size={6}>
+            <ActionIcon variant="light" aria-label="Notification">
+              <IconInfoCircle />
+            </ActionIcon>
+          </Indicator>
+          <Text fw={500} ml="xs">
+            {title}
+          </Text>
+        </Flex>
+      </Box>
+      <Box>
+        <Text size="sm">{description}</Text>
+        <Text fw={500} c="dimmed" size="xs">
+          {getDateLabel(timestamp)}
+        </Text>
+      </Box>
+    </UnstyledButton>
+  );
+};
 
 function Notifications() {
   const { result: notifications, loading } = useApiResult(() => api.User.GetNotifications(), []);
-
-  console.log(notifications);
 
   return (
     <Popover width={400} position="bottom" withArrow shadow="md">
@@ -45,7 +56,7 @@ function Notifications() {
         </Indicator>
       </Popover.Target>
       <Popover.Dropdown>
-        {loading || notifications == undefined ? (
+        {loading || notifications === undefined ? (
           <>
             <Box>
               <Skeleton height={12} radius="xs" w="20%" mb="xs" />
@@ -73,29 +84,3 @@ function Notifications() {
 }
 
 export default Notifications;
-
-const Notification: React.FC<UserNotification> = ({ title, description, timestamp, url, read }) => {
-  const navigate = useNavigate();
-  return (
-    <UnstyledButton w="100%" className={classes.notification} onClick={() => navigate(url)}>
-      <Box>
-        <Flex>
-          <Indicator inline disabled={read} color="red" size={6}>
-            <ActionIcon variant="light" aria-label="Notification">
-              <IconInfoCircle />
-            </ActionIcon>
-          </Indicator>
-          <Text fw={500} ml="xs">
-            {title}
-          </Text>
-        </Flex>
-      </Box>
-      <Box>
-        <Text size="sm">{description}</Text>
-        <Text fw={500} c="dimmed" size="xs">
-          {getDateLabel(timestamp)}
-        </Text>
-      </Box>
-    </UnstyledButton>
-  );
-};

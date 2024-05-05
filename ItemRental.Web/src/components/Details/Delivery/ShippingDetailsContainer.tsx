@@ -5,44 +5,13 @@ import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
 import { getTrackingLink, shippingProviders } from '@/utils/Delivery';
 
-const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => (
-    <>
-      {status > 0 && (
-        <Tabs defaultValue="delivery">
-          <Tabs.List>
-            <Tabs.Tab value="delivery" leftSection={<IconPackageExport size={18} />}>
-              Delivery details
-            </Tabs.Tab>
-            {status > 3 && (
-              <Tabs.Tab value="return" leftSection={<IconPackageImport size={18} />}>
-                Return details
-              </Tabs.Tab>
-            )}
-          </Tabs.List>
-
-          <Tabs.Panel value="delivery">
-            <DeliveryTab id={id} />
-          </Tabs.Panel>
-
-          {status > 3 && (
-            <Tabs.Panel value="return">
-              <ReturnTab id={id} />
-            </Tabs.Panel>
-          )}
-        </Tabs>
-      )}
-    </>
-  );
-
-export default ShippingDetailsContainer;
-
 interface OrderComponent {
   id: string;
 }
 
 const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
   const { result: delivery, loading } = useApiResult(() => api.Delivery.get(id || '', 1), []);
-  console.log(delivery);
+
   return (
     <Box>
       {loading ? (
@@ -53,7 +22,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
         <Box my="md">
           {delivery ? (
             <>
-              {delivery.type == 0 && (
+              {delivery.type === 0 && (
                 <>
                   <Box>
                     <Text fw={500}>Pickup location:</Text>
@@ -61,13 +30,13 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
                   </Box>
                 </>
               )}
-              {delivery.type == 1 && (
+              {delivery.type === 1 && (
                 <>
                   <Box>
                     <Text fw={500}>Shipping company</Text>
                     <Text>
                       {
-                        shippingProviders.find((item) => item.value == delivery.shippingProvider)
+                        shippingProviders.find((item) => item.value === delivery.shippingProvider)
                           ?.label
                       }
                     </Text>
@@ -114,7 +83,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
         <Box my="md">
           {delivery ? (
             <>
-              {delivery.type == 0 && (
+              {delivery.type === 0 && (
                 <>
                   <Box>
                     <Text fw={500}>Pickup location:</Text>
@@ -122,13 +91,13 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
                   </Box>
                 </>
               )}
-              {delivery.type == 1 && (
+              {delivery.type === 1 && (
                 <>
                   <Box>
                     <Text fw={500}>Shipping company</Text>
                     <Text>
                       {
-                        shippingProviders.find((item) => item.value == delivery.shippingProvider)
+                        shippingProviders.find((item) => item.value === delivery.shippingProvider)
                           ?.label
                       }
                     </Text>
@@ -161,3 +130,34 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
     </Box>
   );
 };
+
+const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => (
+  <>
+    {status > 0 && (
+      <Tabs defaultValue="delivery">
+        <Tabs.List>
+          <Tabs.Tab value="delivery" leftSection={<IconPackageExport size={18} />}>
+            Delivery details
+          </Tabs.Tab>
+          {status > 3 && (
+            <Tabs.Tab value="return" leftSection={<IconPackageImport size={18} />}>
+              Return details
+            </Tabs.Tab>
+          )}
+        </Tabs.List>
+
+        <Tabs.Panel value="delivery">
+          <DeliveryTab id={id} />
+        </Tabs.Panel>
+
+        {status > 3 && (
+          <Tabs.Panel value="return">
+            <ReturnTab id={id} />
+          </Tabs.Panel>
+        )}
+      </Tabs>
+    )}
+  </>
+);
+
+export default ShippingDetailsContainer;

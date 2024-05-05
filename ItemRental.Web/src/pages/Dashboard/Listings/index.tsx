@@ -17,10 +17,7 @@ const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Re
 
 export default function Inventory() {
   const [opened, { close }] = useDisclosure(false);
-  const { result: items, loading } = useApiResult<Item[]>(
-    () => api.RentListing.getListingsByOwner(),
-    []
-  );
+  const { result: items, loading } = useApiResult(() => api.RentListing.getListingsByOwner(), []);
 
   useEffect(() => {
     if (loading) {

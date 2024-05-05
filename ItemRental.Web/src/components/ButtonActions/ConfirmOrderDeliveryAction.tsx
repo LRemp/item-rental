@@ -1,10 +1,8 @@
 import { Button, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck } from '@tabler/icons-react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Error, Success } from '@/utils/Notifications';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
@@ -15,7 +13,7 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
   fullWidth = false,
   size = 'md',
 }) => {
-  const { loading, request } = useApiResult(() => api.Delivery.confirm(id));
+  const { request } = useApiResult(() => api.Delivery.confirm(id));
 
   const openModal = () =>
     modals.openConfirmModal({
@@ -28,7 +26,6 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
         </Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
-      onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,

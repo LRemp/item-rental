@@ -16,7 +16,7 @@ const pagePath: PageLink[] = [
 
 export default function Inventory() {
   const [opened, { open, close }] = useDisclosure(false);
-  const { result: items, loading } = useApiResult<Item[]>(() => api.Item.getAll(), []);
+  const { result: items, loading } = useApiResult(() => api.Item.getAll(), []);
 
   useEffect(() => {
     if (loading) {

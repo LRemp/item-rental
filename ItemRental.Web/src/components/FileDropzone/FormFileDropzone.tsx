@@ -1,25 +1,14 @@
-import { UseFormInput, useForm } from '@mantine/form';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { Center, Text, CloseButton } from '@mantine/core';
-
-interface FormValue {
-  files: File[];
-}
 
 export function FormFileDropzone({
   onChange,
   value,
-  checked,
   error,
-  onFocus,
-  onBlur,
 }: {
   onChange: any;
   value?: File[];
-  checked?: any;
   error?: any;
-  onFocus?: any;
-  onBlur?: any;
 }) {
   const selectedFiles = value?.map((file, index) => (
     <Text key={file.name}>
@@ -45,7 +34,6 @@ export function FormFileDropzone({
         onDrop={(files) => {
           onChange([...(value ?? []), ...files]);
         }}
-        onReject={() => console.log('Select images only')}
       >
         <Center h={120}>
           <Dropzone.Idle>Drop files here</Dropzone.Idle>

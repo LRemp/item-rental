@@ -10,35 +10,50 @@ import {
   Loader,
   Paper,
   Text,
-  TextInput,
   Textarea,
   Title,
   rem,
 } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { theme } from '@/theme';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 
 const dateFormatter = buildFormatter(lithuanianStrings);
 
+const Comment: React.FC<IComment> = ({ author, createdAt, text }) => (
+  <Box my="md">
+    <Group>
+      <Avatar alt={author.name} radius="xl" color="cyan">
+        {author.name[0].toUpperCase()}
+      </Avatar>
+      <div>
+        <Text size="sm">
+          {author.name} {author.surname}
+        </Text>
+        <Text size="xs" c="dimmed">
+          <TimeAgo date={createdAt} formatter={dateFormatter} />
+        </Text>
+      </div>
+    </Group>
+    <Text pl={54} pt="sm" size="sm">
+      {text}
+    </Text>
+  </Box>
+);
+
 interface CommentsProps {
   id: string;
 }
 
 const Comments: React.FC<CommentsProps> = ({ id }) => {
-  const auth: AuthUser | null = useAuthUser();
-  const { result, loading, request } = useApiResult<Comment[]>(
-    () => api.RentListing.getComments(id),
-    []
-  );
+  const { result, loading } = useApiResult(() => api.RentListing.getComments(id), []);
 
-  const { loading: createLoading, request: createRequest } = useApiResult(
+  /*const { loading: createLoading, request: createRequest } = useApiResult(
     api.RentListing.createComment
   );
 
-  const createComment = (e: React.ChangeEvent<HTMLElement>) => {};
+  const createComment = (e: React.ChangeEvent<HTMLElement>) => {};*/
 
   return (
     <Paper p="md" shadow="md" radius="sm">
@@ -70,26 +85,5 @@ const Comments: React.FC<CommentsProps> = ({ id }) => {
     </Paper>
   );
 };
-
-const Comment: React.FC<IComment> = ({ id, author, createdAt, text }) => (
-    <Box my="md">
-      <Group>
-        <Avatar alt={author.name} radius="xl" color="cyan">
-          {author.name[0].toUpperCase()}
-        </Avatar>
-        <div>
-          <Text size="sm">
-            {author.name} {author.surname}
-          </Text>
-          <Text size="xs" c="dimmed">
-            <TimeAgo date={createdAt} formatter={dateFormatter} />
-          </Text>
-        </div>
-      </Group>
-      <Text pl={54} pt="sm" size="sm">
-        {text}
-      </Text>
-    </Box>
-  );
 
 export default Comments;

@@ -1,18 +1,8 @@
-import { Menu, Button, rem, Text } from '@mantine/core';
-import {
-  IconSettings,
-  IconMessageCircle,
-  IconPhoto,
-  IconSearch,
-  IconArrowsLeftRight,
-  IconTrash,
-  IconCheck,
-  IconX,
-} from '@tabler/icons-react';
+import { Menu, Button, rem } from '@mantine/core';
+import { IconSettings, IconCheck, IconX } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmOrderAction from '../ButtonActions/ConfirmOrderAction';
-import DeclineOrderAction from '../ButtonActions/DeclineOrderAction';
 
 interface OrderMenuProps {
   status: number;
@@ -36,7 +26,7 @@ const OrderMenu: React.FC<OrderMenuProps> = ({ status, id }) => {
           View
         </Menu.Item>
 
-        {status == 0 && (
+        {status === 0 && (
           <>
             <Menu.Divider />
             <Menu.Label>Confirmation</Menu.Label>
@@ -44,7 +34,7 @@ const OrderMenu: React.FC<OrderMenuProps> = ({ status, id }) => {
               <ConfirmOrderAction id={id} />
             </Menu.Item>
             <Menu.Item leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}>
-              <DeclineOrderAction id={id} />
+              Reject
             </Menu.Item>
           </>
         )}

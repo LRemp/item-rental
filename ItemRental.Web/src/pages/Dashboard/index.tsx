@@ -1,13 +1,4 @@
-import {
-  AppShell,
-  Burger,
-  Grid,
-  Group,
-  Image,
-  Skeleton,
-  Text,
-  UnstyledButton,
-} from '@mantine/core';
+import { AppShell, Burger, Group, Image, UnstyledButton } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from '@/assets/images/logo.png';

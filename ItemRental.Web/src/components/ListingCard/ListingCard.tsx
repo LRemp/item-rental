@@ -1,6 +1,5 @@
-import { Badge, Box, Button, Card, Group, Highlight, Image, Text } from '@mantine/core';
+import { Button, Card, Group, Highlight, Image, Text } from '@mantine/core';
 import React from 'react';
-import { useHover } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 import classes from './ListingCard.module.css';
 import NoImage from '@/assets/images/no_image.png';
@@ -15,9 +14,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   title,
   description,
   item,
-  renter,
   price,
-  location,
   highlight,
   w,
 }) => {

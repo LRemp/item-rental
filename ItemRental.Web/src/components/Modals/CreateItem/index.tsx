@@ -2,7 +2,6 @@ import {
   Button,
   Center,
   Fieldset,
-  Input,
   Loader,
   Modal,
   NumberInput,
@@ -15,7 +14,6 @@ import React from 'react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { DatePickerProps } from '@mantine/dates';
 import { FormFileDropzone } from '../../FileDropzone/FormFileDropzone';
 import { Error, Success } from '@/utils/Notifications';
 import useUploadImage from '@/hooks/useUploadImage';
@@ -41,7 +39,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
 
   const [adding, add] = useDisclosure(false);
 
-  const { result, loading, error, request } = useApiResult(api.Item.create);
+  const { request } = useApiResult(api.Item.create);
 
   const { result: categories, loading: loadingCategories } = useApiResult(
     () => api.Category.getAll(),
@@ -80,6 +78,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
 
     const details: any = [];
     const { scheme } = categories.find((item: any) => item.name === form.values.category);
+    // eslint-disable-next-line no-restricted-syntax
     for (const key in scheme) {
       if (detailsForm.values[scheme[key].name]) {
         details.push({
@@ -90,7 +89,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
     }
 
     try {
-      const createRequest = await request({
+      await request({
         name: data.name,
         description: data.description,
         category: data.category,
@@ -108,15 +107,11 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
       );
       close();
       add.close();
-    } catch (error: any) {
-      notifications.update(
-        Error({ id: notificationId, title: 'Error', message: error.description })
-      );
+    } catch (e: any) {
+      notifications.update(Error({ id: notificationId, title: 'Error', message: e.description }));
       add.close();
     }
   };
-
-  const changeCategory = (value: string | null) => {};
 
   return (
     <Modal
@@ -162,6 +157,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
             {form.values.category &&
               categories
                 .find((item: any) => item.name === form.values.category)
+                // eslint-disable-next-line array-callback-return
                 .scheme?.map((item: any, index: number) => {
                   if (item.type === 'string') {
                     return (
@@ -172,7 +168,8 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                         {...detailsForm.getInputProps(item.name)}
                       />
                     );
-                  } if (item.type == 'select') {
+                  }
+                  if (item.type === 'select') {
                     return (
                       <Select
                         key={index}
@@ -182,7 +179,8 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
                         {...detailsForm.getInputProps(item.name)}
                       />
                     );
-                  } if (item.type == 'number') {
+                  }
+                  if (item.type === 'number') {
                     return (
                       <NumberInput
                         key={index}

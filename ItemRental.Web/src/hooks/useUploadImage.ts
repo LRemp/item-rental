@@ -6,6 +6,7 @@ const useUploadImage = () => {
 
   const upload = useCallback(async (files: File[]) => {
     const formData = new FormData();
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }

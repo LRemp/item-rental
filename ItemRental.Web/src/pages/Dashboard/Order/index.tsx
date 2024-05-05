@@ -22,7 +22,6 @@ import getDateLabel from '@/utils/Dates';
 import { GenerateEvents } from '@/utils/TimelineUtils';
 
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
-import DeclineOrderAction from '@/components/ButtonActions/DeclineOrderAction';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
 import SubmitDeliveryDetailsAction from '@/components/ButtonActions/SubmitDeliveryDetailsAction';
 import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmReturnDeliveryAction';
@@ -36,6 +35,89 @@ const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Or
       {item.title}
     </Anchor>
   )
+);
+
+interface TimelineContainerProps {
+  events: EventLog[];
+}
+
+const TimelineContainer: React.FC<TimelineContainerProps> = ({ events }) => {
+  const timelineEvents = GenerateEvents(events);
+  return (
+    <>
+      <TimelineView events={timelineEvents} active={events.length - 1} />
+    </>
+  );
+};
+
+const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => (
+  <Box mt="lg">
+    {status === 0 && (
+      <Group>
+        <ConfirmOrderAction id={id} />
+      </Group>
+    )}
+    {(status === 1 || status === 2) && (
+      <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />
+    )}
+    {status === 4 && <ConfirmReturnDeliveryAction id={id} />}
+  </Box>
+);
+
+const DetailsContainer: React.FC<Order> = ({
+  user,
+  comment,
+  startDate,
+  endDate,
+  rentListing,
+  deliveryType,
+}) => (
+  <Tabs defaultValue="order">
+    <Tabs.List>
+      <Tabs.Tab value="order" leftSection={<IconTruckDelivery size={26} stroke={1.5} />}>
+        Order details
+      </Tabs.Tab>
+      <Tabs.Tab value="listing" leftSection={<IconBoxSeam size={26} stroke={1.5} />}>
+        Listing details
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="order">
+      <Grid columns={12} mt="md">
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Box>
+            <Box>
+              <Text fw={500}>Client</Text>
+              <Text>{user.username}</Text>
+            </Box>
+            <Box>
+              <Text fw={500}>Rent date</Text>
+              <Text>
+                {getDateLabel(startDate)} - {getDateLabel(endDate)}
+              </Text>
+            </Box>
+            <Box>
+              <Text fw={500}>Comment</Text>
+              <Text>{comment}</Text>
+            </Box>
+            <Box>
+              <Text fw={500}>Delivery type</Text>
+              <Badge radius="xs" size="md">
+                {deliveryType === 0 ? 'Pickup' : 'Shippment'}
+              </Badge>
+            </Box>
+          </Box>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <OrderCalendar startDate={startDate} endDate={endDate} />
+        </Grid.Col>
+      </Grid>
+    </Tabs.Panel>
+
+    <Tabs.Panel value="listing">
+      <ListingDetailsTab id={rentListing.id} />
+    </Tabs.Panel>
+  </Tabs>
 );
 
 function Order() {
@@ -82,7 +164,7 @@ function Order() {
               <Grid columns={12}>
                 <Grid.Col span={{ base: 12, md: 4 }}>
                   <Paper p="lg" shadow="md" radius="sm">
-                    <TimelineContainer events={order.events} status={order.status} />
+                    <TimelineContainer events={order.events} />
                     <DeliveryActions {...order} />
                   </Paper>
                 </Grid.Col>
@@ -102,88 +184,3 @@ function Order() {
 }
 
 export default Order;
-
-interface TimelineContainerProps {
-  events: EventLog[];
-  status: OrderStatus;
-}
-
-const TimelineContainer: React.FC<TimelineContainerProps> = ({ events, status }) => {
-  const timelineEvents = GenerateEvents(events, status);
-  return (
-    <>
-      <TimelineView events={timelineEvents} active={events.length - 1} />
-    </>
-  );
-};
-
-const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => (
-    <Box mt="lg">
-      {status == 0 && (
-        <Group>
-          <ConfirmOrderAction id={id} />
-          <DeclineOrderAction id={id} />
-        </Group>
-      )}
-      {(status == 1 || status == 2) && (
-        <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />
-      )}
-      {status == 4 && <ConfirmReturnDeliveryAction id={id} />}
-    </Box>
-  );
-
-const DetailsContainer: React.FC<Order> = ({
-  user,
-  comment,
-  startDate,
-  endDate,
-  rentListing,
-  deliveryType,
-}) => (
-    <Tabs defaultValue="order">
-      <Tabs.List>
-        <Tabs.Tab value="order" leftSection={<IconTruckDelivery size={26} stroke={1.5} />}>
-          Order details
-        </Tabs.Tab>
-        <Tabs.Tab value="listing" leftSection={<IconBoxSeam size={26} stroke={1.5} />}>
-          Listing details
-        </Tabs.Tab>
-      </Tabs.List>
-
-      <Tabs.Panel value="order">
-        <Grid columns={12} mt="md">
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Box>
-              <Box>
-                <Text fw={500}>Client</Text>
-                <Text>{user.username}</Text>
-              </Box>
-              <Box>
-                <Text fw={500}>Rent date</Text>
-                <Text>
-                  {getDateLabel(startDate)} - {getDateLabel(endDate)}
-                </Text>
-              </Box>
-              <Box>
-                <Text fw={500}>Comment</Text>
-                <Text>{comment}</Text>
-              </Box>
-              <Box>
-                <Text fw={500}>Delivery type</Text>
-                <Badge radius="xs" size="md">
-                  {deliveryType == 0 ? 'Pickup' : 'Shippment'}
-                </Badge>
-              </Box>
-            </Box>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <OrderCalendar startDate={startDate} endDate={endDate} />
-          </Grid.Col>
-        </Grid>
-      </Tabs.Panel>
-
-      <Tabs.Panel value="listing">
-        <ListingDetailsTab id={rentListing.id} />
-      </Tabs.Panel>
-    </Tabs>
-  );

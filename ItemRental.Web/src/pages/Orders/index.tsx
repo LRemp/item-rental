@@ -1,9 +1,8 @@
-import { Box, Center, Grid, Group, Loader, Text, Title } from '@mantine/core';
+import { Box, Center, Group, Loader, Text, Title } from '@mantine/core';
 import React, { useEffect } from 'react';
 import { nprogress } from '@mantine/nprogress';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import api from '@/api';
-import OrderCard from '@/components/Cards/OrderCard';
 import UserOrdersTable from '@/components/Tables/UserOrdersTable';
 import useApiResult from '@/hooks/useApiResult';
 import LoginRequired from '@/components/LoginRequired';
