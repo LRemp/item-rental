@@ -1,4 +1,5 @@
-﻿using ItemRental.Core.Contracts;
+﻿using AutoMapper;
+using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace ItemRental.Services.Services
     {
         private readonly IOrderRepository orderRepository;
         private readonly IRentListingRepository rentListingRepository;
-        public RentListingService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository)
+        private readonly IMapper mapper;
+        public RentListingService(IOrderRepository orderRepository, IRentListingRepository rentListingRepository, IMapper mapper)
         {
             this.orderRepository = orderRepository;
             this.rentListingRepository = rentListingRepository;
+            this.mapper = mapper;
         }
 
         public async Task<List<OrderDateDTO>> GetBusyDatesAsync(Guid id, CancellationToken cancellationToken)
@@ -34,12 +37,19 @@ namespace ItemRental.Services.Services
             return dates;
         }
 
+        public async Task<List<CommentDTO>> GetCommentsDTOAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var comments = await rentListingRepository.GetCommentsAsync(id, CancellationToken.None);
+            var commentDTOs = mapper.Map<List<CommentDTO>>(comments);
+            return commentDTOs;
+        }
+
         public Task<RentListingDTO> GetListingDTOAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<RentListingDTO>> GetListingsDTOAsync()
+        public async Task<List<RentListingDTO>> GetListingsDTOAsync()
         {
             throw new NotImplementedException();
         }

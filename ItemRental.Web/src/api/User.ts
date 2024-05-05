@@ -8,7 +8,7 @@ const Register = {
 
 const GetNotifications = (): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Users/Notifications`,
+  endpoint: '/api/Users/Notifications',
   authenticate: true,
 });
 

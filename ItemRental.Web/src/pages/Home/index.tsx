@@ -14,26 +14,25 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { IconFilter, IconSearch } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { nprogress } from '@mantine/nprogress';
+import { useDebouncedState } from '@mantine/hooks';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 //import ListingCard from '@/components/ListingCard/ListingCard';
 import ListingCard from './Components/ListingCard';
-import { IconFilter, IconSearch } from '@tabler/icons-react';
 import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { nprogress } from '@mantine/nprogress';
 import CategorySelection from '@/components/Selection/CategorySelection';
-import { useDebouncedState } from '@mantine/hooks';
 
-const Home: React.FC = () => {
-  return (
+const Home: React.FC = () => (
     <Grid columns={18}>
       <Grid.Col span={18}>
         <Title fw={700}>Skelbimai</Title>
       </Grid.Col>
       <Grid.Col span={18}>
-        <Paper shadow="md" radius={'sm'} p={'md'}>
+        <Paper shadow="md" radius="sm" p="md">
           <Grid columns={18}>
             <Grid.Col span={18} hiddenFrom="md">
               <CategorySelection />
@@ -42,7 +41,7 @@ const Home: React.FC = () => {
               <ItemsContainer />
             </Grid.Col>
             <Grid.Col span={{ base: 0, md: 3 }}>
-              <Box visibleFrom="md" px={'sm'}>
+              <Box visibleFrom="md" px="sm">
                 <CategoriesFilterSelection />
               </Box>
             </Grid.Col>
@@ -51,7 +50,6 @@ const Home: React.FC = () => {
       </Grid.Col>
     </Grid>
   );
-};
 
 const ItemsContainer: React.FC = () => {
   const [searchArgument, setSearch] = useDebouncedState('', 500);
@@ -83,16 +81,16 @@ const ItemsContainer: React.FC = () => {
     <Grid columns={18}>
       <Grid.Col span={18}>
         <TextInput
-          placeholder={'Search listings...'}
+          placeholder="Search listings..."
           leftSection={<IconSearch />}
           onChange={(event) => setSearch(event.currentTarget.value)}
         />
       </Grid.Col>
 
       {loading ? (
-        <Center h={'70vh'} w={'100%'}>
+        <Center h="70vh" w="100%">
           <Group>
-            <Loader></Loader>
+            <Loader />
             <Text>Loading the rent offers...</Text>
           </Group>
         </Center>
@@ -111,7 +109,7 @@ const ItemsContainer: React.FC = () => {
         </>
       ) : (
         <Grid.Col span={18}>
-          <Center h={'50vh'} w={'100%'}>
+          <Center h="50vh" w="100%">
             <Group>
               <Text c="dimmed" fw={500} size="lg">
                 No listings found

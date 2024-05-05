@@ -1,13 +1,13 @@
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import { Router } from './Router';
-import { theme } from './theme';
 import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 import { NavigationProgress } from '@mantine/nprogress';
 import AuthProvider from 'react-auth-kit';
 
 import createStore from 'react-auth-kit/createStore';
+import { theme } from './theme';
+import { Router } from './Router';
 
 const store = createStore({
   authName: '_auth',

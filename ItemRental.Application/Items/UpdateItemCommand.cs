@@ -43,7 +43,7 @@ namespace ItemRental.Application.Items
                 Name = request.itemDTO.Name,
                 Description = request.itemDTO.Description,
                 Images = JsonConvert.SerializeObject(request.itemDTO.Images),
-                Tags = request.itemDTO.Tags,
+                Tags = JsonConvert.SerializeObject(request.itemDTO.Tags),
                 Details = JsonConvert.SerializeObject(request.itemDTO.Details)
             };
 

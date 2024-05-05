@@ -1,12 +1,11 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
-import { getTrackingLink, shippingProviders } from '@/utils/Delivery';
 import { Box, Button, Center, Loader, Tabs, Text } from '@mantine/core';
 import { IconPackageExport, IconPackageImport, IconTruckDelivery } from '@tabler/icons-react';
 import React from 'react';
+import api from '@/api';
+import useApiResult from '@/hooks/useApiResult';
+import { getTrackingLink, shippingProviders } from '@/utils/Delivery';
 
-const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => {
-  return (
+const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => (
     <>
       {status > 0 && (
         <Tabs defaultValue="delivery">
@@ -34,7 +33,6 @@ const ShippingDetailsContainer: React.FC<Order> = ({ status, id }) => {
       )}
     </>
   );
-};
 
 export default ShippingDetailsContainer;
 
@@ -52,7 +50,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
           <Loader />
         </Center>
       ) : (
-        <Box my={'md'}>
+        <Box my="md">
           {delivery ? (
             <>
               {delivery.type == 0 && (
@@ -93,7 +91,7 @@ const DeliveryTab: React.FC<OrderComponent> = ({ id }) => {
               )}
             </>
           ) : (
-            <Text fs="italic" fw={500} size={'sm'}>
+            <Text fs="italic" fw={500} size="sm">
               No delivery details found
             </Text>
           )}
@@ -113,7 +111,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
           <Loader />
         </Center>
       ) : (
-        <Box my={'md'}>
+        <Box my="md">
           {delivery ? (
             <>
               {delivery.type == 0 && (
@@ -154,7 +152,7 @@ const ReturnTab: React.FC<OrderComponent> = ({ id }) => {
               )}
             </>
           ) : (
-            <Text fs="italic" fw={500} size={'sm'}>
+            <Text fs="italic" fw={500} size="sm">
               No return delivery details found
             </Text>
           )}

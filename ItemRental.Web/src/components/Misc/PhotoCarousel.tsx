@@ -7,7 +7,7 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
       {images &&
         images.map((image) => (
           <Carousel.Slide>
-            <Flex justify={'center'} align={'center'} h={'100%'} w={'100%'}>
+            <Flex justify="center" align="center" h="100%" w="100%">
               <Image src={`/images/${image}`} alt="Tesla Model S" />
             </Flex>
           </Carousel.Slide>

@@ -1,5 +1,6 @@
 ﻿using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
+using ItemRental.Core.Enums;
 using ItemRental.Core.Helpers;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace ItemRental.Core.Contracts
         public Task<bool> UpdateAsync(RentListing rentalListing, CancellationToken cancellationToken);
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
         public Task<bool> AddCommentAsync(Comment comment, CancellationToken cancellationToken);
-        public Task<List<Comment>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken);
+        public Task<List<CommentDTO>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken);
         public Task<Comment?> GetCommentAsync(Guid id, CancellationToken cancellationToken);
         public Task<bool> UpdateCommentAsync(Comment comment, CancellationToken cancellationToken);
         public Task<bool> DeleteCommentAsync(Guid id, CancellationToken cancellationToken);

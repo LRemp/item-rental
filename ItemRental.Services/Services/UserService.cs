@@ -49,7 +49,7 @@ namespace ItemRental.Services.Services
             return mapper.Map<UserDTO>(user);
         }
 
-        public bool VerifyPasswordHash(string password, string passwordHash)
+        public async Task<bool> VerifyPasswordHash(string password, string passwordHash)
         {
             return BCrypt.Net.BCrypt.Verify(password, passwordHash);
         }

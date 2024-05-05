@@ -125,8 +125,10 @@ namespace ItemRental.Repositories.Repositories
                             SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
+                            Category = item.Category,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                            Tags = item.Tags
+                            Tags = JsonConvert.DeserializeObject<string[]>(item.Tags),
+                            Details = JsonConvert.DeserializeObject<Specification[]>(item.Details)
                         },
                         Renter = user,
                         Title = rentListing.Title,
@@ -171,8 +173,10 @@ namespace ItemRental.Repositories.Repositories
                             SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
+                            Category = item.Category,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                            Tags = item.Tags
+                            Tags = JsonConvert.DeserializeObject<string[]>(item.Tags),
+                            Details = JsonConvert.DeserializeObject<Specification[]>(item.Details)
                         },
                         Renter = user,
                         Title = rentListing.Title,
@@ -209,8 +213,10 @@ namespace ItemRental.Repositories.Repositories
                             SerialNumber = item.SerialNumber,
                             Name = item.Name,
                             Description = item.Description,
+                            Category = item.Category,
                             Images = JsonConvert.DeserializeObject<string[]>(item.Images),
-                            Tags = item.Tags
+                            Tags = JsonConvert.DeserializeObject<string[]>(item.Tags),
+                            Details = JsonConvert.DeserializeObject<Specification[]>(item.Details)
                         },
                         Renter = user,
                         Title = rentListing.Title,
@@ -236,11 +242,22 @@ namespace ItemRental.Repositories.Repositories
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Comment>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken)
+        public async Task<List<CommentDTO>> GetCommentsAsync(Guid resource, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM comments WHERE resource = @resource";
+            var query = @"SELECT c.*, u.* 
+                        FROM comments c
+                        INNER JOIN users u ON c.user = u.id
+                        WHERE resource = @resource";
             
-            var result = await mySqlConnection.QueryAsync<Comment>(query, new { resource });
+            var result = await mySqlConnection.QueryAsync<Comment, UserDTO, CommentDTO>(query, (comment, user) => {
+                return new CommentDTO
+                {
+                    Id = comment.Id,
+                    Author = user,
+                    Text = comment.Text,
+                    CreatedAt = comment.CreatedAt
+                };
+            }, new { resource });
 
             return result.ToList();
         }

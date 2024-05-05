@@ -7,3 +7,10 @@ type RentListing = {
   price: number;
   location: string;
 };
+
+type IComment = {
+  id: string;
+  author: UserProfile;
+  text: string;
+  createdAt: string;
+};

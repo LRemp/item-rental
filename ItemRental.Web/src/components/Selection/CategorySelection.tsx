@@ -1,9 +1,9 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
-import { GenerateCategoriesTree } from '@/utils/Categories';
 import { Select } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import api from '@/api';
+import useApiResult from '@/hooks/useApiResult';
+import { GenerateCategoriesTree } from '@/utils/Categories';
 
 function CategorySelection() {
   const { category } = useParams();

@@ -13,16 +13,16 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import useApiResult from '@/hooks/useApiResult';
-import api from '@/api';
-import ListingCard from '@/components/ListingCard/ListingCard';
 import { IconFilter, IconSearch } from '@tabler/icons-react';
-import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nprogress } from '@mantine/nprogress';
-import CategorySelection from '@/components/Selection/CategorySelection';
 import { useDebouncedState } from '@mantine/hooks';
+import useApiResult from '@/hooks/useApiResult';
+import api from '@/api';
+import ListingCard from '@/components/ListingCard/ListingCard';
+import CategoriesFilterSelection from '@/components/Misc/Stats/CategoriesFilterSelection';
+import CategorySelection from '@/components/Selection/CategorySelection';
 
 export function HomePage() {
   return (
@@ -32,8 +32,7 @@ export function HomePage() {
   );
 }
 
-const RentListingsContainer = () => {
-  return (
+const RentListingsContainer = () => (
     <Grid columns={18}>
       <Grid.Col span={18}>
         <Title fw={400} order={2}>
@@ -53,7 +52,6 @@ const RentListingsContainer = () => {
       </Grid.Col>
     </Grid>
   );
-};
 
 const ItemsContainer: React.FC = () => {
   const [searchArgument, setSearch] = useDebouncedState('', 500);
@@ -85,16 +83,16 @@ const ItemsContainer: React.FC = () => {
     <Grid columns={18}>
       <Grid.Col span={18}>
         <TextInput
-          placeholder={'Search listings...'}
+          placeholder="Search listings..."
           leftSection={<IconSearch />}
           onChange={(event) => setSearch(event.currentTarget.value)}
         />
       </Grid.Col>
 
       {loading ? (
-        <Center h={'70vh'} w={'100%'}>
+        <Center h="70vh" w="100%">
           <Group>
-            <Loader></Loader>
+            <Loader />
             <Text>Loading the rent offers...</Text>
           </Group>
         </Center>
@@ -113,7 +111,7 @@ const ItemsContainer: React.FC = () => {
         </>
       ) : (
         <Grid.Col span={18}>
-          <Center h={'50vh'} w={'100%'}>
+          <Center h="50vh" w="100%">
             <Group>
               <Text c="dimmed" fw={500} size="lg">
                 No listings found

@@ -1,8 +1,3 @@
-import api from '@/api';
-import TimelineView from '@/components/Misc/TimelineView';
-import useApiResult from '@/hooks/useApiResult';
-import getDateLabel from '@/utils/Dates';
-import { GenerateEvents } from '@/utils/TimelineUtils';
 import {
   Anchor,
   Badge,
@@ -19,8 +14,13 @@ import {
 } from '@mantine/core';
 import { IconBoxSeam, IconTruckDelivery } from '@tabler/icons-react';
 import React from 'react';
-
 import { useParams } from 'react-router-dom';
+import api from '@/api';
+import TimelineView from '@/components/Misc/TimelineView';
+import useApiResult from '@/hooks/useApiResult';
+import getDateLabel from '@/utils/Dates';
+import { GenerateEvents } from '@/utils/TimelineUtils';
+
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
 import DeclineOrderAction from '@/components/ButtonActions/DeclineOrderAction';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
@@ -43,7 +43,7 @@ function Order() {
   const { result: order, loading } = useApiResult(() => api.Order.getOrder(id || ''), []);
 
   return (
-    <Box w={'100%'}>
+    <Box w="100%">
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Grid justify="space-between" align="flex-end">
@@ -55,9 +55,9 @@ function Order() {
                     {order && (
                       <Badge
                         color={labels[order?.status as keyof typeof labels].color}
-                        radius={'xs'}
+                        radius="xs"
                         size="md"
-                        ml={'sm'}
+                        ml="sm"
                       >
                         {labels[order?.status as keyof typeof labels].label}
                       </Badge>
@@ -68,34 +68,33 @@ function Order() {
               <Text c="dimmed" size="xs" fw={500}>
                 {id}
               </Text>
-              <Breadcrumbs mt={'xs'}>{pathItems}</Breadcrumbs>
+              <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
             </Grid.Col>
           </Grid>
-          <Box></Box>
         </Grid.Col>
         <Grid.Col span={24}>
-          <Paper>
-            {loading ? (
-              <Center>
-                <Loader />
-              </Center>
-            ) : (
-              <Box maw={'960px'}>
-                <Grid columns={12} p={'lg'}>
-                  <Grid.Col span={{ base: 12, md: 4 }}>
+          {loading ? (
+            <Center>
+              <Loader />
+            </Center>
+          ) : (
+            <Box maw="960px">
+              <Grid columns={12}>
+                <Grid.Col span={{ base: 12, md: 4 }}>
+                  <Paper p="lg" shadow="md" radius="sm">
                     <TimelineContainer events={order.events} status={order.status} />
                     <DeliveryActions {...order} />
-                  </Grid.Col>
-                  <Grid.Col span={{ base: 12, md: 8 }}>
-                    <Paper>
-                      <ShippingDetailsContainer {...order} />
-                      <DetailsContainer {...order} />
-                    </Paper>
-                  </Grid.Col>
-                </Grid>
-              </Box>
-            )}
-          </Paper>
+                  </Paper>
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 8 }}>
+                  <Paper p="lg" shadow="md" radius="sm">
+                    <ShippingDetailsContainer {...order} />
+                    <DetailsContainer {...order} />
+                  </Paper>
+                </Grid.Col>
+              </Grid>
+            </Box>
+          )}
         </Grid.Col>
       </Grid>
     </Box>
@@ -118,9 +117,8 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({ events, status })
   );
 };
 
-const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
-  return (
-    <Box mt={'lg'}>
+const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => (
+    <Box mt="lg">
       {status == 0 && (
         <Group>
           <ConfirmOrderAction id={id} />
@@ -133,7 +131,6 @@ const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
       {status == 4 && <ConfirmReturnDeliveryAction id={id} />}
     </Box>
   );
-};
 
 const DetailsContainer: React.FC<Order> = ({
   user,
@@ -142,8 +139,7 @@ const DetailsContainer: React.FC<Order> = ({
   endDate,
   rentListing,
   deliveryType,
-}) => {
-  return (
+}) => (
     <Tabs defaultValue="order">
       <Tabs.List>
         <Tabs.Tab value="order" leftSection={<IconTruckDelivery size={26} stroke={1.5} />}>
@@ -155,7 +151,7 @@ const DetailsContainer: React.FC<Order> = ({
       </Tabs.List>
 
       <Tabs.Panel value="order">
-        <Grid columns={12} mt={'md'}>
+        <Grid columns={12} mt="md">
           <Grid.Col span={{ base: 12, sm: 6 }}>
             <Box>
               <Box>
@@ -174,7 +170,7 @@ const DetailsContainer: React.FC<Order> = ({
               </Box>
               <Box>
                 <Text fw={500}>Delivery type</Text>
-                <Badge radius={'xs'} size="md">
+                <Badge radius="xs" size="md">
                   {deliveryType == 0 ? 'Pickup' : 'Shippment'}
                 </Badge>
               </Box>
@@ -191,4 +187,3 @@ const DetailsContainer: React.FC<Order> = ({
       </Tabs.Panel>
     </Tabs>
   );
-};

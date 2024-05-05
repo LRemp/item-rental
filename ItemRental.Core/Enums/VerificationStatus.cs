@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ItemRental.Tests.Application
+namespace ItemRental.Core.Enums
 {
-    internal class UsersTest
+    public enum VerificationStatus
     {
+        Pending,
+        Approved,
+        Rejected
     }
 }

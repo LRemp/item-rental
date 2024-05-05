@@ -6,11 +6,11 @@ const useUploadImage = () => {
 
   const upload = useCallback(async (files: File[]) => {
     const formData = new FormData();
-    for (var i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
 
-    const response = await fetch(`/api/Image`, {
+    const response = await fetch('/api/Image', {
       method: 'POST',
       body: formData,
       headers: {

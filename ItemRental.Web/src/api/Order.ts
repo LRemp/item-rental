@@ -13,7 +13,7 @@ const getUserListingOrders = (id: string): ApiRequest => ({
 
 const getUserOrders = (): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Orders`,
+  endpoint: '/api/Orders',
   authenticate: true,
 });
 
@@ -24,13 +24,13 @@ const getOrder = (id: string): ApiRequest => ({
 });
 
 const getOwnerOrders = (type?: number): ApiRequest => {
-  let endpoint = `/api/Orders/Owner`;
+  let endpoint = '/api/Orders/Owner';
   if (type) {
     endpoint += `?status=${type}`;
   }
   return {
     method: 'GET',
-    endpoint: endpoint,
+    endpoint,
     authenticate: true,
   };
 };

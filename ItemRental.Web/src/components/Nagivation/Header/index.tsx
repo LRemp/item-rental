@@ -34,12 +34,12 @@ import {
   IconBell,
   IconBellFilled,
 } from '@tabler/icons-react';
-import Logo from '@/assets/images/logo.png';
-import classes from './Header.module.css';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Link, useNavigate } from 'react-router-dom';
+import classes from './Header.module.css';
+import Logo from '@/assets/images/logo.png';
 import ThemeButton from '../../ThemeButton';
 import Search from './Search';
 import Notifications from '@/components/Misc/Notifications';

@@ -1,8 +1,8 @@
 import { Button } from '@mantine/core';
 import { IconPlaylistAdd } from '@tabler/icons-react';
 import React from 'react';
-import CreateListingModal from '../Modals/CreateListing';
 import { useDisclosure } from '@mantine/hooks';
+import CreateListingModal from '../Modals/CreateListing';
 
 const CreateListingAction: React.FC<FlexibleButtonActionProps> = ({ id }) => {
   const [opened, { close, open }] = useDisclosure(false);

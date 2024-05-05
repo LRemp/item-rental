@@ -13,6 +13,7 @@ namespace ItemRental.Core.DTOs
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
         public string? Category { get; set; }
+        public string[]? Tags { get; set; }
         public string[]? Images { get; set; }
         public Specification[]? Details { get; set; }
     }

@@ -1,7 +1,3 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
-import { shippingProviders } from '@/utils/Delivery';
-import { Error, Success } from '@/utils/Notifications';
 import {
   Button,
   Center,
@@ -18,6 +14,10 @@ import { notifications } from '@mantine/notifications';
 import { IconPlaylistAdd } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Error, Success } from '@/utils/Notifications';
+import { shippingProviders } from '@/utils/Delivery';
+import useApiResult from '@/hooks/useApiResult';
+import api from '@/api';
 
 interface SubmitReturnDeliveryDetailsModalProps {
   id: string;
@@ -87,7 +87,7 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title={'Provide return delivery details'} centered>
+      <Modal opened={opened} onClose={close} title="Provide return delivery details" centered>
         {loading ? (
           <Center>
             <Loader />

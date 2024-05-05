@@ -17,11 +17,9 @@ namespace ItemRental.Application.Items
     public class GetItemsQueryHandler : IQueryHandler<GetItemsQuery, List<ItemDTO>>
     {
         private readonly IItemRepository _itemRepository;
-        private readonly IMapper _mapper;
-        public GetItemsQueryHandler(IItemRepository itemRepository, IMapper mapper)
+        public GetItemsQueryHandler(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;
-            _mapper = mapper;
         }
         public async Task<Result<List<ItemDTO>>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
         {
@@ -36,7 +34,7 @@ namespace ItemRental.Application.Items
                     Name = item.Name,
                     Description = item.Description,
                     Images = item.Images is null ? null : JsonConvert.DeserializeObject<string[]>(item.Images),
-                    Tags = item.Tags,
+                    Tags = item.Tags is null ? null : JsonConvert.DeserializeObject<string[]>(item.Tags),
                     Details = item.Details is null ? null : JsonConvert.DeserializeObject<Specification[]>(item.Details)
                 });
             }

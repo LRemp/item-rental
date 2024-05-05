@@ -29,7 +29,7 @@ export function StatsGrid() {
     const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
     return (
-      <Paper withBorder p="md" shadow="xs" radius="md" key={stat.title}>
+      <Paper shadow="md" radius="sm" p="md" key={stat.title}>
         <Group justify="space-between">
           <Text size="xs" c="dimmed" className={classes.title}>
             {stat.title}

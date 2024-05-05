@@ -25,7 +25,7 @@ namespace ItemRental.Application.RentListings
 
             if(rentListing is null) 
             { 
-                return Result.Failure<RentListingDTO>(DomainErrors.RentListing.NotFound(request.id));
+                return Result.Failure<RentListingDTO>(DomainErrors.RentListing.NotFound);
             }
 
             return rentListing;

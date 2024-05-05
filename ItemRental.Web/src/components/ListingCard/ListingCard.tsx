@@ -1,8 +1,8 @@
 import { Badge, Box, Button, Card, Group, Highlight, Image, Text } from '@mantine/core';
-import classes from './ListingCard.module.css';
 import React from 'react';
 import { useHover } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
+import classes from './ListingCard.module.css';
 import NoImage from '@/assets/images/no_image.png';
 
 interface ListingCardProps extends RentListing {
@@ -34,7 +34,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         />
       </Card.Section>
 
-      <Group justify="space-between" my="md" h={'60'}>
+      <Group justify="space-between" my="md" h="60">
         <div>
           <Highlight fw={500} highlight={highlight || ''}>
             {title}

@@ -13,7 +13,7 @@ const TableContainer: React.FC<DashboardOrdersTableProps> = ({ items }) => {
   const rows = items.map((item: Order) => <OrderTableElement {...item} key={item.id} />);
 
   return (
-    <Paper radius="sm" shadow="md" p={'md'}>
+    <Paper radius="sm" shadow="md" p="md">
       <Table>
         <Table.Thead>
           <Table.Tr>
@@ -43,11 +43,11 @@ const OrderTableElement: React.FC<Order> = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <Table.Tr key={id} m={'md'}>
+    <Table.Tr key={id} m="md">
       <Table.Td>{rentListing.title}</Table.Td>
       <Table.Td>
         <Text size="sm">{user.username}</Text>
-        <Text c={'dimmed'} size="xs">
+        <Text c="dimmed" size="xs">
           {user.email}
         </Text>
       </Table.Td>
@@ -57,13 +57,13 @@ const OrderTableElement: React.FC<Order> = ({
         </Text>
       </Table.Td>
       <Table.Td>
-        <Text size={'xs'}>
+        <Text size="xs">
           {getDateLabel(startDate)} - {getDateLabel(endDate)}
         </Text>
       </Table.Td>
       <Table.Td>
         <Center>
-          <Badge color={labels[status as keyof typeof labels].color} variant="light" radius={'xs'}>
+          <Badge color={labels[status as keyof typeof labels].color} variant="light" radius="xs">
             {labels[status as keyof typeof labels].label}
           </Badge>
         </Center>

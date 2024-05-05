@@ -1,6 +1,6 @@
 const getAll = (): ApiRequest => ({
   method: 'GET',
-  endpoint: `/api/Items/Categories`,
+  endpoint: '/api/Items/Categories',
 });
 
 export default {

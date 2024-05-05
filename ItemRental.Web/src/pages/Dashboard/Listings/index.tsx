@@ -1,46 +1,11 @@
-import { Navbar } from '@/components/Nagivation/Navbar';
-import {
-  Anchor,
-  Box,
-  Breadcrumbs,
-  Button,
-  Center,
-  Fieldset,
-  Flex,
-  Grid,
-  Group,
-  Loader,
-  Modal,
-  Paper,
-  Select,
-  Table,
-  TextInput,
-  Textarea,
-  Title,
-} from '@mantine/core';
-import React, { useEffect, useRef } from 'react';
+import { Anchor, Box, Breadcrumbs, Center, Grid, Loader, Title } from '@mantine/core';
+import React, { useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { useForm } from '@mantine/form';
-import { IconUpload, IconPhoto, IconX, IconPlus } from '@tabler/icons-react';
-import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { FormFileDropzone } from '@/components/FileDropzone/FormFileDropzone';
+import { nprogress } from '@mantine/nprogress';
 import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
-import useUploadImage from '@/hooks/useUploadImage';
-import { notifications } from '@mantine/notifications';
-import { Error, Success } from '@/utils/Notifications';
 import CreateItemModal from '@/components/Modals/CreateItem';
-import { nprogress } from '@mantine/nprogress';
-import ListingsTable from '@/components/Tables/ListingsTable';
 import TableContainer from './Components/TableContainer';
-
-const elements = [
-  { position: 1, mass: 12.011, symbol: 'C', name: 'Carbon' },
-  { position: 2, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
-  { position: 3, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
-  { position: 4, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-  { position: 5, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
-];
 
 const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Rent Listings' }].map(
   (item, index) => (
@@ -51,13 +16,11 @@ const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Re
 );
 
 export default function Inventory() {
-  const [opened, { open, close }] = useDisclosure(false);
-  const {
-    result: items,
-    error,
-    loading,
-    request,
-  } = useApiResult<Item[]>(() => api.RentListing.getListingsByOwner(), []);
+  const [opened, { close }] = useDisclosure(false);
+  const { result: items, loading } = useApiResult<Item[]>(
+    () => api.RentListing.getListingsByOwner(),
+    []
+  );
 
   useEffect(() => {
     if (loading) {
@@ -68,38 +31,27 @@ export default function Inventory() {
   }, [loading]);
 
   return (
-    <Box w={'100%'}>
+    <Box w="100%">
       <Grid columns={24} grow>
         <Grid.Col span={24}>
           <Grid justify="space-between" align="flex-end">
-            <Grid.Col span={2}>
-              <Title fw={400} order={2}>
-                Rent listings
-              </Title>
-              <Breadcrumbs mt={'xs'}>{pathItems}</Breadcrumbs>
-            </Grid.Col>
-            <Grid.Col span={1}>
-              {/*<Button variant="filled" onClick={open}>
-                <IconPlus size={18} />
-                Add new item
-              </Button>*/}
+            <Grid.Col span={16}>
+              <Title fw={600}>Nuomos skelbimai</Title>
+              <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
             </Grid.Col>
           </Grid>
-          <Box></Box>
         </Grid.Col>
         <Grid.Col span={24}>
           <CreateItemModal opened={opened} close={close} />
         </Grid.Col>
         <Grid.Col span={24}>
-          <Paper>
-            {loading ? (
-              <Center>
-                <Loader />
-              </Center>
-            ) : (
-              <TableContainer items={items} />
-            )}
-          </Paper>
+          {loading ? (
+            <Center>
+              <Loader />
+            </Center>
+          ) : (
+            <TableContainer items={items} />
+          )}
         </Grid.Col>
       </Grid>
     </Box>

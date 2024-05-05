@@ -1,5 +1,5 @@
-const GenerateEvents = (events: EventLog[], status: OrderStatus): TimelineEvent[] => {
-  var timelineEvents: TimelineEvent[] = [];
+const GenerateEvents = (events: EventLog[]): TimelineEvent[] => {
+  const timelineEvents: TimelineEvent[] = [];
 
   events.forEach((event) => {
     timelineEvents.push({
@@ -9,37 +9,37 @@ const GenerateEvents = (events: EventLog[], status: OrderStatus): TimelineEvent[
     });
   });
 
-  if (events.find((event) => event.eventName == 'Order.Accepted') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.Accepted') === undefined) {
     timelineEvents.push({
       title: 'Accepted',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.Dispatched') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.Dispatched') === undefined) {
     timelineEvents.push({
       title: 'Dispatch package',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.Delivered') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.Delivered') === undefined) {
     timelineEvents.push({
       title: 'Package received',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.ReturnDispatched') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.ReturnDispatched') === undefined) {
     timelineEvents.push({
       title: 'Return package',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.Returned') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.Returned') === undefined) {
     timelineEvents.push({
       title: 'Successful return',
     });
   }
 
-  if (events.find((event) => event.eventName == 'Order.Complete') == undefined) {
+  if (events.find((event) => event.eventName === 'Order.Complete') === undefined) {
     timelineEvents.push({
       title: 'Complete',
     });

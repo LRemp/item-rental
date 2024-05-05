@@ -25,11 +25,13 @@ export default function Dashboard() {
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <Group justify="space-between" w={'100%'}>
-            <UnstyledButton>
-              <Image src={Logo} h={'42'} />
-            </UnstyledButton>
+          <Group justify="space-between" w="100%">
+            <Group>
+              <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+              <UnstyledButton>
+                <Image src={Logo} h="42" />
+              </UnstyledButton>
+            </Group>
             <Notifications />
           </Group>
         </Group>

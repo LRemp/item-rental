@@ -1,7 +1,6 @@
 import { IconCheck, IconError404, IconInfoCircleFilled } from '@tabler/icons-react';
 
-const Success = (data: NotificationProps) => {
-  return {
+const Success = (data: NotificationProps) => ({
     id: data.id,
     color: 'green',
     title: data.title,
@@ -10,11 +9,9 @@ const Success = (data: NotificationProps) => {
     icon: <IconCheck />,
     loading: false,
     autoClose: data.autoClose,
-  };
-};
+  });
 
-const Information = (data: NotificationProps) => {
-  return {
+const Information = (data: NotificationProps) => ({
     id: data.id,
     color: 'blue',
     title: data.title,
@@ -23,11 +20,9 @@ const Information = (data: NotificationProps) => {
     icon: <IconInfoCircleFilled />,
     loading: false,
     autoClose: data.autoClose,
-  };
-};
+  });
 
-const Error = (data: NotificationProps) => {
-  return {
+const Error = (data: NotificationProps) => ({
     id: data.id,
     color: 'red',
     title: data.title,
@@ -36,7 +31,6 @@ const Error = (data: NotificationProps) => {
     icon: <IconError404 />,
     loading: false,
     autoClose: data.autoClose,
-  };
-};
+  });
 
 export { Success, Information, Error };

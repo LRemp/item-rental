@@ -15,7 +15,7 @@ namespace ItemRental.Core.DTOs
         public string? Description { get; set; }
         public string? Category { get; set; }
         public string[]? Images { get; set; }
-        public string[]? Tags { get; set; }  
+        public string[]? Tags { get; set; } = Array.Empty<string>();
         public Specification[]? Details { get; set; }
     }
 }

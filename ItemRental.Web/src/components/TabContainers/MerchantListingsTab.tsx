@@ -1,7 +1,7 @@
-import api from '@/api';
-import useApiResult from '@/hooks/useApiResult';
 import { Loader } from '@mantine/core';
 import React from 'react';
+import api from '@/api';
+import useApiResult from '@/hooks/useApiResult';
 import MerchantListingsTable from '../Tables/MerchantListingsTable';
 
 interface MerchantListingsTabProps {

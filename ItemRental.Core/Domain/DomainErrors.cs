@@ -17,6 +17,25 @@ namespace ItemRental.Core.Domain
             public static readonly Error InvalidCredentials = new Error(
                 "User.InvalidCredentials",
                 "The provided credentials are invalid");
+            public static readonly Error FailedToCreate = new Error(
+                "User.FailedToCreate",
+                "The user could not be created");
+
+            public static readonly Error VerificationRequestAlreadyExists = new Error(
+                "User.VerificationRequestAlreadyExists",
+                "The user already has a verification request");
+
+            public static readonly Error VerificationRequestCreationFailed = new Error(
+                "User.VerificationRequestCreationFailed",
+                 "The verification request could not be created");
+
+            public static readonly Error VerificationRequestNotFound = new Error(
+                "User.VerificationRequestNotFound",
+                "The verification request was not found");
+
+            public static readonly Error VerificationRequestApprovalFailed = new Error(
+                "User.VerificationRequestApprovalFailed",
+                "The verification request could not be approved");
         }
 
         public static class Comment
@@ -43,6 +62,10 @@ namespace ItemRental.Core.Domain
             public static readonly Error NotFound = new Error(
                 "Item.NotFound",
                 "The item was not found");
+
+            public static readonly Error FailedToUpdate = new Error(
+                "Item.FailedToUpdate",
+                "The item was failed to update");
 
             public static readonly Error FailedToCreate = new Error(
                 "Item.FailedToCreate",
@@ -71,19 +94,19 @@ namespace ItemRental.Core.Domain
                 "RentListing.FailedToCreate",
                 "The rent listing could not be created");
 
-            public static readonly Func<Guid, Error> NotFound = id => new Error(
+            public static readonly Error NotFound = new Error(
                 "RentListing.NotFound",
                 "The rent listing was not found");
 
-            public static readonly Func<Guid, Error> NotRenter = id => new Error(
+            public static readonly Error NotRenter = new Error(
                 "RentListing.NotRenter",
                 "The user is not the renter of the listing");
 
-            public static readonly Func<Guid, Error> FailedToDelete = id => new Error(
+            public static readonly Error FailedToDelete = new Error(
                 "RentListing.FailedToDelete",
                 "The rent listing could not be deleted");
 
-            public static readonly Func<Guid, Error> FailedToUpdate = id => new Error(
+            public static readonly Error FailedToUpdate = new Error(
                 "RentListing.FailedToUpdate",
                 "The rent listing could not be updated"
                 );

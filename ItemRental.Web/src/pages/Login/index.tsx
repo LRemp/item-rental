@@ -12,15 +12,15 @@ import {
   rem,
   Center,
 } from '@mantine/core';
-import Logo from '@/assets/images/logo.png';
-import classes from './Components/Form.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '@/api';
 import { notifications } from '@mantine/notifications';
-import { Error, Success } from '@/utils/Notifications';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useForm } from '@mantine/form';
 import { IconAt, IconLock } from '@tabler/icons-react';
+import { Error, Success } from '@/utils/Notifications';
+import api from '@/api';
+import classes from './Components/Form.module.css';
+import Logo from '@/assets/images/logo.png';
 
 export function Login() {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export function Login() {
       },
     });
 
-    const status = request.status;
+    const { status } = request;
 
     if (status == 400) {
       const error: ErrorResponse = await request.json();
@@ -104,7 +104,7 @@ export function Login() {
   };
 
   return (
-    <Center w={'100vw'} h={'100vh'}>
+    <Center w="100vw" h="100vh">
       <Container size={420} my={40}>
         <img src={Logo} alt="logo" width={80} className="" />
         <Title ta="center" className={classes.title}>

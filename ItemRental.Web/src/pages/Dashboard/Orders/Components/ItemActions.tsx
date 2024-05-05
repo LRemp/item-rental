@@ -1,21 +1,9 @@
-import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
-import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
-import { Menu, Button, rem, Text, ActionIcon } from '@mantine/core';
-import {
-  IconSettings,
-  IconMessageCircle,
-  IconPhoto,
-  IconSearch,
-  IconArrowsLeftRight,
-  IconTrash,
-  IconCheck,
-  IconX,
-  IconEye,
-  IconMenu,
-  IconMenu2,
-} from '@tabler/icons-react';
+import { Menu, rem, ActionIcon } from '@mantine/core';
+import { IconCheck, IconX, IconEye, IconMenu2 } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
+import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
 
 interface OrderMenuProps {
   status: number;
@@ -54,7 +42,7 @@ const ItemActions: React.FC<OrderMenuProps> = ({ status, id }) => {
             View
           </Menu.Item>
 
-          {status == 0 && (
+          {status === 0 && (
             <>
               <Menu.Divider />
               <Menu.Label>Confirmation</Menu.Label>
