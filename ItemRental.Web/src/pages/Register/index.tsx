@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import {
   TextInput,
   PasswordInput,
@@ -11,7 +12,6 @@ import {
   Button,
   rem,
   Flex,
-  Box,
   Center,
 } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
@@ -38,7 +38,8 @@ export function Register() {
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      passwordRepeat: (value, values) => value === values.password ? null : 'Passwords do not match',
+      passwordRepeat: (value, values) =>
+        value === values.password ? null : 'Passwords do not match',
     },
   });
 
@@ -65,7 +66,7 @@ export function Register() {
 
     const { status } = request;
 
-    if (status == 400) {
+    if (status === 400) {
       const error: ErrorResponse = await request.json();
       return notifications.update(
         Error({
@@ -77,7 +78,7 @@ export function Register() {
       );
     }
 
-    if (status == 500) {
+    if (status === 500) {
       return notifications.update(
         Error({
           id: notificationId,
@@ -88,7 +89,7 @@ export function Register() {
       );
     }
 
-    if (status == 200) {
+    if (status === 200) {
       notifications.update(
         Success({
           id: notificationId,

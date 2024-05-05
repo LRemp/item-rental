@@ -21,7 +21,6 @@ const useDeclineOrderAction = () => {
       ),
       labels: { confirm: 'Decline', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
-      onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,

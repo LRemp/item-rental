@@ -4,16 +4,13 @@ import {
   Fieldset,
   Loader,
   Modal,
-  NumberInput,
   Select,
   TextInput,
   Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconPlaylistAdd } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Error, Success } from '@/utils/Notifications';
 import { shippingProviders } from '@/utils/Delivery';
 import useApiResult from '@/hooks/useApiResult';
@@ -32,17 +29,12 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
   close,
   deliveryType,
 }) => {
-  const {
-    result: delivery,
-    loading,
-    request: requestDelivery,
-  } = useApiResult(() => api.Delivery.get(id || ''), []);
-  const { result, error, request } = useApiResult(api.Delivery.update);
+  const { loading, request: requestDelivery } = useApiResult(() => api.Delivery.get(id || ''), []);
+  const { request } = useApiResult(api.Delivery.update);
   const form = useForm({
     initialValues: { shippingId: 'CE473405152EE', shippingProvider: '2' },
     validate: {},
   });
-  const navigate = useNavigate();
 
   const updateDetails = async (data: any) => {
     const notificationId = notifications.show({
@@ -54,7 +46,7 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
     });
 
     try {
-      const response = await request(id, {
+      await request(id, {
         location: data.location,
         shippingId: data.shippingId,
         shippingProvider: data.shippingProvider,
@@ -70,10 +62,8 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
           message: 'Return delivery details updated successfuly!',
         })
       );
-    } catch (error: any) {
-      notifications.update(
-        Error({ id: notificationId, title: 'Error', message: error.description })
-      );
+    } catch (e: any) {
+      notifications.update(Error({ id: notificationId, title: 'Error', message: e.description }));
     }
   };
 
@@ -95,7 +85,7 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
         ) : (
           <form onSubmit={form.onSubmit((values) => updateDetails(values))}>
             <Fieldset disabled={loading} variant="unstyled">
-              {deliveryType == 0 && (
+              {deliveryType === 0 && (
                 <>
                   <TextInput
                     label="Location"
@@ -104,7 +94,7 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
                   />
                 </>
               )}
-              {deliveryType == 1 && (
+              {deliveryType === 1 && (
                 <>
                   <Select
                     data={shippingProviders}

@@ -20,7 +20,6 @@ const useAcceptOrderAction = () => {
         </Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
-      onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,

@@ -3,8 +3,6 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import NoImage from '@/assets/images/no_image.png';
-import getDateLabel from '@/utils/Dates';
-import labels from '@/utils/OrderStatusLabels';
 
 interface MerchantListingsTableProps {
   elements: RentListing[];

@@ -57,7 +57,7 @@ export function Login() {
 
     const { status } = request;
 
-    if (status == 400) {
+    if (status === 400) {
       const error: ErrorResponse = await request.json();
       return notifications.update(
         Error({

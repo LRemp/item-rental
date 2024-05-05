@@ -1,7 +1,6 @@
 import { Button, Fieldset, Modal, NumberInput, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconPlaylistAdd } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Error, Success } from '@/utils/Notifications';
@@ -15,7 +14,7 @@ interface CreatListingModalProps {
 }
 
 const CreateListingModal: React.FC<CreatListingModalProps> = ({ id, opened, close }) => {
-  const { result, loading, error, request } = useApiResult(api.RentListing.create);
+  const { loading, request } = useApiResult(api.RentListing.create);
   const form = useForm({
     initialValues: { item: id, title: '', price: null, description: '' },
     validate: {

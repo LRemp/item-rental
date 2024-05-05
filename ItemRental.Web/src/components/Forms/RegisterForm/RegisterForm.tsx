@@ -62,7 +62,7 @@ export function RegisterForm() {
 
     const { status } = request;
 
-    if (status == 400) {
+    if (status === 400) {
       const error: ErrorResponse = await request.json();
       return notifications.update(
         Error({
@@ -74,7 +74,7 @@ export function RegisterForm() {
       );
     }
 
-    if (status == 500) {
+    if (status === 500) {
       return notifications.update(
         Error({
           id: notificationId,
@@ -85,7 +85,7 @@ export function RegisterForm() {
       );
     }
 
-    if (status == 200) {
+    if (status === 200) {
       notifications.update(
         Success({
           id: notificationId,

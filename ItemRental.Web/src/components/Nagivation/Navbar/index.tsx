@@ -1,23 +1,15 @@
 import { useState } from 'react';
-import { Group, Code, Stack, Grid, SegmentedControl, Button, TextInput, Text } from '@mantine/core';
+import { Stack, SegmentedControl, Button, Text } from '@mantine/core';
 import {
   IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
-  IconSwitchHorizontal,
   IconLogout,
   IconHome,
   IconClipboardList,
   IconCheckupList,
-  IconArrowLeft,
   IconTruckDelivery,
   IconLogin,
-  IconLogin2,
 } from '@tabler/icons-react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { modals } from '@mantine/modals';
@@ -39,7 +31,6 @@ const navLinks = {
 
 export function Navbar() {
   const [role, setRole] = useState<string>('client');
-  const [active, setActive] = useState('Billing');
   const isAuthenticaded = useIsAuthenticated();
   const navigate = useNavigate();
   const signOut = useSignOut();
@@ -73,11 +64,11 @@ export function Navbar() {
     });
   };
 
-  const changeRole = (role: string) => {
-    setRole(role);
-    if (role === 'client') {
+  const changeRole = (roleToSet: string) => {
+    setRole(roleToSet);
+    if (roleToSet === 'client') {
       navigate('/');
-    } else if (role === 'merchant') {
+    } else if (roleToSet === 'merchant') {
       navigate('/dashboard/home');
     }
   };

@@ -21,7 +21,6 @@ const useDeleteAction = () => {
       ),
       labels: { confirm: 'Delete item', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
-      onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,
@@ -41,7 +40,6 @@ const useDeleteAction = () => {
             })
           );
           handler && handler();
-          console.log(handler);
         } catch (e: any) {
           notifications.update(
             Error({

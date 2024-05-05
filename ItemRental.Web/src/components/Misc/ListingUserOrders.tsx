@@ -1,28 +1,32 @@
-import {
-  Badge,
-  Box,
-  Center,
-  Flex,
-  Grid,
-  Group,
-  Loader,
-  Paper,
-  ScrollArea,
-  Table,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Badge, Box, Flex, Loader, Paper, ScrollArea, Table, Text } from '@mantine/core';
 import React from 'react';
 import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
 import getDateLabel from '@/utils/Dates';
 import OrderStatusLabels from '@/utils/OrderStatusLabels';
 
+const Element = ({ id, startDate, endDate, status }: Order) => (
+  <Table.Tr key={id}>
+    <Table.Td>
+      <Text size="xs" fw={600}>
+        {getDateLabel(startDate)} - {getDateLabel(endDate)}
+      </Text>
+    </Table.Td>
+    <Table.Td>
+      <Badge
+        color={OrderStatusLabels[status as keyof typeof OrderStatusLabels].color}
+        radius="xs"
+        fullWidth
+        variant="light"
+      >
+        {OrderStatusLabels[status as keyof typeof OrderStatusLabels].label}
+      </Badge>
+    </Table.Td>
+  </Table.Tr>
+);
+
 function ListingUserOrders({ listingId }: { listingId: string }) {
-  const { result, error, loading } = useApiResult<any>(
-    () => api.Order.getUserListingOrders(listingId),
-    []
-  );
+  const { result, loading } = useApiResult(() => api.Order.getUserListingOrders(listingId), []);
 
   return (
     <Box>
@@ -55,25 +59,5 @@ function ListingUserOrders({ listingId }: { listingId: string }) {
     </Box>
   );
 }
-
-const Element = ({ id, startDate, endDate, status }: Order) => (
-    <Table.Tr key={id}>
-      <Table.Td>
-        <Text size="xs" fw={600}>
-          {getDateLabel(startDate)} - {getDateLabel(endDate)}
-        </Text>
-      </Table.Td>
-      <Table.Td>
-        <Badge
-          color={OrderStatusLabels[status as keyof typeof OrderStatusLabels].color}
-          radius="xs"
-          fullWidth
-          variant="light"
-        >
-          {OrderStatusLabels[status as keyof typeof OrderStatusLabels].label}
-        </Badge>
-      </Table.Td>
-    </Table.Tr>
-  );
 
 export default ListingUserOrders;

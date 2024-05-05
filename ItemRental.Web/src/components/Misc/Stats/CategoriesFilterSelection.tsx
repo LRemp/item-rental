@@ -1,14 +1,4 @@
-import {
-  ActionIcon,
-  Box,
-  Center,
-  Group,
-  Loader,
-  Skeleton,
-  Text,
-  Title,
-  UnstyledButton,
-} from '@mantine/core';
+import { ActionIcon, Box, Center, Loader, Text, Title, UnstyledButton } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -28,8 +18,6 @@ function CategoriesFilterSelection() {
       setCategories(data);
     }
   }, [result]);
-
-  const select = (name: string) => {};
 
   return (
     <Box w="100%">
@@ -51,7 +39,7 @@ function CategoriesFilterSelection() {
           <Box>
             <UnstyledButton
               key={item.id}
-              c={item.value == category && category != undefined ? 'blue' : ''}
+              c={item.value === category && category !== undefined ? 'blue' : ''}
               onClick={() => navigate(`/${item.value}`)}
               w="100%"
             >
@@ -63,7 +51,7 @@ function CategoriesFilterSelection() {
               {item.children.map((child: any) => (
                 <UnstyledButton
                   key={child.id}
-                  c={child.value == category && category != undefined ? 'blue' : ''}
+                  c={child.value === category && category !== undefined ? 'blue' : ''}
                   onClick={() => navigate(`/${child.value}`)}
                   w="100%"
                 >

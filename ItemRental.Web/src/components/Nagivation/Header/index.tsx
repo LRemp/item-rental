@@ -10,29 +10,16 @@ import {
   Tabs,
   Burger,
   rem,
-  useMantineTheme,
   Button,
-  TextInput,
-  ActionIcon,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconLogout,
-  IconHeart,
-  IconStar,
-  IconMessage,
   IconSettings,
-  IconPlayerPause,
-  IconTrash,
-  IconSwitchHorizontal,
   IconChevronDown,
   IconHome,
-  IconPlus,
   IconBuildingWarehouse,
-  IconSearch,
   IconTruckDelivery,
-  IconBell,
-  IconBellFilled,
 } from '@tabler/icons-react';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
@@ -43,12 +30,6 @@ import Logo from '@/assets/images/logo.png';
 import ThemeButton from '../../ThemeButton';
 import Search from './Search';
 import Notifications from '@/components/Misc/Notifications';
-
-const user = {
-  name: 'Jane Spoonfighter',
-  email: 'janspoon@fighter.dev',
-  image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-};
 
 const tabs = [
   {
@@ -63,7 +44,6 @@ const tabs = [
 
 export function Header() {
   const navigate = useNavigate();
-  const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const isAuthenticated = useIsAuthenticated();

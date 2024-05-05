@@ -1,0 +1,27 @@
+name: ESLint Check
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ItemRental.Web
+        run: npm install
+
+      - name: Run ESLint
+        working-directory: ItemRental.Web
+        run: npm run lint:eslint

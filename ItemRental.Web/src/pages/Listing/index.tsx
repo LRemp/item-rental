@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 import {
   Badge,
   Button,
@@ -14,7 +16,6 @@ import {
   Text,
   Textarea,
   Title,
-  isNumberLike,
 } from '@mantine/core';
 import { DatePicker, DatePickerProps, DatesProvider } from '@mantine/dates';
 import { useForm } from '@mantine/form';
@@ -25,7 +26,6 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate, useParams } from 'react-router-dom';
 import { nprogress } from '@mantine/nprogress';
 import NoImage from '@/assets/images/no_image.png';
-import UserProfileCard from '@/components/Misc/UserProfileCard';
 import { Error, Success } from '@/utils/Notifications';
 import useApiResult from '@/hooks/useApiResult';
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
@@ -37,12 +37,160 @@ import Comments from './Components/Comments';
 import UserDetailsCard from '@/components/Cards/UserDetailsCard';
 import ItemDetails from './Components/ItemDetails';
 
+const CreateOrderModal = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { request } = useApiResult(api.Order.createOrder);
+  const {
+    result: busyDates,
+    loading: loadingDates,
+    request: loadDates,
+  } = useApiResult(api.RentListing.getBusyDates);
+  const [opened, { open, close }] = useDisclosure(false);
+  const [creating, create] = useDisclosure(false);
+  const isAuthenticated = useIsAuthenticated();
+
+  const form = useForm({
+    initialValues: { comment: '', date: [], deliveryType: undefined },
+    validate: {
+      date: (value) => (value.length !== 2 || value[0] == null) && 'You must pick the rent period',
+      deliveryType: (value) => !value && 'You must pick the delivery type',
+    },
+  });
+
+  const createOrder = async (values: any) => {
+    if (creating) return;
+    create.open();
+    const notificationId = notifications.show({
+      loading: true,
+      title: 'Loading',
+      message: 'Creating new order...',
+      autoClose: false,
+      withCloseButton: false,
+    });
+    try {
+      const createRequest = await request({
+        rentListing: id,
+        startDate: values.date[0],
+        endDate: values.date[1],
+        comment: values.comment,
+        // eslint-disable-next-line radix
+        deliveryType: parseInt(values.deliveryType),
+      });
+      notifications.update(
+        Success({
+          id: notificationId,
+          title: 'Success',
+          message: 'Order created!',
+        })
+      );
+      close();
+      create.close();
+
+      navigate(`/orders/${createRequest}`);
+    } catch (error: any) {
+      if (error.code === 'Order.DateBusy') {
+        form.setFieldError('date', 'The selected date is busy!');
+      }
+      notifications.update(
+        Error({ id: notificationId, title: 'Error', message: error.description })
+      );
+      create.close();
+    }
+  };
+
+  const getDayProps: DatePickerProps['getDayProps'] = (date) => {
+    // eslint-disable-next-line no-param-reassign
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    for (const index in busyDates) {
+      let startDate = new Date(busyDates[index].startDate);
+      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      let endDate = new Date(busyDates[index].endDate);
+      endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+      if (date >= startDate && date <= endDate) {
+        return {
+          style: {
+            backgroundColor: 'var(--mantine-color-red-filled)',
+            color: 'var(--mantine-color-white)',
+          },
+        };
+      }
+    }
+
+    return {};
+  };
+
+  useEffect(() => {
+    if (opened) {
+      loadDates(id);
+    }
+  }, [opened]);
+
+  return (
+    <>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Create item rent order"
+        centered
+        closeOnClickOutside={!creating}
+        closeOnEscape={!creating}
+        withCloseButton={!creating}
+      >
+        {isAuthenticated() ? (
+          <form onSubmit={form.onSubmit((values) => createOrder(values))}>
+            <LoadingOverlay
+              visible={creating}
+              zIndex={1000}
+              overlayProps={{ radius: 'sm', blur: 1 }}
+            />
+            <Fieldset variant="unstyled">
+              <Center>
+                {loadingDates ? (
+                  <Loader />
+                ) : (
+                  <DatesProvider settings={{ timezone: 'UTC' }}>
+                    <DatePicker
+                      type="range"
+                      minDate={new Date()}
+                      {...form.getInputProps('date')}
+                      getDayProps={getDayProps}
+                    />
+                  </DatesProvider>
+                )}
+              </Center>
+
+              <Textarea
+                label="Comment"
+                placeholder="Add the comment to the order"
+                autosize
+                {...form.getInputProps('comment')}
+              />
+              <Select
+                label="Delivery type"
+                placeholder="Select delivery type"
+                data={deliveryTypes}
+                {...form.getInputProps('deliveryType')}
+              />
+              <Button fullWidth mt="md" type="submit">
+                Add Item
+              </Button>
+            </Fieldset>
+          </form>
+        ) : (
+          <LoginRequired />
+        )}
+      </Modal>
+      <Button fullWidth my={8} onClick={open} variant="light">
+        Rent this item!
+      </Button>
+    </>
+  );
+};
+
 function Listing() {
   const { id } = useParams();
-  const { result, loading } = useApiResult<RentListing>(
-    () => api.RentListing.getListingById(id || ''),
-    []
-  );
+  const { result, loading } = useApiResult(() => api.RentListing.getListingById(id || ''), []);
 
   useEffect(() => {
     if (loading) {
@@ -51,7 +199,6 @@ function Listing() {
       nprogress.complete();
     }
   }, [loading]);
-  console.log(result);
 
   return (
     <Grid w="100%" mt="md">
@@ -113,155 +260,5 @@ function Listing() {
     </Grid>
   );
 }
-
-const CreateOrderModal = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { request } = useApiResult(api.Order.createOrder);
-  const {
-    result: busyDates,
-    loading: loadingDates,
-    request: loadDates,
-  } = useApiResult(api.RentListing.getBusyDates);
-  const [opened, { open, close }] = useDisclosure(false);
-  const [creating, create] = useDisclosure(false);
-  const isAuthenticated = useIsAuthenticated();
-
-  const form = useForm({
-    initialValues: { comment: '', date: [], deliveryType: undefined },
-    validate: {
-      date: (value) => (value.length != 2 || value[0] == null) && 'You must pick the rent period',
-      deliveryType: (value) => !value && 'You must pick the delivery type',
-    },
-  });
-
-  const createOrder = async (values: any) => {
-    if (creating) return;
-    create.open();
-    const notificationId = notifications.show({
-      loading: true,
-      title: 'Loading',
-      message: 'Creating new order...',
-      autoClose: false,
-      withCloseButton: false,
-    });
-    try {
-      const createRequest = await request({
-        rentListing: id,
-        startDate: values.date[0],
-        endDate: values.date[1],
-        comment: values.comment,
-        deliveryType: parseInt(values.deliveryType),
-      });
-      notifications.update(
-        Success({
-          id: notificationId,
-          title: 'Success',
-          message: 'Order created!',
-        })
-      );
-      close();
-      create.close();
-
-      navigate(`/orders/${createRequest}`);
-    } catch (error: any) {
-      if (error.code == 'Order.DateBusy') {
-        form.setFieldError('date', 'The selected date is busy!');
-      }
-      notifications.update(
-        Error({ id: notificationId, title: 'Error', message: error.description })
-      );
-      create.close();
-    }
-  };
-
-  const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    for (const index in busyDates) {
-      let startDate = new Date(busyDates[index].startDate);
-      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-      let endDate = new Date(busyDates[index].endDate);
-      endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-      if (date >= startDate && date <= endDate) {
-        return {
-          style: {
-            backgroundColor: 'var(--mantine-color-red-filled)',
-            color: 'var(--mantine-color-white)',
-          },
-        };
-      }
-    }
-
-    return {};
-  };
-
-  useEffect(() => {
-    if (opened) {
-      loadDates(id);
-    }
-  }, [opened]);
-
-  return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Create item rent order"
-        centered
-        closeOnClickOutside={!creating}
-        closeOnEscape={!creating}
-        withCloseButton={!creating}
-      >
-        {isAuthenticated() ? (
-          <form onSubmit={form.onSubmit((values) => createOrder(values))}>
-            <LoadingOverlay
-              visible={creating}
-              zIndex={1000}
-              overlayProps={{ radius: 'sm', blur: 1 }}
-            />
-            <Fieldset variant="unstyled">
-              <Center>
-                {loadingDates ? (
-                  <Loader />
-                ) : (
-                  <DatesProvider settings={{ timezone: 'UTC' }}>
-                    <DatePicker
-                      type="range"
-                      minDate={new Date()}
-                      {...form.getInputProps('date')}
-                      getDayProps={getDayProps}
-                      onDateChange={(date) => console.log(date)}
-                    />
-                  </DatesProvider>
-                )}
-              </Center>
-
-              <Textarea
-                label="Comment"
-                placeholder="Add the comment to the order"
-                autosize
-                {...form.getInputProps('comment')}
-              />
-              <Select
-                label="Delivery type"
-                placeholder="Select delivery type"
-                data={deliveryTypes}
-                {...form.getInputProps('deliveryType')}
-              />
-              <Button fullWidth mt="md" type="submit">
-                Add Item
-              </Button>
-            </Fieldset>
-          </form>
-        ) : (
-          <LoginRequired />
-        )}
-      </Modal>
-      <Button fullWidth my={8} onClick={open} variant="light">
-        Rent this item!
-      </Button>
-    </>
-  );
-};
 
 export default Listing;

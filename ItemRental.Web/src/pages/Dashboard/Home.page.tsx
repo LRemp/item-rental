@@ -7,30 +7,6 @@ import { StatsGrid } from '@/components/Misc/Stats';
 import OrdersTable from '@/components/Tables/OrdersTable';
 import useApiResult from '@/hooks/useApiResult';
 
-export default function Home() {
-  return (
-    <Box w="100%">
-      <Grid columns={24} grow>
-        <Grid.Col span={24}>
-          <Title fw={600}>Pagrindinis</Title>
-        </Grid.Col>
-        <Grid.Col span={24}>
-          <StatsGrid />
-        </Grid.Col>
-        <Grid.Col span={8}>
-          <ActiveOrders />
-        </Grid.Col>
-        <Grid.Col span={8}>
-          <PendingOrders />
-        </Grid.Col>
-        <Grid.Col span={8}>
-          <CompletedOrders />
-        </Grid.Col>
-      </Grid>
-    </Box>
-  );
-}
-
 const ActiveOrders: React.FC = () => {
   const { result: orders, loading } = useApiResult(() => api.Order.getOwnerOrders(3), []);
   return (
@@ -111,3 +87,27 @@ const CompletedOrders: React.FC = () => {
     </Paper>
   );
 };
+
+export default function Home() {
+  return (
+    <Box w="100%">
+      <Grid columns={24} grow>
+        <Grid.Col span={24}>
+          <Title fw={600}>Pagrindinis</Title>
+        </Grid.Col>
+        <Grid.Col span={24}>
+          <StatsGrid />
+        </Grid.Col>
+        <Grid.Col span={8}>
+          <ActiveOrders />
+        </Grid.Col>
+        <Grid.Col span={8}>
+          <PendingOrders />
+        </Grid.Col>
+        <Grid.Col span={8}>
+          <CompletedOrders />
+        </Grid.Col>
+      </Grid>
+    </Box>
+  );
+}

@@ -1,23 +1,8 @@
-import { Menu, Button, rem, Text, ActionIcon } from '@mantine/core';
-import {
-  IconSettings,
-  IconMessageCircle,
-  IconPhoto,
-  IconSearch,
-  IconArrowsLeftRight,
-  IconTrash,
-  IconCheck,
-  IconX,
-  IconEye,
-  IconMenu,
-  IconMenu2,
-  IconEdit,
-} from '@tabler/icons-react';
+import { Menu, rem, ActionIcon } from '@mantine/core';
+import { IconX, IconEye, IconMenu2, IconEdit } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDeleteAction from '@/components/Actions/DeleteItemAction';
-import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
-import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
 
 interface ItemActionsProps {
   id: string;
