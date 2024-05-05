@@ -128,7 +128,7 @@ namespace ItemRental.Tests.Application
 
             userRepository.Verify(x => x.GetByEmailOrUsernameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
             result.IsFailure.Should().BeTrue();
-            result.Error.Should().Be(DomainErrors.User.InvalidCredentials);
+            result.Error.Should().Be(DomainErrors.User.NotFound);
         }
 
         [Fact]
