@@ -54,8 +54,9 @@ const CreateOrderModal = () => {
   const form = useForm({
     initialValues: { comment: '', date: [], deliveryType: undefined },
     validate: {
-      date: (value) => (value.length !== 2 || value[0] == null) && 'You must pick the rent period',
-      deliveryType: (value) => !value && 'You must pick the delivery type',
+      date: (value) =>
+        (value.length !== 2 || value[0] == null) && 'Privalote pasirinkti nuomos datą',
+      deliveryType: (value) => !value && 'Privalote pasirinkti pristatymo tipą',
     },
   });
 
@@ -132,7 +133,7 @@ const CreateOrderModal = () => {
       <Modal
         opened={opened}
         onClose={close}
-        title="Create item rent order"
+        title="Sukurti nuomos rezervaciją"
         centered
         closeOnClickOutside={!creating}
         closeOnEscape={!creating}
@@ -162,19 +163,19 @@ const CreateOrderModal = () => {
               </Center>
 
               <Textarea
-                label="Comment"
-                placeholder="Add the comment to the order"
+                label="Komentaras"
+                placeholder="Pridėkite komentarą"
                 autosize
                 {...form.getInputProps('comment')}
               />
               <Select
-                label="Delivery type"
-                placeholder="Select delivery type"
+                label="Pristatymo tipas"
+                placeholder="Pasirinkite pristatymo tipą"
                 data={deliveryTypes}
                 {...form.getInputProps('deliveryType')}
               />
               <Button fullWidth mt="md" type="submit">
-                Add Item
+                Sukurti rezervaciją
               </Button>
             </Fieldset>
           </form>
@@ -183,7 +184,7 @@ const CreateOrderModal = () => {
         )}
       </Modal>
       <Button fullWidth my={8} onClick={open} variant="light">
-        Rent this item!
+        Rezervuoti nuomai
       </Button>
     </>
   );
@@ -207,7 +208,7 @@ function Listing() {
         <Center h="70vh" w="100%">
           <Group>
             <Loader />
-            <Text>Loading up the listing...</Text>
+            <Text>Kraunamas skelbimas...</Text>
           </Group>
         </Center>
       ) : (
@@ -251,7 +252,7 @@ function Listing() {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4 }}>
               <Paper shadow="md" radius="sm" p="md">
-                <UserDetailsCard {...result?.renter} />
+                <UserDetailsCard {...result?.renter} hasButton={1} />
               </Paper>
               <CreateOrderModal />
               <ListingUserOrders listingId={id || ''} />

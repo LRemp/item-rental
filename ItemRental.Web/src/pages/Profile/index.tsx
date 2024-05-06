@@ -1,4 +1,14 @@
-import { Button, Center, Grid, Loader, Paper, PasswordInput, Title, rem } from '@mantine/core';
+import {
+  Button,
+  Center,
+  Grid,
+  Loader,
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title,
+  rem,
+} from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useForm } from '@mantine/form';
@@ -61,22 +71,19 @@ const Profile = () => {
           Atnaujinti vartotojo duomenis
         </Title>
         <Paper shadow="md" radius="sm" p="md">
-          <PasswordInput
-            label="Senas slaptažodis"
-            placeholder="Įveskite seną slaptažodį"
-            leftSectionPointerEvents="none"
-            leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
+          <TextInput
+            label="El.paštas"
+            placeholder="Įveskite el.paštą"
+            {...form.getInputProps('name')}
           />
-          <PasswordStrength formHandle={form.getInputProps('newpassword')} />
-          <PasswordInput
-            leftSectionPointerEvents="none"
-            leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
-            label="Pakartokite naują slaptažodį"
-            placeholder="Įveskitę naują slaptažodį dar kartą"
-            {...form.getInputProps('newpasswordrepeat')}
+          <TextInput
+            label="Telefono numeris"
+            placeholder="Įveskite telefono numerį"
+            {...form.getInputProps('name')}
           />
+
           <Button mt="md" fullWidth>
-            Pakeisti slaptažodį
+            Pakeisti duomenis
           </Button>
         </Paper>
       </Grid.Col>
