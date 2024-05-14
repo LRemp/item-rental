@@ -1,0 +1,139 @@
+{
+  "id": "0fc4870d-7f53-4778-98ad-98f52d91da42",
+  "version": "2.0",
+  "name": "ItemRental",
+  "url": "http://localhost:5173/",
+  "tests": [{
+    "id": "ae772bf6-9d67-480a-bdb9-5619e104dc6f",
+    "name": "Untitled",
+    "commands": [{
+      "id": "df7310ea-5ab3-43fc-8b2a-863f3582eb15",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3b655908-4855-486c-bffc-1695b743d957",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6741d881-06ce-4af7-b1bd-00b437b48b85",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1658x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f8962cf-dcdd-4aa0-a48d-b5d38f2dfa5d",
+      "comment": "",
+      "command": "click",
+      "target": "css=#login > span",
+      "targets": [
+        ["css=#login > span", "css:finder"],
+        ["xpath=//a[@id='login']/span", "xpath:idRelative"],
+        ["xpath=//div[2]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Prisijungti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5204f616-7eb7-4926-a5b6-8534f525a1aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.m-4451eb3a",
+      "targets": [
+        ["css=.m-4451eb3a", "css:finder"],
+        ["xpath=//div[@id='root']/div", "xpath:idRelative"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a05e7e1e-7d00-422a-ad12-0183ccafd794",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "margarita"
+    }, {
+      "id": "3a88f606-6028-4064-b35f-59d00b805cf3",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/form/div[2]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "user"
+    }, {
+      "id": "102f28dc-6847-4728-bb71-60f4564395ba",
+      "comment": "",
+      "command": "click",
+      "target": "css=.m-80f1301b",
+      "targets": [
+        ["css=.m-80f1301b", "css:finder"],
+        ["xpath=//button[@id='login']/span[2]", "xpath:idRelative"],
+        ["xpath=//form/button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Prisijungti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3e6b79d-e485-44f6-bb18-819284079bb3",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.m-80f1301b",
+      "targets": [
+        ["css=.m-80f1301b", "css:finder"],
+        ["xpath=//button[@id='login']/span[2]", "xpath:idRelative"],
+        ["xpath=//form/button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Prisijungti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5f6af1cc-b092-45b8-9e94-281585fe22e4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_link_1izho_45:nth-child(3) > span",
+      "targets": [
+        ["css=.\\_link_1izho_45:nth-child(3) > span", "css:finder"],
+        ["xpath=//div[@id='root']/div/nav/div/div[2]/a/span", "xpath:idRelative"],
+        ["xpath=//div[2]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Atsijungti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4203089-dce3-4bf3-b464-673bbb5b0706",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#register > span",
+      "targets": [
+        ["css=#register > span", "css:finder"],
+        ["xpath=//a[@id='register']/span", "xpath:idRelative"],
+        ["xpath=//div[2]/a[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Registruotis')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e31c0456-d84e-41ee-9db8-2824b189c32f",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["ae772bf6-9d67-480a-bdb9-5619e104dc6f"]
+  }],
+  "urls": ["http://localhost:5173/"],
+  "plugins": []
+}

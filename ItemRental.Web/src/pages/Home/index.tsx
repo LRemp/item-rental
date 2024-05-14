@@ -48,6 +48,7 @@ const ItemsContainer: React.FC = () => {
     <Grid columns={18}>
       <Grid.Col span={18}>
         <TextInput
+          id="search"
           placeholder="Įveskite paieškos kriterijų..."
           leftSection={<IconSearch />}
           onChange={(event) => setSearch(event.currentTarget.value)}

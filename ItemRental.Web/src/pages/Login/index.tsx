@@ -108,42 +108,44 @@ export function Login() {
       <Container size={420} my={40}>
         <img src={Logo} alt="logo" width={80} className="" />
         <Title ta="center" className={classes.title}>
-          Welcome back!
+          Sveiki sugrįžę!
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Do not have an account yet?{' '}
+          Neturite paskyros?{' '}
           <Anchor size="sm" component="button">
-            <Link to="/register">Create account</Link>
+            <Link to="/register">Sukurti paskyrą</Link>
           </Anchor>
         </Text>
 
         <Paper shadow="md" p={16} mt={30} miw={400} radius="sm">
           <form onSubmit={form.onSubmit((values) => login(values))}>
             <TextInput
+              id="username"
               leftSectionPointerEvents="none"
               leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
-              label="Email or username"
-              placeholder="Your email address or username"
+              label="El. paštas arba slapyvardis"
+              placeholder="Įveskite el.paštą arba slapyvardį"
               required
               {...form.getInputProps('email')}
             />
             <PasswordInput
+              id="password"
               leftSectionPointerEvents="none"
               leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
-              label="Password"
-              placeholder="Your password"
+              label="Slaptažodis"
+              placeholder="Įveskite slaptažodį"
               required
               mt="md"
               {...form.getInputProps('password')}
             />
             <Group justify="space-between" mt="lg">
-              <Checkbox label="Remember me" />
+              <Checkbox label="Prisiminti mane" />
               <Anchor component="button" size="sm">
-                Forgot password?
+                Pamiršote slaptažodį?
               </Anchor>
             </Group>
-            <Button fullWidth mt="xl" type="submit">
-              Sign in
+            <Button id="login" fullWidth mt="xl" type="submit">
+              Prisijungti
             </Button>
           </form>
         </Paper>

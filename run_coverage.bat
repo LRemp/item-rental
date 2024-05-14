@@ -5,7 +5,7 @@ IF EXIST "ItemRental.Tests\TestResults" (
 )
 
 rem Run tests with code coverage
-dotnet test --collect:"XPlat Code Coverage"
+dotnet test ItemRental.sln --collect:"XPlat Code Coverage"
 
 rem Extract GUID from latest result folder (modify if folder structure differs)
 for /f "tokens=*" %%a in ('dir /b /o-d /ad ItemRental.Tests\TestResults\') do set "guid=%%a"

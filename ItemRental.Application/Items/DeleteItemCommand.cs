@@ -14,13 +14,9 @@ namespace ItemRental.Application.Items
     public class DeleteItemCommandHandler : ICommandHandler<DeleteItemCommand>
     {
         private readonly IItemRepository itemRepository;
-        private readonly IOrderService orderService;
-        private readonly IRentListingService rentListingService;
-        public DeleteItemCommandHandler(IItemRepository itemRepository, IOrderService orderService, IRentListingService rentListingService)
+        public DeleteItemCommandHandler(IItemRepository itemRepository)
         {
             this.itemRepository = itemRepository;
-            this.orderService = orderService;
-            this.rentListingService = rentListingService;
         }
         public async Task<Result> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
@@ -35,20 +31,6 @@ namespace ItemRental.Application.Items
             if(!isAuthorized)
             {
                 return Result.Failure(DomainErrors.Item.Unauthorized);
-            }
-
-            var includedInListing = await rentListingService.IsItemUsed(request.itemId, cancellationToken);
-
-            if(includedInListing)
-            {
-                return Result.Failure(DomainErrors.Item.UsedInListing);
-            }
-
-            var usedInOrder = await orderService.IsItemInUse(request.itemId, cancellationToken);
-
-            if(usedInOrder)
-            {
-                return Result.Failure(DomainErrors.Item.UsedInOrder);
             }
 
             var success = await itemRepository.DeleteAsync(request.itemId, cancellationToken);

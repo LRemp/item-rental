@@ -214,7 +214,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
             />
 
             <Button fullWidth mt="md" type="submit" loading={adding}>
-              Add Item
+              Sukurti daiktą
             </Button>
           </Fieldset>
         </form>

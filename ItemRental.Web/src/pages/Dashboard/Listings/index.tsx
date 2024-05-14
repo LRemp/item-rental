@@ -6,6 +6,7 @@ import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
 import CreateItemModal from '@/components/Modals/CreateItem';
 import TableContainer from './Components/TableContainer';
+import RequireAuthRoute from '@/layouts/RequireAuthRoute';
 
 const pathItems = [
   { title: 'Pagrindinis', href: '/dashboard/home' },
@@ -29,29 +30,31 @@ export default function Inventory() {
   }, [loading]);
 
   return (
-    <Box w="100%">
-      <Grid columns={24} grow>
-        <Grid.Col span={24}>
-          <Grid justify="space-between" align="flex-end">
-            <Grid.Col span={16}>
-              <Title fw={600}>Nuomos skelbimai</Title>
-              <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
-            </Grid.Col>
-          </Grid>
-        </Grid.Col>
-        <Grid.Col span={24}>
-          <CreateItemModal opened={opened} close={close} />
-        </Grid.Col>
-        <Grid.Col span={24}>
-          {loading ? (
-            <Center>
-              <Loader />
-            </Center>
-          ) : (
-            <TableContainer items={items} />
-          )}
-        </Grid.Col>
-      </Grid>
-    </Box>
+    <RequireAuthRoute fallbackPath="/login">
+      <Box w="100%">
+        <Grid columns={24} grow>
+          <Grid.Col span={24}>
+            <Grid justify="space-between" align="flex-end">
+              <Grid.Col span={16}>
+                <Title fw={600}>Nuomos skelbimai</Title>
+                <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
+              </Grid.Col>
+            </Grid>
+          </Grid.Col>
+          <Grid.Col span={24}>
+            <CreateItemModal opened={opened} close={close} />
+          </Grid.Col>
+          <Grid.Col span={24}>
+            {loading ? (
+              <Center>
+                <Loader />
+              </Center>
+            ) : (
+              <TableContainer items={items} />
+            )}
+          </Grid.Col>
+        </Grid>
+      </Box>
+    </RequireAuthRoute>
   );
 }

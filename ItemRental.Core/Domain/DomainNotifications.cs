@@ -16,8 +16,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Created",
-                Title = "Created",
-                Description = "Your order was created successfuly",
+                Title = "Rezervacija sukurta",
+                Description = "Jūsų rezervacija buvo sėkmingai sukurta",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
@@ -27,8 +27,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Accepted",
-                Title = "Accepted",
-                Description = "Your order was accepted",
+                Title = "Rezervacija patvirtinta",
+                Description = "Jūsų užsakymas buvo patvirtinta",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
@@ -38,8 +38,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Dispatched",
-                Title = "Dispatched",
-                Description = "Your order was dispatched",
+                Title = "Užsakymas išsiųstas",
+                Description = "Jūsų užsakymas buvo išsiųstas",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
@@ -49,8 +49,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Delivered",
-                Title = "Delivered",
-                Description = "Your order was dispatched",
+                Title = "Užsakymas pristatytas",
+                Description = "Jūsų užsakymas buvo pristatytas",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
@@ -60,8 +60,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Returned",
-                Title = "Returned",
-                Description = "Your order was returned",
+                Title = "Užsąkymas Grąžintas",
+                Description = "Jūsų užsakymas buvo grąžintas",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
@@ -71,8 +71,8 @@ namespace ItemRental.Core.Domain
                 Id = Guid.NewGuid(),
                 User = user,
                 Code = "Order.Completed",
-                Title = "Completed",
-                Description = "Your order was completed",
+                Title = "Užsakymas baigtas",
+                Description = "Jūsų užsakymas buvo sėkmingai užbaigtas",
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };

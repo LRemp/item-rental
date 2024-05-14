@@ -15,6 +15,7 @@ import DashboardOrders from './pages/Dashboard/Orders';
 import DashboardOrder from './pages/Dashboard/Order';
 import UserPage from './pages/User.page';
 import ProfilePage from './pages/Profile';
+import AdminPage from './pages/Admin';
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
         element: <DashboardSettings />,
       },
     ],
+  },
+  {
+    path: '/admin',
+    element: <AdminPage />,
   },
 ]);
 

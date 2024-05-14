@@ -111,7 +111,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}/BusyDates")]
@@ -169,7 +169,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
     }
 }

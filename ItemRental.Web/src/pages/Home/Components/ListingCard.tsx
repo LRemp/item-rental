@@ -54,7 +54,7 @@ const ListingCard: React.FC<RentListing> = ({ id, title, description, price, ite
       <Group justify="space-between" mt="md">
         <div>
           <Text fz="xl" span fw={500} className={classes.price}>
-            {price}$
+            {price}€
           </Text>
           <Text span fz="sm" c="dimmed">
             {' '}

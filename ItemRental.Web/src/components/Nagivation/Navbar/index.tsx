@@ -37,6 +37,7 @@ export function Navbar() {
 
   const links = navLinks[role as keyof typeof navLinks].map((item) => (
     <NavLink
+      id={item.link.toLocaleLowerCase()}
       className={({ isActive }) => [isActive ? classes.active : '', classes.link].join(' ')}
       to={item.link}
       key={item.label}
@@ -96,12 +97,12 @@ export function Navbar() {
           </>
         ) : (
           <>
-            <NavLink to="/login" className={classes.link}>
+            <NavLink id="login" to="/login" className={classes.link}>
               <IconLogin className={classes.linkIcon} stroke={1.5} />
               <span>Prisijungti</span>
             </NavLink>
 
-            <NavLink to="/register" className={classes.link}>
+            <NavLink id="register" to="/register" className={classes.link}>
               <IconFingerprint className={classes.linkIcon} stroke={1.5} />
               <span>Registruotis</span>
             </NavLink>

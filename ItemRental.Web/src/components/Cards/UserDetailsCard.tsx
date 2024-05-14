@@ -1,6 +1,6 @@
 import { Stack, Avatar, Text, Badge, Button } from '@mantine/core';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface UserDetailsCardProps extends UserProfile {
   hasButton?: boolean;
@@ -21,7 +21,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
       <Text fw={500} size="xl">
         {name} {surname}
       </Text>
-      {verified && <Badge>Verified</Badge>}
+      {verified && <Badge>Patvirtintas</Badge>}
       <Text c="dimmed" size="sm">
         {email}
       </Text>

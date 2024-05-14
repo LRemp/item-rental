@@ -8,10 +8,6 @@ export default defineConfig({
       '/api': 'http://localhost:5261',
       '/images': 'http://localhost:5261',
     },
-    port: 5173,
-    strictPort: true,
-    host: true,
-    origin: 'http://0.0.0.0:5173',
   },
   plugins: [react(), tsconfigPaths()],
   test: {

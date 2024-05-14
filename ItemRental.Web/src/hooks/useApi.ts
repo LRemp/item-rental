@@ -28,7 +28,7 @@ const useApi = () => {
     };
     return fetch(endpoint, requestOptions).then(async (result: any) => {
       if (result.ok) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         return result.status === 200 ? await result.json() : {};
       }
       const errorData = await result.json();

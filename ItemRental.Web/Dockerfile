@@ -4,7 +4,7 @@ RUN corepack prepare pnpm@8.14.1 --activate
 
 WORKDIR /app
 
-COPY package.json .
+COPY ./ItemRental.Web/package.json .
 
 RUN pnpm install
 

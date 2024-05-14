@@ -18,19 +18,19 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
   const openModal = () =>
     modals.openConfirmModal({
       centered: true,
-      title: 'Confirm this order delivery request?',
+      title: 'Patvirtinti šio užsakymo pristatymą?',
       children: (
         <Text size="sm">
-          Are you sure to confirm this order delivery? The order status will be changes to Relivered
-          and status will be updated and the change irreversible.
+          Ar esate įsitikinę, kad norite patvirtinti šio užsakymo pristatymą? Ši operacija yra
+          negrįžtama.
         </Text>
       ),
-      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      labels: { confirm: 'Patvirtinti', cancel: 'Atšaukti' },
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,
-          title: 'Loading',
-          message: 'Confirming order delivery...',
+          title: 'Vykdoma',
+          message: 'Patvirtinamas užsakymo pristatymas...',
           autoClose: false,
           withCloseButton: false,
         });
@@ -40,8 +40,8 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
           notifications.update(
             Success({
               id: notificationId,
-              title: 'Success',
-              message: 'The order delivery was successfuly confirmed!',
+              title: 'Patvirtinta',
+              message: 'Užsakymo pristatymas sėkmingai patvirtintas',
             })
           );
           refresh && refresh();
@@ -49,7 +49,7 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
           notifications.update(
             Error({
               id: notificationId,
-              title: 'Error',
+              title: 'Klaida',
               message: e.message,
             })
           );
@@ -60,7 +60,7 @@ const ConfirmOrderDeliveryAction: React.FC<ItemButtonActionProps> = ({
   return (
     <>
       <Button color="green" size={size} onClick={openModal} fullWidth={fullWidth}>
-        Confirm order delivery
+        Patvirtinti pristatymą
         <IconCheck size={18} />
       </Button>
     </>

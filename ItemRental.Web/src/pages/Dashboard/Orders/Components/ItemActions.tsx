@@ -34,29 +34,29 @@ const ItemActions: React.FC<OrderMenuProps> = ({ status, id }) => {
         </Menu.Target>
 
         <Menu.Dropdown>
-          <Menu.Label>Order actions</Menu.Label>
+          <Menu.Label>Užsakymo veiksmai</Menu.Label>
           <Menu.Item
             leftSection={<IconEye style={{ width: rem(14), height: rem(14) }} />}
             onClick={() => navigate(`/dashboard/orders/${id}`)}
           >
-            View
+            Peržiūrėti
           </Menu.Item>
 
           {status === 0 && (
             <>
               <Menu.Divider />
-              <Menu.Label>Confirmation</Menu.Label>
+              <Menu.Label>Rezervacijos patvirtinimas</Menu.Label>
               <Menu.Item
                 leftSection={<IconCheck style={{ width: rem(14), height: rem(14) }} />}
                 onClick={() => acceptOrderAction(id)}
               >
-                Accept
+                Patvirtinti
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconX style={{ width: rem(14), height: rem(14) }} />}
                 onClick={() => declineOrderAction(id)}
               >
-                Decline
+                Atmesti
               </Menu.Item>
             </>
           )}

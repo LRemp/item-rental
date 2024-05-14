@@ -11,13 +11,13 @@ const GenerateEvents = (events: EventLog[]): TimelineEvent[] => {
 
   if (events.find((event) => event.eventName === 'Order.Accepted') === undefined) {
     timelineEvents.push({
-      title: 'Užsakymas priimtas',
+      title: 'Rezervacija patvirtinta',
     });
   }
 
   if (events.find((event) => event.eventName === 'Order.Dispatched') === undefined) {
     timelineEvents.push({
-      title: 'Išiųsta',
+      title: 'Išsiųsta',
     });
   }
 

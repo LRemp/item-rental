@@ -183,8 +183,8 @@ const CreateOrderModal = () => {
           <LoginRequired />
         )}
       </Modal>
-      <Button fullWidth my={8} onClick={open} variant="light">
-        Rezervuoti nuomai
+      <Button id="create-reservation" fullWidth my={8} onClick={open} variant="light">
+        Atlikti rezervaciją
       </Button>
     </>
   );
@@ -241,7 +241,7 @@ function Listing() {
                     </Title>
 
                     <Badge size="20" px="10" py="15" variant="light" radius="sm" fw={600}>
-                      {result?.price} Eur / day
+                      {result?.price}€ / dienai
                     </Badge>
                   </Group>
 

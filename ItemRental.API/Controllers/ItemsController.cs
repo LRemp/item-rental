@@ -117,5 +117,50 @@ namespace ItemRental.API.Controllers
 
             return Ok(result.Value);
         }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("Categories")]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryDTO category)
+        {
+            Result result = await _sender.Send(new AddCategoryCommand(category));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("Categories/{id}")]
+        public async Task<IActionResult> DeleteCategory(Guid id)
+        {
+            Result result = await _sender.Send(new DeleteCategoryCommand(id));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut("Categories/{id}")]
+        public async Task<IActionResult> UpdateCategory(Guid id, CategoryDTO categoryDTO)
+        {
+            Result result = await _sender.Send(new UpdateCategoryCommand(id, categoryDTO));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
     }
 }

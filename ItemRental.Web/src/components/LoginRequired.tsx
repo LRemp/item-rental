@@ -16,12 +16,12 @@ function LoginRequired() {
         </Grid.Col>
         <Grid.Col>
           <Center>
-            <Text>Please log in to procceed further!</Text>
+            <Text>Prašome prisijungti norėdami atlikti tolimesnius veiksmus</Text>
           </Center>
         </Grid.Col>
         <Grid.Col>
           <Center>
-            <Button onClick={() => navigate('/login')}>Log in</Button>
+            <Button onClick={() => navigate('/login')}>Prisijungti</Button>
           </Center>
         </Grid.Col>
       </Grid>

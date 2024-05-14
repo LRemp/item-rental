@@ -29,6 +29,24 @@ const getMerchantListings = (id: string): ApiRequest => ({
   authenticate: true,
 });
 
+const getVerificationRequests = (): ApiRequest => ({
+  method: 'GET',
+  endpoint: '/api/Users/VerificationRequests',
+  authenticate: true,
+});
+
+const approveVerificationRequest = (id: string): ApiRequest => ({
+  method: 'POST',
+  endpoint: `/api/Users/VerificationRequests/${id}/Approve`,
+  authenticate: true,
+});
+
+const rejectVerificationRequest = (id: string): ApiRequest => ({
+  method: 'POST',
+  endpoint: `/api/Users/VerificationRequests/${id}/Reject`,
+  authenticate: true,
+});
+
 export default {
   Login,
   Register,
@@ -36,4 +54,7 @@ export default {
   get,
   getMerchantOrders,
   getMerchantListings,
+  getVerificationRequests,
+  approveVerificationRequest,
+  rejectVerificationRequest,
 };

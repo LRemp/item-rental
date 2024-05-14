@@ -108,12 +108,12 @@ export function Register() {
       <Container size={420} my={40}>
         <img src={Logo} alt="logo" width={80} className="" />
         <Title ta="center" className={classes.title}>
-          Create an account
+          Sukurti paskyrą
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Do you already have an account{' '}
+          Ar jau turite paskyrą?{' '}
           <Anchor size="sm" component="button">
-            <Link to="/login">Sign in</Link>
+            <Link to="/login">Prisijungti</Link>
           </Anchor>
         </Text>
 
@@ -121,14 +121,16 @@ export function Register() {
           <form onSubmit={form.onSubmit((values) => register(values))}>
             <Flex gap={14}>
               <TextInput
-                label="Name"
-                placeholder="Your name"
+                id="name"
+                label="Vardas"
+                placeholder="Įveskite vardą"
                 required
                 {...form.getInputProps('name')}
               />
               <TextInput
-                label="Surname"
-                placeholder="Your surname"
+                id="surname"
+                label="Pavardė"
+                placeholder="Įveskite pavardę"
                 required
                 {...form.getInputProps('surname')}
               />
@@ -136,16 +138,16 @@ export function Register() {
             <TextInput
               leftSectionPointerEvents="none"
               leftSection={<IconUser style={{ width: rem(16), height: rem(16) }} />}
-              label="Username"
-              placeholder="Your username"
+              label="Slapyvardis"
+              placeholder="Įveskite savo slapyvardį"
               required
               {...form.getInputProps('username')}
             />
             <TextInput
               leftSectionPointerEvents="none"
               leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
-              label="Email"
-              placeholder="Your email address"
+              label="El. paštas"
+              placeholder="Įveskite el.paštą"
               required
               {...form.getInputProps('email')}
             />
@@ -155,23 +157,20 @@ export function Register() {
             <PasswordInput
               leftSectionPointerEvents="none"
               leftSection={<IconLock style={{ width: rem(16), height: rem(16) }} />}
-              label="Repeat password"
-              placeholder="Repeat your password"
+              label="Slaptažodis"
+              placeholder="Įveskite slaptažodį"
               required
               {...form.getInputProps('passwordRepeat')}
             />
 
             <Group justify="space-between" mt="lg">
               <Checkbox
-                label="I agree to platform terms of service"
+                label="Sutinku su taisyklėmis"
                 required
                 {...form.getInputProps('termsOfService', { type: 'checkbox' })}
               />
-              <Anchor component="button" size="sm" style={{ display: 'none' }}>
-                Forgot password?
-              </Anchor>
               <Button type="submit" fullWidth>
-                Sign up
+                Sukurti paskyrą
               </Button>
             </Group>
           </form>

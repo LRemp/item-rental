@@ -4,111 +4,123 @@ namespace ItemRental.Core.Domain
 {
     public static class DomainErrors
     {
+        public static class Category
+        {
+            public static readonly Error FailedToCreate = new Error(
+                "User.FailedToCreate",
+                "Nepavyko sukurti kategorijos");
+            public static readonly Error FailedToDelete = new Error(
+                "User.FailedToDelete",
+                "Nepavyko ištrinti kategorijos");
+            public static readonly Error FailedToUpdate = new Error(
+                "User.FailedToUpdate",
+                "Nepavyko atnaujinti kategorijos");
+        }
         public static class User
         {
             public static readonly Error EmailOrUsernameAlreadyInUse = new Error(
                 "User.EmailOrUsernameAlreadyInUse",
-                "The provided email or username is already in use.");
+                "Pateiktas el. paštas arba vartotojo vardas jau naudojamas.");
 
             public static readonly Error NotFound = new Error(
                 "User.NotFound",
-                $"The member with given username was not found.");
+                $"Nario su nurodytu vartotojo vardu nepavyko rasti.");
 
             public static readonly Error InvalidCredentials = new Error(
                 "User.InvalidCredentials",
-                "The provided credentials are invalid");
+                "Pateikti duomenys yra neteisingi");
             public static readonly Error FailedToCreate = new Error(
                 "User.FailedToCreate",
-                "The user could not be created");
+                "Nepavyko sukurti paskyros");
 
             public static readonly Error VerificationRequestAlreadyExists = new Error(
                 "User.VerificationRequestAlreadyExists",
-                "The user already has a verification request");
+                "Vartotojas jau turi patvirtinimo užklausą");
 
             public static readonly Error VerificationRequestCreationFailed = new Error(
                 "User.VerificationRequestCreationFailed",
-                 "The verification request could not be created");
+                 "Nepavyko sukurti profilio verifikacijos užklausos");
 
             public static readonly Error VerificationRequestNotFound = new Error(
                 "User.VerificationRequestNotFound",
-                "The verification request was not found");
+                "Verifikacijos užklausa nerasta");
 
             public static readonly Error VerificationRequestApprovalFailed = new Error(
                 "User.VerificationRequestApprovalFailed",
-                "The verification request could not be approved");
+                "Nepavyko patvirtinti profilio verifikacijos užklausos");
         }
 
         public static class Comment
         {
             public static readonly Error FailedToCreate = new Error(
                 "Comment.FailedToCreate",
-                "The comment could not be created");
+                "Nepavyko sukurti komentaro");
 
             public static readonly Error Unauthorized = new Error(
                 "Comment.Unauthorized",
-                "Not authorized for this action");
+                "Neautorizuotas šiam veiksmui");
 
             public static readonly Error NotFound = new Error(
                 "Comment.NotFound",
-                "The comment was not found");
+                "Komentaras nerastas");
 
             public static readonly Error Failed = new Error(
                 "Comment.Failed",
-                "The comment could not be updated");
+                "Nepavyko atnaujinti komentaro");
         }
 
         public static class Item
         {
             public static readonly Error NotFound = new Error(
                 "Item.NotFound",
-                "The item was not found");
+                "Prekė nerasta");
 
             public static readonly Error FailedToUpdate = new Error(
                 "Item.FailedToUpdate",
-                "The item was failed to update");
+                "Prekės atnaujinimas nepavyko");
 
             public static readonly Error FailedToCreate = new Error(
                 "Item.FailedToCreate",
-                "The item could not be created");
+                "Prekė negalėjo būti sukurta");
 
             public static readonly Error Unauthorized = new Error(
                 "Item.Unauthorized",
-                "Not authorized for this action");
+                "Neautorizuotas šiam veiksmui");
 
             public static readonly Error FailedToDelete = new Error(
                 "Item.FailedToDelete",
-                "The item could not be deleted");
+                "Prekė negalėjo būti ištrinta");
 
             public static readonly Error UsedInListing = new Error(
                 "Item.UsedInListing",
-                "This item is included in the listing and can not be deleted");
+                "Ši prekė įtraukta į sąrašą ir negali būti ištrinta");
 
             public static readonly Error UsedInOrder = new Error(
                 "Item.UsedInOrder",
-                "This item is used in order and can not be deleted");
+                "Ši prekė naudojama užsakyme ir negali būti ištrinta");
         }
 
         public static class RentListing
         {
             public static readonly Error FailedToCreate = new Error(
                 "RentListing.FailedToCreate",
-                "The rent listing could not be created");
+                "Nepavyko sukurti nuomos skelbimo");
 
             public static readonly Error NotFound = new Error(
                 "RentListing.NotFound",
-                "The rent listing was not found");
+                "Nuomos skelbimas nerastas");
 
             public static readonly Error NotRenter = new Error(
                 "RentListing.NotRenter",
-                "The user is not the renter of the listing");
+                "Vartotojas nėra nuomininkas");
 
             public static readonly Error FailedToDelete = new Error(
                 "RentListing.FailedToDelete",
-                "The rent listing could not be deleted");
+                "Ištrinti Nuomos skelbimo nepavyko");
 
             public static readonly Error FailedToUpdate = new Error(
                 "RentListing.FailedToUpdate",
-                "The rent listing could not be updated"
+                "Atnaujinti nuomos skelbimo nepavyko"
                 );
         }
 
@@ -116,35 +128,35 @@ namespace ItemRental.Core.Domain
         {
             public static readonly Error FailedToCreate = new Error(
                 "Order.FailedToCreate",
-                "The order could not be created");
+                "Sukurti užsakymo nepavyko");
 
             public static readonly Func<Guid, Error> NotFound = id => new Error(
                 "Order.NotFound",
-                "The order was not found");
+                "Užsakymas nerastas");
 
             public static readonly Func<Guid, Error> NotOwner = id => new Error(
                 "Order.NotOwner",
-                "The user is not the owner of the order");
+                "Jūs nesate klientas");
 
             public static readonly Func<Guid, Error> NotValidAction = id => new Error(
                 "Order.NotValidAction",
-                "The action is not valid for the order");
+                "Veiksmas nėra galiojantis užsakymui");
 
             public static readonly Func<Guid, Error> FailedToAccept = id => new Error(
                 "Order.FailedToAccept",
-                "Failed to accept the order");
+                "Užsakymo priimti nepavyko");
 
             public static readonly Func<Guid, Error> DateBusy = id => new Error(
                 "Order.DateBusy",
-                "The selected date is busy");
+                "Pasirinkta data užimta");
 
             public static readonly Error NotInTransit = new Error(
                 "Order.NotInTransit",
-                "The order is not in transit");
+                "Užsakymas nepristatomas");
 
             public static readonly Error FailedToConfirmDelivery = new Error(
                 "Order.FailedToConfirmDelivery",
-                "Failed to confirm the delivery");
+                "Pristatymą patvirtinti nepavyko");
         }
     }
 }

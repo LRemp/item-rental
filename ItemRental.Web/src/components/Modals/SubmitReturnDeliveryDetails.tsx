@@ -39,8 +39,8 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
   const updateDetails = async (data: any) => {
     const notificationId = notifications.show({
       loading: true,
-      title: 'Updating',
-      message: 'Updating return delivery details...',
+      title: 'Atnaujinama',
+      message: 'Atnaujinama grąžinimo informacija...',
       autoClose: false,
       withCloseButton: false,
     });
@@ -58,8 +58,8 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
       notifications.update(
         Success({
           id: notificationId,
-          title: 'Success',
-          message: 'Return delivery details updated successfuly!',
+          title: 'Atnaujinta',
+          message: 'Pristatymo informacija sėkmingai atnaujinta!',
         })
       );
     } catch (e: any) {
@@ -88,8 +88,8 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
               {deliveryType === 0 && (
                 <>
                   <TextInput
-                    label="Location"
-                    placeholder="Enter pickup location"
+                    label="Vieta"
+                    placeholder="Įveskite atsiėmimo vietą"
                     {...form.getInputProps('location')}
                   />
                 </>
@@ -98,19 +98,19 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
                 <>
                   <Select
                     data={shippingProviders}
-                    label="Shipping provider"
-                    placeholder="Pick shipping provider"
+                    label="Pristatymo paslauga"
+                    placeholder="Pasirinkite pristatymo paslaugą"
                     {...form.getInputProps('shippingProvider')}
                   />
 
                   <TextInput
-                    label="Tracking id"
-                    placeholder="Enter tracking id"
+                    label="Sekimo ID"
+                    placeholder="Įveskite sekimo ID"
                     {...form.getInputProps('shippingId')}
                   />
                   <Textarea
-                    label="Comment"
-                    placeholder="Enter comment"
+                    label="Komentaras"
+                    placeholder="Įveskite komentarą"
                     {...form.getInputProps('comment')}
                     autosize
                   />
@@ -118,7 +118,7 @@ const SubmitReturnDeliveryDetailsModal: React.FC<SubmitReturnDeliveryDetailsModa
               )}
 
               <Button fullWidth mt="md" type="submit" loading={loading}>
-                Update return delivery details
+                Atnaujinti grąžinimo informaciją
               </Button>
             </Fieldset>
           </form>

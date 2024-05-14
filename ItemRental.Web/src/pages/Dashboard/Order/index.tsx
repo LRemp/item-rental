@@ -29,7 +29,7 @@ import labels from '@/utils/OrderStatusLabels';
 import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
 import OrderCalendar from '@/components/Misc/OrderCalendar';
 
-const pathItems = [{ title: 'Dashboard', href: '/dashboard/home' }, { title: 'Orders' }].map(
+const pathItems = [{ title: 'Pagrindinis', href: '/dashboard/home' }, { title: 'Užsakymai' }].map(
   (item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}

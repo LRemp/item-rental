@@ -150,7 +150,7 @@ const UserOrdersTable: React.FC<UserOrdersTableProps> = ({ items = [] }) => {
     <Paper radius="sm" mb="xl" mt="lg" p="md" shadow="md">
       <ScrollArea>
         <TextInput
-          placeholder="Search by any field"
+          placeholder="Įveskite paieškos kriterijų"
           mb="md"
           leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
           value={search}

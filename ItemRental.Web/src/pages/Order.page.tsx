@@ -28,6 +28,7 @@ import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDeta
 import labels from '@/utils/OrderStatusLabels';
 import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
 import OrderCalendar from '@/components/Misc/OrderCalendar';
+import OrderStatusHints from '@/components/Misc/OrderStatusHints';
 
 const pathItems = [
   { title: 'Pagrindinis', href: '/' },
@@ -92,7 +93,7 @@ const DetailsContainer: React.FC<Order> = ({
             <Box>
               <Text fw={500}>Pristatymo būdas</Text>
               <Badge radius="xs" size="md">
-                {deliveryType === 0 ? 'Pickup' : 'Shippment'}
+                {deliveryType === 0 ? 'Atsiėmimas' : 'Siuntimas'}
               </Badge>
             </Box>
           </Box>
@@ -164,6 +165,7 @@ function Order() {
                     <TimelineContainer events={order.events} />
                     <DeliveryActions {...order} />
                   </Paper>
+                  <OrderStatusHints status={order.status} />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 8 }}>
                   <Paper p="lg" shadow="md" radius="sm">

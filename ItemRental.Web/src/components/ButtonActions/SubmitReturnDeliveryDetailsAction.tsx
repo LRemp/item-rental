@@ -24,7 +24,7 @@ const SubmitReturnDeliveryDetailsAction: React.FC<SubmitReturnDeliveryDetailsAct
       />
       <Button fullWidth onClick={open}>
         <Center inline>
-          Submit return delivery details <IconBoxSeam size={26} stroke={1.5} />
+          Pateikti grąžinimo informaciją <IconBoxSeam size={26} stroke={1.5} />
         </Center>
       </Button>
     </>

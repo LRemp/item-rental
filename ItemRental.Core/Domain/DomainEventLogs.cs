@@ -16,8 +16,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Created",
-                Title = "Created",
-                Description = "Order created by the user"
+                Title = "Rezervacija sukurta",
+                Description = "Rezervacija sėkmingai sukurta"
             };
 
             public static readonly Func<Guid, Guid, EventLog> Accepted = (id, resource) => new EventLog
@@ -25,8 +25,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Accepted",
-                Title = "Accepted",
-                Description = "Order accepted by the merchant"
+                Title = "Revzervacija patvirtinta",
+                Description = "Rezervacija sėkmingai patvirtinta prekybininko"
             };
 
             public static readonly Func<Guid, Guid, EventLog> Dispatched = (id, resource) => new EventLog
@@ -34,8 +34,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Dispatched",
-                Title = "Dispatched",
-                Description = "Order dispatched by the merchant"
+                Title = "Užsakymas išsiųstas",
+                Description = "Užsakymas išsiųstas prekybininko"
             };
 
             public static readonly Func<Guid, Guid, EventLog> Delivered = (id, resource) => new EventLog
@@ -43,8 +43,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Delivered",
-                Title = "Delivered",
-                Description = "Order delivered to the customer"
+                Title = "Užsakymas pristatytas",
+                Description = "Užsakymas pristatytas klientui"
             };
 
             public static readonly Func<Guid, Guid, EventLog> ReturnDispatched = (id, resource) => new EventLog
@@ -52,8 +52,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.ReturnDispatched",
-                Title = "Dispatched",
-                Description = "Order dispatched back by the customer"
+                Title = "Užsakymas grąžinamas",
+                Description = "Užsakymas išsiųstas atgal"
             };
 
             public static readonly Func<Guid, Guid, EventLog> Returned = (id, resource) => new EventLog
@@ -61,8 +61,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Returned",
-                Title = "Returned",
-                Description = "Order returned by the customer"
+                Title = "Užsakymas grąžintas",
+                Description = "Užsakymas sėkmingai grąžintas"
             };
 
             public static readonly Func<Guid, Guid, EventLog> Complete = (id, resource) => new EventLog
@@ -70,8 +70,8 @@ namespace ItemRental.Core.Domain
                 Id = id,
                 Resource = resource,
                 EventName = "Order.Complete",
-                Title = "Complete",
-                Description = "The order is complete"
+                Title = "Užsakymas baigtas",
+                Description = "Nuoma sėkmingai įvykdyta"
             };
         }
     }

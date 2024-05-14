@@ -1,4 +1,4 @@
-import { Blockquote, Box } from '@mantine/core';
+import { Alert, Blockquote, Box } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 import React from 'react';
 import { deliveryStatusTips } from '@/utils/Delivery';
@@ -8,12 +8,14 @@ interface OrderStatusHintsProps {
 }
 
 const OrderStatusHints: React.FC<OrderStatusHintsProps> = ({ status }) => (
-    <Box mt="lg">
-      <br />
-      {deliveryStatusTips[status] && (
-        <Blockquote icon={<IconInfoCircle />}>{deliveryStatusTips[status].text}</Blockquote>
-      )}
-    </Box>
-  );
+  <Box>
+    <br />
+    {deliveryStatusTips[status] && (
+      <Alert variant="light" color="blue" icon={<IconInfoCircle />}>
+        {deliveryStatusTips[status].text}
+      </Alert>
+    )}
+  </Box>
+);
 
 export default OrderStatusHints;

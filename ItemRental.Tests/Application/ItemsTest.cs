@@ -75,7 +75,7 @@ namespace ItemRental.Tests.Application
         {
             var command = new DeleteItemCommand(Guid.NewGuid(), Guid.NewGuid());
 
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, null, null);
+            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object);
 
             _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync((Item)null);
 
@@ -98,7 +98,7 @@ namespace ItemRental.Tests.Application
 
             var command = new DeleteItemCommand(item.Id, Guid.NewGuid());
 
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, null, null);
+            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object);
 
             _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync(item);
 
@@ -108,55 +108,6 @@ namespace ItemRental.Tests.Application
             //Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be(DomainErrors.Item.Unauthorized);
-        }
-
-        [Fact]
-        public async Task DeleteItemShouldReturnFailureResultWhenIncludedInListing()
-        {
-            var item = new Item
-            {
-                Id = Guid.NewGuid(),
-                Owner = Guid.NewGuid()
-            };
-
-            var command = new DeleteItemCommand(item.Id, item.Owner);
-
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, _orderServiceMock.Object, _rentListingService.Object);
-
-            _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync(item);
-            _rentListingService.Setup(x => x.IsItemUsed(It.IsAny<Guid>(), default)).ReturnsAsync(true);
-
-            //Act
-            Result result = await handler.Handle(command, default);
-
-            //Assert
-            result.IsFailure.Should().BeTrue();
-            result.Error.Should().Be(DomainErrors.Item.UsedInListing);
-        }
-
-        [Fact]
-        public async Task DeleteItemShouldReturnFailureResultWhenUsedInOrder()
-        {
-            var item = new Item
-            {
-                Id = Guid.NewGuid(),
-                Owner = Guid.NewGuid()
-            };
-
-            var command = new DeleteItemCommand(item.Id, item.Owner);
-
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, _orderServiceMock.Object, _rentListingService.Object);
-
-            _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync(item);
-            _rentListingService.Setup(x => x.IsItemUsed(It.IsAny<Guid>(), default)).ReturnsAsync(false);
-            _orderServiceMock.Setup(x => x.IsItemInUse(It.IsAny<Guid>(), default)).ReturnsAsync(true);
-
-            //Act
-            Result result = await handler.Handle(command, default);
-
-            //Assert
-            result.IsFailure.Should().BeTrue();
-            result.Error.Should().Be(DomainErrors.Item.UsedInOrder);
         }
 
         [Fact]
@@ -170,7 +121,7 @@ namespace ItemRental.Tests.Application
 
             var command = new DeleteItemCommand(item.Id, item.Owner);
 
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, _orderServiceMock.Object, _rentListingService.Object);
+            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object);
 
             _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync(item);
             _rentListingService.Setup(x => x.IsItemUsed(It.IsAny<Guid>(), default)).ReturnsAsync(false);
@@ -196,7 +147,7 @@ namespace ItemRental.Tests.Application
 
             var command = new DeleteItemCommand(item.Id, item.Owner);
 
-            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object, _orderServiceMock.Object, _rentListingService.Object);
+            var handler = new DeleteItemCommandHandler(_itemRepositoryMock.Object);
 
             _itemRepositoryMock.Setup(x => x.GetAsync(It.IsAny<Guid>(), default)).ReturnsAsync(item);
             _rentListingService.Setup(x => x.IsItemUsed(It.IsAny<Guid>(), default)).ReturnsAsync(false);

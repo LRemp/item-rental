@@ -62,7 +62,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<List<Item>> GetByOwnerAsync(Guid owner, CancellationToken cancellationToken)
         {
-            var query = @"SELECT * FROM items WHERE owner = @owner";
+            var query = @"SELECT * FROM items WHERE owner = @owner AND deleted = 0";
 
             var result = await _connection.QueryAsync<Item>(query, new { owner = owner.ToString() });
             return result.ToList();
@@ -70,7 +70,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var query = @"DELETE FROM items WHERE id = @id";
+            var query = @"UPDATE items SET deleted = 1 WHERE id = @id";
 
             var result = await _connection.ExecuteAsync(query, new { id });
             return result > 0;
@@ -101,6 +101,7 @@ namespace ItemRental.Repositories.Repositories
                 {
                     return new CategoryDTO
                     {
+                        Id = category.Id,
                         Name = category.Name,
                         Label = category.Label,
                         Parent = category.Parent,
@@ -110,6 +111,48 @@ namespace ItemRental.Repositories.Repositories
                 splitOn: "Scheme");
 
             return result.ToList();
+        }
+
+        public async Task<bool> UpdateCategoryAsync(Category category, CancellationToken cancellationToken)
+        {
+            var query = @"UPDATE categories SET name = @name, label = @label, parent = @parent, scheme = @scheme WHERE id = @id";
+
+            var result = await _connection.ExecuteAsync(query, new
+            {
+                id = category.Id,
+                name = category.Name,
+                label = category.Label,
+                parent = category.Parent,
+                scheme = category.Scheme
+            });
+
+            return result > 0;
+        }
+
+        public async Task<bool> AddCategoryAsync(Category category, CancellationToken cancellationToken)
+        {
+            var query = @"INSERT INTO categories (id, name, label, parent, scheme)
+                            VALUES(@id, @name, @label, @parent, @scheme)";
+
+            var result = await _connection.ExecuteAsync(query, new
+            {
+                id = category.Id,
+                name = category.Name,
+                label = category.Label,
+                parent = category.Parent,
+                scheme = category.Scheme
+            });
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteCategoryAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"DELETE FROM categories WHERE id = @id";
+
+            var result = await _connection.ExecuteAsync(query, new { id });
+
+            return result > 0;
         }
     }
 }
