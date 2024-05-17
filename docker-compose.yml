@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: ItemRental.API/Dockerfile
+    volumes:
+      - image-data:/app/Images
     depends_on:
       - mariadb
   mariadb:
@@ -47,3 +49,4 @@ services:
       - itemrental.web
 volumes:
   mysql-data:
+  image-data:  

@@ -11,7 +11,7 @@ const RequireAuthRoute: React.FC<RequireAuthRouteProps> = ({ children, fallbackP
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticated) {
     navigate(fallbackPath || '/login');
   }
   return <>{children}</>;
