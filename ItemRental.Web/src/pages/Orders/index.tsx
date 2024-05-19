@@ -23,7 +23,7 @@ const Orders: React.FC = () => {
     <>
       <Box>
         <Title fw={700}>Nuomos rezervacijos</Title>
-        {isAuthenticated ? (
+        {isAuthenticated() ? (
           <>
             {loading ? (
               <Center h="70vh" w="100%">
