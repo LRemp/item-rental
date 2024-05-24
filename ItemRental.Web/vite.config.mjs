@@ -5,11 +5,11 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:5261',
-      '/images': 'http://localhost:5261',
+      '/api': 'https://localhost:8082',
+      '/images': 'https://localhost:8082',
     },
     host: true,
-    port: 8080
+    port: 8080,
   },
   plugins: [react(), tsconfigPaths()],
   test: {

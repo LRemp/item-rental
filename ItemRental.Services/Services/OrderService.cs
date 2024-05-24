@@ -114,8 +114,9 @@ namespace ItemRental.Services.Services
             }
 
             var merchant = await userRepository.GetByIdAsync(listing.Renter, cancellationToken);
+            var userEntity = await userRepository.GetByIdAsync(user, cancellationToken);
 
-            emailService.SendEmail(DomainEmails.Order.NewOrderCreated(merchant, listing));
+            emailService.SendEmail(DomainEmails.Order.NewOrderCreated(merchant, listing, order, userEntity));
 
             await eventLogRepository.AddAsync(DomainEventLogs.Order.Created(Guid.NewGuid(), order.Id), cancellationToken);
             await userRepository.AddNotificationAsync(DomainNotifications.Order.Created(order.User, order.Id), cancellationToken);

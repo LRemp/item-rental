@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   itemrental-api:
@@ -10,7 +10,7 @@ services:
       - image-data:/app/Images
     ports:
       - "8081:8081"
-      - "8082:8082" 
+      - "8082:8082"
     depends_on:
       - mariadb
   mariadb:
@@ -29,8 +29,10 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./proxy/ssl:/etc/nginx/ssl
       - ./ItemRental.Web/dist:/usr/share/nginx/html
     depends_on:
       - itemrental-api
@@ -47,4 +49,4 @@ services:
       - mariadb
 volumes:
   mysql-data:
-  image-data:  
+  image-data:
