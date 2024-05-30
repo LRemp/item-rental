@@ -8,7 +8,7 @@ const ListingCard: React.FC<RentListing> = ({ id, title, description, price, ite
   const navigate = useNavigate();
   const slides = item.images?.map((image) => (
     <Carousel.Slide key={image}>
-      <Image src={`/images/${image}`} height={220} />
+      <Image src={`/images/${image}`} height={220} fallbackSrc={NoImage} />
     </Carousel.Slide>
   ));
 
