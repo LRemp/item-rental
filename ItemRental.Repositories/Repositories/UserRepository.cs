@@ -25,10 +25,10 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<bool> AddAsync(User user, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO users (id, username, email, password, name, surname) 
-                            VALUES (@id, @username, @email, @password, @name, @surname)";
+            var query = @"INSERT INTO users (id, username, email, password, name, surname, phone) 
+                            VALUES (@id, @username, @email, @password, @name, @surname, @phone)";
             
-            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, username = user.Username, email = user.Email, password = user.Password, name = user.Name, surname = user.Surname });
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, username = user.Username, email = user.Email, password = user.Password, name = user.Name, surname = user.Surname, phone = user.Phone });
 
             return result > 0;
         }
@@ -178,9 +178,9 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<bool> UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            var query = @"UPDATE users SET password = @password, name = @name, surname = @surname, verified = @verified WHERE id = @id";
+            var query = @"UPDATE users SET password = @password, name = @name, surname = @surname, verified = @verified, phone = @phone WHERE id = @id";
 
-            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, password = user.Password, name = user.Name, surname = user.Surname, verified = user.Verified });
+            var result = await _mySqlConnection.ExecuteAsync(query, new { id = user.Id, password = user.Password, name = user.Name, surname = user.Surname, verified = user.Verified, phone = user.Phone });
 
             return result > 0;
         }

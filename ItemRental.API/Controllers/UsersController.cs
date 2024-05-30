@@ -47,9 +47,10 @@ namespace ItemRental.API.Controllers
             return Ok(result.Value);
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterCommand request)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO registerUserDTO)
         {
-            Result<Guid> result = await _sender.Send(request);
+
+            Result<Guid> result = await _sender.Send(new RegisterCommand(registerUserDTO));
 
             if(result.IsFailure)
             {
