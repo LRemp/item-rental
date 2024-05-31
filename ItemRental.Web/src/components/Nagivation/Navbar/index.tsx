@@ -79,7 +79,7 @@ export function Navbar() {
       <div className={classes.navbarMain}>{links}</div>
 
       <div className={classes.footer}>
-        {isAuthenticaded() ? (
+        {isAuthenticaded ? (
           <>
             <SegmentedControl
               data={[

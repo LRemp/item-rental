@@ -37,7 +37,7 @@ namespace ItemRental.Application.Users
                 Id = Guid.NewGuid(),
                 Username = request.registerUser.Username,
                 Email = request.registerUser.Email,
-                Name = request.registerUser.Username,
+                Name = request.registerUser.Name,
                 Surname = request.registerUser.Surname,
                 Phone = request.registerUser.Phone,
                 Password = passwordHash
