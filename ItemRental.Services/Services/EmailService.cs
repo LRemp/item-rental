@@ -31,7 +31,14 @@ namespace ItemRental.Services.Services
                 senderAddress: "DoNotReply@bead29e0-a40e-4714-a3a5-d590f17ea26a.azurecomm.net",
                 recipientAddress: email.Address,
                 subject: email.Subject,
-                htmlContent: email.HTMLcontent,
+                htmlContent: @"
+                <html>
+                <body>
+                    <h1>Welcome to Azure Communication Services!</h1>
+                    <p>This email is sent using <b>Azure.Communication.Email</b> client library.</p>
+                    <p>Here is an example of HTML content in an email.</p>
+                </body>
+                </html>",
                 plainTextContent: email.PlainTextContent);
         }
 

@@ -41,6 +41,7 @@
     "react": "^18.2.0",
     "react-auth-kit": "^3.1.2",
     "react-dom": "^18.2.0",
+    "react-input-mask": "^2.0.4",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.21.0",
     "react-timeago": "^7.2.0"
@@ -91,5 +92,5 @@
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0"
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@9.0.6"
 }

@@ -1,6 +1,6 @@
 import TimeAgo from 'react-timeago';
-import lithuanianStrings from 'react-timeago/lib/language-strings/lt';
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
+//import lithuanianStrings from 'react-timeago/lib/language-strings/lt';
+//import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import {
   ActionIcon,
   Avatar,
@@ -19,7 +19,7 @@ import { theme } from '@/theme';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
 
-const dateFormatter = buildFormatter(lithuanianStrings);
+//const dateFormatter = buildFormatter(lithuanianStrings);
 
 const Comment: React.FC<IComment> = ({ author, createdAt, text }) => (
   <Box my="md">
@@ -32,7 +32,7 @@ const Comment: React.FC<IComment> = ({ author, createdAt, text }) => (
           {author.name} {author.surname}
         </Text>
         <Text size="xs" c="dimmed">
-          <TimeAgo date={createdAt} formatter={dateFormatter} />
+          <TimeAgo date={createdAt} />
         </Text>
       </div>
     </Group>

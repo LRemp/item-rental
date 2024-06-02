@@ -17,23 +17,27 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconAt, IconLock, IconUser } from '@tabler/icons-react';
+import { IconAt, IconLock, IconPhone, IconPhoneCall, IconUser } from '@tabler/icons-react';
 import Logo from '@/assets/images/logo.png';
 import classes from './Components/Form.module.css';
 import api from '@/api';
 import { Error, Success } from '@/utils/Notifications';
 import PasswordStrength from './Components/PasswordStrength';
+import PhoneNumberInput from '@/components/Input/PhoneNumberInput';
 
 export function Register() {
   const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
-      username: '',
-      email: '',
-      password: '',
-      passwordRepeat: '',
-      termsOfService: false,
+      username: 'testuser',
+      name: 'Test',
+      surname: 'User',
+      phone: '+37067600222',
+      email: 'testuser@itemrental.com',
+      password: 'Testuser1!',
+      passwordRepeat: 'Testuser1!',
+      termsOfService: true,
     },
 
     validate: {
@@ -58,6 +62,9 @@ export function Register() {
         username: args.username,
         email: args.email,
         password: args.password,
+        name: args.name,
+        surname: args.surname,
+        phone: args.phone,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -150,6 +157,14 @@ export function Register() {
               placeholder="Įveskite el.paštą"
               required
               {...form.getInputProps('email')}
+            />
+
+            <TextInput
+              leftSectionPointerEvents="none"
+              leftSection={<IconPhone style={{ width: rem(16), height: rem(16) }} />}
+              label="Telefono numeris"
+              placeholder="Įveskite telefono numerį"
+              {...form.getInputProps('phone')}
             />
 
             <PasswordStrength formHandle={form.getInputProps('password')} />

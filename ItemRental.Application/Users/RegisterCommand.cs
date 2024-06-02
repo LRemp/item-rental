@@ -1,5 +1,6 @@
 ﻿using ItemRental.Core.Contracts;
 using ItemRental.Core.Domain;
+using ItemRental.Core.DTOs;
 using ItemRental.Core.Entities;
 using ItemRental.Core.Helpers;
 using ItemRental.Services.Extensions.Messaging;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Users
 {
-    public record RegisterCommand(string Username, string Email, string Password) : ICommand<Guid>;
+    public record RegisterCommand(RegisterUserDTO registerUser) : ICommand<Guid>;
     internal sealed class RegisterCommandHandler : ICommandHandler<RegisterCommand, Guid>
     {
         private readonly IUserRepository _userRepository;
@@ -23,19 +24,22 @@ namespace ItemRental.Application.Users
         }
         public async Task<Result<Guid>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            bool isUnique = await _userRepository.IsEmailAndUsernameUniqueAsync(request.Username, request.Email, cancellationToken);
+            bool isUnique = await _userRepository.IsEmailAndUsernameUniqueAsync(request.registerUser.Username, request.registerUser.Email, cancellationToken);
             
             if(!isUnique)
             {
                 return Result.Failure<Guid>(DomainErrors.User.EmailOrUsernameAlreadyInUse);
             }
 
-            var passwordHash = _userService.GeneratePasswordHash(request.Password);
+            var passwordHash = _userService.GeneratePasswordHash(request.registerUser.Password);
 
             var user = new User {
                 Id = Guid.NewGuid(),
-                Username = request.Username,
-                Email = request.Email,
+                Username = request.registerUser.Username,
+                Email = request.registerUser.Email,
+                Name = request.registerUser.Name,
+                Surname = request.registerUser.Surname,
+                Phone = request.registerUser.Phone,
                 Password = passwordHash
             };
 
