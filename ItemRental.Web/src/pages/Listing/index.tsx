@@ -139,7 +139,7 @@ const CreateOrderModal = () => {
         closeOnEscape={!creating}
         withCloseButton={!creating}
       >
-        {isAuthenticated() ? (
+        {isAuthenticated ? (
           <form onSubmit={form.onSubmit((values) => createOrder(values))}>
             <LoadingOverlay
               visible={creating}
