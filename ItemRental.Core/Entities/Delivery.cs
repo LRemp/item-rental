@@ -11,7 +11,7 @@ namespace ItemRental.Core.Entities
     {
         public DeliveryType Type { get; set; }
         public OrderRole Role { get; set; }
-        public Guid Order { get; set; }
+        public string Order { get; set; }
         public string? Location { get; set; }
         public string? ShippingProvider { get; set; }
         public string? ShippingId { get; set; }

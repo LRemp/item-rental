@@ -11,7 +11,7 @@ namespace ItemRental.Core.Domain
     {
         public static class Order
         {
-            public static readonly Func<Guid, Guid, Notification> Created = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Created = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,
@@ -22,7 +22,7 @@ namespace ItemRental.Core.Domain
                 Url = $"/orders/{order}"
             };
 
-            public static readonly Func<Guid, Guid, Notification> Accepted = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Accepted = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,
@@ -33,7 +33,7 @@ namespace ItemRental.Core.Domain
                 Url = $"/orders/{order}"
             };
 
-            public static readonly Func<Guid, Guid, Notification> Dispatched = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Dispatched = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,
@@ -44,7 +44,7 @@ namespace ItemRental.Core.Domain
                 Url = $"/orders/{order}"
             };
 
-            public static readonly Func<Guid, Guid, Notification> Delivered = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Delivered = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,
@@ -55,7 +55,7 @@ namespace ItemRental.Core.Domain
                 Url = $"/orders/{order}"
             };
 
-            public static readonly Func<Guid, Guid, Notification> Returned = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Returned = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,
@@ -66,7 +66,7 @@ namespace ItemRental.Core.Domain
                 Url = $"/orders/{order}"
             };
 
-            public static readonly Func<Guid, Guid, Notification> Completed = (user, order) => new Notification
+            public static readonly Func<Guid, string, Notification> Completed = (user, order) => new Notification
             {
                 Id = Guid.NewGuid(),
                 User = user,

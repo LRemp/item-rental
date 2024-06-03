@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Core.Entities
 {
-    public class Order : Entity
+    public class Order
     {
+        public required string Id { get; set; }
         public Guid Listing { get; set; }
         public Guid User { get; set; }
         public DateTime StartDate { get; set; }

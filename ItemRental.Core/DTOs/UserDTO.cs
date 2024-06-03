@@ -14,6 +14,7 @@ namespace ItemRental.Core.DTOs
         public string Name { get; set; } = string.Empty;
         public string Surname { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
+        public string AvatarURL {  get; set; } = string.Empty;
         public bool Verified { get; set; } = false;
     }
 }

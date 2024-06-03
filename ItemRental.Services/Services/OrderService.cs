@@ -31,7 +31,7 @@ namespace ItemRental.Services.Services
             this.mapper = mapper;
         }
 
-        public async Task<Result> AcceptAsync(Guid id, Guid user, CancellationToken cancellationToken)
+        public async Task<Result> AcceptAsync(string id, Guid user, CancellationToken cancellationToken)
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 
@@ -78,25 +78,32 @@ namespace ItemRental.Services.Services
             return Result.Success();
         }
 
-        public async Task<Result<Guid>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken)
+        public async Task<Result<string>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken)
         {
             var listing = await rentListingRepository.GetInternalAsync(addOrderDTO.RentListing, cancellationToken);
 
             if (listing is null)
             {
-                return Result.Failure<Guid>(DomainErrors.RentListing.NotFound);
+                return Result.Failure<string>(DomainErrors.RentListing.NotFound);
             }
 
             var isDateNotTaken = await this.IsDateNotTaken(addOrderDTO.RentListing, addOrderDTO.StartDate, addOrderDTO.EndDate, cancellationToken);
 
             if (!isDateNotTaken)
             {
-                return Result.Failure<Guid>(DomainErrors.Order.DateBusy(addOrderDTO.RentListing));
+                return Result.Failure<string>(DomainErrors.Order.DateBusy(addOrderDTO.RentListing));
+            }
+
+            var orderId = await GetNewMerchantOrderId(listing.Renter, cancellationToken);
+
+            if(orderId is null)
+            {
+                return Result.Failure<string>(DomainErrors.Order.FailedToCreate);
             }
 
             var order = new Order
             {
-                Id = Guid.NewGuid(),
+                Id = orderId,
                 User = user,
                 Listing = addOrderDTO.RentListing,
                 StartDate = addOrderDTO.StartDate,
@@ -110,7 +117,7 @@ namespace ItemRental.Services.Services
             
             if(!success)
             {
-                return Result.Failure<Guid>(DomainErrors.Order.FailedToCreate);
+                return Result.Failure<string>(DomainErrors.Order.FailedToCreate);
             }
 
             var merchant = await userRepository.GetByIdAsync(listing.Renter, cancellationToken);
@@ -123,7 +130,7 @@ namespace ItemRental.Services.Services
             return Result.Success(order.Id);
         }
 
-        public async Task<OrderDTO?> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<OrderDTO?> GetAsync(string id, CancellationToken cancellationToken)
         {
             var orderDTO = await orderRepository.GetAsync(id, cancellationToken);
 
@@ -137,6 +144,20 @@ namespace ItemRental.Services.Services
             orderDTO.Events = mapper.Map<List<EventLogDTO>>(events);
 
             return orderDTO;
+        }
+
+        public async Task<string?> GetNewMerchantOrderId(Guid id, CancellationToken cancellationToken)
+        {
+            var merchant = await userRepository.GetByIdAsync(id, cancellationToken);
+
+            if(merchant is null)
+            {
+                return null;
+            }
+
+            var merchantOrdersCount = await orderRepository.GetNumberOfMerchantOrders(id, cancellationToken);
+
+            return $"{merchant.Username.ToUpper()}-{merchantOrdersCount + 1}";
         }
 
         public async Task<bool> IsDateNotTaken(Guid id, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)

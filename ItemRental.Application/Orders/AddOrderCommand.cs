@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Orders
 {
-    public sealed record AddOrderCommand(Guid user, AddOrderDTO addOrderDTO) : ICommand<Guid>;
-    public class AddOrderCommandHandler : ICommandHandler<AddOrderCommand, Guid>
+    public sealed record AddOrderCommand(Guid user, AddOrderDTO addOrderDTO) : ICommand<string>;
+    public class AddOrderCommandHandler : ICommandHandler<AddOrderCommand, string>
     {
         private readonly IOrderService orderService;
         public AddOrderCommandHandler(IOrderService orderService)
         {
             this.orderService = orderService;
         }
-        public async Task<Result<Guid>> Handle(AddOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
             var result = await orderService.CreateAsync(request.addOrderDTO, request.user, cancellationToken);
 

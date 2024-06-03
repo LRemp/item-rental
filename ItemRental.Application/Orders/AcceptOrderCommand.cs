@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Orders
 {
-    public sealed record AcceptOrderCommand(Guid id, Guid user) : ICommand;
+    public sealed record AcceptOrderCommand(string id, Guid user) : ICommand;
     public class AcceptOrderCommandHandler : ICommandHandler<AcceptOrderCommand>
     {
         private readonly IOrderService orderService;

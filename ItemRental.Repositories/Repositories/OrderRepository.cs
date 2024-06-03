@@ -40,7 +40,7 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<bool> DeleteAsync(string id, CancellationToken cancellationToken)
         {
             var query = @"DELETE FROM `orders` WHERE id = @id";
 
@@ -49,7 +49,7 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<OrderDTO?> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<OrderDTO?> GetAsync(string id, CancellationToken cancellationToken)
 
         {
            /* var query = @"SELECT rl.*, i.*, u.*
@@ -103,7 +103,7 @@ namespace ItemRental.Repositories.Repositories
             return results[0];
         }
 
-        public async Task<Order?> GetInternalAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Order?> GetInternalAsync(string id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM `orders` WHERE id = @id";
 
@@ -376,6 +376,18 @@ namespace ItemRental.Repositories.Repositories
             var result = await _connection.QueryAsync<Order>(query, new { id });
 
             return result.ToList();
+        }
+
+        public async Task<int> GetNumberOfMerchantOrders(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT COUNT(*)
+                          FROM orders o
+                          INNER JOIN rent_listings l ON o.listing = l.id
+                          WHERE l.renter = @id";
+
+            var result = await _connection.QueryAsync<int>(query, new { id });
+
+            return result.FirstOrDefault();
         }
     }
 }

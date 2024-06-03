@@ -9,7 +9,7 @@ namespace ItemRental.Core.DTOs
 {
     public class OrderDTO
     {
-        public Guid Id { get; set; }
+        public required string Id { get; set; }
         public required RentListingDTO RentListing { get; set; }
         public required UserDTO User { get; set; }
         public DateTime StartDate { get; set; }

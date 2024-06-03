@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Orders
 {
-    public sealed record GetOrderQuery(Guid id) : IQuery<OrderDTO>;
+    public sealed record GetOrderQuery(string id) : IQuery<OrderDTO>;
     public class GetOrderQueryHandler : IQueryHandler<GetOrderQuery, OrderDTO>
     {
         private readonly IOrderService orderService;

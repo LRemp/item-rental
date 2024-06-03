@@ -8,7 +8,7 @@ namespace ItemRental.Core.Entities
 {
     public class EventLog : Entity
     {
-        public Guid Resource { get; set; }
+        public string Resource { get; set; }
         public string EventName { get; set; } = string.Empty;
         public string? Title { get; set; }
         public string ? Description { get; set; }

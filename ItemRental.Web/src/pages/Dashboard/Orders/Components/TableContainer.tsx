@@ -1,6 +1,6 @@
 import { Badge, Center, Paper, SegmentedControl, Table, Text } from '@mantine/core';
 import { useState } from 'react';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 import labels from '@/utils/OrderStatusLabels';
 import ItemActions from './ItemActions';
 

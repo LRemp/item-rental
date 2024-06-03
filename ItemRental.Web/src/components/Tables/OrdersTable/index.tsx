@@ -2,7 +2,7 @@ import { ActionIcon, Center, ScrollArea, Table, Text } from '@mantine/core';
 import { IconEye } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 
 const OrdersTableElement: React.FC<Order> = ({ id, rentListing, user, startDate, endDate }) => {
   const navigate = useNavigate();

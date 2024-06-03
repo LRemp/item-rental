@@ -55,7 +55,8 @@ namespace ItemRental.Application.Users
                 Username = user.Username,
                 Email = user.Email,
                 Name = user.Name,
-                Surname = user.Surname
+                Surname = user.Surname,
+                AvatarURL = user.AvatarURL,
             };
 
             return new LoginResponse(token, userDTO);

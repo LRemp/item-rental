@@ -10,10 +10,11 @@ namespace ItemRental.Core.Contracts
 {
     public interface IOrderService
     {
-        public Task<OrderDTO?> GetAsync(Guid id, CancellationToken cancellationToken);
-        public Task<Result<Guid>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken);
-        public Task<Result> AcceptAsync(Guid id, Guid user, CancellationToken cancellationToken);
+        public Task<OrderDTO?> GetAsync(string id, CancellationToken cancellationToken);
+        public Task<Result<string>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken);
+        public Task<Result> AcceptAsync(string id, Guid user, CancellationToken cancellationToken);
         public Task<bool> IsDateNotTaken(Guid id, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         public Task<bool> IsItemInUse(Guid id, CancellationToken cancellationToken);
+        public Task<string> GetNewMerchantOrderId(Guid id, CancellationToken cancellationToken);
     }
 }

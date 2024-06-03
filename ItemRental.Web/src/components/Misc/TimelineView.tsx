@@ -1,3 +1,4 @@
+import { getDateTimeLabel } from '@/utils/Dates';
 import { Timeline, Text } from '@mantine/core';
 
 interface TimelineViewProps {
@@ -26,7 +27,7 @@ const TimelineView: React.FC<TimelineViewProps> = ({
           {event.description}
         </Text>
         <Text size="xs" mt={4}>
-          {event.date}
+          {getDateTimeLabel(event.date)}
         </Text>
       </Timeline.Item>
     ))}

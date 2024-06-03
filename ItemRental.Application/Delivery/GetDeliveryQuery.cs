@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Delivery
 {
-    public sealed record GetDeliveryQuery(Guid id, Guid user, OrderRole? role) : IQuery<DeliveryDTO?>;
+    public sealed record GetDeliveryQuery(string id, Guid user, OrderRole? role) : IQuery<DeliveryDTO?>;
     public class GetDeliveryQueryHandler : IQueryHandler<GetDeliveryQuery, DeliveryDTO>
     {
         private readonly IDeliveryService deliveryService;

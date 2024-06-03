@@ -57,7 +57,7 @@ namespace ItemRental.Repositories.Repositories
             return result;
         }
 
-        public async Task<Delivery?> GetByOrderAndRoleAsync(Guid order, OrderRole role, CancellationToken cancellationToken)
+        public async Task<Delivery?> GetByOrderAndRoleAsync(string order, OrderRole role, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM deliveries WHERE `order` = @order AND `role` = @role";
 
@@ -66,7 +66,7 @@ namespace ItemRental.Repositories.Repositories
             return result;
         }
 
-        public async Task<List<Delivery>> GetByOrderAsync(Guid order, CancellationToken cancellationToken)
+        public async Task<List<Delivery>> GetByOrderAsync(string order, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM deliveries WHERE order = @order";
 

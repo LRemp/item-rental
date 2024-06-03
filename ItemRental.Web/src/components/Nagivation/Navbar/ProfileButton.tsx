@@ -7,11 +7,11 @@ import classes from './ProfileButton.module.css';
 export function ProfileButton() {
   const auth: AuthUser | null = useAuthUser();
   const navigate = useNavigate();
-
+  console.log(auth);
   return (
     <UnstyledButton className={classes.user} onClick={() => navigate('/profile')}>
       <Group>
-        <Avatar alt={auth?.username} radius="xl" color="cyan">
+        <Avatar src={auth?.avatarURL} alt={auth?.username} radius="xl" color="cyan">
           {auth?.username[0].toUpperCase()}
         </Avatar>
 

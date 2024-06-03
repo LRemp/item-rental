@@ -12,8 +12,8 @@ namespace ItemRental.Core.Contracts
     {
         public Task<bool> AddAsync(Delivery delivery, CancellationToken cancellationToken);
         public Task<Delivery?> GetAsync(Guid id, CancellationToken cancellationToken);
-        public Task<Delivery?> GetByOrderAndRoleAsync(Guid order, OrderRole role, CancellationToken cancellationToken);
-        public Task<List<Delivery>> GetByOrderAsync(Guid order, CancellationToken cancellationToken);
+        public Task<Delivery?> GetByOrderAndRoleAsync(string order, OrderRole role, CancellationToken cancellationToken);
+        public Task<List<Delivery>> GetByOrderAsync(string order, CancellationToken cancellationToken);
         public Task<bool> UpdateAsync(Delivery delivery, CancellationToken cancellationToken);
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
     }

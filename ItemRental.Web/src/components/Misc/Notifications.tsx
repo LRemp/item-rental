@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import classes from './Notifications.module.css';
 import useApiResult from '@/hooks/useApiResult';
 import api from '@/api';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 
 const Notification: React.FC<UserNotification> = ({ title, description, timestamp, url, read }) => {
   const navigate = useNavigate();

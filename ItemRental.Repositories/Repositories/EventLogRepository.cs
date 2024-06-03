@@ -46,7 +46,7 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
-        public async Task<List<EventLog>> GetAllAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<List<EventLog>> GetAllAsync(string id, CancellationToken cancellationToken)
         {
             var query = @"SELECT * FROM eventlog WHERE resource = @id";
 

@@ -11,7 +11,7 @@ namespace ItemRental.Core.Domain
     {
         public static class Order
         {
-            public static readonly Func<Guid, Guid, EventLog> Created = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Created = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -20,7 +20,7 @@ namespace ItemRental.Core.Domain
                 Description = "Rezervacija sėkmingai sukurta"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> Accepted = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Accepted = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -29,7 +29,7 @@ namespace ItemRental.Core.Domain
                 Description = "Rezervacija sėkmingai patvirtinta prekybininko"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> Dispatched = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Dispatched = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -38,7 +38,7 @@ namespace ItemRental.Core.Domain
                 Description = "Užsakymas išsiųstas prekybininko"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> Delivered = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Delivered = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -47,7 +47,7 @@ namespace ItemRental.Core.Domain
                 Description = "Užsakymas pristatytas klientui"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> ReturnDispatched = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> ReturnDispatched = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -56,7 +56,7 @@ namespace ItemRental.Core.Domain
                 Description = "Užsakymas išsiųstas atgal"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> Returned = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Returned = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,
@@ -65,7 +65,7 @@ namespace ItemRental.Core.Domain
                 Description = "Užsakymas sėkmingai grąžintas"
             };
 
-            public static readonly Func<Guid, Guid, EventLog> Complete = (id, resource) => new EventLog
+            public static readonly Func<Guid, string, EventLog> Complete = (id, resource) => new EventLog
             {
                 Id = id,
                 Resource = resource,

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Delivery
 {
-    public sealed record UpdateDeliveryCommand(Guid id, Guid user, UpdateDeliveryDTO updateDeliveryDTO) : ICommand;
+    public sealed record UpdateDeliveryCommand(string id, Guid user, UpdateDeliveryDTO updateDeliveryDTO) : ICommand;
     public class UpdateDeliveryCommandHandler : ICommandHandler<UpdateDeliveryCommand>
     {
         private readonly IDeliveryService deliveryService;

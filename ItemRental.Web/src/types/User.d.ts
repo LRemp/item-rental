@@ -23,6 +23,7 @@ type RegisterResponse = {};
 type AuthUser = {
   username: string;
   email: string;
+  avatarURL: string;
 };
 
 type UserNotification = {

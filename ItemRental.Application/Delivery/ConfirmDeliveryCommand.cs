@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Application.Delivery
 {
-    public sealed record ConfirmDeliveryCommand(Guid id, Guid user) : ICommand;
+    public sealed record ConfirmDeliveryCommand(string id, Guid user) : ICommand;
     public class ConfirmDeliveryCommandHandler : ICommandHandler<ConfirmDeliveryCommand>
     {
         private readonly IDeliveryService deliveryService;

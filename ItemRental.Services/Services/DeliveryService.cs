@@ -33,7 +33,7 @@ namespace ItemRental.Services.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> CompleteDeliveryAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<bool> CompleteDeliveryAsync(string id, CancellationToken cancellationToken)
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 
@@ -82,7 +82,7 @@ namespace ItemRental.Services.Services
             return deliveryDTO;
         }
 
-        public async Task<DeliveryDTO?> GetByOrderAsync(Guid id, OrderRole? role, CancellationToken cancellationToken)
+        public async Task<DeliveryDTO?> GetByOrderAsync(string id, OrderRole? role, CancellationToken cancellationToken)
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 
@@ -108,7 +108,7 @@ namespace ItemRental.Services.Services
             return null;
         }
 
-        public async Task<bool> UpdateAsync(UpdateDeliveryDTO updateDeliveryDTO, Guid id, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAsync(UpdateDeliveryDTO updateDeliveryDTO, string id, CancellationToken cancellationToken)
         {
             var order = await orderRepository.GetInternalAsync(id, cancellationToken);
 

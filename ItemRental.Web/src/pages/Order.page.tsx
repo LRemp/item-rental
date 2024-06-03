@@ -21,7 +21,7 @@ import TimelineView from '@/components/Misc/TimelineView';
 import useApiResult from '@/hooks/useApiResult';
 import { GenerateEvents } from '@/utils/TimelineUtils';
 
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 import ConfirmOrderDeliveryAction from '@/components/ButtonActions/ConfirmOrderDeliveryAction';
 import SubmitReturnDeliveryDetailsAction from '@/components/ButtonActions/SubmitReturnDeliveryDetailsAction';
 import ShippingDetailsContainer from '@/components/Details/Delivery/ShippingDetailsContainer';
@@ -147,7 +147,7 @@ function Order() {
                 </Title>
               </Group>
               <Text c="dimmed" size="xs" fw={500}>
-                {id}
+                Užsakymo Nr: {id}
               </Text>
               <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
             </Grid.Col>

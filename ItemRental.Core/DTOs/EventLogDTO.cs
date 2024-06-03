@@ -9,7 +9,7 @@ namespace ItemRental.Core.DTOs
 {
     public class EventLogDTO
     {
-        public Guid Resource { get; set; }
+        public string Resource { get; set; } = string.Empty;
         public string EventName { get; set; } = string.Empty;
         public string? Title { get; set; }
         public string? Description { get; set; }

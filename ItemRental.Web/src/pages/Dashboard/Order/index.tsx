@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import api from '@/api';
 import TimelineView from '@/components/Misc/TimelineView';
 import useApiResult from '@/hooks/useApiResult';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 import { GenerateEvents } from '@/utils/TimelineUtils';
 
 import ConfirmOrderAction from '@/components/ButtonActions/ConfirmOrderAction';
@@ -154,7 +154,7 @@ function Order() {
                 </Title>
               </Group>
               <Text c="dimmed" size="xs" fw={500}>
-                {id}
+                Užsakymo Nr: {id}
               </Text>
               <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
             </Grid.Col>

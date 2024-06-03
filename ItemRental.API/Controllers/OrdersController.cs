@@ -30,14 +30,14 @@ namespace ItemRental.API.Controllers
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
-            Result<Guid> result = await _sender.Send(new AddOrderCommand(userId, request));
+            Result<string> result = await _sender.Send(new AddOrderCommand(userId, request));
 
             if (result.IsFailure)
             {
                 return NotFound(result.Error);
             }
 
-            return Ok(result.Value);
+            return Ok(new { id = result.Value });
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -58,7 +58,7 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(string id)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
@@ -74,7 +74,7 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("{id}/accept")]
-        public async Task<IActionResult> Accept(Guid id)
+        public async Task<IActionResult> Accept(string id)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
@@ -142,7 +142,7 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}/Delivery")]
-        public async Task<IActionResult> GetDeliveryData(Guid id, [FromQuery(Name = "role")] OrderRole? role)
+        public async Task<IActionResult> GetDeliveryData(string id, [FromQuery(Name = "role")] OrderRole? role)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
@@ -163,7 +163,7 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("{id}/Delivery")]
-        public async Task<IActionResult> SetDeliveryData(Guid id, [FromBody] UpdateDeliveryDTO updateDeliveryDTO)
+        public async Task<IActionResult> SetDeliveryData(string id, [FromBody] UpdateDeliveryDTO updateDeliveryDTO)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
@@ -179,7 +179,7 @@ namespace ItemRental.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("{id}/Delivery/Confirm")]
-        public async Task<IActionResult> ConfirmDelivery(Guid id)
+        public async Task<IActionResult> ConfirmDelivery(string id)
         {
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 

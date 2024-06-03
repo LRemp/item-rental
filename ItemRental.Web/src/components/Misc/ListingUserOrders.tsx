@@ -2,7 +2,7 @@ import { Badge, Box, Flex, Loader, Paper, ScrollArea, Table, Text } from '@manti
 import React from 'react';
 import api from '@/api';
 import useApiResult from '@/hooks/useApiResult';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 import OrderStatusLabels from '@/utils/OrderStatusLabels';
 
 const Element = ({ id, startDate, endDate, status }: Order) => (

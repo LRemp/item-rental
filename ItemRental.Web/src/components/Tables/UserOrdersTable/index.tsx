@@ -22,7 +22,7 @@ import {
 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import classes from './main.module.css';
-import getDateLabel from '@/utils/Dates';
+import { getDateLabel } from '@/utils/Dates';
 import OrderStatusLabels, { GetBadgeData } from '@/utils/OrderStatusLabels';
 
 interface RowData {

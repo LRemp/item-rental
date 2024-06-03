@@ -89,11 +89,12 @@ const CreateOrderModal = () => {
       close();
       create.close();
 
-      navigate(`/orders/${createRequest}`);
+      navigate(`/orders/${createRequest.id}`);
     } catch (error: any) {
       if (error.code === 'Order.DateBusy') {
         form.setFieldError('date', 'The selected date is busy!');
       }
+      console.log(error);
       notifications.update(
         Error({ id: notificationId, title: 'Error', message: error.description })
       );

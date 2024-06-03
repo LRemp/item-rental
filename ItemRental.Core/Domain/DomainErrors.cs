@@ -130,19 +130,19 @@ namespace ItemRental.Core.Domain
                 "Order.FailedToCreate",
                 "Sukurti užsakymo nepavyko");
 
-            public static readonly Func<Guid, Error> NotFound = id => new Error(
+            public static readonly Func<string, Error> NotFound = id => new Error(
                 "Order.NotFound",
                 "Užsakymas nerastas");
 
-            public static readonly Func<Guid, Error> NotOwner = id => new Error(
+            public static readonly Func<string, Error> NotOwner = id => new Error(
                 "Order.NotOwner",
                 "Jūs nesate klientas");
 
-            public static readonly Func<Guid, Error> NotValidAction = id => new Error(
+            public static readonly Func<string, Error> NotValidAction = id => new Error(
                 "Order.NotValidAction",
                 "Veiksmas nėra galiojantis užsakymui");
 
-            public static readonly Func<Guid, Error> FailedToAccept = id => new Error(
+            public static readonly Func<string, Error> FailedToAccept = id => new Error(
                 "Order.FailedToAccept",
                 "Užsakymo priimti nepavyko");
 
