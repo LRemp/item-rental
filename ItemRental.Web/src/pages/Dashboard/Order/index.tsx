@@ -28,6 +28,7 @@ import ConfirmReturnDeliveryAction from '@/components/ButtonActions/ConfirmRetur
 import labels from '@/utils/OrderStatusLabels';
 import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
 import OrderCalendar from '@/components/Misc/OrderCalendar';
+import ChatWindow from '../../../components/Window/ChatWindow';
 
 const pathItems = [{ title: 'Pagrindinis', href: '/dashboard/home' }, { title: 'Užsakymai' }].map(
   (item, index) => (
@@ -165,22 +166,23 @@ function Order() {
               <Loader />
             </Center>
           ) : (
-            <Box maw="960px">
-              <Grid columns={12}>
-                <Grid.Col span={{ base: 12, md: 4 }}>
-                  <Paper p="lg" shadow="md" radius="sm">
-                    <TimelineContainer events={order.events} />
-                    <DeliveryActions {...order} />
-                  </Paper>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 8 }}>
-                  <Paper p="lg" shadow="md" radius="sm">
-                    <ShippingDetailsContainer {...order} />
-                    <DetailsContainer {...order} />
-                  </Paper>
-                </Grid.Col>
-              </Grid>
-            </Box>
+            <Grid columns={16}>
+              <Grid.Col span={{ base: 16, md: 4 }}>
+                <Paper p="lg" shadow="md" radius="sm">
+                  <TimelineContainer events={order.events} />
+                  <DeliveryActions {...order} />
+                </Paper>
+              </Grid.Col>
+              <Grid.Col span={{ base: 16, md: 8 }}>
+                <Paper p="lg" shadow="md" radius="sm">
+                  <ShippingDetailsContainer {...order} />
+                  <DetailsContainer {...order} />
+                </Paper>
+              </Grid.Col>
+              <Grid.Col span={{ base: 16, md: 4 }}>
+                <ChatWindow />
+              </Grid.Col>
+            </Grid>
           )}
         </Grid.Col>
       </Grid>

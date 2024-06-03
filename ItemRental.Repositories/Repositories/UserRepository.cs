@@ -50,6 +50,22 @@ namespace ItemRental.Repositories.Repositories
             return result > 0;
         }
 
+        public async Task<bool> CreateMessageAsync(Message message, CancellationToken cancellationToken)
+        {
+            var query = @"INSERT INTO messages (resource, author, text, created)
+                            VALUES (@resource, @author, @text, @created)";
+
+            var result = await _mySqlConnection.ExecuteAsync(query, new
+            {
+                resource = message.Resource,
+                author = message.Author,
+                text = message.Text,
+                created = message.Created,
+            });
+
+            return result > 0;
+        }
+
         public async Task<bool> CreateVerificationRequestAsync(Guid user, CancellationToken cancellationToken)
         {
             var query = @"INSERT INTO verification_requests (id, user, status) VALUES (@id, @user, @status)";
@@ -75,6 +91,26 @@ namespace ItemRental.Repositories.Repositories
             var result = await _mySqlConnection.QueryAsync<User>(query, new { userId });
 
             return result.FirstOrDefault();
+        }
+
+        public async Task<List<MessageDTO>> GetMessagesAsync(string resource, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT m.*, u.*
+                        FROM messages m
+                        INNER JOIN users u ON m.author = u.id
+                        WHERE m.resource = @resource";
+
+            var result = await _mySqlConnection.QueryAsync<Message, UserDTO, MessageDTO>(query, (message, user) =>
+            {
+                return new MessageDTO
+                {
+                    Author = user,
+                    Text = message.Text,
+                    Created = message.Created
+                };
+            }, new { resource });
+
+            return result.ToList();
         }
 
         public async Task<Notification?> GetNotificationAsync(Guid id, CancellationToken cancellationToken)

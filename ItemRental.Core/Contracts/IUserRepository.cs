@@ -25,5 +25,7 @@ namespace ItemRental.Core.Contracts
         public Task<List<VerificationRequestDTO>> GetProfileVerificationRequestsAsync(CancellationToken cancellationToken);
         public Task<bool> CreateVerificationRequestAsync(Guid user, CancellationToken cancellationToken);
         public Task<bool> UpdateProfileVerificationRequestAsync(Guid id, VerificationStatus status, CancellationToken cancelationToken);
+        public Task<bool> CreateMessageAsync(Message message, CancellationToken cancellationToken);
+        public Task<List<MessageDTO>> GetMessagesAsync(string resource, CancellationToken cancellationToken);
     }
 }

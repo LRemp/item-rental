@@ -47,6 +47,19 @@ const decline = (id: string): ApiRequest => ({
   authenticate: true,
 });
 
+const getMessages = (id: string): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Orders/${id}/Messages`,
+  authenticate: true,
+});
+
+const createMessage = (id: string, data: any): ApiRequest => ({
+  method: 'POST',
+  endpoint: `/api/Orders/${id}/Messages`,
+  authenticate: true,
+  body: data,
+});
+
 export default {
   createOrder,
   getOrder,
@@ -55,4 +68,6 @@ export default {
   getOwnerOrders,
   confirm,
   decline,
+  getMessages,
+  createMessage,
 };

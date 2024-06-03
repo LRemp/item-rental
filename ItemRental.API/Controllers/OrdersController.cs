@@ -2,6 +2,7 @@
 using ItemRental.Application.Orders;
 using ItemRental.Core.Contracts;
 using ItemRental.Core.DTOs;
+using ItemRental.Core.Entities;
 using ItemRental.Core.Enums;
 using ItemRental.Core.Helpers;
 using MediatR;
@@ -183,6 +184,38 @@ namespace ItemRental.API.Controllers
             Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
             Result result = await _sender.Send(new ConfirmDeliveryCommand(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Messages")]
+        public async Task<IActionResult> GetMessages(string id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<List<MessageDTO>> result = await _sender.Send(new GetMessagesQuery(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("{id}/Messages")]
+        public async Task<IActionResult> CreateMessage(string id, [FromBody] CreateMessageDTO message)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result result = await _sender.Send(new CreateMessageCommand(id, userId, message.Text));
 
             if (result.IsFailure)
             {

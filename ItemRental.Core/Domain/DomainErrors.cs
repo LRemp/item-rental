@@ -157,6 +157,10 @@ namespace ItemRental.Core.Domain
             public static readonly Error FailedToConfirmDelivery = new Error(
                 "Order.FailedToConfirmDelivery",
                 "Pristatymą patvirtinti nepavyko");
+
+            public static readonly Error FailedToCreateMessage = new Error(
+                "Order.FailedToCreateMessage",
+                "Nepavyko sukurti naujos žinutės");
         }
     }
 }

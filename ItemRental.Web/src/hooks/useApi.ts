@@ -26,6 +26,7 @@ const useApi = () => {
       headers: requestHeaders,
       body: body instanceof FormData ? body : JSON.stringify(body),
     };
+    console.log(endpoint);
     return fetch(endpoint, requestOptions).then(async (result: any) => {
       if (result.ok) {
         await new Promise((resolve) => setTimeout(resolve, 0));
