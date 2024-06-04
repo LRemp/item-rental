@@ -22,8 +22,8 @@ namespace ItemRental.Repositories.Repositories
         }
         public async Task<bool> AddAsync(Order order, CancellationToken cancellationToken)
         {
-            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status, deliveryType, comment) 
-                        VALUES (@id, @listing, @user, @startDate, @endDate, @status, @deliveryType, @comment)";
+            var query = @"INSERT INTO `orders` (id, listing, user, startDate, endDate, status, deliveryType, comment, location) 
+                        VALUES (@id, @listing, @user, @startDate, @endDate, @status, @deliveryType, @comment, @location)";
 
             var result = await _connection.ExecuteAsync(query, new
             {
@@ -34,7 +34,8 @@ namespace ItemRental.Repositories.Repositories
                 endDate = order.EndDate,
                 status = order.Status,
                 deliveryType = order.DeliveryType,
-                comment = order.Comment
+                comment = order.Comment,
+                location = order.Location
             });
 
             return result > 0;
@@ -93,7 +94,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { id }
             );
@@ -150,7 +152,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { id }
             );
@@ -201,7 +204,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { id, status }
             );
@@ -247,7 +251,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { user }
             );
@@ -293,7 +298,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { id, user }
             );
@@ -339,7 +345,8 @@ namespace ItemRental.Repositories.Repositories
                         EndDate = order.EndDate,
                         Status = order.Status,
                         DeliveryType = order.DeliveryType,
-                        Comment = order.Comment
+                        Comment = order.Comment,
+                        Location = order.Location
                     };
                 }, new { user, merchant }
             );
@@ -388,6 +395,53 @@ namespace ItemRental.Repositories.Repositories
             var result = await _connection.QueryAsync<int>(query, new { id });
 
             return result.FirstOrDefault();
+        }
+
+        public async Task<List<OrderDTO>> GetOrdersOfItemAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var query = @"SELECT o.*, u.*, l.*, i.*, a.*
+                        FROM orders o
+                        INNER JOIN users u ON o.user = u.id
+                        INNER JOIN rent_listings l ON o.listing = l.id
+                        INNER JOIN items i ON l.item = i.id
+                        INNER JOIN users a ON l.renter = a.id
+                        WHERE l.item = @id";
+
+            var result = await _connection.QueryAsync<Order, UserDTO, RentListing, Item, UserDTO, OrderDTO>(query,
+                (order, user, listing, item, renter) =>
+                {
+                    return new OrderDTO
+                    {
+                        Id = order.Id,
+                        User = user,
+                        RentListing = new RentListingDTO
+                        {
+                            Id = listing.Id,
+                            Renter = renter,
+                            Item = new ItemDTO
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                Description = item.Description,
+                                Images = JsonConvert.DeserializeObject<string[]>(item.Images),
+                                Tags = JsonConvert.DeserializeObject<string[]>(item.Tags)
+                            },
+                            Title = listing.Title,
+                            Description = listing.Description,
+                            Price = listing.Price,
+                            Location = listing.Location,
+                        },
+                        StartDate = order.StartDate,
+                        EndDate = order.EndDate,
+                        Status = order.Status,
+                        DeliveryType = order.DeliveryType,
+                        Comment = order.Comment,
+                        Location = order.Location
+                    };
+                }, new { id }
+            );
+
+            return result.ToList();
         }
     }
 }

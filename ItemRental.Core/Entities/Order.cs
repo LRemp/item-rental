@@ -17,5 +17,6 @@ namespace ItemRental.Core.Entities
         public OrderStatus Status { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public string? Comment { get; set; }
+        public string? Location { get; set; }
     }
 }

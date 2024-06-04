@@ -51,7 +51,7 @@ const ConfirmOrderAction: React.FC<ActionButtonProps> = ({ id, refresh }) => {
       },
     });
 
-  return <Button onClick={openModal}>Confirm</Button>;
+  return <Button onClick={openModal}>Patvirtinti</Button>;
 };
 
 export default ConfirmOrderAction;

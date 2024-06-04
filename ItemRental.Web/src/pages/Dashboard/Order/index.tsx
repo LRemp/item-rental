@@ -3,6 +3,7 @@ import {
   Badge,
   Box,
   Breadcrumbs,
+  Button,
   Center,
   Grid,
   Group,
@@ -11,8 +12,9 @@ import {
   Tabs,
   Text,
   Title,
+  rem,
 } from '@mantine/core';
-import { IconBoxSeam, IconTruckDelivery } from '@tabler/icons-react';
+import { IconBoxSeam, IconCheck, IconCross, IconTruckDelivery, IconX } from '@tabler/icons-react';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import api from '@/api';
@@ -29,7 +31,9 @@ import labels from '@/utils/OrderStatusLabels';
 import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
 import OrderCalendar from '@/components/Misc/OrderCalendar';
 import ChatWindow from '../../../components/Window/ChatWindow';
-
+import ClientCard from '@/components/Cards/ClientCard';
+import useAcceptOrderAction from '@/components/Actions/ConfirmOrderAction';
+import useDeclineOrderAction from '@/components/Actions/DeclineOrderAction';
 const pathItems = [{ title: 'Pagrindinis', href: '/dashboard/home' }, { title: 'Užsakymai' }].map(
   (item, index) => (
     <Anchor href={item.href} key={index}>
@@ -51,19 +55,34 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({ events }) => {
   );
 };
 
-const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => (
-  <Box mt="lg">
-    {status === 0 && (
-      <Group>
-        <ConfirmOrderAction id={id} />
-      </Group>
-    )}
-    {(status === 1 || status === 2) && (
-      <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />
-    )}
-    {status === 4 && <ConfirmReturnDeliveryAction id={id} />}
-  </Box>
-);
+const DeliveryActions: React.FC<Order> = ({ id, status, deliveryType }) => {
+  const acceptOrderAction = useAcceptOrderAction();
+  const declineOrderAction = useDeclineOrderAction();
+  return (
+    <Box mt="lg">
+      {status === 0 && (
+        <Group>
+          <Button color="green" onClick={() => acceptOrderAction(id)}>
+            <Center>
+              Patvirtinti
+              <IconCheck height={rem(16)} />
+            </Center>
+          </Button>
+          <Button color="red" onClick={() => declineOrderAction(id)}>
+            <Center>
+              Atmesti
+              <IconX height={rem(16)} />
+            </Center>
+          </Button>
+        </Group>
+      )}
+      {(status === 1 || status === 2) && (
+        <SubmitDeliveryDetailsAction id={id} deliveryType={deliveryType} />
+      )}
+      {status === 4 && <ConfirmReturnDeliveryAction id={id} />}
+    </Box>
+  );
+};
 
 const DetailsContainer: React.FC<Order> = ({
   user,
@@ -72,6 +91,7 @@ const DetailsContainer: React.FC<Order> = ({
   endDate,
   rentListing,
   deliveryType,
+  location,
 }) => (
   <Tabs defaultValue="order">
     <Tabs.List>
@@ -88,15 +108,6 @@ const DetailsContainer: React.FC<Order> = ({
         <Grid.Col span={{ base: 12, sm: 6 }}>
           <Box>
             <Box>
-              <Text fw={500}>Klientas</Text>
-              <Text>
-                {user.name} {user.surname}
-              </Text>
-              <Text c="dimmed" size="xs">
-                {user.email}
-              </Text>
-            </Box>
-            <Box>
               <Text fw={500}>Nuomos data</Text>
               <Text>
                 {getDateLabel(startDate)} - {getDateLabel(endDate)}
@@ -104,12 +115,24 @@ const DetailsContainer: React.FC<Order> = ({
             </Box>
             <Box>
               <Text fw={500}>Komentaras</Text>
-              <Text>{comment}</Text>
+              {comment ? (
+                <Text>{comment}</Text>
+              ) : (
+                <Text fs="italic" size="sm" c="dimmed">
+                  Komentaras nepateiktas
+                </Text>
+              )}
             </Box>
+            {deliveryType == 1 && (
+              <Box>
+                <Text fw={500}>Pageidaujama pistatymo vieta</Text>
+                <Text>{location}</Text>
+              </Box>
+            )}
             <Box>
               <Text fw={500}>Pristatymo tipas</Text>
               <Badge radius="xs" size="md">
-                {deliveryType === 0 ? 'Atsiimti' : 'Siuntimas'}
+                {deliveryType === 0 ? 'Savarankiškas atsiėmimas' : 'Pristatymas'}
               </Badge>
             </Box>
           </Box>
@@ -174,10 +197,17 @@ function Order() {
                 </Paper>
               </Grid.Col>
               <Grid.Col span={{ base: 16, md: 8 }}>
-                <Paper p="lg" shadow="md" radius="sm">
-                  <ShippingDetailsContainer {...order} />
-                  <DetailsContainer {...order} />
-                </Paper>
+                <Grid>
+                  <Grid.Col span={{ base: 12, md: 6 }}>
+                    <ClientCard {...order.user} />
+                  </Grid.Col>
+                  <Grid.Col>
+                    <Paper p="lg" shadow="md" radius="sm">
+                      <ShippingDetailsContainer {...order} />
+                      <DetailsContainer {...order} />
+                    </Paper>
+                  </Grid.Col>
+                </Grid>
               </Grid.Col>
               <Grid.Col span={{ base: 16, md: 4 }}>
                 <ChatWindow />

@@ -6,9 +6,11 @@ type Item = {
   images: string[];
   details: Detail[];
   tags?: string[];
+  orders?: Order[];
 };
 
 type Detail = {
+  label: string;
   name: string;
   value: string;
 };

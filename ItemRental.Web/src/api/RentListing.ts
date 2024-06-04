@@ -26,6 +26,12 @@ const getListingById = (id: string): ApiRequest => ({
   endpoint: `/api/Listings/${id}`,
 });
 
+const getMerchantListingById = (id: string): ApiRequest => ({
+  method: 'GET',
+  endpoint: `/api/Listings/${id}/Merchant`,
+  authenticate: true,
+});
+
 const getBusyDates = (id: string): ApiRequest => ({
   method: 'GET',
   endpoint: `/api/Listings/${id}/BusyDates`,
@@ -59,6 +65,7 @@ const deleteComment = (id: string, commentId: string): ApiRequest => ({
 export default {
   getListings,
   getListingsByOwner,
+  getMerchantListingById,
   create,
   getListingById,
   getBusyDates,

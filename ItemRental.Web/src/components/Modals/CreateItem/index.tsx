@@ -89,6 +89,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({ opened, close }) => {
     for (const key in scheme) {
       if (detailsForm.values[scheme[key].name]) {
         details.push({
+          label: scheme[key].label,
           name: scheme[key].name,
           value: `${detailsForm.values[scheme[key].name]}`,
         });

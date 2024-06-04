@@ -30,6 +30,7 @@ import ListingDetailsTab from '@/components/TabContainers/ListingDetailsTab';
 import OrderCalendar from '@/components/Misc/OrderCalendar';
 import OrderStatusHints from '@/components/Misc/OrderStatusHints';
 import ChatWindow from '@/components/Window/ChatWindow';
+import ClientCard from '@/components/Cards/ClientCard';
 
 const pathItems = [
   { title: 'Pagrindinis', href: '/' },
@@ -123,6 +124,8 @@ function Order() {
     }
   }, [loading]);
 
+  console.log(order);
+
   return (
     <Box w="100%">
       <Grid columns={24} grow>
@@ -168,10 +171,17 @@ function Order() {
                 <OrderStatusHints status={order.status} />
               </Grid.Col>
               <Grid.Col span={{ base: 16, md: 8 }}>
-                <Paper p="lg" shadow="md" radius="sm">
-                  <ShippingDetailsContainer {...order} />
-                  <DetailsContainer {...order} />
-                </Paper>
+                <Grid>
+                  <Grid.Col span={{ base: 16, md: 6 }}>
+                    <ClientCard {...order.rentListing.renter} />
+                  </Grid.Col>
+                  <Grid.Col>
+                    <Paper p="lg" shadow="md" radius="sm">
+                      <ShippingDetailsContainer {...order} />
+                      <DetailsContainer {...order} />
+                    </Paper>
+                  </Grid.Col>
+                </Grid>
               </Grid.Col>
               <Grid.Col span={{ base: 16, md: 4 }}>
                 <ChatWindow />

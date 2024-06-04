@@ -14,9 +14,9 @@ const DetailRow: React.FC<IDetailRow> = ({ label, value }) => (
 
 const ItemDetails: React.FC<Item> = ({ details, category }) => (
   <Box>
-    <Title fw={600} order={4} mt="lg">
+    <Text size="sm" fw={600} mt="md" mb="xs">
       Daikto ypatybės
-    </Title>
+    </Text>
     <Paper shadow="md" radius="sm" p="md">
       <DetailRow label="Kategorija" value={category || 'Kita'} />
       {details?.map((detail, index) => (

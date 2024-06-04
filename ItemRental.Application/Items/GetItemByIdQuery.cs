@@ -17,9 +17,11 @@ namespace ItemRental.Application.Items
     public class GetItemByIdQueryHandler : IQueryHandler<GetItemByIdQuery, ItemDTO>
     {
         private readonly IItemRepository _itemRepository;
-        public GetItemByIdQueryHandler(IItemRepository itemRepository)
+        private readonly IOrderRepository orderRepository;
+        public GetItemByIdQueryHandler(IItemRepository itemRepository, IOrderRepository orderRepository)
         {
             _itemRepository = itemRepository;
+            this.orderRepository = orderRepository;
         }
         public async Task<Result<ItemDTO>> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
         {
@@ -30,6 +32,8 @@ namespace ItemRental.Application.Items
                 return Result.Failure<ItemDTO>(DomainErrors.Item.NotFound);
             }
 
+            var orders = await orderRepository.GetOrdersOfItemAsync(request.id, cancellationToken);
+
             var itemDTO = new ItemDTO
             {
                 Id = item.Id,
@@ -38,7 +42,8 @@ namespace ItemRental.Application.Items
                 Category = item.Category,
                 Images = item.Images is null ? null : JsonConvert.DeserializeObject<string[]>(item.Images),
                 Tags = item.Tags is null ? null : JsonConvert.DeserializeObject<string[]>(item.Tags),
-                Details = item.Details is null ? null : JsonConvert.DeserializeObject<Specification[]>(item.Details)
+                Details = item.Details is null ? null : JsonConvert.DeserializeObject<Specification[]>(item.Details),
+                Orders = orders
             };
 
             return Result.Success(itemDTO);

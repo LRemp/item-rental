@@ -12,20 +12,20 @@ const useDeclineOrderAction = () => {
   const declineOrder = useCallback((id: string) => {
     modals.openConfirmModal({
       centered: true,
-      title: 'Decline this order request?',
+      title: 'Ar atmesti šią rezervaciją?',
       children: (
         <Text size="sm">
-          Are you sure to decline this order? The order status will be changes to Declined and will
-          cancel the order proccess.
+          Ar jūs tikrai norite atmesti šią rezervaciją? Atmetus rezervaciją bus atšaukiama nuomos
+          užklausa ir šios užklausos nuomos rezervuotas laikotarpis bus atlaisvintas
         </Text>
       ),
-      labels: { confirm: 'Decline', cancel: 'Cancel' },
+      labels: { confirm: 'Atmesti', cancel: 'Atšaukti' },
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,
-          title: 'Loading',
-          message: 'Accepting order...',
+          title: 'Vykdoma',
+          message: 'Atšaukiama rezervacija...',
           autoClose: false,
           withCloseButton: false,
         });
@@ -35,15 +35,15 @@ const useDeclineOrderAction = () => {
           notifications.update(
             Success({
               id: notificationId,
-              title: 'Success',
-              message: 'The order was successfuly confirmed!',
+              title: 'Įvykdyta',
+              message: 'Nuomos rezervacija sėkmingai atšaukta!',
             })
           );
         } catch (e: any) {
           notifications.update(
             Error({
               id: notificationId,
-              title: 'Error',
+              title: 'Klaida',
               message: e.message,
             })
           );

@@ -13,6 +13,7 @@ namespace ItemRental.Core.Contracts
         public Task<OrderDTO?> GetAsync(string id, CancellationToken cancellationToken);
         public Task<Result<string>> CreateAsync(AddOrderDTO addOrderDTO, Guid user, CancellationToken cancellationToken);
         public Task<Result> AcceptAsync(string id, Guid user, CancellationToken cancellationToken);
+        public Task<Result> DeclineAsync(string id, Guid user, CancellationToken cancellationToken);
         public Task<bool> IsDateNotTaken(Guid id, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         public Task<bool> IsItemInUse(Guid id, CancellationToken cancellationToken);
         public Task<string> GetNewMerchantOrderId(Guid id, CancellationToken cancellationToken);

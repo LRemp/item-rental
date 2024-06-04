@@ -76,6 +76,17 @@ namespace ItemRental.Core.Domain
                 Timestamp = new DateTime(),
                 Url = $"/orders/{order}"
             };
+
+            public static readonly Func<Guid, string, Notification> Rejected = (user, order) => new Notification
+            {
+                Id = Guid.NewGuid(),
+                User = user,
+                Code = "Order.Rejected",
+                Title = "Užsakymas atmestas",
+                Description = "Jūsų užsakymas buvo atmestas",
+                Timestamp = new DateTime(),
+                Url = $"/orders/{order}"
+            };
         }
     }
 }

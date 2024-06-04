@@ -17,6 +17,7 @@ namespace ItemRental.Core.DTOs
         public OrderStatus Status { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public string Comment { get; set; } = string.Empty;
+        public string? Location { get; set; }
         public List<EventLogDTO>? Events { get; set; }
     }
 }

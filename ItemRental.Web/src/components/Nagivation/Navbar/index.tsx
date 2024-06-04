@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Stack, SegmentedControl, Button, Text } from '@mantine/core';
 import {
   IconFingerprint,
@@ -9,7 +9,7 @@ import {
   IconTruckDelivery,
   IconLogin,
 } from '@tabler/icons-react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { modals } from '@mantine/modals';
@@ -30,7 +30,9 @@ const navLinks = {
 };
 
 export function Navbar() {
-  const [role, setRole] = useState<string>('client');
+  const location = useLocation();
+  const { hash, pathname, search } = location;
+  const [role, setRole] = useState<string>(pathname.includes('/dashboard') ? 'merchant' : 'client');
   const isAuthenticaded = useIsAuthenticated();
   const navigate = useNavigate();
   const signOut = useSignOut();
@@ -82,6 +84,7 @@ export function Navbar() {
         {isAuthenticaded ? (
           <>
             <SegmentedControl
+              value={role}
               data={[
                 { label: 'Klientas', value: 'client' },
                 { label: 'Nuomininkas', value: 'merchant' },

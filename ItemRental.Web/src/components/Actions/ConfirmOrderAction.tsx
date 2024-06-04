@@ -12,19 +12,20 @@ const useAcceptOrderAction = () => {
   const confirmOrder = useCallback((id: string) => {
     modals.openConfirmModal({
       centered: true,
-      title: 'Confirm this order request?',
+      title: 'Ar patvirtinti šią rezervaciją?',
       children: (
         <Text size="sm">
-          Are you sure to confirm this order? The order status will be changes to Accepted and will
-          begin the rent progress
+          Ar tikrai norite patvirtinti šią rezervaciją? Patvirtinus rezervaciją prasidės nuomos
+          procesas ir šis žingsis nėra sugrąžinamas!
         </Text>
       ),
-      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      labels: { confirm: 'Patvirtinti', cancel: 'Atšaukti' },
+      confirmProps: { color: 'green' },
       onConfirm: async () => {
         const notificationId = notifications.show({
           loading: true,
-          title: 'Loading',
-          message: 'Accepting order...',
+          title: 'Vykdoma',
+          message: 'Patvirtinima nuomos rezervacija...',
           autoClose: false,
           withCloseButton: false,
         });
@@ -34,15 +35,15 @@ const useAcceptOrderAction = () => {
           notifications.update(
             Success({
               id: notificationId,
-              title: 'Success',
-              message: 'The order was successfuly confirmed!',
+              title: 'Įvykdyta',
+              message: 'Nuomos rezervacija sėkmingai patvirtinta!',
             })
           );
         } catch (e: any) {
           notifications.update(
             Error({
               id: notificationId,
-              title: 'Error',
+              title: 'Klaida',
               message: e.message,
             })
           );

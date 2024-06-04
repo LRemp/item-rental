@@ -8,7 +8,8 @@ namespace ItemRental.Core.Entities
 {
     public class Specification
     {
-        public string Name { get; set; } = string.Empty;
-        public string Value { get; set; } = string.Empty;
+        public required string Label { get; set; }
+        public required string Name { get; set; }
+        public required string Value { get; set; }
     }
 }

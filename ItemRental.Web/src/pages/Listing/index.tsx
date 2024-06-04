@@ -110,7 +110,7 @@ const CreateOrderModal = () => {
       startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
       let endDate = new Date(busyDates[index].endDate);
       endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-      if (date >= startDate && date <= endDate) {
+      if (date >= startDate && date <= endDate && busyDates[index].status < 6) {
         return {
           style: {
             backgroundColor: 'var(--mantine-color-red-filled)',
@@ -175,6 +175,16 @@ const CreateOrderModal = () => {
                 data={deliveryTypes}
                 {...form.getInputProps('deliveryType')}
               />
+
+              {form.values.deliveryType == 1 && (
+                <Textarea
+                  label="Pageidaujama pristatymo vieta"
+                  placeholder="Įveskite vietos informaciją"
+                  autosize
+                  {...form.getInputProps('location')}
+                />
+              )}
+
               <Button fullWidth mt="md" type="submit">
                 Sukurti rezervaciją
               </Button>

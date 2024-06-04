@@ -73,6 +73,15 @@ namespace ItemRental.Core.Domain
                 Title = "Užsakymas baigtas",
                 Description = "Nuoma sėkmingai įvykdyta"
             };
+
+            public static readonly Func<Guid, string, EventLog> Rejected = (id, resource) => new EventLog
+            {
+                Id = id,
+                Resource = resource,
+                EventName = "Order.Rejected",
+                Title = "Užsakymas atmestas",
+                Description = "Užsakymas sėkmingai atmestas"
+            };
         }
     }
 }

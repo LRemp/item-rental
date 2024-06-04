@@ -15,7 +15,7 @@ const ItemActions: React.FC<ItemActionsProps> = ({ id }) => {
       <ActionIcon
         variant="subtle"
         aria-label="Settings"
-        onClick={() => navigate(`/dashboard/inventory/${id}`)}
+        onClick={() => navigate(`/dashboard/listings/${id}`)}
         color="gray"
       >
         <IconEye style={{ width: '70%', height: '70%' }} stroke={1.5} />

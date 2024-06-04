@@ -6,6 +6,7 @@ type RentListing = {
   description: string;
   price: number;
   location: string;
+  orders?: Order[];
 };
 
 type IComment = {

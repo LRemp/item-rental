@@ -16,14 +16,15 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ details }) => (
     <Tabs.Panel value="first">
       {details?.length === 0 ? (
         <Text mt="md" fs="italic">
-          Informacijos nerasta
+          Daikto ypatybės nerastos
         </Text>
       ) : (
         <>
           {details?.map((detail: Detail) => (
             <Box>
-              <Text fw={500}>{detail.name}</Text>
-              <Text>{detail.value}</Text>
+              <Text fw={500}>
+                {detail.label}: {detail.value}
+              </Text>
             </Box>
           ))}
         </>

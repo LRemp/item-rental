@@ -1,12 +1,23 @@
 import { AppShell, Burger, Group, Image, UnstyledButton } from '@mantine/core';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from '@/assets/images/logo.png';
 import { Navbar } from '@/components/Nagivation/Navbar';
 import Notifications from '@/components/Misc/Notifications';
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
   const [opened, { toggle }] = useDisclosure();
+  const location = useLocation();
+  const { hash, pathname, search } = location;
+  const [previousPath, setPreviousPath] = useState(pathname);
+  console.log(pathname);
+  useEffect(() => {
+    if (pathname != previousPath) {
+      toggle();
+      setPreviousPath(pathname);
+    }
+  }, [pathname]);
 
   return (
     <AppShell

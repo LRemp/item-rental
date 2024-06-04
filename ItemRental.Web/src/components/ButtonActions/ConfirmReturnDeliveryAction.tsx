@@ -60,7 +60,7 @@ const ConfirmReturnDeliveryAction: React.FC<ItemButtonActionProps> = ({
   return (
     <>
       <Button color="green" size={size} onClick={openModal} fullWidth={fullWidth}>
-        Confirm return delivery
+        Patvirtinti grąžinimą
         <IconCheck size={18} />
       </Button>
     </>

@@ -16,6 +16,7 @@ import DashboardOrder from './pages/Dashboard/Order';
 import UserPage from './pages/User.page';
 import ProfilePage from './pages/Profile';
 import AdminPage from './pages/Admin';
+import DashboardListingPage from './pages/Dashboard/Listing';
 
 const router = createBrowserRouter([
   {
@@ -69,12 +70,16 @@ const router = createBrowserRouter([
         element: <InventoryPage />,
       },
       {
+        path: 'inventory/:id',
+        element: <ItemPage />,
+      },
+      {
         path: 'listings',
         element: <ListingsPage />,
       },
       {
-        path: 'inventory/:id',
-        element: <ItemPage />,
+        path: 'listings/:id',
+        element: <DashboardListingPage />,
       },
       {
         path: 'orders',

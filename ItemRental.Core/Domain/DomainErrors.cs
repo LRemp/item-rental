@@ -146,6 +146,10 @@ namespace ItemRental.Core.Domain
                 "Order.FailedToAccept",
                 "Užsakymo priimti nepavyko");
 
+            public static readonly Func<string, Error> FailedToReject = id => new Error(
+                "Order.FailedToReject",
+                "Užsakymo atmesti nepavyko");
+
             public static readonly Func<Guid, Error> DateBusy = id => new Error(
                 "Order.DateBusy",
                 "Pasirinkta data užimta");

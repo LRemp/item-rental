@@ -29,6 +29,7 @@ namespace ItemRental.Services.Services
             foreach(OrderDTO order in orders)
             {
                 dates.Add(new OrderDateDTO { 
+                    Status = order.Status,
                     StartDate = order.StartDate, 
                     EndDate = order.EndDate 
                 });

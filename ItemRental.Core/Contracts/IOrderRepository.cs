@@ -23,5 +23,6 @@ namespace ItemRental.Core.Contracts
         public Task<List<OrderDTO>> GetOrdersFromMerchantAsync(Guid user, Guid merchant, CancellationToken cancellationToken);
         public Task<List<Order>> GetWithItemAsync(Guid id, CancellationToken cancellationToken);
         public Task<int> GetNumberOfMerchantOrders(Guid id, CancellationToken cancellationToken);
+        public Task<List<OrderDTO>> GetOrdersOfItemAsync(Guid id, CancellationToken cancellationToken);
     }
 }

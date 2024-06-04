@@ -110,7 +110,8 @@ namespace ItemRental.Services.Services
                 EndDate = addOrderDTO.EndDate,
                 Status = OrderStatus.Pending,
                 DeliveryType = addOrderDTO.DeliveryType,
-                Comment = addOrderDTO.Comment
+                Comment = addOrderDTO.Comment,
+                Location = addOrderDTO.DeliveryType == DeliveryType.Shipping ? addOrderDTO.Location : null,
             };
 
             var success = await orderRepository.AddAsync(order, cancellationToken);
@@ -128,6 +129,53 @@ namespace ItemRental.Services.Services
             await userRepository.AddNotificationAsync(DomainNotifications.Order.Created(order.User, order.Id), cancellationToken);
 
             return Result.Success(order.Id);
+        }
+
+        public async Task<Result> DeclineAsync(string id, Guid user, CancellationToken cancellationToken)
+        {
+            var order = await orderRepository.GetInternalAsync(id, cancellationToken);
+
+            if (order is null)
+            {
+                return Result.Failure(DomainErrors.Order.NotFound(id));
+            }
+
+            var rentListing = await rentListingRepository.GetInternalAsync(order.Listing, cancellationToken);
+
+            if (rentListing is null)
+            {
+                return Result.Failure(DomainErrors.RentListing.NotFound);
+            }
+
+            if (rentListing.Renter != user)
+            {
+                return Result.Failure(DomainErrors.RentListing.NotRenter);
+            }
+
+            if (order.Status != OrderStatus.Pending)
+            {
+                return Result.Failure(DomainErrors.Order.NotValidAction(order.Id));
+            }
+
+            var success = await orderRepository.UpdateAsync(new Order
+            {
+                Id = order.Id,
+                User = order.User,
+                Listing = order.Listing,
+                StartDate = order.StartDate,
+                EndDate = order.EndDate,
+                Status = OrderStatus.Rejected
+            }, cancellationToken);
+
+            if (!success)
+            {
+                return Result.Failure(DomainErrors.Order.FailedToReject(order.Id));
+            }
+
+            await eventLogRepository.AddAsync(DomainEventLogs.Order.Rejected(Guid.NewGuid(), order.Id), cancellationToken);
+            userRepository.AddNotificationAsync(DomainNotifications.Order.Rejected(order.User, order.Id), cancellationToken);
+
+            return Result.Success();
         }
 
         public async Task<OrderDTO?> GetAsync(string id, CancellationToken cancellationToken)
@@ -166,7 +214,7 @@ namespace ItemRental.Services.Services
 
             foreach (OrderDTO order in orders)
             {
-                if (startTime < order.EndDate && endTime > order.StartDate)
+                if (startTime < order.EndDate && endTime > order.StartDate && order.Status < OrderStatus.Rejected)
                 {
                     return false; // There is overlap, date is taken
                 }
