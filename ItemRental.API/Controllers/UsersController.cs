@@ -166,7 +166,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
 
         [Authorize(Roles = "Administrator")]
@@ -181,7 +181,7 @@ namespace ItemRental.API.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return NoContent();
         }
     }
 }

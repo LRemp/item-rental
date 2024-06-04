@@ -12,12 +12,12 @@ export default function Dashboard() {
   const { hash, pathname, search } = location;
   const [previousPath, setPreviousPath] = useState(pathname);
   console.log(pathname);
-  useEffect(() => {
+  /* useEffect(() => {
     if (pathname != previousPath) {
       toggle();
       setPreviousPath(pathname);
     }
-  }, [pathname]);
+  }, [pathname]);*/
 
   return (
     <AppShell

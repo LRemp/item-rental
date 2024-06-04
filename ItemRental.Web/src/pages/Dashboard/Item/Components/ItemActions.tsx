@@ -6,7 +6,7 @@ interface ItemActionsProps {
 }
 
 const ItemActions: React.FC<ItemActionsProps> = ({ id }) => (
-  <Group mb="md" justify="center">
+  <Group mb="md">
     <CreateListingAction id={id} />
   </Group>
 );

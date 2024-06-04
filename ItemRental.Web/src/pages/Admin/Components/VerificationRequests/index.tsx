@@ -29,7 +29,7 @@ const ItemActions: React.FC<ItemActionsProps> = ({ data, id, refresh }) => {
         </Text>
       ),
       labels: { confirm: 'Patvirtinti', cancel: 'Atšaukti' },
-      confirmProps: { color: 'red' },
+      confirmProps: { color: 'green' },
       onCancel: () => console.log('Cancel'),
       onConfirm: async () => {
         const notificationId = notifications.show({
@@ -53,6 +53,7 @@ const ItemActions: React.FC<ItemActionsProps> = ({ data, id, refresh }) => {
 
           refresh();
         } catch (e: any) {
+          console.log(e);
           notifications.update(
             Error({ id: notificationId, title: 'Klaida', message: e.description })
           );

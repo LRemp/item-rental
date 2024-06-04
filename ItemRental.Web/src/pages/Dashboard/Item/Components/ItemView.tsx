@@ -1,9 +1,10 @@
 import PhotoCarousel from '@/components/Misc/PhotoCarousel';
 import ItemDetails from './ItemDetails';
 import { Paper, Grid, Group, Title, Badge, Text, Image, Box } from '@mantine/core';
-import ItemActions from '../../Inventory/Components/ItemActions';
+import ItemActions from './ItemActions';
 import NoImage from '@/assets/images/no_image.png';
 import Orders from './Orders';
+import ItemStatus from '@/components/Misc/ItemStatus';
 
 const ItemView: React.FC<Item> = ({
   id,
@@ -28,6 +29,7 @@ const ItemView: React.FC<Item> = ({
           <Title fw={600} order={3}>
             {name}
           </Title>
+          <ItemStatus id={id} />
           <Text size="xs" opacity="50%">
             ({category})
           </Text>
@@ -47,6 +49,7 @@ const ItemView: React.FC<Item> = ({
       </Paper>
     </Grid.Col>
     <Grid.Col span={{ base: 12, sm: 6 }}>
+      <ItemActions id={id} />
       <Paper shadow="md" radius="sm" p="md">
         <Orders orders={orders} />
       </Paper>

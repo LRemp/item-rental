@@ -19,12 +19,12 @@ const pathItems = [
 const Listing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  console.log(id);
   const {
     result: listing,
     loading,
     request,
-  } = useApiResult(() => api.RentListing.getListingById(id || ''));
+  } = useApiResult(() => api.RentListing.getMerchantListingById(id || ''), []);
 
   useEffect(() => {
     request(id).catch(() => navigate('/dashboard/listings'));

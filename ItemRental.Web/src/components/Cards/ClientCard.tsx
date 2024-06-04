@@ -15,7 +15,7 @@ const ClientCard: React.FC<UserProfile> = ({ id, username, name, surname, email,
             ({username})
           </Text>
           <Text size="sm" fw={600}>
-            +37067600484
+            +37060427763
           </Text>
           <Text size="xs" c={'dimmed'}>
             {email}

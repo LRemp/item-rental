@@ -37,6 +37,7 @@ import { deliveryTypes } from '@/utils/Delivery';
 import Comments from './Components/Comments';
 import UserDetailsCard from '@/components/Cards/UserDetailsCard';
 import ItemDetails from './Components/ItemDetails';
+import { IconLocation, IconMapPinFilled, IconPin } from '@tabler/icons-react';
 
 const CreateOrderModal = () => {
   const { id } = useParams();
@@ -255,7 +256,12 @@ function Listing() {
                       {result?.price}€ / dienai
                     </Badge>
                   </Group>
-
+                  <Group>
+                    <Center inline>
+                      <IconMapPinFilled />
+                      <Text fw={600}>{result?.location}</Text>
+                    </Center>
+                  </Group>
                   <div>{result?.description}</div>
                 </Group>
               </Paper>

@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               11.3.1-MariaDB - mariadb.org binary distribution
+-- Server version:               11.3.2-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.3.0.6589
+-- HeidiSQL Version:             12.6.0.6765
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -25,10 +25,13 @@ CREATE TABLE IF NOT EXISTS `administrators` (
   `user` uuid NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Dumping data for table itemrental.administrators: ~0 rows (approximately)
+-- Dumping data for table itemrental.administrators: ~2 rows (approximately)
 DELETE FROM `administrators`;
+INSERT INTO `administrators` (`id`, `user`) VALUES
+	(2, '13557b17-53e1-4da3-9da2-0496fd7c5474'),
+	(1, '142eae84-432c-4a67-a92b-ece3fb36a109');
 
 -- Dumping structure for table itemrental.categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -41,31 +44,32 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.categories: ~22 rows (approximately)
+-- Dumping data for table itemrental.categories: ~23 rows (approximately)
 DELETE FROM `categories`;
 INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('1e3ebeba-c402-449f-8a69-0b431b87137c', 'other', 'Kita', NULL, NULL),
-	('18607d1a-fcee-432d-a848-110c3ba5fcf8', 'bikes', 'Dviračiai', 'sports', NULL),
-	('178b77c6-aede-4277-b120-14ad421377e8', 'gameconsoles', 'Žaidimų konsolės', 'electronics', NULL),
-	('75f1f33a-941e-431a-8f4b-15ceb69a589c', 'tools', 'Įrankiai', NULL, NULL),
-	('93a0387d-4687-442b-92bf-182626764a31', 'lensfilter', 'Objektyvų filtrai', 'video', '[{"type":"string","label":"Type","name":"type"}]'),
-	('a01cdedf-8b2d-4f60-9775-2949d4c930af', 'electronics', 'Elektronika', NULL, NULL),
+	('18607d1a-fcee-432d-a848-110c3ba5fcf8', 'dviraciai', 'Dviračiai', 'sports', NULL),
+	('178b77c6-aede-4277-b120-14ad421377e8', 'konsoles', 'Žaidimų konsolės', 'electronics', NULL),
+	('75f1f33a-941e-431a-8f4b-15ceb69a589c', 'irankiai', 'Įrankiai', NULL, NULL),
+	('93a0387d-4687-442b-92bf-182626764a31', 'optikosfiltrai', 'Objektyvų filtrai', 'video', '[{"type":"string","label":"Tipas","name":"type"}]'),
+	('a01cdedf-8b2d-4f60-9775-2949d4c930af', 'elektronika', 'Elektronika', NULL, NULL),
 	('9b73883b-fc3a-48de-b4ec-461d2d5dea1b', 'video', 'Video', NULL, ''),
-	('e6f4a840-066d-48cc-bf75-4a48a428c5fc', 'vehicles', 'Auto', NULL, '[{"type":"select","label":"Type","name":"type","options":["Car", "Trailer","Truck","Motorcycle"]},{"type":"select","label":"Fuel type","name":"fueltype","options":["Diesel", "Gasoline","EV"]}]'),
-	('f61f71e2-9825-496c-b987-5be6e338b50f', 'audio', 'Audio', NULL, NULL),
-	('994853a5-f05f-4781-8a15-6029c011daef', 'stands', 'Stovai', 'foto', NULL),
+	('e6f4a840-066d-48cc-bf75-4a48a428c5fc', 'auto', 'Auto', NULL, '[{"type":"select","label":"Tipas","name":"type","options":["Automobilis", "Priekaba","Sunkvežemis","Motociklas"]},{"type":"select","label":"Kuro tipas","name":"fueltype","options":["Dyzelis", "Benzinas","EV"]}]'),
+	('f61f71e2-9825-496c-b987-5be6e338b50f', 'garsoiranga', 'Audio', NULL, NULL),
+	('994853a5-f05f-4781-8a15-6029c011daef', 'stovai', 'Stovai', 'foto', NULL),
 	('a484bcc1-e341-4ed4-9c71-63369d0da8ce', 'foto', 'Foto', NULL, NULL),
-	('ee491fb0-1cb8-4447-be5e-8bfb4eaf1329', 'sports', 'Sportas', NULL, NULL),
-	('33f81811-8582-4879-8106-9b8e8c190cdc', 'microphones', 'Mikrofonai', 'audio', '[{"type":"select","label":"Type","name":"type","options":["Dynamic", "Condenser"]},{"type":"string","name":"model","label":"Model"},{"type":"select","label":"Connection","name":"connection","options":["USB", "XLR"]}]'),
-	('123341dd-1307-45f4-a6bf-9bf103e6149b', 'phones', 'Telefonai', 'electronics', '[{"type":"select","label":"Maker","name":"maker","options":["samsung", "lg"]},{"type":"string","name":"model","label":"Model"}]'),
-	('72f123dd-1307-45f4-a6bf-9bf103e6149b', 'cameras', 'Fotoaparatai', 'video', '[{"name":"mountType","type":"string","label":"Lens mount type"}]'),
-	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'computers', 'Kompiuteriai', 'electronics', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Cores"}]'),
+	('e73e8392-fe00-43d1-b156-6618e7ba8e04', 'postman', 'postman', 'postman', NULL),
+	('ee491fb0-1cb8-4447-be5e-8bfb4eaf1329', 'sportas', 'Sportas', NULL, NULL),
+	('33f81811-8582-4879-8106-9b8e8c190cdc', 'mikrofonai', 'Mikrofonai', 'audio', '[{"type":"select","label":"Tipas","name":"type","options":["Dinaminis", "Kondensatorinis"]},{"type":"string","name":"model","label":"Modelis"},{"type":"select","label":"Lizdas","name":"connection","options":["USB", "XLR"]}]'),
+	('123341dd-1307-45f4-a6bf-9bf103e6149b', 'telefonai', 'Telefonai', 'electronics', '[{"type":"select","label":"Gamintojas","name":"maker","options":["Samsung", "LG", "Xiaomi", "Apple", "Oppo", "HTC", "Poco"]},{"type":"string","name":"model","label":"Modelis"}]'),
+	('72f123dd-1307-45f4-a6bf-9bf103e6149b', 'kameros', 'Fotoaparatai', 'video', '[{"name":"mountType","type":"string","label":"Optikos tvirtinimo tipas"}]'),
+	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'kompiuteriai', 'Kompiuteriai', 'electronics', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Procesoriaus Branduoliai"}]'),
 	('71f9fdee-1809-43c7-8d23-9ddc9c96ba49', 'moto', 'Moto', 'auto', NULL),
-	('fb55d6cc-d5c2-47d2-b8fa-9e7415068d31', 'lens', 'Objektyvai', 'video', '[{"type":"string","label":"Mount type","name":"mounttype"},{"type":"string","name":"focallength","label":"Focal length"},{"type":"string","label":"Apperture","name":"apperture"}]'),
-	('1e5046cd-0412-4b07-b537-bc25597c6f1f', 'saws', 'Pjūklai', 'tools', NULL),
-	('9b66471a-5b52-4dc3-b6bc-dc37b80d6f0e', 'lights', 'Lempos', 'foto', NULL),
+	('fb55d6cc-d5c2-47d2-b8fa-9e7415068d31', 'optika', 'Objektyvai', 'video', '[{"type":"string","label":"Tvirtinimo tipas","name":"mounttype"},{"type":"string","name":"focallength","label":"Židinio nuotolis"},{"type":"string","label":"Diafragma","name":"apperture"}]'),
+	('1e5046cd-0412-4b07-b537-bc25597c6f1f', 'pjūklai', 'Pjūklai', 'tools', NULL),
+	('9b66471a-5b52-4dc3-b6bc-dc37b80d6f0e', 'apšvietimas', 'Lempos', 'foto', NULL),
 	('8f5051ae-8d77-42dd-959e-f001aa8e94b4', 'drills', 'Grąžtai', 'tools', NULL),
-	('02c02bf8-5610-4b8e-bfbb-fbf5845ee3a1', 'protection', 'Apsaugos', 'sports', NULL);
+	('02c02bf8-5610-4b8e-bfbb-fbf5845ee3a1', 'apsauga', 'Apsaugos', 'sports', NULL);
 
 -- Dumping structure for table itemrental.comments
 CREATE TABLE IF NOT EXISTS `comments` (
@@ -76,16 +80,17 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `createdAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Dumping data for table itemrental.comments: ~2 rows (approximately)
+-- Dumping data for table itemrental.comments: ~3 rows (approximately)
 DELETE FROM `comments`;
 INSERT INTO `comments` (`id`, `resource`, `user`, `text`, `createdAt`) VALUES
-	('ccb01dd2-7515-4fe0-a110-17ca9c949550', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2024-05-03 23:03:04'),
-	('96472313-0f3e-4631-bf52-65b33ae1ed71', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2024-05-03 23:30:18');
+	('31898720-015a-4bb8-a0a8-dd195cb91125', '63831671-381d-49d3-b01d-bb1d17839d7c', 'd49ec1b3-fec0-4532-a17c-50376245f15c', 'Nuostabi patirtis! Išsinuomojau šį sportinį BMW F30 savaitgaliui, kad išbandyčiau save lenktynių trasoje. Automobilis puikiai paruoštas ir atitinka visus FIA standartus, kas suteikia tikrą lenktynių jausmą. Saugumo priemonės, kaip pilni saugos lankai ir panikos mygtukas, suteikė papildomą ramybę. Tikrai rekomenduoju visiems automobilių sporto mėgėjams!', '2024-05-12 17:04:13'),
+	('dab62f3e-c1df-4d98-a288-782a3f3db2b4', '63831671-381d-49d3-b01d-bb1d17839d7c', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Super automobilis! BMW F30 buvo tiesiog tobulas pasirinkimas Nemuno žiedo lenktynėms. Važiavimas buvo sklandus ir saugus, nes automobilis turi visas reikiamas saugumo priemones. Patiko, kad viskas buvo įskaičiuota, todėl nereikėjo jaudintis dėl papildomų mokesčių. Puiki patirtis už labai prieinamą kainą – tik 100€ per dieną.', '2024-05-26 09:05:12'),
+	('c5fe2bfb-5a9e-4e57-bbbf-28bb09db15e0', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Puikus pasirinkimas adrenalino mėgėjams! Šis BMW F30 yra ne tik galingas, bet ir saugus – pilni saugos lankai ir kitos saugumo priemonės leidžia jaustis užtikrintai trasoje. Be to, automobilis pritaikytas lenktynėms ir visiškai atitinka FIA standartus. Kaina taip pat labai patraukli, 100€ už dieną yra puikus pasiūlymas. Neabejotinai verta išbandyti!', '2024-06-01 17:09:35');
 
 -- Dumping structure for table itemrental.deliveries
 CREATE TABLE IF NOT EXISTS `deliveries` (
   `id` uuid NOT NULL,
-  `order` uuid NOT NULL,
+  `order` varchar(50) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL,
   `role` int(11) NOT NULL,
   `location` text DEFAULT NULL,
@@ -96,115 +101,58 @@ CREATE TABLE IF NOT EXISTS `deliveries` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.deliveries: ~13 rows (approximately)
+-- Dumping data for table itemrental.deliveries: ~2 rows (approximately)
 DELETE FROM `deliveries`;
 INSERT INTO `deliveries` (`id`, `order`, `type`, `role`, `location`, `shippingProvider`, `shippingId`, `comment`, `completed`) VALUES
-	('593567e8-5e10-4430-973f-08b00d64f763', 'e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 1, 1, NULL, '2', 'CE473405152EE', NULL, 0),
-	('d1aa1cc3-17d7-432f-9ed0-0a2d5f81809e', '53df4412-cdbd-4413-8d3d-6723d67488e6', 1, 1, NULL, '2', 'CE473405152EE', 'Pristatymas', 0),
-	('feddfcc3-fbe4-4345-a1d9-18f5a029cdae', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 0, 0, '789797', '2', 'CE473405152EE', NULL, 1),
-	('765f3753-8446-4272-bc6b-2570bd2db8ea', '0b8e55db-ae77-43ab-b072-95a316c2f026', 1, 1, NULL, '2', 'CE473405152EE', NULL, 1),
-	('f9af23b9-0a9d-4115-b53b-27bc6b1496d7', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 0, 0, 'Kaunas', '2', 'CE473405152EE', NULL, 1),
-	('97f98c95-59db-415a-bb90-4a3b811a53a9', '752858d3-269c-4839-9a50-d619751e83a1', 0, 1, 'Kaunas, Lithuania', '2', 'CE473405152EE', NULL, 0),
-	('72711c93-c437-4398-afd4-4bfc0afeb7c1', '1945b4a1-2911-43c6-bbac-dd25bd2a5cdb', 1, 1, NULL, '2', 'CE473405152EE', 'test', 0),
-	('8350ee8e-7db7-431c-afa2-78834204a210', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 0, 0, 'Kaunas, Lithuania', '2', 'CE473405152EE', NULL, 1),
-	('8238be80-8ee8-446e-813f-8245461273f6', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 0, 1, 'Kaunas, K.Baršausko g. 43', '2', 'CE473405152EE', NULL, 1),
-	('7b52fda8-4a86-47a3-8e6f-8b2d84041ea9', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 0, 1, 'Kaunas, Lithuania', '2', 'CE473405152EE', NULL, 1),
-	('0a9fe6b6-9c51-46dd-88dc-99504b493be6', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 0, 1, 'asd', '2', 'CE473405152EE', NULL, 1),
-	('889a4140-9ca4-4a63-8aed-c5f01ee67662', 'a5735e6b-ec17-405a-8214-1024b6d488cb', 1, 1, NULL, '2', 'CE473405152EE', 'stest123', 0),
-	('ba974f3a-2383-4246-8e0f-c83daf539c5c', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 0, 0, 'Kaunas', '2', 'CE473405152EE', NULL, 1),
-	('b61c08b1-b1fb-43ff-9b1a-de9eb024b563', '05d6659e-9392-40d9-9f13-99a507ece273', 0, 1, 'K. Baršausko g. 64, Kaunas, Lietuva', '2', 'CE473405152EE', NULL, 1),
-	('b56be486-9268-461b-8921-deca4c172cbe', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 0, 1, 'Kaunas, Lithuania', '2', 'CE473405152EE', NULL, 1);
+	('6d493de7-ef44-453e-b7c0-0f25c349207c', 'FOTOFOTO-3', 0, 1, 'Kaunas', '2', 'CE473405152EE', NULL, 0),
+	('c3338a0c-b0bc-42f2-8615-461504a72ab8', 'FOTOFOTO-2', 0, 1, 'Kaunas', '2', 'CE473405152EE', NULL, 1),
+	('59a99574-bf51-4bf4-90e5-730407a2dd99', 'FOTOFOTO-1', 0, 1, 'Baršausko g. 60, Kaunas', '2', 'CE473405152EE', NULL, 1),
+	('ff2aa2b9-9aaf-452d-8cc9-8e946aebc74c', 'FOTOFOTO-1', 0, 0, 'Kaunas, Lithuania', '2', 'CE473405152EE', NULL, 1),
+	('9c86419c-5c9d-4807-b750-8f6023cf21c8', 'FOTOFOTO-2', 0, 0, 'Kaunas', '2', 'CE473405152EE', NULL, 0),
+	('3cbcc0e5-34f2-47c6-8c95-fa9e9aef7713', 'FOTOFOTO-4', 0, 1, 'Kaunas', '2', 'CE473405152EE', NULL, 1);
 
 -- Dumping structure for table itemrental.eventlog
 CREATE TABLE IF NOT EXISTS `eventlog` (
   `rowId` int(11) NOT NULL AUTO_INCREMENT,
   `id` uuid NOT NULL,
-  `resource` uuid NOT NULL,
+  `resource` varchar(50) NOT NULL DEFAULT '',
   `eventName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `title` longtext NOT NULL,
-  `description` longtext NOT NULL,
+  `title` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
+  `description` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   `timestamp` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`rowId`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.eventlog: ~67 rows (approximately)
+-- Dumping data for table itemrental.eventlog: ~0 rows (approximately)
 DELETE FROM `eventlog`;
 INSERT INTO `eventlog` (`rowId`, `id`, `resource`, `eventName`, `title`, `description`, `timestamp`) VALUES
-	(14, 'f64f91df-1f54-44d7-a87f-6a9df4fc3455', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Created', 'Created', 'Order created by the user', '2024-04-11 20:26:47'),
-	(15, 'cc36b133-59e9-4fe4-80c3-45b24b5f454a', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-11 20:27:23'),
-	(16, '9440fbbb-efb3-4f8f-82c5-6ddd2b725db5', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-12 08:35:30'),
-	(17, 'e85e7bf5-a47b-4405-a47b-2c28f6ddd860', '0b8e55db-ae77-43ab-b072-95a316c2f026', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-12 08:46:01'),
-	(18, 'aecce21c-679a-41a5-8181-5860a6bf73ed', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Created', 'Created', 'Order created by the user', '2024-04-12 08:53:37'),
-	(19, '5b1fc963-413c-4c30-ba1c-28b9eb3ccf83', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-12 08:54:07'),
-	(20, '69f5640e-cee3-4e02-b728-a267b8ece53c', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-12 08:55:15'),
-	(21, 'b171ce17-ddd6-4a2e-9540-bf6facb573b4', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-12 08:55:28'),
-	(22, '88423a68-4b5f-473e-8dca-2ef0ab9f1d63', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-04-12 09:13:48'),
-	(23, 'bf8f99b4-0d65-4cf8-9c4d-0c1cb49fc923', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-04-12 09:15:02'),
-	(24, '73735572-387b-4fd7-b68b-84c36881e9a8', 'd8c62fc2-21a0-4588-8d9b-6db3b44d60a4', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-12 09:15:02'),
-	(25, 'faa1f967-cd96-4215-b97f-b6c6cddd9db1', '94c03172-c718-45b4-b85f-5ed50b1d0eaf', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 15:39:01'),
-	(26, '9d81d39a-d4cc-4b03-925f-52f544464e9b', 'c19375e6-a87a-4cd2-a55e-716817cbfe51', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 16:03:44'),
-	(27, '863039c4-f7a0-4330-afe7-4adbe81d8301', 'a714072f-7b40-4f44-9bc8-3416f51b86e7', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 16:06:21'),
-	(28, '8e20c4a3-494b-492f-a33e-41064591bd85', '88f2df42-8b4f-47e4-ae17-de5576364781', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 16:13:27'),
-	(29, '2a53929e-c052-401d-9816-be7fb01d79ac', '4ebe5050-59d6-497d-b79e-6e44b7bd289e', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:33:14'),
-	(30, 'cb0d52b7-d667-405b-b266-c02536776382', '4ebe5050-59d6-497d-b79e-6e44b7bd289e', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 17:33:57'),
-	(31, '18456d58-ed62-4e1a-bf08-f24224417f47', '1f718cb5-32b1-4bae-b764-8c9e4116cf22', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:35:00'),
-	(32, '47640bd6-79e5-4ef6-80a4-23553f79e4f7', '0411c2dc-083b-468c-9f34-d8e628e55a7c', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:35:52'),
-	(33, '43f3f081-d38f-4307-a6b6-33e982ade6d9', 'd86d2041-d45e-4b86-b80e-f106cd444ace', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:36:18'),
-	(34, '5e9a9b70-bb66-44be-b981-b3ce2f6f913b', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:37:10'),
-	(35, '0ced66b1-4144-472d-8c48-0bd876c9661f', '0ac3e66a-6a23-4741-b8e2-7e2f90541b69', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:37:33'),
-	(36, '06042116-2b2f-4020-ba24-76d9c97daa13', '8723b1be-e59c-45df-bd3a-7cfbb09c73a3', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 17:38:03'),
-	(37, '004d3cf1-2d49-4581-8ee3-865984609724', '0411c2dc-083b-468c-9f34-d8e628e55a7c', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 17:38:24'),
-	(38, '2073b8df-5e9e-4900-91ac-bcadbf65f95e', 'b599ebb1-a933-47ef-a702-e0f8e59de778', 'Order.Created', 'Created', 'Order created by the user', '2024-04-15 18:09:09'),
-	(39, 'e244eb26-366e-4791-b14f-e9a9f4884fcd', 'd86d2041-d45e-4b86-b80e-f106cd444ace', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:33'),
-	(40, '927954ec-5f27-4c10-a608-e896b6b0bb4d', 'b599ebb1-a933-47ef-a702-e0f8e59de778', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:35'),
-	(41, '12c545fb-e948-4685-b5db-e8691bb5e28d', '88f2df42-8b4f-47e4-ae17-de5576364781', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:37'),
-	(42, '6200f310-c0ac-4a53-ba5f-c44bdc24b713', '1f718cb5-32b1-4bae-b764-8c9e4116cf22', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:38'),
-	(43, '78b65af5-e4db-420e-84e0-5b02e3ffb14e', '0ac3e66a-6a23-4741-b8e2-7e2f90541b69', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:39'),
-	(44, 'a50233c3-0194-4d90-9cd4-a8b4087c092f', '8723b1be-e59c-45df-bd3a-7cfbb09c73a3', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:40'),
-	(45, '9185a7ea-d857-479e-840f-089ee4de0601', 'c19375e6-a87a-4cd2-a55e-716817cbfe51', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:41'),
-	(46, '5177ef82-bd9c-4870-88f2-11d5061af655', '94c03172-c718-45b4-b85f-5ed50b1d0eaf', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:42'),
-	(47, '347f3e7e-8553-4395-ad8a-47bdbf31e396', 'a714072f-7b40-4f44-9bc8-3416f51b86e7', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:43'),
-	(48, '1baeb3e4-b940-4184-8619-74c038951874', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-15 18:09:44'),
-	(49, '738b88e6-b5f9-49a5-a6e2-4009ed2c69bc', 'e3bfd257-8251-4296-aa8d-7fdc58595349', 'Order.Created', 'Created', 'Order created by the user', '2024-04-16 06:43:14'),
-	(50, 'e5c8e6d9-58a0-4415-bb30-832382cabe0b', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-16 07:40:43'),
-	(51, '534ccc8d-7279-4767-b7d5-b556fc0736bd', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-16 07:43:21'),
-	(52, 'c7240578-a1ca-4bb9-8f07-d57926cc1cfb', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-04-16 07:43:39'),
-	(53, '1da3d289-9083-4296-9a20-5dd67c3064e9', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-04-16 07:44:08'),
-	(54, '50948ffe-3807-4a44-8880-c72745290f15', 'e704c1ce-3a71-488b-83c0-2182a41824c6', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-16 07:44:08'),
-	(55, '004bf87c-d02f-43ac-852d-b8c93f942539', 'bc0acfd6-8ac7-45fe-9378-c743a22f1393', 'Order.Created', 'Created', 'Order created by the user', '2024-04-16 08:46:35'),
-	(56, '4340ac8b-41d0-49fa-a408-b8e7b6fc2c7f', '05d6659e-9392-40d9-9f13-99a507ece273', 'Order.Created', 'Created', 'Order created by the user', '2024-04-16 08:47:03'),
-	(57, '4562b8c5-d93e-4ed5-b350-976745ae4700', '05d6659e-9392-40d9-9f13-99a507ece273', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-16 08:47:42'),
-	(58, '641ba4e6-226c-454d-8563-887e5c07ee67', '05d6659e-9392-40d9-9f13-99a507ece273', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-16 08:47:58'),
-	(59, '0cf49513-ac64-4b30-84e5-fa79e232858f', '05d6659e-9392-40d9-9f13-99a507ece273', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-16 08:48:12'),
-	(60, 'e83a4389-98a4-4e6c-93b8-d6218ae784a5', 'e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 'Order.Created', 'Created', 'Order created by the user', '2024-04-16 08:49:12'),
-	(61, '0f21c324-34fe-47f5-8e13-56cd0241fa53', 'e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-16 08:49:24'),
-	(62, 'd5288108-cfda-49cd-a088-4eb3ba078fa9', 'e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-16 09:00:49'),
-	(63, 'c76389e4-5bc3-47b9-bf38-4fb7ed071522', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Created', 'Created', 'Order created by the user', '2024-04-16 09:04:08'),
-	(64, 'edf0c684-8976-4ac7-ba65-163644732dd4', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-16 09:04:25'),
-	(65, 'ea913d58-320d-478e-a409-271c00076b11', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-04-16 09:04:35'),
-	(66, 'cc39932c-06ff-4b00-8992-b8d319ef6e6f', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-04-16 09:04:44'),
-	(67, '7d70e8e6-13f8-4541-91f8-b17d157b669d', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-04-16 09:04:58'),
-	(68, '4c6345fc-e01c-4001-bed4-dded83e39d10', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-04-16 09:05:04'),
-	(69, 'e7f5a9b8-f8c6-45c7-a733-cd8a78342c47', '6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', 'Order.Complete', 'Complete', 'The order is complete', '2024-04-16 09:05:04'),
-	(70, '4e81bd34-8fcf-4345-aa4d-5d2c5e095f28', '752858d3-269c-4839-9a50-d619751e83a1', 'Order.Created', 'Created', 'Order created by the user', '2024-04-17 08:28:33'),
-	(71, 'd0539364-ad27-4cad-aa4b-e3d769dc8873', 'b9aa4f51-9788-4790-bfde-535b38610e61', 'Order.Created', 'Created', 'Order created by the user', '2024-04-23 21:32:09'),
-	(72, '4badd924-5427-4a48-bc4f-00f6c3f2f627', '752858d3-269c-4839-9a50-d619751e83a1', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-04-30 17:22:59'),
-	(73, '76e13e3b-dff0-49d0-be77-a187f3454ab2', '204c90b8-6959-4bb8-8204-d53dd6b81a73', 'Order.Created', 'Created', 'Order created by the user', '2024-05-02 22:45:14'),
-	(74, '037b3f04-015a-4d6d-b2f7-235e64750f0c', '608747da-7d8f-44ad-8a18-a062ae0b60da', 'Order.Created', 'Created', 'Order created by the user', '2024-05-02 22:46:21'),
-	(75, '7f1ead83-8ff5-4a81-9c47-aae22e79bbca', '0df86afd-5b00-4aab-a694-71381a92fdd6', 'Order.Created', 'Created', 'Order created by the user', '2024-05-03 23:53:07'),
-	(76, '6364d21b-17dc-40ce-bdea-2e0e73af7d58', 'b9aa4f51-9788-4790-bfde-535b38610e61', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-05-03 23:53:35'),
-	(77, 'b7a948fe-1c8a-481a-9c6a-1f87e3ae7f65', '752858d3-269c-4839-9a50-d619751e83a1', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-05-03 23:57:31'),
-	(78, '4fa8296c-440b-4bc0-b4f9-b9a718602b44', 'ddb70e7b-14ca-4d5b-b5e6-0874c1b2c6ac', 'Order.Created', 'Created', 'Order created by the user', '2024-05-04 11:59:38'),
-	(79, '17c2f705-acd3-4ab2-9ba0-7a95d65659c8', '2e0d662c-f3a4-4db5-afad-732273012cc0', 'Order.Created', 'Created', 'Order created by the user', '2024-05-04 12:00:51'),
-	(80, 'a7ba58f4-18a2-48c7-9194-b4c22e20a15f', '2e0d662c-f3a4-4db5-afad-732273012cc0', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-05-04 12:01:19'),
-	(81, '70e70b24-072f-479a-b392-beda2ed0b947', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Created', 'Created', 'Order created by the user', '2024-05-05 21:58:23'),
-	(82, 'ba75d5a3-763e-4487-9f7a-5faa4b795289', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Accepted', 'Accepted', 'Order accepted by the merchant', '2024-05-05 21:58:42'),
-	(83, 'a45c61fa-3df0-4514-907b-2af47a39ed54', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Dispatched', 'Dispatched', 'Order dispatched by the merchant', '2024-05-05 21:58:56'),
-	(84, 'd4fc3e38-4c1e-4b71-b64a-6dbb95e3cd10', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Delivered', 'Delivered', 'Order delivered to the customer', '2024-05-05 21:59:07'),
-	(85, '0d6e583b-d7a6-4db2-a423-db9513164753', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.ReturnDispatched', 'Dispatched', 'Order dispatched back by the customer', '2024-05-05 21:59:16'),
-	(86, 'e6416252-b4a9-4611-a422-70fa37fbc4f1', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Returned', 'Returned', 'Order returned by the customer', '2024-05-05 21:59:24'),
-	(87, '47b2f541-7db4-48ff-852b-8121b6593af5', '14a4c409-5b4e-4b45-843c-01fbaa7f9718', 'Order.Complete', 'Complete', 'The order is complete', '2024-05-05 21:59:24');
+	(119, 'ae711202-f07b-4231-b976-cf308a2b9c9e', 'FOTOFOTO-1', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 19:59:17'),
+	(120, '9e9bcda9-33cc-4e3e-aa50-3e998e566aae', 'FOTOFOTO-1', 'Order.Accepted', 'Revzervacija patvirtinta', 'Rezervacija sėkmingai patvirtinta prekybininko', '2024-06-04 20:23:18'),
+	(121, 'e5810082-fbf8-4d4f-b84f-a7de9ea4d230', 'FOTOFOTO-1', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Užsakymas išsiųstas prekybininko', '2024-06-04 20:23:43'),
+	(122, '52d2738c-edc2-4ef0-933c-f0294f7b7327', 'FOTOFOTO-1', 'Order.Delivered', 'Užsakymas pristatytas', 'Užsakymas pristatytas klientui', '2024-06-04 20:31:12'),
+	(123, '5cdddd1a-c68c-4ecc-811a-aca3a210f113', 'FOTOFOTO-1', 'Order.ReturnDispatched', 'Užsakymas grąžinamas', 'Užsakymas išsiųstas atgal', '2024-06-04 20:32:16'),
+	(124, 'df435c08-0f11-43e5-812d-b7e47e0baee3', 'FOTOFOTO-1', 'Order.Returned', 'Užsakymas grąžintas', 'Užsakymas sėkmingai grąžintas', '2024-06-04 20:32:27'),
+	(125, '3b190d17-7009-4146-9e63-bdce882831d2', 'FOTOFOTO-1', 'Order.Complete', 'Užsakymas baigtas', 'Nuoma sėkmingai įvykdyta', '2024-06-04 20:32:27'),
+	(126, '6452b716-eda0-421c-82af-7bf4cdad7625', 'MATAS-1', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:47:47'),
+	(127, '6367ba69-1240-4d93-8642-6f6b29fab552', 'MATAS-2', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:48:09'),
+	(128, '3c61247e-06e5-4352-8b5a-6ab56b4e2126', 'FOTOFOTO-2', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:48:23'),
+	(129, 'c4eeb0bf-9498-4630-b165-230ef84f910c', 'FOTOFOTO-3', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:48:33'),
+	(130, 'c3893d6d-7849-421c-9343-4f32184d1036', 'FOTOFOTO-4', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:48:46'),
+	(131, '677ce646-f65d-45a4-8eb9-44985006bddb', 'FOTOFOTO-3', 'Order.Accepted', 'Revzervacija patvirtinta', 'Rezervacija sėkmingai patvirtinta prekybininko', '2024-06-04 20:50:26'),
+	(132, '2d68be53-1205-47e6-928f-fe75148478ca', 'FOTOFOTO-3', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Užsakymas išsiųstas prekybininko', '2024-06-04 20:50:32'),
+	(133, '6fe340fb-e240-496a-9964-98a962b56ff2', 'FOTOFOTO-4', 'Order.Accepted', 'Revzervacija patvirtinta', 'Rezervacija sėkmingai patvirtinta prekybininko', '2024-06-04 20:50:43'),
+	(134, '5a67354d-f3cc-490f-b180-b51f59e1ba80', 'FOTOFOTO-4', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Užsakymas išsiųstas prekybininko', '2024-06-04 20:50:52'),
+	(135, '75df2722-554c-4252-9a8e-3a37fc595bbe', 'FOTOFOTO-4', 'Order.Delivered', 'Užsakymas pristatytas', 'Užsakymas pristatytas klientui', '2024-06-04 20:51:00'),
+	(136, 'cf49c602-f577-4073-93a5-b20116c10edf', 'FOTOFOTO-2', 'Order.Accepted', 'Revzervacija patvirtinta', 'Rezervacija sėkmingai patvirtinta prekybininko', '2024-06-04 20:51:31'),
+	(137, '3510e697-c959-4ae3-9cc8-77e013c1d5a7', 'FOTOFOTO-2', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Užsakymas išsiųstas prekybininko', '2024-06-04 20:51:37'),
+	(138, '12b5d573-269c-4899-bc31-e941d8d832f9', 'FOTOFOTO-2', 'Order.Delivered', 'Užsakymas pristatytas', 'Užsakymas pristatytas klientui', '2024-06-04 20:51:47'),
+	(139, '5214ac32-6c70-4516-8a26-9c85567b2df4', 'FOTOFOTO-2', 'Order.ReturnDispatched', 'Užsakymas grąžinamas', 'Užsakymas išsiųstas atgal', '2024-06-04 20:51:54'),
+	(140, '26ab0f51-0f81-43d1-98f0-3c22a22aa6f2', 'MATAS-3', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:52:39'),
+	(141, '269a5f72-540c-49f9-9e2e-3fd2e0dd2086', 'MATAS-4', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:52:57'),
+	(142, '72b1c16f-65e9-4ddb-99f1-7d16737c4009', 'MATAS-5', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:53:04'),
+	(143, '043bfd83-8922-487c-addf-bae25d175362', 'MATAS-6', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:53:11'),
+	(144, '23b2428d-f5e8-4c47-991f-5e41a07901ba', 'FOTOFOTO-5', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 20:53:55');
 
 -- Dumping structure for table itemrental.inventory_links
 CREATE TABLE IF NOT EXISTS `inventory_links` (
@@ -232,73 +180,100 @@ CREATE TABLE IF NOT EXISTS `items` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.items: ~20 rows (approximately)
+-- Dumping data for table itemrental.items: ~28 rows (approximately)
 DELETE FROM `items`;
 INSERT INTO `items` (`id`, `serialNumber`, `owner`, `name`, `description`, `category`, `images`, `tags`, `details`, `deleted`) VALUES
-	('a5140a5e-a8cf-4760-8d95-0562bb9b0589', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 3', 'Originali playstation 3 konsolė su visu kompletu', 'gameconsoles', '["1ec6840c-46b6-4601-a9c4-fec02fe3cb2a.jpg"]', '["playstation","PS","games"]', '[]', 0),
-	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'lensfilter', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', '', '[{"Name":"type","Value":"Polarizing"}]', 0),
-	('5e51f0a8-e519-4b73-860d-2c77210e3d55', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2', 'Originali playstation žaidimų konsolė', 'gameconsoles', '["eaf7b767-29bd-4fc3-9528-3433f4b4a6cf.jpg","00941ce7-640f-4ed7-b248-972cf7329141.png"]', '["playstation","PS","games"]', '[]', 0),
-	('fcf53cdc-6f12-4356-879b-2def3d2d186d', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'vehicles', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
-	('62c42c49-b548-454e-9c46-4d4076b5dd78', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Tesla Model S', 'Tesla elektromobilis', 'vehicles', '["c309d7e9-c9fe-4dba-a61e-afa515c6af1f.jpg","431cbbe0-ad24-45a8-92fd-93f9c1a8199d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"EV"}]', 0),
-	('7cbdf583-4b98-4bce-87fc-59585a7ae494', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'RODE PodMic', 'Studijos lygio mikrofonas', 'microphones', '["6150f019-123b-4564-bda1-71421431f271.jpg"]', '', '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"PodMic"},{"Name":"connection","Value":"USB"}]', 0),
-	('c6841033-4ab2-41c7-a155-61da6c42a7db', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30', 'BMW trečios klasės benzininis automobilis', 'vehicles', '["331de3f9-77d6-425b-8418-47f7253f3918.jpeg"]', '', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
-	('38442e05-7369-4747-ba10-73ee8d6f2ab6', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', 'Pilno kardo fotoaparatas', 'cameras', '["fe98092f-cc84-4613-bb1e-6d1549df6fa5.jpg","3cc526ab-b236-4910-a85b-75c354401d91.png"]', '', '[{"Name":"mountType","Value":"Sony E-Mount"}]', 0),
-	('46c5db9a-0e83-4052-83b3-76e656724a44', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Genesis Radium 600', 'Studijinis mikrofonas', 'microphones', '["c35d4863-e029-4d94-960f-a02d5d139827.jpg"]', '', '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"Radium 600"},{"Name":"connection","Value":"USB"}]', 0),
-	('700f1862-8a21-486e-bfa2-7d2f99564da9', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Žoliapjovė/traktoriukas', 'Naujas traktoriukas skirtas prižiūrėti vejai', 'other', '["9b40ffe1-37aa-43ec-bf43-9d52ccfb7446.jpg","7f8b2758-469e-458c-b170-de96a0243d3a.jpg","1e209e69-7616-4079-9a0f-1bd2926052c5.jpg"]', '', '[]', 0),
-	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'phones', 'null', '', '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]', 0),
-	('0f6c4d55-7bb9-4455-8595-84691606635a', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation1', 'Originali retro žaidimų konsolė', 'gameconsoles', '["61fe44ac-f279-4c76-8fba-a6677109d005.jpg"]', '["playstation","PS","games"]', '[]', 0),
-	('74010154-b180-411e-9420-9fbf7c04d49c', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5', 'Originali playstation 5 konsolė su visu kompletu', 'gameconsoles', '["818fbc66-48ea-4bef-9e3b-2b6d124d0e35.jpg","ee73cc44-e773-4060-a9d2-d37d1d04bb9b.jpg"]', '["playstation","PS","games"]', '[]', 0),
-	('90c0992e-d736-4638-b292-a18c42d949c1', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Nikon D5100', 'Veidrodinis Nikon fotoaparatas', 'cameras', '["58895aea-9b1a-4603-bb31-a209efe84b23.jpg"]', '', '[{"Name":"mountType","Value":"Nikon mount"}]', 0),
-	('e58af2d6-ad2c-4250-aa0e-af9a8d5a0885', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Elektrinė žolepjovė', 'Mažai naudota žolepjovė, veikianti įjungus į elektros tinklą', 'other', '["1fd76ae9-7c04-48f4-99f7-6a3035985692.jpg"]', '', '[]', 0),
-	('af000421-55ac-433f-8524-d063e7c39d73', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'GARDEN priekaba', 'Prikabinama automobilinė priekaba', 'vehicles', '["05fc6c7f-97f6-4a43-b52c-1bfe9b903d2f.png"]', '', '[{"Name":"type","Value":"Trailer"}]', 0),
-	('2cacbcdd-e5a9-4280-932e-d8485323dc16', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'vehicles', '["3a6450a9-214f-48c4-85cd-c0a0ba4a136d.jpg"]', '["vehicle","sports","bmw"]', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
-	('beb49730-4478-45b6-b958-ecfc81597177', '', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'test', 'test', 'other', 'null', '', '[]', 0),
-	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'cameras', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', '', '[{"Name":"mountType","Value":"asd"}]', 0),
-	('b9885038-af3d-4d2c-b818-f8fcad813341', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Audi S3', 'Aukštos klasės audi automobilis', 'vehicles', '["ca0ddecb-859a-4935-b433-59af4c0c83ce.jpg","adcf34dc-1353-4e4e-88dd-b0bb572e1d26.jpg"]', '', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Diesel"}]', 0);
+	('a5140a5e-a8cf-4760-8d95-0562bb9b0589', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 3', 'Originali playstation 3 konsolė su visu kompletu', 'konsoles', '["1ec6840c-46b6-4601-a9c4-fec02fe3cb2a.jpg"]', '["playstation","PS","games"]', '[]', 0),
+	('5aab285b-6da4-4d4a-b5fe-074c45a8b891', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 Body', 'Profesionali Sony filmavimo kamera', 'foto', '["1f30e3a7-6918-45e9-a99d-a4f103d5c88d.jpg"]', '["Sony","FX30","Cinema"]', '[]', 0),
+	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'optikosfiltrai', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', '', '[{"Name":"type","Value":"Polarizing"}]', 0),
+	('2aff7031-b16c-4f86-906d-0d8d7d1946ba', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony a6400 + Sony 18-135/f3.5-5.6', 'Sony sisteminis fotoaparatas su objektyvu', 'foto', '["3bcb7055-329f-4d9e-9bbb-c30daf434a03.jpg","75513b2d-e58a-40a9-a022-4297a5bddf80.jpg"]', '["Sony","a6400","Mirroless","Bundle"]', '[]', 0),
+	('5e51f0a8-e519-4b73-860d-2c77210e3d55', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2', 'Originali playstation žaidimų konsolė', 'kita', '["eaf7b767-29bd-4fc3-9528-3433f4b4a6cf.jpg","00941ce7-640f-4ed7-b248-972cf7329141.png"]', '["playstation","PS","games"]', '[]', 0),
+	('fcf53cdc-6f12-4356-879b-2def3d2d186d', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'auto', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
+	('ecb401ce-8fcf-404f-841e-3c20e3f50350', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 550d', 'Canon veidrodinis fotoaparatas', 'foto', '["1140dd3a-5066-4ab5-b487-903c45258e05.jpg"]', '["Canon","550d","Foto","DSLR"]', '[]', 0),
+	('55082151-1b43-4451-981d-4b3477b75793', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony HXR-MC2500', 'Sony filmavimo kamera', 'foto', '["fb316c0d-c755-43e7-ba56-4698edc63588.jpeg"]', '["Sony","HDCAM","VIDEO","HXR-MC2500"]', '[]', 0),
+	('62c42c49-b548-454e-9c46-4d4076b5dd78', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Tesla Model S', 'Tesla elektromobilis', 'auto', '["c309d7e9-c9fe-4dba-a61e-afa515c6af1f.jpg","431cbbe0-ad24-45a8-92fd-93f9c1a8199d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"EV"}]', 0),
+	('7cbdf583-4b98-4bce-87fc-59585a7ae494', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'RODE PodMic', 'Studijos lygio mikrofonas', 'mikrofonai', '["6150f019-123b-4564-bda1-71421431f271.jpg"]', '', '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"PodMic"},{"Name":"connection","Value":"USB"}]', 0),
+	('c6841033-4ab2-41c7-a155-61da6c42a7db', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30', 'BMW trečios klasės benzininis automobilis', 'auto', '["331de3f9-77d6-425b-8418-47f7253f3918.jpeg"]', '', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
+	('38442e05-7369-4747-ba10-73ee8d6f2ab6', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Sony A7S2', 'Pilno kardo fotoaparatas', 'kameros', '["fe98092f-cc84-4613-bb1e-6d1549df6fa5.jpg","3cc526ab-b236-4910-a85b-75c354401d91.png"]', '', '[{"Name":"mountType","Value":"Sony E-Mount"}]', 0),
+	('46c5db9a-0e83-4052-83b3-76e656724a44', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Genesis Radium 600', 'Studijinis mikrofonas', 'kita', '["c35d4863-e029-4d94-960f-a02d5d139827.jpg"]', '', '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"Radium 600"},{"Name":"connection","Value":"USB"}]', 0),
+	('700f1862-8a21-486e-bfa2-7d2f99564da9', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Žoliapjovė/traktoriukas', 'Naujas traktoriukas skirtas prižiūrėti vejai', 'kita', '["9b40ffe1-37aa-43ec-bf43-9d52ccfb7446.jpg","7f8b2758-469e-458c-b170-de96a0243d3a.jpg","1e209e69-7616-4079-9a0f-1bd2926052c5.jpg"]', '', '[]', 0),
+	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'telefonai', 'null', '', '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]', 0),
+	('0f6c4d55-7bb9-4455-8595-84691606635a', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation1', 'Originali retro žaidimų konsolė', 'kita', '["61fe44ac-f279-4c76-8fba-a6677109d005.jpg"]', '["playstation","PS","games"]', '[]', 0),
+	('74010154-b180-411e-9420-9fbf7c04d49c', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5', 'Originali playstation 5 konsolė su visu kompletu', 'kita', '["818fbc66-48ea-4bef-9e3b-2b6d124d0e35.jpg","ee73cc44-e773-4060-a9d2-d37d1d04bb9b.jpg"]', '["playstation","PS","games"]', '[]', 0),
+	('90c0992e-d736-4638-b292-a18c42d949c1', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Nikon D5100', 'Veidrodinis Nikon fotoaparatas', 'kameros', '["58895aea-9b1a-4603-bb31-a209efe84b23.jpg"]', '', '[{"Name":"mountType","Value":"Nikon mount"}]', 0),
+	('c7700ff4-29b1-42e3-bf05-af8bab66b533', '', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracinis daiktas', 'Demonstracinis aprašymas', 'other', 'null', '["Demonstracija","Naujas"]', '[]', 1),
+	('e58af2d6-ad2c-4250-aa0e-af9a8d5a0885', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Elektrinė žolepjovė', 'Mažai naudota žolepjovė, veikianti įjungus į elektros tinklą', 'kita', '["1fd76ae9-7c04-48f4-99f7-6a3035985692.jpg"]', '', '[]', 0),
+	('af000421-55ac-433f-8524-d063e7c39d73', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'GARDEN priekaba', 'Prikabinama automobilinė priekaba', 'auto', '["05fc6c7f-97f6-4a43-b52c-1bfe9b903d2f.png"]', '', '[{"Name":"type","Value":"Trailer"}]', 0),
+	('9099dece-eaf2-4609-a229-d6cdb6cfb895', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 70D', 'Canon veidrodinis fotoaparatas', 'foto', '["9d57833d-05b6-4741-97dc-fda50d10eb88.jpg"]', '["Foto","Canon","70D","DSLR"]', '[]', 0),
+	('2cacbcdd-e5a9-4280-932e-d8485323dc16', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'auto', '["vairuok-lenktynini-vt3-klases-bmw-f30-nemuno-ziede.jpg"]', '["vehicle","sports","bmw"]', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
+	('5797ddd0-6ebd-42a0-8307-e00da61d9a3d', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 + Sony 24-70/f4', 'Sony cinema kamera su objektyvu', 'video', '["b6bdfe94-b084-4201-a5f4-1bf6e3a175d0.jpg"]', '["Sony","FX30","Cinema","Lens","Bundle"]', '[]', 0),
+	('c4efea99-0a84-4045-88f6-e276d376b61f', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'BMPCC 4k', 'Blackmagic cinema kamera', 'video', '["f34cbda0-47e6-469e-b7da-1269c8fb6180.jpg","c07d7b0f-7209-4f1f-b51f-79752a96aa5a.jpg"]', '["Blackmagic","Cinema","4K","BMPCC"]', '[]', 0),
+	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'kameros', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', '', '[{"Name":"mountType","Value":"asd"}]', 0),
+	('9ac4ca1c-8017-4297-9edd-f8b2adca5858', '', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracinis daiktas', 'Demonstracinis aprašymas', 'auto', 'null', '["Demonstracija","Naujas"]', '[{"Label":"Type","Name":"type","Value":"Car"},{"Label":"Fuel type","Name":"fueltype","Value":"Diesel"}]', 0),
+	('b9885038-af3d-4d2c-b818-f8fcad813341', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Audi S3', 'Aukštos klasės audi automobilis', 'auto', '["ca0ddecb-859a-4935-b433-59af4c0c83ce.jpg","adcf34dc-1353-4e4e-88dd-b0bb572e1d26.jpg"]', '', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Diesel"}]', 0);
+
+-- Dumping structure for table itemrental.messages
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource` varchar(50) NOT NULL DEFAULT '',
+  `author` uuid NOT NULL,
+  `text` longtext NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- Dumping data for table itemrental.messages: ~0 rows (approximately)
+DELETE FROM `messages`;
+INSERT INTO `messages` (`id`, `resource`, `author`, `text`, `created`) VALUES
+	(6, 'FOTOFOTO-1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Sveiki', '2024-06-04 17:32:51'),
+	(7, 'FOTOFOTO-1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Ar būtų galima atsiimti 12:00?', '2024-06-04 17:33:12'),
+	(8, 'FOTOFOTO-1', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Taip, adresą nurodysiu kuriuo galite atvykti jūsų nurodytu laiku', '2024-06-04 17:33:37');
 
 -- Dumping structure for table itemrental.notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` uuid NOT NULL,
   `user` uuid NOT NULL,
   `code` varchar(50) NOT NULL,
-  `title` text NOT NULL,
-  `description` longtext DEFAULT NULL,
+  `title` text CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
+  `description` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_bin DEFAULT NULL,
   `url` longtext DEFAULT NULL,
   `timestamp` timestamp NULL DEFAULT current_timestamp(),
   `read` tinyint(4) DEFAULT 0,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.notifications: ~17 rows (approximately)
+-- Dumping data for table itemrental.notifications: ~0 rows (approximately)
 DELETE FROM `notifications`;
 INSERT INTO `notifications` (`id`, `user`, `code`, `title`, `description`, `url`, `timestamp`, `read`) VALUES
-	('0b26c776-be1f-432b-aaba-017266455609', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:58:42', 0),
-	('3629e96c-5b3c-42eb-9e4f-0e3f4d8d3e77', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', '2024-04-16 09:00:49', 0),
-	('e72f5263-ffa9-4a7e-80d0-15ce367b0cd3', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/752858d3-269c-4839-9a50-d619751e83a1', '2024-05-03 23:57:31', 0),
-	('a9af60b1-4d88-456d-9426-2a294539cd58', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/2e0d662c-f3a4-4db5-afad-732273012cc0', '2024-05-04 12:00:51', 0),
-	('04671a8a-a657-4b8d-9ba3-3622a28daba8', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Returned', 'Returned', 'Your order was returned', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:05:04', 0),
-	('72209bce-033c-474e-b3b2-36cbd0887b07', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:35', 0),
-	('e0b3be0d-6322-4f9e-aba3-377720a5886d', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/608747da-7d8f-44ad-8a18-a062ae0b60da', '2024-05-02 22:46:21', 0),
-	('023bccd9-e42b-42b7-8cc0-64c7e1090ce4', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Dispatched', 'Your order was dispatched', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:58:56', 0),
-	('6abc9e4d-41a2-4ee7-a04b-6f279208af0d', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:58:23', 0),
-	('d4a63c0d-e339-4d42-a1d6-736e9f5d0625', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Completed', 'Completed', 'Your order was completed', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:59:24', 0),
-	('e2e5604f-bad2-4dac-bd7f-7c3059e38761', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Returned', 'Returned', 'Your order was returned', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:59:24', 0),
-	('378820b0-34f3-482c-bdeb-838d903943f0', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/ddb70e7b-14ca-4d5b-b5e6-0874c1b2c6ac', '2024-05-04 11:59:38', 0),
-	('6bf3e359-33ee-4837-a7d0-9184c0926fd9', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/2e0d662c-f3a4-4db5-afad-732273012cc0', '2024-05-04 12:01:19', 0),
-	('3ce73df8-7304-45ee-becf-9c8444bcf6e5', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/752858d3-269c-4839-9a50-d619751e83a1', '2024-04-30 17:22:59', 0),
-	('ec10b14e-abd2-4aad-9eda-9d4534ce126c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Delivered', 'Your order was dispatched', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:44', 0),
-	('250e8aa7-8d58-449c-b19c-a858aecbecd1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/204c90b8-6959-4bb8-8204-d53dd6b81a73', '2024-05-02 22:45:14', 0),
-	('397a7e6f-4fb1-40b7-84bf-bb5efc2500d0', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Delivered', 'Your order was dispatched', '/orders/14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2024-05-05 21:59:07', 0),
-	('22055df3-9000-4d88-a103-bda09e7f5b7d', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:25', 0),
-	('fd321b9b-6180-40d8-899b-c08e105c9e92', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '2024-04-16 09:04:08', 0),
-	('b4c1fe27-b258-4c79-a1e6-cdb171b14551', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/752858d3-269c-4839-9a50-d619751e83a1', '2024-04-17 08:28:33', 0),
-	('2029e2c4-046d-4112-983f-cdd96bbee194', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Accepted', 'Your order was accepted', '/orders/b9aa4f51-9788-4790-bfde-535b38610e61', '2024-05-03 23:53:35', 0),
-	('28473b73-92e5-47bb-8c86-cf19ab9d41e7', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/0df86afd-5b00-4aab-a694-71381a92fdd6', '2024-05-03 23:53:07', 0),
-	('3b4c7df5-c3b1-4572-b1c9-ef115fe26d48', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Created', 'Your order was created successfuly', '/orders/b9aa4f51-9788-4790-bfde-535b38610e61', '2024-04-23 21:32:09', 0);
+	('c57504db-e597-437e-b4b7-1534a4756ca6', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Returned', 'Užsąkymas Grąžintas', 'Jūsų užsakymas buvo grąžintas', '/orders/FOTOFOTO-1', '2024-06-04 20:32:27', 0),
+	('4ce7ea9b-9750-4fa4-b29a-2093028ce9db', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Rezervacija patvirtinta', 'Jūsų užsakymas buvo patvirtinta', '/orders/FOTOFOTO-1', '2024-06-04 20:23:18', 0),
+	('4e544ddf-18ff-4977-8284-4848eb04d837', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-5', '2024-06-04 20:53:04', 0),
+	('628f4120-2b98-4c49-8e60-48eac5b79ef6', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/FOTOFOTO-2', '2024-06-04 20:48:23', 0),
+	('c97a1d38-7bf2-4bce-a2f9-4f07ad9eed48', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-4', '2024-06-04 20:52:57', 0),
+	('25eb7d20-b988-44ef-95c5-5c979f789b54', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/FOTOFOTO-4', '2024-06-04 20:48:46', 0),
+	('be4021c2-8e48-45f5-bd5a-6b98708c1f29', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Užsakymas pristatytas', 'Jūsų užsakymas buvo pristatytas', '/orders/FOTOFOTO-1', '2024-06-04 20:31:12', 0),
+	('7a574cab-496f-424e-9cc9-70619c7cfd93', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Užsakymas pristatytas', 'Jūsų užsakymas buvo pristatytas', '/orders/FOTOFOTO-4', '2024-06-04 20:51:00', 0),
+	('81432dee-a46a-4914-a45d-8a6c5544c3c6', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Jūsų užsakymas buvo išsiųstas', '/orders/FOTOFOTO-4', '2024-06-04 20:50:52', 0),
+	('ce6e02a8-1ecf-4428-860b-90008d82ea1c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Completed', 'Užsakymas baigtas', 'Jūsų užsakymas buvo sėkmingai užbaigtas', '/orders/FOTOFOTO-1', '2024-06-04 20:32:27', 0),
+	('c9f3dbe5-225d-41cb-ba63-98006e90d898', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-6', '2024-06-04 20:53:11', 0),
+	('f5c97b84-cb00-4779-9513-a0d4255cdf9e', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Jūsų užsakymas buvo išsiųstas', '/orders/FOTOFOTO-3', '2024-06-04 20:50:32', 0),
+	('bb7aac17-5bb6-498d-b668-aa3554897347', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/FOTOFOTO-1', '2024-06-04 19:59:17', 0),
+	('72c1b200-bb19-463a-a349-ba02bd466737', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-3', '2024-06-04 20:52:39', 0),
+	('466acd3e-18f9-47a5-bc34-bb792ec3e591', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Delivered', 'Užsakymas pristatytas', 'Jūsų užsakymas buvo pristatytas', '/orders/FOTOFOTO-2', '2024-06-04 20:51:47', 0),
+	('420dba13-f339-447c-b49f-c8b217dd2d3c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/FOTOFOTO-3', '2024-06-04 20:48:33', 0),
+	('874bd7e1-a81d-4308-86db-d2f93485d1fa', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-1', '2024-06-04 20:47:47', 0),
+	('3bb94951-b4c6-4fee-b91c-d80cb3d00339', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Rezervacija patvirtinta', 'Jūsų užsakymas buvo patvirtinta', '/orders/FOTOFOTO-3', '2024-06-04 20:50:26', 0),
+	('95ca63f9-920e-4fee-82b0-df1984a5d92e', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Rezervacija patvirtinta', 'Jūsų užsakymas buvo patvirtinta', '/orders/FOTOFOTO-2', '2024-06-04 20:51:31', 0),
+	('419a388c-c33a-4afd-bdf3-dfda742a8855', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Accepted', 'Rezervacija patvirtinta', 'Jūsų užsakymas buvo patvirtinta', '/orders/FOTOFOTO-4', '2024-06-04 20:50:43', 0),
+	('d9d0f7ed-fe87-46b6-b94c-e0d72a8aa39a', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/FOTOFOTO-5', '2024-06-04 20:53:55', 0),
+	('0dfae830-f1a9-4cde-8f13-e83cc6c6f542', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Jūsų užsakymas buvo išsiųstas', '/orders/FOTOFOTO-1', '2024-06-04 20:23:43', 0),
+	('639e1f4b-f8fb-4c63-ae3d-fca296365ed0', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Dispatched', 'Užsakymas išsiųstas', 'Jūsų užsakymas buvo išsiųstas', '/orders/FOTOFOTO-2', '2024-06-04 20:51:37', 0),
+	('2c169911-dbb7-4106-bf1f-fcee332a6a70', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Created', 'Rezervacija sukurta', 'Jūsų rezervacija buvo sėkmingai sukurta', '/orders/MATAS-2', '2024-06-04 20:48:09', 0);
 
 -- Dumping structure for table itemrental.orders
 CREATE TABLE IF NOT EXISTS `orders` (
-  `id` uuid NOT NULL,
+  `id` varchar(50) NOT NULL DEFAULT '',
   `listing` uuid DEFAULT NULL,
   `user` uuid DEFAULT NULL,
   `startDate` date DEFAULT NULL,
@@ -306,26 +281,26 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `status` int(11) DEFAULT NULL,
   `deliveryType` int(11) DEFAULT NULL,
   `comment` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `location` longtext DEFAULT NULL,
   `createdAt` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.orders: ~13 rows (approximately)
+-- Dumping data for table itemrental.orders: ~1 rows (approximately)
 DELETE FROM `orders`;
-INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`, `deliveryType`, `comment`, `createdAt`) VALUES
-	('14a4c409-5b4e-4b45-843c-01fbaa7f9718', '2d9fc51d-1e22-4f95-b37a-4d690ee220b0', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-05-13', '2024-05-15', 5, 0, 'Demonstracinė rezervacija', '2024-05-05 21:58:22'),
-	('ddb70e7b-14ca-4d5b-b5e6-0874c1b2c6ac', '63831671-381d-49d3-b01d-bb1d17839d7c', '13557b17-53e1-4da3-9da2-0496fd7c5474', '2024-05-27', '2024-05-29', 0, 0, 'Testavimas', '2024-05-04 11:59:37'),
-	('6c9d6e0e-82f3-4adb-9d60-19cfaf2d51c7', '9802d975-8fe5-4523-aa15-2fcac5d1c85c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-16', '2024-04-17', 5, 0, '', '2024-04-16 09:04:08'),
-	('b9aa4f51-9788-4790-bfde-535b38610e61', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-25', '2024-04-27', 1, 0, '', '2024-04-23 21:32:09'),
-	('c091e35a-995c-4d24-8a42-5baf4989aff5', '1ed4d290-189f-4ecb-a0af-a84a7dee38c3', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-05-10', '2024-05-12', 0, 0, '', '2024-05-02 22:42:03'),
-	('0df86afd-5b00-4aab-a694-71381a92fdd6', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-05-20', '2024-05-22', 0, 0, '', '2024-05-03 23:53:06'),
-	('2e0d662c-f3a4-4db5-afad-732273012cc0', 'c7aa5214-552b-4fa1-8010-1cd753cf1c75', '13557b17-53e1-4da3-9da2-0496fd7c5474', '2024-05-20', '2024-05-22', 1, 0, '', '2024-05-04 12:00:51'),
-	('e2ee9ed8-e2a5-4f6b-b23f-8992ef2b8266', 'b8d19c9e-8d1b-4cec-b3cc-2c42cb76b4d2', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-27', '2024-04-28', 2, 1, 'Bus naudojamas gimtadienio fotosesijai', '2024-04-16 08:49:12'),
-	('05d6659e-9392-40d9-9f13-99a507ece273', 'c7aa5214-552b-4fa1-8010-1cd753cf1c75', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-23', '2024-04-26', 3, 0, '', '2024-04-16 08:47:03'),
-	('608747da-7d8f-44ad-8a18-a062ae0b60da', '1ed4d290-189f-4ecb-a0af-a84a7dee38c3', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-05-27', '2024-05-29', 0, 0, '', '2024-05-02 22:46:20'),
-	('bc0acfd6-8ac7-45fe-9378-c743a22f1393', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-20', '2024-04-21', 0, 0, 'Skirtingomis dienomis bus kiti žmonės', '2024-04-16 08:46:35'),
-	('204c90b8-6959-4bb8-8204-d53dd6b81a73', '1ed4d290-189f-4ecb-a0af-a84a7dee38c3', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-05-20', '2024-05-22', 0, 0, '', '2024-05-02 22:44:53'),
-	('752858d3-269c-4839-9a50-d619751e83a1', '205a4ff4-fcb3-4f69-8486-da3aade46168', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-04-17', '2024-04-19', 2, 0, '', '2024-04-17 08:28:33');
+INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`, `deliveryType`, `comment`, `location`, `createdAt`) VALUES
+	('FOTOFOTO-1', '75f6cbe1-a138-4e57-8195-666ca307431f', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-04', '2024-06-07', 5, 0, 'Universiteto reklamos filmavimas', NULL, '2024-06-04 19:59:17'),
+	('FOTOFOTO-2', '2e62415d-4a73-4f54-b218-2f479c16bf27', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-12', '2024-06-13', 4, 0, '', NULL, '2024-06-04 20:48:23'),
+	('FOTOFOTO-3', '3e5644a0-e2c2-45e4-9877-f0f581ae51bb', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-19', '2024-06-20', 2, 0, '', NULL, '2024-06-04 20:48:33'),
+	('FOTOFOTO-4', '30f7c2e4-3a58-43b6-a83e-421e75084a98', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-25', '2024-06-28', 3, 0, '', NULL, '2024-06-04 20:48:45'),
+	('FOTOFOTO-5', '75f6cbe1-a138-4e57-8195-666ca307431f', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-14', '2024-06-15', 0, 0, '', NULL, '2024-06-04 20:53:55'),
+	('MATAS-1', 'b8d19c9e-8d1b-4cec-b3cc-2c42cb76b4d2', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-12', '2024-06-13', 0, 1, '', NULL, '2024-06-04 20:47:47'),
+	('MATAS-2', '1cd0a3fc-f6cb-4337-baf4-56ad77ec0d1c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-04', '2024-06-05', 0, 0, '', NULL, '2024-06-04 20:48:09'),
+	('MATAS-3', '63831671-381d-49d3-b01d-bb1d17839d7c', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-05', '2024-06-06', 0, 0, '', NULL, '2024-06-04 20:52:38'),
+	('MATAS-4', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', '2024-06-08', '2024-06-09', 0, 0, '', NULL, '2024-06-04 20:52:57'),
+	('MATAS-5', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', '2024-06-11', '2024-06-12', 0, 0, '', NULL, '2024-06-04 20:53:04'),
+	('MATAS-6', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', '2024-06-17', '2024-06-21', 0, 0, '', NULL, '2024-06-04 20:53:11');
 
 -- Dumping structure for table itemrental.profile_feedback
 CREATE TABLE IF NOT EXISTS `profile_feedback` (
@@ -353,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `rent_listings` (
   `deleted` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.rent_listings: ~18 rows (approximately)
+-- Dumping data for table itemrental.rent_listings: ~31 rows (approximately)
 DELETE FROM `rent_listings`;
 INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `price`, `location`, `deleted`) VALUES
 	('f09d8b6d-643a-485a-8ac9-46254569b9c1', '892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'What is lorem ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20.990000, 'Vilnius, Lithuania', 0),
@@ -373,7 +348,20 @@ INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `pr
 	('b3f0f53f-58e9-46ec-8e68-795ec855235a', '0f6c4d55-7bb9-4455-8595-84691606635a', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 1 originali žaidimų konsolė', 'Originali retro žaidimų konsolė su žinomiausiais žaidimas "Crash" ir kiti. Pridedami du pulteliai. Prijungti naudojama RCA jungtis.', 5.000000, 'Kaunas, Lithuania', 0),
 	('39078b4b-d1fc-4169-a00b-fab6cc0c4bb5', '5e51f0a8-e519-4b73-860d-2c77210e3d55', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2 konsolė', 'Žaidimų konsolė su pilnu paketu ir žaidimais', 5.000000, 'Kaunas, Lithuania', 0),
 	('ddc222b2-4c9b-442e-84a8-c3f5fb142c7d', 'a5140a5e-a8cf-4760-8d95-0562bb9b0589', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 3 žaidimų konsolė', 'Pilnas playstation 3 konsolės rinkinys su daugybe žaidimų, galimybė žaisti tinkle su kitais žaidėjais, aktyvi PS Plus prenumerata.', 10.000000, 'Kaunas, Lithuania', 0),
-	('322d5fa3-8cb9-41c1-a940-5142a53df3a7', '74010154-b180-411e-9420-9fbf7c04d49c', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5 konsolė', 'Naujausia playstation žaidimų konsolė, palaikanti ir Playstation 4 žaidimus, aktyvi PS Plus prenumerata suteikianti didžiulią žaidimų biblioteką ir galimybę žaisti tinkle su kitais žaidėjais.', 15.000000, 'Kaunas, Lithuania', 0);
+	('322d5fa3-8cb9-41c1-a940-5142a53df3a7', '74010154-b180-411e-9420-9fbf7c04d49c', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5 konsolė', 'Naujausia playstation žaidimų konsolė, palaikanti ir Playstation 4 žaidimus, aktyvi PS Plus prenumerata suteikianti didžiulią žaidimų biblioteką ir galimybę žaisti tinkle su kitais žaidėjais.', 15.000000, 'Kaunas, Lithuania', 0),
+	('38b2b8b8-8fec-40a9-9bbb-827e3605cdb1', 'cbbf7cb6-7a55-481e-8ead-9657db94607b', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracins skelbimas', 'Demonstracinis skelbimo aprašymas', 50.000000, 'Kaunas, Lithuania', 0),
+	('f0441dca-b60c-41f6-94cd-1339f9493e8e', 'b3e20e08-fa6d-4498-8638-9e001b241d6c', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('64f97985-0fb8-410d-996f-9ead4b70e5b4', 'fe2b1ff7-d148-4dba-abba-3d71e77dcd0a', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('1ea7200c-fedc-467b-bd58-83aa341ec217', '124a6d60-1aa3-4a77-b0c5-f88adf5008c1', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('f9796e0f-eb70-4df9-8dc1-be28a9e2b927', '3c67c89b-1ccd-4606-9795-15b96ed4e898', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('21644299-da8f-4ab1-b0af-e69be5d314f0', '87df2594-1bd8-4ac7-84e5-93c924542e55', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('c34081dd-d710-4b70-bb89-4499481bd154', 'edf45d7d-9845-4761-a28c-73c9f61bbf61', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
+	('7c191cbc-6b5d-4b4d-94f0-6fc27ddf7a6f', '5aab285b-6da4-4d4a-b5fe-074c45a8b891', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 Body', 'Sony naujausia kino standartus atitinkanti kamera. Nuomojamas tik korpusas!', 20.000000, 'Kaunas, Lithuania', 0),
+	('75f6cbe1-a138-4e57-8195-666ca307431f', '5797ddd0-6ebd-42a0-8307-e00da61d9a3d', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 + Sony 24-70/f4', 'Rinkinys profesionaliam/mėgėjiškui filmavimui. Pridedamas pakrovėjas ir dvi papildomos baterijos. Nuomojama tik su nuomos sutartimi.', 35.000000, 'Kaunas, Lithuania', 0),
+	('c04b2980-531c-4a44-9623-74bb42c7a52d', '2aff7031-b16c-4f86-906d-0d8d7d1946ba', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony a6400', 'Sisteminis sony fotoaparatas puikiai tinkantis fotosesijom ir filmavimo darbam, pridedamas parovėjas papildomai ir dvi papildomos baterijos', 25.000000, 'Vilnius, Lithuania', 0),
+	('3e5644a0-e2c2-45e4-9877-f0f581ae51bb', 'ecb401ce-8fcf-404f-841e-3c20e3f50350', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 550d', 'Veidrodinis canon fotoaparatas', 20.000000, 'Kaunas, Lithuania', 0),
+	('30f7c2e4-3a58-43b6-a83e-421e75084a98', '55082151-1b43-4451-981d-4b3477b75793', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony HXR-MC2500 Filmavimo kamera', 'Puiki kamera mėgėjiškam filmavimui', 15.000000, 'Kaunas, Lithuania', 0),
+	('2e62415d-4a73-4f54-b218-2f479c16bf27', '9099dece-eaf2-4609-a229-d6cdb6cfb895', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 70d', 'Veidrodinis canon 70d fotoaparatas', 15.000000, 'Kaunas, Lithuania', 0);
 
 -- Dumping structure for table itemrental.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -383,22 +371,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   `surname` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
-  `avatarURL` varchar(50) DEFAULT '',
+  `avatarURL` text DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
   `verified` tinyint(4) DEFAULT 0,
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.users: ~8 rows (approximately)
+-- Dumping data for table itemrental.users: ~7 rows (approximately)
 DELETE FROM `users`;
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `name`, `surname`, `avatarURL`, `verified`) VALUES
-	('13557b17-53e1-4da3-9da2-0496fd7c5474', 'rent', 'serviceitemrental@gmail.com', '$2a$10$hBSs1JwWG10LepzgcHdMVOp8X.6UI6Q6e2CAcS7//CCFEHsRTWYx.', 'Rent', 'Debug', '', 0),
-	('1a58f19b-077f-4098-b412-28effb9e985b', 'test', 'service@itemrental.com', '$2a$10$7TDI/mOR82pCwtL.wATSQeEqTtZk2lvCSKeKk6PGTaHwT7TQUx7.O', '', '', '', 0),
-	('4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'user', 'margarita@itemrental.com', '$2a$10$K84SlOwBCYfOcYcb8Xxe/.WGdu/sCLztDVInrpTOY/KIkS7BSsRQm', 'Margarita', 'Peškauskaitė', '', 0),
-	('b606ff72-9163-4a66-9a33-327abb272d07', 'lukastest', 'service@itemrental.com', '$2a$10$e8Yl01X1KOfzCR0gpCdvHOZsFYwHX.EgOwNfTYAiA8x74B2mhRR5.', '', '', '', 0),
-	('8fe27bb1-091c-44e9-81d2-4c36aee488a2', 'debug', 'service@itemrental.com', '$2a$10$su.tziG6VMm4Xns/.fVhKO5pNCUoI1akHiMPCBxLi/v4O8NOyhmia', '', '', '', 0),
-	('59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'retrogamer', 'retrogamer@itemrental.com', '$2a$10$DZW.gnDoO2yIXKI074GCWO3ow7LBhvEDUAnZnlfXSRIVwb7LUgtCW', 'Emilis', 'Kaskadininkas', '', 1),
-	('44fa8ccc-69cf-45bd-bff2-7b8311e200d8', 'string', 'service@itemrental.com', '$2a$10$o/Kfa1aTMKkTEX6V07P0zu2hnV2PqH9KH0bn5wwh7vpugf7t2ryUW', '', '', '', 0),
-	('f1e6980c-9d5e-4f10-afd0-c1fe8461252f', 'postman', 'service@itemrental.com', '$2a$10$Anlw9q0MH.MI.9t7MTflye0flbkGOwjbKBavc8ZQvRYIHyrDVHDey', '', '', '', 0);
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `name`, `surname`, `avatarURL`, `phone`, `verified`) VALUES
+	('13557b17-53e1-4da3-9da2-0496fd7c5474', 'matas', 'matas.kaskadininkas@gmail.com', '$2a$10$hBSs1JwWG10LepzgcHdMVOp8X.6UI6Q6e2CAcS7//CCFEHsRTWYx.', 'Matas', 'Kaskadininkas', 'https://www.part.lt/img/ad9612856988d4fea00ae4644131922f983.png', NULL, 1),
+	('e03a8d2c-6399-4686-958c-14caef3d1519', 'jonas_p', 'jonas.petrauskas@example.com', '$2a$10$KYHU..HIaA1NnRDAjA.MTuNB6PrjgKEeO/PW4uyReKTlkRCMZ7XGW', 'Jonas', 'Petrauskas', NULL, '+37067600222', 0),
+	('4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'margarita', 'margarita@gmail.com', '$2a$10$K84SlOwBCYfOcYcb8Xxe/.WGdu/sCLztDVInrpTOY/KIkS7BSsRQm', 'Margarita', 'Peškauskaitė', '', NULL, 0),
+	('6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'fotofoto', 'fotofoto@example.com', '$2a$10$yhoCNBi6WTUbQHYDHvZIZ.vagODRGA.Xy1VhDpWHFGjVKfP38/.Ry', 'Gediminas', 'Stankevičius', NULL, '+37067600222', 0),
+	('d49ec1b3-fec0-4532-a17c-50376245f15c', 'Kazimieras', 'kazimieras.kas@gmail.com', '$2a$10$JYOWj.RJoI7Z4H6BCM6Iae2EuCw0yHhKNYLA6BDtYTuxGnInnaiMm', 'Kazimieras', 'Kaskadininkas', '', NULL, 0),
+	('59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'retrogamer', 'retrogamer@itemrental.com', '$2a$10$DZW.gnDoO2yIXKI074GCWO3ow7LBhvEDUAnZnlfXSRIVwb7LUgtCW', 'Emilis', 'Kaskadininkas', '', NULL, 1),
+	('142eae84-432c-4a67-a92b-ece3fb36a109', 'postman', 'postman@itemrental.com', '$2a$10$K0LlwL5BKSSDc5nU0qENlewny5JKMj4BlUUaYesWYZDPstt0YikmO', '', '', '', NULL, 0);
 
 -- Dumping structure for table itemrental.verification_requests
 CREATE TABLE IF NOT EXISTS `verification_requests` (
@@ -409,8 +397,11 @@ CREATE TABLE IF NOT EXISTS `verification_requests` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Dumping data for table itemrental.verification_requests: ~0 rows (approximately)
+-- Dumping data for table itemrental.verification_requests: ~2 rows (approximately)
 DELETE FROM `verification_requests`;
+INSERT INTO `verification_requests` (`id`, `user`, `status`, `createdAt`) VALUES
+	('1bcf1750-2f15-4412-92f6-5ab48122e9ff', 'e03a8d2c-6399-4686-958c-14caef3d1519', 0, '2024-06-04 23:56:28'),
+	('db494e00-ffcd-420d-9bf8-d49d42ade033', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 0, '2024-06-04 23:56:41');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

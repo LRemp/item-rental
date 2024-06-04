@@ -78,7 +78,7 @@ namespace ItemRental.Repositories.Repositories
 
         public async Task<PaginatedResult<List<RentListingDTO>>> GetAsync(string? searchArgument, string? category, int page, CancellationToken cancellationTokenn)
         {
-            int pageSize = 9;
+            int pageSize = 8;
             int rowsToSkip = page * pageSize;
 
             var query = @"SELECT rl.*, i.*, u.*

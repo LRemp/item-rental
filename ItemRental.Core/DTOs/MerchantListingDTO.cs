@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItemRental.Core.DTOs
 {
-    public class RentListingDTO
+    public class MerchantListingDTO
     {
         public Guid Id { get; set; }
         public ItemDTO Item { get; set; }
@@ -16,5 +16,6 @@ namespace ItemRental.Core.DTOs
         public decimal Price { get; set; }
         public string Location { get; set; } = string.Empty;
         public List<OrderDTO>? Orders { get; set; }
+
     }
 }

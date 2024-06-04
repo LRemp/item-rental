@@ -1,6 +1,7 @@
 import { Badge, Center, Image, Paper, Table, Text } from '@mantine/core';
 import NoImage from '@/assets/images/no_image.png';
 import ItemActions from './ItemActions';
+import ItemStatus from '@/components/Misc/ItemStatus';
 
 const ItemTableElement: React.FC<Item> = ({ id, name, description, images, tags }) => (
   <Table.Tr key={id} m="md">
@@ -18,6 +19,9 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, images, tags 
     </Table.Td>
     <Table.Td>{name}</Table.Td>
     <Table.Td>{description}</Table.Td>
+    <Table.Td>
+      <ItemStatus id={id} />
+    </Table.Td>
     <Table.Td>
       {tags && (
         <Text>
@@ -52,6 +56,7 @@ const TableContainer: React.FC<ItemsListProps> = ({ items }) => {
             <Table.Th />
             <Table.Th>Pavadinimas</Table.Th>
             <Table.Th>Aprašymas</Table.Th>
+            <Table.Th />
             <Table.Th>Žymės</Table.Th>
           </Table.Tr>
         </Table.Thead>

@@ -114,6 +114,22 @@ namespace ItemRental.API.Controllers
             return NoContent();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}/Merchant")]
+        public async Task<IActionResult> GetMerchantListing(Guid id)
+        {
+            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
+
+            Result<RentListingDTO> result = await _sender.Send(new GetListingAsMerchantQuery(id, userId));
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
         [HttpGet("{id}/BusyDates")]
         public async Task<IActionResult> GetBusyDates(Guid id)
         {

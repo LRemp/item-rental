@@ -1,6 +1,7 @@
 import { Center, Image, Paper, Table, Text } from '@mantine/core';
 import NoImage from '@/assets/images/no_image.png';
 import ItemActions from './ItemActions';
+import ListingStatus from '@/components/Misc/ListingStatus';
 
 const ListingTableElement: React.FC<RentListing> = ({ id, title, description, item }) => (
   <Table.Tr key={id} m="md">
@@ -21,6 +22,9 @@ const ListingTableElement: React.FC<RentListing> = ({ id, title, description, it
       <Text lineClamp={4} size="xs">
         {description}
       </Text>
+    </Table.Td>
+    <Table.Td>
+      <ListingStatus id={id} />
     </Table.Td>
     <Table.Td>
       <ItemActions id={id} />

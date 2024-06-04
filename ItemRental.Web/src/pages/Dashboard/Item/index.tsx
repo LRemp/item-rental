@@ -31,7 +31,7 @@ const Item = () => {
       <Box w="100%">
         <Grid columns={24} grow>
           <Grid.Col span={24}>
-            <Title fw={700}>Item</Title>
+            <Title fw={700}>Inventoriaus daiktas</Title>
             <Breadcrumbs mt="xs">{pathItems}</Breadcrumbs>
           </Grid.Col>
           <Grid.Col span={24}>

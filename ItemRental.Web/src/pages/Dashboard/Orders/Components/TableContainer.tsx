@@ -51,7 +51,7 @@ interface DashboardOrdersTableProps {
 }
 
 const TableContainer: React.FC<DashboardOrdersTableProps> = ({ items }) => {
-  const [type, setType] = useState<string>('0');
+  const [type, setType] = useState<string>('all');
   const rows = items
     // eslint-disable-next-line radix, yoda
     .filter((x) => type === 'all' || x.status === parseInt(type))

@@ -56,18 +56,6 @@ const Comments: React.FC<CommentsProps> = ({ id }) => {
       <Title fw={600} order={2} mb="md">
         Komentarai
       </Title>
-
-      <>
-        <Textarea
-          placeholder="Įveskite komentarą"
-          autosize
-          rightSection={
-            <ActionIcon size={32} color={theme.primaryColor} variant="filled">
-              <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-            </ActionIcon>
-          }
-        />
-      </>
       {loading ? (
         <Center>
           <Loader />
@@ -75,7 +63,19 @@ const Comments: React.FC<CommentsProps> = ({ id }) => {
         </Center>
       ) : (
         <>
-          {result?.map((comment: IComment, index: number) => <Comment key={index} {...comment} />)}
+          {result?.length > 0 ? (
+            <>
+              {result?.map((comment: IComment, index: number) => (
+                <Comment key={index} {...comment} />
+              ))}
+            </>
+          ) : (
+            <Center>
+              <Text fw={600} c="dimmed">
+                Komentarų nėra
+              </Text>
+            </Center>
+          )}
         </>
       )}
     </Paper>

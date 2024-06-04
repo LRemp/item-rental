@@ -11,10 +11,10 @@ const Actions: React.FC = () => {
       <Tabs defaultValue="verification">
         <Tabs.List>
           <Tabs.Tab value="verification" leftSection={<IconPhoto style={iconStyle} />}>
-            Profile verification requests
+            Profilio verifikavimo užklausos
           </Tabs.Tab>
           <Tabs.Tab value="categories" leftSection={<IconMessageCircle style={iconStyle} />}>
-            Categories
+            Kategorijos
           </Tabs.Tab>
         </Tabs.List>
 
