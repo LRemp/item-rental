@@ -8,7 +8,7 @@ const ItemTableElement: React.FC<Item> = ({ id, name, description, images, tags 
     <Table.Td width="50px">
       <Center>
         <Image
-          src={`/images/${images?.[0]}`}
+          src={`/api/images/${images?.[0]}`}
           radius="xs"
           h={50}
           w="auto"

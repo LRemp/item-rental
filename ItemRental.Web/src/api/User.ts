@@ -26,7 +26,6 @@ const getMerchantOrders = (id: string): ApiRequest => ({
 const getMerchantListings = (id: string): ApiRequest => ({
   method: 'GET',
   endpoint: `/api/Users/${id}/Listings`,
-  authenticate: true,
 });
 
 const getVerificationRequests = (): ApiRequest => ({

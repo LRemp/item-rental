@@ -20,7 +20,7 @@ const ItemDetails: React.FC<Item> = ({ details, category }) => (
     <Paper shadow="md" radius="sm" p="md">
       <DetailRow label="Kategorija" value={category || 'Kita'} />
       {details?.map((detail, index) => (
-        <DetailRow key={index} label={detail.name} value={detail.value} />
+        <DetailRow key={index} label={detail.label} value={detail.value} />
       ))}
     </Paper>
   </Box>

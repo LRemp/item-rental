@@ -27,7 +27,7 @@ const TimelineView: React.FC<TimelineViewProps> = ({
           {event.description}
         </Text>
         <Text size="xs" mt={4}>
-          {getDateTimeLabel(event.date)}
+          {getDateTimeLabel(event.date || '')}
         </Text>
       </Timeline.Item>
     ))}

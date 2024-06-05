@@ -18,7 +18,7 @@ const MerchantOrdersTable: React.FC<MerchantOrdersTableProps> = ({ elements }) =
       <Table.Td>
         <Center>
           <Image
-            src={`/images/${rentListing.item.images?.[0]}`}
+            src={`/api/images/${rentListing.item.images?.[0]}`}
             radius="xs"
             h={50}
             w="auto"

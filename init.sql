@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
 DELETE FROM `categories`;
 INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('1e3ebeba-c402-449f-8a69-0b431b87137c', 'other', 'Kita', NULL, NULL),
-	('18607d1a-fcee-432d-a848-110c3ba5fcf8', 'dviraciai', 'Dviračiai', 'sports', NULL),
-	('178b77c6-aede-4277-b120-14ad421377e8', 'konsoles', 'Žaidimų konsolės', 'electronics', NULL),
+	('18607d1a-fcee-432d-a848-110c3ba5fcf8', 'dviraciai', 'Dviračiai', 'sportas', NULL),
+	('178b77c6-aede-4277-b120-14ad421377e8', 'konsoles', 'Žaidimų konsolės', 'elektronika', NULL),
 	('75f1f33a-941e-431a-8f4b-15ceb69a589c', 'irankiai', 'Įrankiai', NULL, NULL),
 	('93a0387d-4687-442b-92bf-182626764a31', 'optikosfiltrai', 'Objektyvų filtrai', 'video', '[{"type":"string","label":"Tipas","name":"type"}]'),
 	('a01cdedf-8b2d-4f60-9775-2949d4c930af', 'elektronika', 'Elektronika', NULL, NULL),
@@ -61,15 +61,15 @@ INSERT INTO `categories` (`id`, `name`, `label`, `parent`, `scheme`) VALUES
 	('e73e8392-fe00-43d1-b156-6618e7ba8e04', 'postman', 'postman', 'postman', NULL),
 	('ee491fb0-1cb8-4447-be5e-8bfb4eaf1329', 'sportas', 'Sportas', NULL, NULL),
 	('33f81811-8582-4879-8106-9b8e8c190cdc', 'mikrofonai', 'Mikrofonai', 'audio', '[{"type":"select","label":"Tipas","name":"type","options":["Dinaminis", "Kondensatorinis"]},{"type":"string","name":"model","label":"Modelis"},{"type":"select","label":"Lizdas","name":"connection","options":["USB", "XLR"]}]'),
-	('123341dd-1307-45f4-a6bf-9bf103e6149b', 'telefonai', 'Telefonai', 'electronics', '[{"type":"select","label":"Gamintojas","name":"maker","options":["Samsung", "LG", "Xiaomi", "Apple", "Oppo", "HTC", "Poco"]},{"type":"string","name":"model","label":"Modelis"}]'),
+	('123341dd-1307-45f4-a6bf-9bf103e6149b', 'telefonai', 'Telefonai', 'elektronika', '[{"type":"select","label":"Gamintojas","name":"maker","options":["Samsung", "LG", "Xiaomi", "Apple", "Oppo", "HTC", "Poco"]},{"type":"string","name":"model","label":"Modelis"}]'),
 	('72f123dd-1307-45f4-a6bf-9bf103e6149b', 'kameros', 'Fotoaparatai', 'video', '[{"name":"mountType","type":"string","label":"Optikos tvirtinimo tipas"}]'),
-	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'kompiuteriai', 'Kompiuteriai', 'electronics', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Procesoriaus Branduoliai"}]'),
+	('94fea3dd-1307-45f4-a6bf-9bf103e6149b', 'kompiuteriai', 'Kompiuteriai', 'elektronika', '[{"type":"number","min":"1","max":"10","name":"cores","label":"Procesoriaus Branduoliai"}]'),
 	('71f9fdee-1809-43c7-8d23-9ddc9c96ba49', 'moto', 'Moto', 'auto', NULL),
 	('fb55d6cc-d5c2-47d2-b8fa-9e7415068d31', 'optika', 'Objektyvai', 'video', '[{"type":"string","label":"Tvirtinimo tipas","name":"mounttype"},{"type":"string","name":"focallength","label":"Židinio nuotolis"},{"type":"string","label":"Diafragma","name":"apperture"}]'),
-	('1e5046cd-0412-4b07-b537-bc25597c6f1f', 'pjūklai', 'Pjūklai', 'tools', NULL),
+	('1e5046cd-0412-4b07-b537-bc25597c6f1f', 'pjūklai', 'Pjūklai', 'irankiai', NULL),
 	('9b66471a-5b52-4dc3-b6bc-dc37b80d6f0e', 'apšvietimas', 'Lempos', 'foto', NULL),
-	('8f5051ae-8d77-42dd-959e-f001aa8e94b4', 'drills', 'Grąžtai', 'tools', NULL),
-	('02c02bf8-5610-4b8e-bfbb-fbf5845ee3a1', 'apsauga', 'Apsaugos', 'sports', NULL);
+	('8f5051ae-8d77-42dd-959e-f001aa8e94b4', 'drills', 'Grąžtai', 'irankiai', NULL),
+	('02c02bf8-5610-4b8e-bfbb-fbf5845ee3a1', 'apsauga', 'Apsaugos', 'sportas', NULL);
 
 -- Dumping structure for table itemrental.comments
 CREATE TABLE IF NOT EXISTS `comments` (
@@ -80,12 +80,13 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `createdAt` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Dumping data for table itemrental.comments: ~3 rows (approximately)
+-- Dumping data for table itemrental.comments: ~4 rows (approximately)
 DELETE FROM `comments`;
 INSERT INTO `comments` (`id`, `resource`, `user`, `text`, `createdAt`) VALUES
 	('31898720-015a-4bb8-a0a8-dd195cb91125', '63831671-381d-49d3-b01d-bb1d17839d7c', 'd49ec1b3-fec0-4532-a17c-50376245f15c', 'Nuostabi patirtis! Išsinuomojau šį sportinį BMW F30 savaitgaliui, kad išbandyčiau save lenktynių trasoje. Automobilis puikiai paruoštas ir atitinka visus FIA standartus, kas suteikia tikrą lenktynių jausmą. Saugumo priemonės, kaip pilni saugos lankai ir panikos mygtukas, suteikė papildomą ramybę. Tikrai rekomenduoju visiems automobilių sporto mėgėjams!', '2024-05-12 17:04:13'),
 	('dab62f3e-c1df-4d98-a288-782a3f3db2b4', '63831671-381d-49d3-b01d-bb1d17839d7c', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Super automobilis! BMW F30 buvo tiesiog tobulas pasirinkimas Nemuno žiedo lenktynėms. Važiavimas buvo sklandus ir saugus, nes automobilis turi visas reikiamas saugumo priemones. Patiko, kad viskas buvo įskaičiuota, todėl nereikėjo jaudintis dėl papildomų mokesčių. Puiki patirtis už labai prieinamą kainą – tik 100€ per dieną.', '2024-05-26 09:05:12'),
-	('c5fe2bfb-5a9e-4e57-bbbf-28bb09db15e0', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Puikus pasirinkimas adrenalino mėgėjams! Šis BMW F30 yra ne tik galingas, bet ir saugus – pilni saugos lankai ir kitos saugumo priemonės leidžia jaustis užtikrintai trasoje. Be to, automobilis pritaikytas lenktynėms ir visiškai atitinka FIA standartus. Kaina taip pat labai patraukli, 100€ už dieną yra puikus pasiūlymas. Neabejotinai verta išbandyti!', '2024-06-01 17:09:35');
+	('c5fe2bfb-5a9e-4e57-bbbf-28bb09db15e0', '63831671-381d-49d3-b01d-bb1d17839d7c', 'e03a8d2c-6399-4686-958c-14caef3d1519', 'Puikus pasirinkimas adrenalino mėgėjams! Šis BMW F30 yra ne tik galingas, bet ir saugus – pilni saugos lankai ir kitos saugumo priemonės leidžia jaustis užtikrintai trasoje. Be to, automobilis pritaikytas lenktynėms ir visiškai atitinka FIA standartus. Kaina taip pat labai patraukli, 100€ už dieną yra puikus pasiūlymas. Neabejotinai verta išbandyti!', '2024-06-01 17:09:35'),
+	('75f6cbe1-a138-4e57-1259-666ca307431f', '75f6cbe1-a138-4e57-8195-666ca307431f', 'd49ec1b3-fec0-4532-a17c-50376245f15c', 'Nuomavausi Sony FX30 kamerą ir buvau labai patenkintas jos vaizdo kokybe bei greitu autofokusu. Kamera veikia patikimai ir yra lengvai naudojama, tačiau ilgesnėms filmavimo sesijoms rekomenduočiau turėti papildomų baterijų. Apskritai, puikus pasirinkimas tiek profesionalams, tiek mėgėjams.', '2024-05-05 05:23:26');
 
 -- Dumping structure for table itemrental.deliveries
 CREATE TABLE IF NOT EXISTS `deliveries` (
@@ -101,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `deliveries` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.deliveries: ~2 rows (approximately)
+-- Dumping data for table itemrental.deliveries: ~6 rows (approximately)
 DELETE FROM `deliveries`;
 INSERT INTO `deliveries` (`id`, `order`, `type`, `role`, `location`, `shippingProvider`, `shippingId`, `comment`, `completed`) VALUES
 	('6d493de7-ef44-453e-b7c0-0f25c349207c', 'FOTOFOTO-3', 0, 1, 'Kaunas', '2', 'CE473405152EE', NULL, 0),
@@ -124,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `eventlog` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.eventlog: ~0 rows (approximately)
+-- Dumping data for table itemrental.eventlog: ~26 rows (approximately)
 DELETE FROM `eventlog`;
 INSERT INTO `eventlog` (`rowId`, `id`, `resource`, `eventName`, `title`, `description`, `timestamp`) VALUES
 	(119, 'ae711202-f07b-4231-b976-cf308a2b9c9e', 'FOTOFOTO-1', 'Order.Created', 'Rezervacija sukurta', 'Rezervacija sėkmingai sukurta', '2024-06-04 19:59:17'),
@@ -180,15 +181,15 @@ CREATE TABLE IF NOT EXISTS `items` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.items: ~28 rows (approximately)
+-- Dumping data for table itemrental.items: ~26 rows (approximately)
 DELETE FROM `items`;
 INSERT INTO `items` (`id`, `serialNumber`, `owner`, `name`, `description`, `category`, `images`, `tags`, `details`, `deleted`) VALUES
 	('a5140a5e-a8cf-4760-8d95-0562bb9b0589', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 3', 'Originali playstation 3 konsolė su visu kompletu', 'konsoles', '["1ec6840c-46b6-4601-a9c4-fec02fe3cb2a.jpg"]', '["playstation","PS","games"]', '[]', 0),
 	('5aab285b-6da4-4d4a-b5fe-074c45a8b891', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 Body', 'Profesionali Sony filmavimo kamera', 'foto', '["1f30e3a7-6918-45e9-a99d-a4f103d5c88d.jpg"]', '["Sony","FX30","Cinema"]', '[]', 0),
-	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'optikosfiltrai', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', '', '[{"Name":"type","Value":"Polarizing"}]', 0),
+	('cfaba7fe-e9cf-4e8b-9ca8-0a4e9b4572e7', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'KOOD lens polalizer filter', '49mm polarizuojantis objektyvo filtras', 'optikosfiltrai', '["974a2b9a-9908-41f0-b365-eeae4e50854a.jpg"]', '', '[{"Name":"type","Value":"Polarizing","Label":"Polirizuojantis"}]', 0),
 	('2aff7031-b16c-4f86-906d-0d8d7d1946ba', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony a6400 + Sony 18-135/f3.5-5.6', 'Sony sisteminis fotoaparatas su objektyvu', 'foto', '["3bcb7055-329f-4d9e-9bbb-c30daf434a03.jpg","75513b2d-e58a-40a9-a022-4297a5bddf80.jpg"]', '["Sony","a6400","Mirroless","Bundle"]', '[]', 0),
-	('5e51f0a8-e519-4b73-860d-2c77210e3d55', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2', 'Originali playstation žaidimų konsolė', 'kita', '["eaf7b767-29bd-4fc3-9528-3433f4b4a6cf.jpg","00941ce7-640f-4ed7-b248-972cf7329141.png"]', '["playstation","PS","games"]', '[]', 0),
-	('fcf53cdc-6f12-4356-879b-2def3d2d186d', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'auto', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
+	('5e51f0a8-e519-4b73-860d-2c77210e3d55', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2', 'Originali playstation žaidimų konsolė', 'konsoles', '["eaf7b767-29bd-4fc3-9528-3433f4b4a6cf.jpg","00941ce7-640f-4ed7-b248-972cf7329141.png"]', '["playstation","PS","games"]', '[]', 0),
+	('fcf53cdc-6f12-4356-879b-2def3d2d186d', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Toyota Yaris GR', 'Sportinis miesto automobilis', 'auto', '["67a4d060-690b-4166-a829-782fa494041f.jpg","2879c274-e59d-4782-a844-b74648e90237.jpg"]', NULL, '[{"Name":"type","Value":"Automobilis","Label":"Tipas"},{"Name":"transmission","Value":"Mechaninė","Label":"Pavarų dėžė"},{"Name":"gears","Value":"Pavarų kiekis","Label":"Pavarų kiekis"},{"Name":"fueltype","Label":"Kuro tipas","Value":"Benzinas"}]', 0),
 	('ecb401ce-8fcf-404f-841e-3c20e3f50350', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 550d', 'Canon veidrodinis fotoaparatas', 'foto', '["1140dd3a-5066-4ab5-b487-903c45258e05.jpg"]', '["Canon","550d","Foto","DSLR"]', '[]', 0),
 	('55082151-1b43-4451-981d-4b3477b75793', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony HXR-MC2500', 'Sony filmavimo kamera', 'foto', '["fb316c0d-c755-43e7-ba56-4698edc63588.jpeg"]', '["Sony","HDCAM","VIDEO","HXR-MC2500"]', '[]', 0),
 	('62c42c49-b548-454e-9c46-4d4076b5dd78', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Tesla Model S', 'Tesla elektromobilis', 'auto', '["c309d7e9-c9fe-4dba-a61e-afa515c6af1f.jpg","431cbbe0-ad24-45a8-92fd-93f9c1a8199d.jpg"]', NULL, '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"EV"}]', 0),
@@ -198,18 +199,16 @@ INSERT INTO `items` (`id`, `serialNumber`, `owner`, `name`, `description`, `cate
 	('46c5db9a-0e83-4052-83b3-76e656724a44', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Genesis Radium 600', 'Studijinis mikrofonas', 'kita', '["c35d4863-e029-4d94-960f-a02d5d139827.jpg"]', '', '[{"Name":"type","Value":"Condenser"},{"Name":"model","Value":"Radium 600"},{"Name":"connection","Value":"USB"}]', 0),
 	('700f1862-8a21-486e-bfa2-7d2f99564da9', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Žoliapjovė/traktoriukas', 'Naujas traktoriukas skirtas prižiūrėti vejai', 'kita', '["9b40ffe1-37aa-43ec-bf43-9d52ccfb7446.jpg","7f8b2758-469e-458c-b170-de96a0243d3a.jpg","1e209e69-7616-4079-9a0f-1bd2926052c5.jpg"]', '', '[]', 0),
 	('4ba8efe6-defd-480b-8ea9-81fc90c1cc80', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'telefonai', 'null', '', '[{"Name":"maker","Value":"samsung"},{"Name":"model","Value":"asd"}]', 0),
-	('0f6c4d55-7bb9-4455-8595-84691606635a', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation1', 'Originali retro žaidimų konsolė', 'kita', '["61fe44ac-f279-4c76-8fba-a6677109d005.jpg"]', '["playstation","PS","games"]', '[]', 0),
-	('74010154-b180-411e-9420-9fbf7c04d49c', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5', 'Originali playstation 5 konsolė su visu kompletu', 'kita', '["818fbc66-48ea-4bef-9e3b-2b6d124d0e35.jpg","ee73cc44-e773-4060-a9d2-d37d1d04bb9b.jpg"]', '["playstation","PS","games"]', '[]', 0),
+	('0f6c4d55-7bb9-4455-8595-84691606635a', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation1', 'Originali retro žaidimų konsolė', 'konsoles', '["61fe44ac-f279-4c76-8fba-a6677109d005.jpg"]', '["playstation","PS","games"]', '[]', 0),
+	('74010154-b180-411e-9420-9fbf7c04d49c', '', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5', 'Originali playstation 5 konsolė su visu kompletu', 'konsoles', '["818fbc66-48ea-4bef-9e3b-2b6d124d0e35.jpg","ee73cc44-e773-4060-a9d2-d37d1d04bb9b.jpg"]', '["playstation","PS","games"]', '[]', 0),
 	('90c0992e-d736-4638-b292-a18c42d949c1', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Nikon D5100', 'Veidrodinis Nikon fotoaparatas', 'kameros', '["58895aea-9b1a-4603-bb31-a209efe84b23.jpg"]', '', '[{"Name":"mountType","Value":"Nikon mount"}]', 0),
-	('c7700ff4-29b1-42e3-bf05-af8bab66b533', '', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracinis daiktas', 'Demonstracinis aprašymas', 'other', 'null', '["Demonstracija","Naujas"]', '[]', 1),
 	('e58af2d6-ad2c-4250-aa0e-af9a8d5a0885', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Elektrinė žolepjovė', 'Mažai naudota žolepjovė, veikianti įjungus į elektros tinklą', 'kita', '["1fd76ae9-7c04-48f4-99f7-6a3035985692.jpg"]', '', '[]', 0),
 	('af000421-55ac-433f-8524-d063e7c39d73', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'GARDEN priekaba', 'Prikabinama automobilinė priekaba', 'auto', '["05fc6c7f-97f6-4a43-b52c-1bfe9b903d2f.png"]', '', '[{"Name":"type","Value":"Trailer"}]', 0),
 	('9099dece-eaf2-4609-a229-d6cdb6cfb895', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Canon 70D', 'Canon veidrodinis fotoaparatas', 'foto', '["9d57833d-05b6-4741-97dc-fda50d10eb88.jpg"]', '["Foto","Canon","70D","DSLR"]', '[]', 0),
-	('2cacbcdd-e5a9-4280-932e-d8485323dc16', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'auto', '["vairuok-lenktynini-vt3-klases-bmw-f30-nemuno-ziede.jpg"]', '["vehicle","sports","bmw"]', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Gasoline"}]', 0),
-	('5797ddd0-6ebd-42a0-8307-e00da61d9a3d', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 + Sony 24-70/f4', 'Sony cinema kamera su objektyvu', 'video', '["b6bdfe94-b084-4201-a5f4-1bf6e3a175d0.jpg"]', '["Sony","FX30","Cinema","Lens","Bundle"]', '[]', 0),
+	('2cacbcdd-e5a9-4280-932e-d8485323dc16', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'BMW F30 Track Certified', 'Sportinis BMW automobilis skirtas žiedynėms lenktynėms atitinkantis reikiamus standartus', 'auto', '["vairuok-lenktynini-vt3-klases-bmw-f30-nemuno-ziede.jpg"]', '["vehicle","sports","bmw"]', '[{"Name":"type","Value":"Automobilis","Label":"Tipas"},{"Name":"transmission","Value":"Mechaninė","Label":"Pavarų dėžė"},{"Name":"gears","Value":"Pavarų kiekis","Label":"Pavarų kiekis"},{"Name":"fueltype","Label":"Kuro tipas","Value":"Benzinas"}]', 0),
+	('5797ddd0-6ebd-42a0-8307-e00da61d9a3d', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'Sony FX30 + Sony 24-70/f4', 'Sony cinema kamera su objektyvu', 'video', '["b6bdfe94-b084-4201-a5f4-1bf6e3a175d0.jpg"]', '["Sony","FX30","Cinema","Lens","Bundle"]', '[{"Name":"grade","Value":"Tipas","Label":"Profesionali"},{"Name":"mp","Value":"26.1MP","Label":"Sensoriaus raiška"},{"Name":"sensortype","Value":"Apkirptas sensorius","Label":"Sensoriaus tipas"}]', 0),
 	('c4efea99-0a84-4045-88f6-e276d376b61f', '', '6630ef8d-fd45-4da8-9b29-32c6f7ea4638', 'BMPCC 4k', 'Blackmagic cinema kamera', 'video', '["f34cbda0-47e6-469e-b7da-1269c8fb6180.jpg","c07d7b0f-7209-4f1f-b51f-79752a96aa5a.jpg"]', '["Blackmagic","Cinema","4K","BMPCC"]', '[]', 0),
 	('fe49778e-561e-4da8-b1e2-f3f0eefb2149', NULL, '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'asd', 'asd', 'kameros', '["109ef986-6a19-4ca7-9688-6343703319a8.png"]', '', '[{"Name":"mountType","Value":"asd"}]', 0),
-	('9ac4ca1c-8017-4297-9edd-f8b2adca5858', '', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracinis daiktas', 'Demonstracinis aprašymas', 'auto', 'null', '["Demonstracija","Naujas"]', '[{"Label":"Type","Name":"type","Value":"Car"},{"Label":"Fuel type","Name":"fueltype","Value":"Diesel"}]', 0),
 	('b9885038-af3d-4d2c-b818-f8fcad813341', NULL, '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Audi S3', 'Aukštos klasės audi automobilis', 'auto', '["ca0ddecb-859a-4935-b433-59af4c0c83ce.jpg","adcf34dc-1353-4e4e-88dd-b0bb572e1d26.jpg"]', '', '[{"Name":"type","Value":"Car"},{"Name":"fueltype","Value":"Diesel"}]', 0);
 
 -- Dumping structure for table itemrental.messages
@@ -223,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Dumping data for table itemrental.messages: ~0 rows (approximately)
+-- Dumping data for table itemrental.messages: ~3 rows (approximately)
 DELETE FROM `messages`;
 INSERT INTO `messages` (`id`, `resource`, `author`, `text`, `created`) VALUES
 	(6, 'FOTOFOTO-1', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Sveiki', '2024-06-04 17:32:51'),
@@ -243,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.notifications: ~0 rows (approximately)
+-- Dumping data for table itemrental.notifications: ~24 rows (approximately)
 DELETE FROM `notifications`;
 INSERT INTO `notifications` (`id`, `user`, `code`, `title`, `description`, `url`, `timestamp`, `read`) VALUES
 	('c57504db-e597-437e-b4b7-1534a4756ca6', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', 'Order.Returned', 'Užsąkymas Grąžintas', 'Jūsų užsakymas buvo grąžintas', '/orders/FOTOFOTO-1', '2024-06-04 20:32:27', 0),
@@ -287,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.orders: ~1 rows (approximately)
+-- Dumping data for table itemrental.orders: ~11 rows (approximately)
 DELETE FROM `orders`;
 INSERT INTO `orders` (`id`, `listing`, `user`, `startDate`, `endDate`, `status`, `deliveryType`, `comment`, `location`, `createdAt`) VALUES
 	('FOTOFOTO-1', '75f6cbe1-a138-4e57-8195-666ca307431f', '4dc7d983-af45-4bb1-ac7d-2b9edbbbf7fc', '2024-06-04', '2024-06-07', 5, 0, 'Universiteto reklamos filmavimas', NULL, '2024-06-04 19:59:17'),
@@ -328,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `rent_listings` (
   `deleted` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table itemrental.rent_listings: ~31 rows (approximately)
+-- Dumping data for table itemrental.rent_listings: ~30 rows (approximately)
 DELETE FROM `rent_listings`;
 INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `price`, `location`, `deleted`) VALUES
 	('f09d8b6d-643a-485a-8ac9-46254569b9c1', '892e9dd3-cc05-45a8-9020-35cfcd9bd28e', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'What is lorem ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 20.990000, 'Vilnius, Lithuania', 0),
@@ -349,7 +348,6 @@ INSERT INTO `rent_listings` (`id`, `item`, `renter`, `title`, `description`, `pr
 	('39078b4b-d1fc-4169-a00b-fab6cc0c4bb5', '5e51f0a8-e519-4b73-860d-2c77210e3d55', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 2 konsolė', 'Žaidimų konsolė su pilnu paketu ir žaidimais', 5.000000, 'Kaunas, Lithuania', 0),
 	('ddc222b2-4c9b-442e-84a8-c3f5fb142c7d', 'a5140a5e-a8cf-4760-8d95-0562bb9b0589', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 3 žaidimų konsolė', 'Pilnas playstation 3 konsolės rinkinys su daugybe žaidimų, galimybė žaisti tinkle su kitais žaidėjais, aktyvi PS Plus prenumerata.', 10.000000, 'Kaunas, Lithuania', 0),
 	('322d5fa3-8cb9-41c1-a940-5142a53df3a7', '74010154-b180-411e-9420-9fbf7c04d49c', '59e8d978-da4b-470b-9beb-6bbcc70ac5fb', 'Playstation 5 konsolė', 'Naujausia playstation žaidimų konsolė, palaikanti ir Playstation 4 žaidimus, aktyvi PS Plus prenumerata suteikianti didžiulią žaidimų biblioteką ir galimybę žaisti tinkle su kitais žaidėjais.', 15.000000, 'Kaunas, Lithuania', 0),
-	('38b2b8b8-8fec-40a9-9bbb-827e3605cdb1', 'cbbf7cb6-7a55-481e-8ead-9657db94607b', '13557b17-53e1-4da3-9da2-0496fd7c5474', 'Demonstracins skelbimas', 'Demonstracinis skelbimo aprašymas', 50.000000, 'Kaunas, Lithuania', 0),
 	('f0441dca-b60c-41f6-94cd-1339f9493e8e', 'b3e20e08-fa6d-4498-8638-9e001b241d6c', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
 	('64f97985-0fb8-410d-996f-9ead4b70e5b4', 'fe2b1ff7-d148-4dba-abba-3d71e77dcd0a', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),
 	('1ea7200c-fedc-467b-bd58-83aa341ec217', '124a6d60-1aa3-4a77-b0c5-f88adf5008c1', '142eae84-432c-4a67-a92b-ece3fb36a109', 'Postman rent listing', 'This is a test ran by a postman to test creating a rent listing endpoint', 12.990000, 'Kaunas, Lithuania', 0),

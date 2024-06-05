@@ -91,11 +91,9 @@ namespace ItemRental.API.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}/Listings")]
         public async Task<IActionResult> GetListings(Guid id)
         {
-            Guid userId = _jwtTokenService.GetTokenSubject(HttpContext.Request.Headers["Authorization"]);
 
             Result<List<RentListingDTO>> result = await _sender.Send(new GetRentListingByOwnerQuery(id));
 

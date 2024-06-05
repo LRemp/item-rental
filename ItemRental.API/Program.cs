@@ -46,12 +46,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+
+Console.WriteLine("path");
+Console.WriteLine(app.Environment.ContentRootPath);
 
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images")),
-    RequestPath = "/images"
+    RequestPath = "/api/images"
 });
 
 app.UseAuthorization();

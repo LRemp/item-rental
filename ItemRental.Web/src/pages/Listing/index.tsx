@@ -112,9 +112,13 @@ const CreateOrderModal = () => {
       let endDate = new Date(busyDates[index].endDate);
       endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
       if (date >= startDate && date <= endDate && busyDates[index].status < 6) {
+        const bgColor =
+          busyDates[index].status > 1
+            ? 'var(--mantine-color-red-filled)'
+            : 'var(--mantine-color-orange-filled)';
         return {
           style: {
-            backgroundColor: 'var(--mantine-color-red-filled)',
+            backgroundColor: bgColor,
             color: 'var(--mantine-color-white)',
           },
         };

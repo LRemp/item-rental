@@ -25,6 +25,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
       <Text c="dimmed" size="sm">
         {email}
       </Text>
+      <Text size="sm">+37060427763</Text>
       {hasButton && (
         <Button fullWidth onClick={() => navigate(`/user/${username}`)}>
           Peržiūrėti profilį

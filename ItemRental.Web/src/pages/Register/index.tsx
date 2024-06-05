@@ -23,7 +23,6 @@ import classes from './Components/Form.module.css';
 import api from '@/api';
 import { Error, Success } from '@/utils/Notifications';
 import PasswordStrength from './Components/PasswordStrength';
-import PhoneNumberInput from '@/components/Input/PhoneNumberInput';
 
 export function Register() {
   const navigate = useNavigate();

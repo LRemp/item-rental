@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ItemRental.API/Dockerfile
     volumes:
-      - image-data:/app/Images
+      - ./ItemRental.API/Images:/app/Images
     ports:
       - "8081:8081"
       - "8082:8082"
@@ -34,6 +34,7 @@ services:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./proxy/ssl:/etc/nginx/ssl
       - ./ItemRental.Web/dist:/usr/share/nginx/html
+      - ./ItemRental.Web/Images:/usr/share/nginx/html/Images
     depends_on:
       - itemrental-api
   phpmyadmin:

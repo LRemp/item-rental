@@ -5,8 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:8081',
-      '/images': 'http://localhost:8081',
+      '/api': 'https://localhost:8082',
     },
     host: true,
     port: 8080,

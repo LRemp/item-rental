@@ -11,12 +11,12 @@ interface MerchantListingsTableProps {
 const MerchantListingsTable: React.FC<MerchantListingsTableProps> = ({ elements }) => {
   const navigate = useNavigate();
 
-  const rows = elements.map(({ id, item, title, description, price }) => (
+  const rows = elements?.map(({ id, item, title, description, price }) => (
     <Table.Tr key={id}>
       <Table.Td>
         <Center>
           <Image
-            src={`/images/${item.images?.[0]}`}
+            src={`/api/images/${item.images?.[0]}`}
             radius="xs"
             h={50}
             w="auto"

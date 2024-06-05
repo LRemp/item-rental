@@ -8,7 +8,7 @@ const ListingTableElement: React.FC<RentListing> = ({ id, title, description, it
     <Table.Td width="50px">
       <Center>
         <Image
-          src={`/images/${item?.images?.[0]}`}
+          src={`/api/images/${item?.images?.[0]}`}
           radius="xs"
           h={50}
           w="auto"

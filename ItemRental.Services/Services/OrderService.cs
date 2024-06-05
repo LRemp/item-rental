@@ -64,7 +64,8 @@ namespace ItemRental.Services.Services
                 Listing = order.Listing,
                 StartDate = order.StartDate,
                 EndDate = order.EndDate,
-                Status = OrderStatus.Accepted
+                Status = OrderStatus.Accepted,
+                DeliveryType = order.DeliveryType
             }, cancellationToken);
 
             if(!success)

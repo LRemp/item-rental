@@ -24,7 +24,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     <Card withBorder radius="sm" className={classes.card} shadow="md" w={w}>
       <Card.Section className={classes.imageSection}>
         <Image
-          src={`/images/${item.images?.[0]}`}
+          src={`/api/images/${item.images?.[0]}`}
           h={140}
           alt="Tesla Model S"
           fallbackSrc={NoImage}
